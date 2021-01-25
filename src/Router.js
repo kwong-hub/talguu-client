@@ -2,22 +2,19 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Landing from "./pages/landing/Landing";
+import Profile from "./pages/profile/Profile";
+import Upload from "./pages/Upload";
 
 const Router = () => {
   return (
     <div>
+      <Home/>
       <BrowserRouter>
         <Switch>
-        <Route path="/">
-            <Home />
-            <Landing />
-          </Route>
-          <Route path="/landing">
-            <Landing />
-          </Route>
-          <Route path="/home">
-            <Home />
-          </Route>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/landing" component={Landing} />
+          <Route exact path="/upload" component={Upload} />
+          <Route exact path="/profile" component={Profile} />
         </Switch>
       </BrowserRouter>
     </div>
