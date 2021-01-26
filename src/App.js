@@ -8,10 +8,6 @@ function App() {
   return (
     <div className="App">
       <Router />
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-      </header>
     </div>
   );
 }

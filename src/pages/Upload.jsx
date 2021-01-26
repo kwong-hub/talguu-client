@@ -76,7 +76,7 @@ class Upload extends Component {
         <div ref={this.dropRef} class="flex justify-center">
           <div class="shadow-lg w-2/3 max-w-3/4 transition duration-500 ease-in-out hover:bg-gray-100 transform hover:-translate-y-1 hover:scale-110">
             <div class=" h-64 flex flex-col justify-center items-center container mx-auto px-6 ">
-              <RiVideoUploadFill class="text-5xl" />
+              {/* <RiVideoUploadFill class="text-5xl" /> */}
               <p class="tracking-wider text-lg text-gray-500"> Drag and Drop the video </p>
             </div>
           </div>
