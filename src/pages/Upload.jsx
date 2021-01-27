@@ -25,6 +25,7 @@ class Upload extends Component {
   };
 
   dropRef = React.createRef();
+  fileInput = React.createRef();
   handleDrag = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -45,7 +46,22 @@ class Upload extends Component {
       this.setState({ drag: false });
     }
   };
+  handleOnclick = (e) =>{
+    this.fileInput.current.click();
+  }
+  handleFileSelect = (e) => {
+   
+    e.preventDefault();
+    e.stopPropagation();
+    this.setState({ drag: false });
+    if (e.target.files && e.target.files.length > 0) {
+      this.uploadFiles(e.target.files);
+      // e.target.clearData();
+      this.dragCounter = 0;
+    }
+  };
   handleDrop = (e) => {
+    console.log(e);
     e.preventDefault();
     e.stopPropagation();
     this.setState({ drag: false });
@@ -55,6 +71,7 @@ class Upload extends Component {
       this.dragCounter = 0;
     }
   };
+
 
   submit = (e) => {
     e.preventDefault();
@@ -87,6 +104,7 @@ class Upload extends Component {
     div.addEventListener("dragleave", this.handleDragOut);
     div.addEventListener("dragover", this.handleDrag);
     div.addEventListener("drop", this.handleDrop);
+    div.addEventListener("click", this.handleOnclick);
   };
 
   componentWillUnmount = () => {
@@ -116,15 +134,15 @@ class Upload extends Component {
         </div>
 
         <div ref={this.dropRef} class="flex justify-center my-4">
-          <div class="shadow-inner border border-gray-100 rounded-md w-2/3 max-w-3/4 transition duration-500 ease-in-out hover:bg-gray-100 transform hover:-translate-y-1 hover:scale-110">
+          <div class="shadow-inner border bg-white cursor-pointer border-gray-100 rounded-md w-2/3 max-w-3/4 transition duration-500 ease-in-out hover:bg-gray-100 transform hover:-translate-y-1 hover:scale-110">
             <div class="h-64 flex flex-col justify-center items-center container mx-auto px-6 ">
               <RiVideoUploadFill class="text-5xl" />
               <p class="tracking-wider text-lg text-gray-500">
                 {" "}
                 Drag and Drop the video{" "}
               </p>
-              <input type="file" className="hidden" />
-              <button>Upload file</button>
+              <input type="file" ref={this.fileInput} onChange={this.handleFileSelect} className="hidden" />
+              <button onClick={this.handleOnclick}>Upload file</button>
               {this.state.progress > 0 && (
                 <Progress
                   type="circle"
@@ -140,12 +158,12 @@ class Upload extends Component {
           {this.state.upload && (
             <form
               onSubmit={this.submit}
-              className="flex flex-col items-center my-8 text-2xl text-gray-500"
+              className="flex flex-col w-full items-center my-8 text-xl text-gray-500"
             >
-              <label>
+              <label className="flex items-baseline w-3/4">
                 Title
                 <input
-                  className="border p-1 m-2 w-full rounded-lg focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-transparent focus:border-green-700"
+                  className="border p-2 m-2 w-full rounded-xl focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-transparent focus:border-green-700"
                   type="text"
                   value={this.state.title}
                   onChange={(e) => {
@@ -154,7 +172,7 @@ class Upload extends Component {
                 />
               </label>
 
-              <label className="flex items-baseline">
+              <label className="flex items-baseline w-3/4">
                 Description
                 <textarea
                   className="border w-full p-1 m-4 rounded-lg focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-transparent focus:border-green-700"
