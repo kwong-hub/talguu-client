@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { RiVideoUploadFill } from "react-icons/ri";
-import { Progress } from "antd";
+import { RiVideoUploadFill, RiUploadCloud2Line } from "react-icons/ri";
+import { Button, Progress } from "antd";
 import videoService from "../services/video.service";
 
 class Upload extends Component {
@@ -56,8 +56,6 @@ class Upload extends Component {
     }
   };
 
-
-
   submit = (e) => {
     e.preventDefault();
 
@@ -101,9 +99,24 @@ class Upload extends Component {
 
   render() {
     return (
-      <div>
-        <div ref={this.dropRef} class="flex justify-center">
-          <div class="shadow-lg rounded-md w-2/3 max-w-3/4 transition duration-500 ease-in-out hover:bg-gray-100 transform hover:-translate-y-1 hover:scale-110">
+      <div className="flex flex-col mt-8 m-4 mx-auto w-full max-w-4xl justify-center ">
+        <div className="flex justify-around mx-4 ">
+          <p className="text-2xl text-gray-600 m-2">
+            One Step to Publish your video!{" "}
+          </p>
+          <Button
+            size={60}
+            type="primary"
+            shape="round"
+            icon={<RiUploadCloud2Line />}
+            className="w-48 flex justify-center items-center text-xl p-4 transform hover:scale-110 motion-reduce:transform-none"
+          >
+            Publish Video
+          </Button>
+        </div>
+
+        <div ref={this.dropRef} class="flex justify-center my-4">
+          <div class="shadow-inner border border-gray-100 rounded-md w-2/3 max-w-3/4 transition duration-500 ease-in-out hover:bg-gray-100 transform hover:-translate-y-1 hover:scale-110">
             <div class="h-64 flex flex-col justify-center items-center container mx-auto px-6 ">
               <RiVideoUploadFill class="text-5xl" />
               <p class="tracking-wider text-lg text-gray-500">
@@ -127,7 +140,7 @@ class Upload extends Component {
           {this.state.upload && (
             <form
               onSubmit={this.submit}
-              className="flex  flex-col items-center my-8 text-2xl text-gray-500"
+              className="flex flex-col items-center my-8 text-2xl text-gray-500"
             >
               <label>
                 Title
@@ -141,10 +154,10 @@ class Upload extends Component {
                 />
               </label>
 
-              <label className="">
+              <label className="flex items-baseline">
                 Description
                 <textarea
-                  className="border w-full p-1 m-2 rounded-lg focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-transparent focus:border-green-700"
+                  className="border w-full p-1 m-4 rounded-lg focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-transparent focus:border-green-700"
                   type="text"
                   value={this.state.description}
                   onChange={(e) => {
@@ -153,11 +166,15 @@ class Upload extends Component {
                 ></textarea>
               </label>
 
-              <input
-                className="btn bg-green-700 cursor-pointer text-white rounded-md w-32"
-                type="submit"
-                value="Submit"
-              />
+              <Button
+                size={60}
+                type="primary"
+                shape="round"
+                icon={<RiUploadCloud2Line />}
+                className="w-64 my-4 flex justify-center items-center text-xl p-4 transform hover:scale-110 motion-reduce:transform-none"
+              >
+                Publish Video
+              </Button>
             </form>
           )}
         </div>
