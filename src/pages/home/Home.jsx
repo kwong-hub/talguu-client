@@ -3,6 +3,7 @@ import React from 'react'
 const Home = () => {
     return (
         <div>
+            
             <div class="w-full container mx-auto p-6">
 			
             <div class="w-full flex items-center justify-between">
@@ -20,7 +21,7 @@ const Home = () => {
                 </div>
                 
             </div>
-    
+            
         </div>
 
         
