@@ -1,12 +1,13 @@
-import React from 'react'
+import React from "react";
+import SideNav from "../../partials/sideNav/SideNav";
 
 const Profile = () => {
-    return (
-        <div>
-            
-        </div>
-    )
-}
+  return (
+    <div>
+      <SideNav></SideNav>
+      <div>Profile</div>
+    </div>
+  );
+};
 
-export default Profile
-
+export default Profile;
