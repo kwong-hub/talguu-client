@@ -10,6 +10,7 @@ import StreamVideo from "./pages/streamVideo/StreamVideo";
 import Upload from "./pages/Upload";
 import UploadVideo from "./pages/uploadVideo/UploadVideo";
 import WatchVideo from "./pages/watchVideo/WatchVideo";
+import UploadAnt from "./pages/UploadAnt";
 
 const Router = () => {
   return (
@@ -24,6 +25,11 @@ const Router = () => {
           <Route path="/settings" component={Settings} />
           {/* <Route path="/profile" component={Profile} /> */}
           <Route path="/account" component={Account} />
+          <Route exact path="/" component={Home} />
+          <Route exact path="/landing" component={Landing} />
+          <Route exact path="/upload" component={Upload} />
+          <Route exact path="/upload2" component={UploadAnt} />
+          <Route exact path="/profile" component={Profile} />
         </Switch>
       </BrowserRouter>
     </div>

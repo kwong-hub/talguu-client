@@ -1,0 +1,16 @@
+:root {
+    --color-primary: #1DA57A;
+    --color-primary-light: rgba(255, 130, 82, 0.8);
+    --color-primary-lighter: rgba(255, 130, 82, 0.1);
+    --color-success: #00af9c;
+    --color-success-light: #00af9b;
+    --color-success-lighter: #00af9b55;
+    --color-pink-white: #e1f2f1;
+    --color-white: #fff;
+    --color-white-light: #fafafa;
+    --color-gray: #b8b9bb33;
+    --color-gray-light: #b8b9bb;
+    --color-black: #000;
+    --color-black-lighter: rgba(0, 0, 0, 0.1);
+  }
+  
