@@ -40,7 +40,7 @@ const UploadAnt = () => {
   return (
     <div class="flex items-center flex-col">
       <Dragger
-        className="shadow-lg w-2/3 max-w-3/4 transition duration-500 ease-in-out hover:bg-gray-100 transform hover:-translate-y-1 hover:scale-110"
+        className=""
         {...props}
         onChange={uploadFile}
       >
@@ -73,7 +73,7 @@ const UploadAnt = () => {
             valuePropName="description"
             rules={[{ required: true, message: "Please input your password!" }]}
           >
-            <Input.Password />
+            <Input />
           </Form.Item>
 
           <Form.Item {...tailLayout}>
