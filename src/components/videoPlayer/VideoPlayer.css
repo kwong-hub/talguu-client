@@ -1,0 +1,10 @@
+@import "~video.js/dist/video-js.css";
+
+.video-js .vjs-big-play-button {
+  top: calc(50% - 1.2em);
+  left: calc(50% - 1.5em);
+}
+
+.video-js {
+  max-height: 100%;
+}
