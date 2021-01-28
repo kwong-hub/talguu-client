@@ -26,7 +26,7 @@ const Router = () => {
           <Route path="/upload_video" component={UploadVideo} />
           <Route path="/stream_video" component={YourVideo} />
           <Route path="/settings" component={Settings} />
-          <Route path="/account" component={Account} />
+          <Route path="/account" component={Login} />
           <Route exact path="/" component={Home} />
           <Route exact path="/landing" component={Landing} />
          
