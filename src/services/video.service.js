@@ -23,4 +23,14 @@ export default {
       throw error;
     }
   },
+  getVideos: async function () {
+    try {
+     const video =  await axios.get(
+        `${enviroment}/video`,
+      );
+      return video.data;
+    } catch (error) {
+      throw error;
+    }
+  },
 };

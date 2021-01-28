@@ -154,7 +154,7 @@ class UploadVideo extends Component {
                   onChange={this.handleFileSelect}
                   className="hidden"
                 />
-                <button onClick={this.handleOnclick}>Upload file</button>
+                <button >Upload file</button>
                 {this.state.progress > 0 && (
                   <Progress
                     type="line"
