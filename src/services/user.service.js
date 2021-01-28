@@ -10,4 +10,13 @@ export default {
       throw error;
     }
   },
+  login: async function (data) {
+    try {
+      const user = await axios.post(`${enviroment}/account/login`,data);
+      return user.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
 };
