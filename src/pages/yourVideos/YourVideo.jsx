@@ -1,12 +1,20 @@
-import { Avatar } from "antd";
 import React, { Component } from "react";
-import { FaUser } from "react-icons/fa";
+import { Menu } from "antd";
 import Video from "../../components/videos/Video";
 import SideNav from "../../partials/sideNav/SideNav";
 import videoService from "../../services/video.service";
+import { FaTimes, FaVideo } from "react-icons/fa";
+import { RiTimeFill } from "react-icons/ri";
+const { SubMenu } = Menu;
 export class YourVideo extends Component {
   state = {
     videos: [],
+    current: "mail",
+  };
+
+  handleClick = (e) => {
+    console.log("click ", e);
+    this.setState({ current: e.key });
   };
   componentDidMount() {
     this.getVideos();
@@ -24,18 +32,33 @@ export class YourVideo extends Component {
   };
 
   render() {
+    const { current } = this.state;
     return (
-      <div className="m-4">
+      <div className="m-12">
         <SideNav></SideNav>
-        <div className="w-full h-32 flex justify-center bg-gray-100 ml-4 shadow-lg">
-         <span className="text-2xl "> Your Video is here</span> 
+        <div className="m-6 w-full">
+          <Menu
+            onClick={this.handleClick}
+            selectedKeys={[current]}
+            mode="horizontal"
+            className=""
+          >
+            <Menu.Item key="mail" >
+            Watched Videos 
+            </Menu.Item>
+            <Menu.Item key="app"  >
+              Videos
+            </Menu.Item>
+            <Menu.Item key="video"  >
+              Videos
+            </Menu.Item>
+          </Menu>
         </div>
         <div className="m-2 flex flex-wrap">
-        {this.state.videos.map((item) => {
-           return <Video {...item} width={400} height={100} />;
+          {this.state.videos.map((item) => {
+            return <Video {...item} width={400} height={100} />;
           })}
         </div>
-       
       </div>
     );
   }
