@@ -16,7 +16,7 @@ export class VideoPlayer extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(prevProps.sources, this.props.sources);
+    // console.log(prevProps.sources, this.props.sources);
     if (
       prevProps.sources[0].src !== this.props.sources[0].src ||
       prevProps.autoplay !== this.props.autoplay
