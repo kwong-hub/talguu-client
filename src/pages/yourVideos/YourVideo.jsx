@@ -11,7 +11,7 @@ export class YourVideo extends Component {
     videos: [],
     current: "mail",
   };
-
+  
   handleClick = (e) => {
     console.log("click ", e);
     this.setState({ current: e.key });
@@ -43,15 +43,9 @@ export class YourVideo extends Component {
             mode="horizontal"
             className=""
           >
-            <Menu.Item key="mail" >
-            Watched Videos 
-            </Menu.Item>
-            <Menu.Item key="app"  >
-              Videos
-            </Menu.Item>
-            <Menu.Item key="video"  >
-              Videos
-            </Menu.Item>
+            <Menu.Item key="mail">Watched Videos</Menu.Item>
+            <Menu.Item key="app">Videos</Menu.Item>
+            <Menu.Item key="video">Videos</Menu.Item>
           </Menu>
         </div>
         <div className="m-2 flex flex-wrap">
