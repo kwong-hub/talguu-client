@@ -3,12 +3,14 @@ import { Form, Input, Button, Checkbox } from "antd";
 import { FaEnvelope, FaFacebook, FaGoogle, FaLock, FaUser } from "react-icons/fa";
 import logo from "../../assets/images/logo.svg";
 import userService from "../../services/user.service";
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 
 export class Signup extends Component {
   state = {};
+  
 
   onFinish = (values) => {
+   
     console.log("Received values of form: ", values);
     userService
       .login(values)
@@ -16,6 +18,8 @@ export class Signup extends Component {
         console.log(resp);
       })
       .catch((err) => console.log(err));
+      
+
   };
 
   render() {
@@ -25,7 +29,7 @@ export class Signup extends Component {
           <div className="w-full max-w-xs flex flex-col justify-center m-4 p-4 py-8 shadow-md rounded-2xl bg-white">
             <div className="flex justify-center flex-col items-center ">
               <img className="" src={logo} alt="Logo" width={50} />
-             
+              
             
               <p className="text-2xl text-gray-700 my-6">
                Create a New Account

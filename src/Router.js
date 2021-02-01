@@ -13,6 +13,7 @@ import WatchVideo from "./pages/watchVideo/WatchVideo";
 import UploadAnt from "./pages/UploadAnt";
 import Login from "./pages/authentication/Login";
 import Signup from "./pages/authentication/Signup";
+import YourVideo from "./pages/yourVideos/YourVideo";
 
 const Router = () => {
   return (
@@ -23,9 +24,9 @@ const Router = () => {
           <Route exact path="/" component={WatchVideo} />
           <Route path="/saved_playlist" component={SavedPlayList} />
           <Route path="/upload_video" component={UploadVideo} />
-          <Route path="/stream_video" component={StreamVideo} />
+          <Route path="/stream_video" component={YourVideo} />
           <Route path="/settings" component={Settings} />
-          <Route path="/account" component={Account} />
+          <Route path="/account" component={Login} />
           <Route exact path="/" component={Home} />
           <Route exact path="/landing" component={Landing} />
          

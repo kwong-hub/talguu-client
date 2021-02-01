@@ -1,8 +1,14 @@
 import React, { Component } from "react";
-import { RiVideoUploadFill, RiUploadCloud2Line } from "react-icons/ri";
-import { Button, Progress,message } from "antd";
+import {
+  RiVideoUploadFill,
+  RiUploadCloud2Line,
+  RiUploadCloud2Fill,
+} from "react-icons/ri";
+import { Button, Progress, message } from "antd";
 import videoService from "../../services/video.service";
 import SideNav from "../../partials/sideNav/SideNav";
+import { FaPlus } from "react-icons/fa";
+import Thumbnail from "./Thumbnail";
 
 const initialState = {
   drag: false,
@@ -11,6 +17,7 @@ const initialState = {
   describe: "",
   files: {},
   progress: 0,
+  active: "",
 };
 class UploadVideo extends Component {
   state = initialState;
@@ -21,12 +28,12 @@ class UploadVideo extends Component {
     for (var i = 0; i < files.length; i++) {
       if (!files[i].name) return;
       this.fileList.push(files[i].name);
-      this.setState({ upload: true });
+      this.setState({ active: "upload" });
       this.setState({ title: files[0].name, files: files[0] });
     }
   };
   successMessage = () => {
-    message.success('Successfull Upload');
+    message.success("Successfull Upload");
   };
 
   dropRef = React.createRef();
@@ -102,7 +109,9 @@ class UploadVideo extends Component {
       })
       .catch((err) => console.log(err));
   };
-
+  nextClick = (to) => {
+    this.setState({ active: to });
+  };
   componentDidMount = () => {
     let div = this.dropRef.current;
     div.addEventListener("dragenter", this.handleDragIn);
@@ -119,6 +128,12 @@ class UploadVideo extends Component {
     div.removeEventListener("dragover", this.handleDrag);
     div.removeEventListener("drop", this.handleDrop);
   };
+  uploadButton = () => (
+    <div>
+      <FaPlus />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
 
   render() {
     return (
@@ -133,6 +148,7 @@ class UploadVideo extends Component {
               size={60}
               type="primary"
               shape="round"
+              onClick={this.submit}
               icon={<RiUploadCloud2Line />}
               className="w-48 flex justify-center items-center text-xl p-4 transform hover:scale-110 motion-reduce:transform-none"
             >
@@ -154,7 +170,7 @@ class UploadVideo extends Component {
                   onChange={this.handleFileSelect}
                   className="hidden"
                 />
-                <button onClick={this.handleOnclick}>Upload file</button>
+                <button>Upload file</button>
                 {this.state.progress > 0 && (
                   <Progress
                     type="line"
@@ -167,7 +183,7 @@ class UploadVideo extends Component {
           </div>
 
           <div>
-            {this.state.upload && (
+            {this.state.active !== "" && (
               <form
                 onSubmit={this.submit}
                 className="flex flex-col w-full items-center my-8 text-xl text-gray-500"
@@ -195,16 +211,29 @@ class UploadVideo extends Component {
                     }}
                   ></textarea>
                 </label>
-
+                {this.state.active == "detail" && (
+                  <div className="flex items-baseline w-3/4 ">
+                    <span className="text-gray-500" >Add Thumbnail</span>
+                    <Thumbnail />
+                  </div>
+                )}
+                {!this.state.active !== "detail" && (
+                  <span
+                    onClick={(e) => this.nextClick("detail")}
+                    className="underline cursor-pointer text-blue-900 "
+                  >
+                    {" "}
+                    Want to add detail info.
+                  </span>
+                )}
                 <Button
                   size={60}
                   type="primary"
                   shape="round"
-                  icon={<RiUploadCloud2Line />}
-                  onClick={this.submit}
-                  className="w-64 my-4 flex justify-center items-center text-xl p-4 transform hover:scale-110 motion-reduce:transform-none"
+                  icon={<RiUploadCloud2Fill />}
+                  className="w-64 my-4 py-5 flex justify-center items-center text-xl p-4 transform hover:scale-110 motion-reduce:transform-none"
                 >
-                  Publish Video
+                  Publish video
                 </Button>
               </form>
             )}
