@@ -1,23 +1,18 @@
 import axios from "axios";
 
-import  { enviroment } from "../config/config";
+import { environment } from "../config/config";
 
 axios.create({
-  baseURL: enviroment,
+  baseURL: environment,
   headers: {
-    "Content-type": "application/json"
-  }
+    "Content-type": "application/json",
+  },
 });
-
 
 export default {
   addVideo: async function (body, onUploadProgress) {
     try {
-     return  await axios.post(
-        `${enviroment}/video`,
-        body,
-        onUploadProgress
-      );
+      return await axios.post(`${environment}/video`, body, onUploadProgress);
       // return user.data;
     } catch (error) {
       throw error;
@@ -25,9 +20,7 @@ export default {
   },
   getVideos: async function () {
     try {
-     const video =  await axios.get(
-        `${enviroment}/video`,
-      );
+      const video = await axios.get(`${environment}/video`);
       return video.data;
     } catch (error) {
       throw error;

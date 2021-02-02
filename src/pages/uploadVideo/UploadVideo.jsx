@@ -5,10 +5,11 @@ import {
   RiUploadCloud2Fill,
 } from "react-icons/ri";
 import { Button, Progress, message } from "antd";
-import videoService from "../../services/video.service";
+import videoService from "../../_services/video.service";
 import SideNav from "../../partials/sideNav/SideNav";
 import { FaPlus } from "react-icons/fa";
 import Thumbnail from "./Thumbnail";
+import Trailer from "./Trailer";
 
 const initialState = {
   drag: false,
@@ -212,12 +213,19 @@ class UploadVideo extends Component {
                   ></textarea>
                 </label>
                 {this.state.active == "detail" && (
-                  <div className="flex items-baseline w-3/4 ">
-                    <span className="text-gray-500" >Add Thumbnail</span>
-                    <Thumbnail />
-                  </div>
+                  <>
+                    <div className="flex items-center w-3/4 ">
+                      <span className="text-gray-500">Add Thumbnail</span>
+                      <Thumbnail />
+                    </div>
+
+                    <div className="flex items-center w-3/4 my-4 ">
+                      <span className="text-gray-500">Add Trailer</span>
+                      <Trailer />
+                    </div>
+                  </>
                 )}
-                {!this.state.active !== "detail" && (
+                {this.state.active !== "detail" && (
                   <span
                     onClick={(e) => this.nextClick("detail")}
                     className="underline cursor-pointer text-blue-900 "

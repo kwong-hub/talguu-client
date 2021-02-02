@@ -1,5 +1,4 @@
-import axios from "axios";
-import { all, call, delay, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeLatest } from "redux-saga/effects";
 import userService from "../../services/user.service";
 import {
   CREATE_USER_ASYNC,
@@ -8,6 +7,7 @@ import {
   INCREMENT,
   INCREMENT_ASYNC,
 } from "../types";
+import { userConstants } from "../../_constants";
 
 function* incrementAsync() {
   yield put({ type: INCREMENT, payload: 1 });
@@ -24,10 +24,24 @@ function* createUserAsync(action) {
   }
 }
 
+function* loginSuccess(data) {
+  yield put({ type: userConstants.LOGIN_SUCCESS, payload: data.payload });
+}
+
+function* loginFail() {
+  yield put({ type: userConstants.LOGIN_FAILURE });
+}
+function* logout() {
+  yield put({ type: userConstants.LOGOUT });
+}
+
 function* watchAll() {
   yield all([
     takeLatest(CREATE_USER_ASYNC, createUserAsync),
     takeLatest(INCREMENT_ASYNC, incrementAsync),
+    takeLatest("LOGIN_ASYNC", loginSuccess),
+    takeLatest("LOGIN_FAIL", loginFail),
+    takeLatest(userConstants.LOGOUT_ASYNC, logout),
   ]);
 }
 
