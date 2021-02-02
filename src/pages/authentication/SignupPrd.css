@@ -1,0 +1,8 @@
+.ant-steps-item-custom > .ant-steps-item-container > .ant-steps-item-icon > .ant-steps-icon {
+  font-size: 30px;
+}
+
+.ant-form-item-control-input-content {
+  display: flex;
+  justify-content: space-around;
+}
