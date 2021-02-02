@@ -241,7 +241,7 @@ export class WatchVideo extends Component {
 
 const mapStateToProps = (props) => {
   return {
-    count: props.counter.count,
+    // count: props.counter.count,
   };
 };
 

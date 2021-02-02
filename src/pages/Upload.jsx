@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { RiVideoUploadFill, RiUploadCloud2Line } from "react-icons/ri";
 import { Button, Progress } from "antd";
-import videoService from "../services/video.service";
+import videoService from "../_services/video.service";
 
 class Upload extends Component {
   state = {

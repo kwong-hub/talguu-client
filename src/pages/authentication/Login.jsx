@@ -2,19 +2,32 @@ import React, { Component } from "react";
 import { Form, Input, Button, Checkbox } from "antd";
 import { FaFacebook, FaGoogle, FaLock, FaUser } from "react-icons/fa";
 import logo from "../../assets/images/logo.svg";
-import userService from "../../services/user.service";
 import { Link } from "react-router-dom";
-export class Login extends Component {
+import { connect } from "react-redux";
+import { userActions } from "../../_actions";
+import { userService } from "../../_services/user.service";
+class Login extends Component {
   state = {};
 
   onFinish = (values) => {
     console.log("Received values of form: ", values);
+    if (values.email && values.password) {
+      // this.props.dispatch({ type: "LOGIN_ASYNC", values });
+    }
     userService
       .login(values)
       .then((resp) => {
-        console.log(resp);
+        console.log(resp, "respons");
+        if (resp.success) {
+          this.props.dispatch({ type: "LOGIN_ASYNC", payload: resp });
+        } else {
+          this.props.dispatch({ type: "LOGIN_FAIL" });
+        }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        this.props.dispatch({ type: "LOGIN_FAIL" });
+        console.log(err);
+      });
   };
 
   render() {
@@ -58,15 +71,15 @@ export class Login extends Component {
                 onFinish={this.onFinish}
               >
                 <Form.Item
-                  name="username"
+                  name="email"
                   rules={[
-                    { required: true, message: "Please input your Username!" },
+                    { required: true, message: "Please input your email!" },
                   ]}
                 >
                   <Input
                     className="rounded-2xl"
                     prefix={<FaUser className="site-form-item-icon" />}
-                    placeholder="Username"
+                    placeholder="E-mail Address"
                   />
                 </Form.Item>
                 <Form.Item
@@ -94,7 +107,6 @@ export class Login extends Component {
 
                 <Form.Item>
                   <Button
-                  
                     type="primary"
                     htmlType="submit"
                     shape="round"
@@ -133,4 +145,16 @@ export class Login extends Component {
   }
 }
 
-export default Login;
+function mapState(state) {
+  const { loggingIn } = state.authentication;
+  return { loggingIn };
+}
+
+const actionCreators = {
+  login: userActions.login,
+  logout: userActions.logout,
+};
+
+const connectedLoginPage = connect(mapState, null)(Login);
+export { connectedLoginPage as Login };
+// export  Login;

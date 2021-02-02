@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Form, Input, Button, Checkbox } from "antd";
 import { FaEnvelope, FaFacebook, FaGoogle, FaLock, FaUser } from "react-icons/fa";
 import logo from "../../assets/images/logo.svg";
-import userService from "../../services/user.service";
 import { Link,useHistory } from "react-router-dom";
 
 export class Signup extends Component {
@@ -12,12 +11,12 @@ export class Signup extends Component {
   onFinish = (values) => {
    
     console.log("Received values of form: ", values);
-    userService
-      .login(values)
-      .then((resp) => {
-        console.log(resp);
-      })
-      .catch((err) => console.log(err));
+    // userService
+    //   .login(values)
+    //   .then((resp) => {
+    //     console.log(resp);
+    //   })
+    //   .catch((err) => console.log(err));
       
 
   };

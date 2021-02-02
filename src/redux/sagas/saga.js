@@ -1,4 +1,5 @@
 import { delay, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { userConstants } from "../../_constants";
 import { INCREMENT, INCREMENT_ASYNC } from "../types";
 
 function* incrementAsync() {
@@ -9,4 +10,19 @@ function* watchIncrement() {
   yield takeLatest(INCREMENT_ASYNC, incrementAsync);
 }
 
-export { watchIncrement };
+function* loginSuccess(data) {
+  yield put({ type: userConstants.LOGIN_SUCCESS, payload: data.payload });
+}
+
+function* loginFail() {
+  yield put({ type: userConstants.LOGIN_FAILURE});
+}
+
+function* watchLogin() {
+  yield takeLatest("LOGIN_ASYNC", loginSuccess);
+  yield takeLatest("LOGIN_FAIL", loginFail);
+}
+
+
+
+export { watchIncrement, watchLogin };
