@@ -12,7 +12,7 @@ import watchAll from "./redux/sagas/saga";
 //   watchLogin,
 //   watchLoginFailure,
 // } from "./redux/sagas/saga";
-import rootReducer from "./redux/_reducers";
+import rootReducer from "./redux/reducers";
 
 let sagaMiddleware = createSagaMiddleware();
 
