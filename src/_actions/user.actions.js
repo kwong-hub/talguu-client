@@ -28,7 +28,7 @@ function login(username, password) {
 
 function logout() {
     userService.logout();
-    return { type: userConstants.LOGOUT };
+    return { type: userConstants.LOGOUT_ASYNC };
 }
 
 function register(user) {

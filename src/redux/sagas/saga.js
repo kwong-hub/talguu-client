@@ -17,10 +17,13 @@ function* loginSuccess(data) {
 function* loginFail() {
   yield put({ type: userConstants.LOGIN_FAILURE});
 }
-
+function* logout() {
+  yield put({ type: userConstants.LOGOUT});
+}
 function* watchLogin() {
   yield takeLatest("LOGIN_ASYNC", loginSuccess);
   yield takeLatest("LOGIN_FAIL", loginFail);
+  yield takeLatest(userConstants.LOGOUT_ASYNC, logout);
 }
 
 
