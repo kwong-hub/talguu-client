@@ -7,13 +7,13 @@ import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 import { applyMiddleware, createStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
-import { watchIncrement } from "./redux/sagas/saga";
+import watchAll from "./redux/sagas/saga";
 
 let sagaMiddleware = createSagaMiddleware();
 
 let store = createStore(reducer, applyMiddleware(sagaMiddleware));
 
-sagaMiddleware.run(watchIncrement);
+sagaMiddleware.run(watchAll);
 
 ReactDOM.render(
   <React.StrictMode>

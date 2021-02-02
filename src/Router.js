@@ -12,7 +12,7 @@ import UploadVideo from "./pages/uploadVideo/UploadVideo";
 import WatchVideo from "./pages/watchVideo/WatchVideo";
 import UploadAnt from "./pages/UploadAnt";
 import Login from "./pages/authentication/Login";
-import Signup from "./pages/authentication/Signup";
+import SignupPrd from "./pages/authentication/SignupPrd";
 import YourVideo from "./pages/yourVideos/YourVideo";
 
 const Router = () => {
@@ -29,10 +29,10 @@ const Router = () => {
           <Route path="/account" component={Login} />
           <Route exact path="/" component={Home} />
           <Route exact path="/landing" component={Landing} />
-         
+
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/signupprd" component={SignupPrd} />
         </Switch>
       </BrowserRouter>
     </div>

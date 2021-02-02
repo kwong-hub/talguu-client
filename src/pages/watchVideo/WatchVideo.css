@@ -54,9 +54,9 @@
   visibility: visible;
 }
 
-.video_thumbnail:active {
+/* .video_thumbnail:active {
   transform: scale(1.01);
-}
+} */
 
 .ant-modal-content,
 .ant-modal-body {
@@ -75,7 +75,12 @@
   align-items: center;
 }
 
+.pay_button:hover {
+  transition: all 0.2s;
+  color: #ddd;
+}
+
 .pay_button:active {
   transition: all 0.2s;
-  font-size: 0.8rem;
+  color: #fff;
 }

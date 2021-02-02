@@ -1,10 +1,10 @@
 import axios from "axios";
-import { enviroment } from "../config/config";
+import { environment } from "../config/config";
 
 export default {
   getUser: async function () {
     try {
-      const user = await axios.get(`${enviroment}/user`);
+      const user = await axios.get(`${environment}/user`);
       return user.data;
     } catch (error) {
       throw error;
@@ -12,11 +12,19 @@ export default {
   },
   login: async function (data) {
     try {
-      const user = await axios.post(`${enviroment}/account/login`,data);
+      const user = await axios.post(`${environment}/account/login`, data);
       return user.data;
     } catch (error) {
       throw error;
     }
   },
 
+  createProducer: async function (data) {
+    try {
+      const user = await axios.post(`${environment}/account/producer_sign_up`, data);
+      return user.data;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
