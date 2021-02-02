@@ -21,9 +21,9 @@ const Router = () => {
       <BrowserRouter>
         <Switch>
           <PrivateRoute exact path="/" component={WatchVideo}  />
-          <Route path="/saved_playlist" component={SavedPlayList} />
-          <Route path="/upload_video" component={UploadVideo} />
-          <Route path="/stream_video" component={YourVideo} />
+          <PrivateRoute path="/saved_playlist" component={SavedPlayList} />
+          <PrivateRoute path="/upload_video" component={UploadVideo} />
+          <PrivateRoute path="/stream_video" component={YourVideo} />
           <Route path="/settings" component={Settings} />
           <Route path="/account" component={Account} />
           <Route exact path="/" component={Home} />
