@@ -6,6 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { userActions } from "../../_actions";
 import { userService } from "../../_services/user.service";
+import Header from "../../partials/header/Header";
 
 const Login = (props) => {
   var history = useHistory();
@@ -34,7 +35,7 @@ const Login = (props) => {
   return (
     <div>
       <Header />
-      <div className="p-8 pt-2 mt-14">
+      <div className="flex justify-center items-center h-full pt-2 mt-14">
         <div className="w-full max-w-xs flex flex-col justify-center m-4 p-4 py-8 shadow-md rounded-2xl bg-white">
           <div className="flex justify-center flex-col items-center ">
             <img className="" src={logo} alt="Logo" width={50} />
