@@ -13,6 +13,7 @@ import { Login } from "../pages/authentication/Login";
 import Signup from "../pages/authentication/Signup";
 import YourVideo from "../pages/yourVideos/YourVideo";
 import PrivateRoute from "./privateRoute";
+import NotFound from "../pages/NotFound";
 
 const Router = () => {
   return (
@@ -32,6 +33,7 @@ const Router = () => {
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
+          <Route  component={NotFound} />
         </Switch>
       </BrowserRouter>
     </div>
