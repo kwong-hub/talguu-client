@@ -9,7 +9,7 @@ import { environment } from "../config/config";
 //   },
 // });
 
-export default  {
+export default {
   addVideo: async function (body, onUploadProgress) {
     try {
       return await axios.post(`${environment}/video`, body, onUploadProgress);
@@ -22,6 +22,15 @@ export default  {
     try {
       const video = await axios.get(`${environment}/video`);
       return video.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  addThumbnail: async function (body) {
+    try {
+      const thumb = await axios.post(`${environment}/video/thumbnail`, body);
+      return thumb.data;
     } catch (error) {
       throw error;
     }

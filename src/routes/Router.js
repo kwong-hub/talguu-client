@@ -14,6 +14,7 @@ import Signup from "../pages/authentication/Signup";
 import YourVideo from "../pages/yourVideos/YourVideo";
 import PrivateRoute from "./privateRoute";
 import NotFound from "../pages/NotFound";
+import EditUploadVideos from "../pages/uploadVideo/EditUploadVideos";
 
 const Router = () => {
   return (
@@ -33,6 +34,7 @@ const Router = () => {
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
+          <Route exact path="/finish-upload" component={EditUploadVideos} />
           <Route  component={NotFound} />
         </Switch>
       </BrowserRouter>

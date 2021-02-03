@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import { Upload, Modal } from "antd";
+import { Upload, Modal, Button } from "antd";
 import { FaPlus } from "react-icons/fa";
+import videoService from "../../_services/video.service";
 const intialState = {
+  loading:false,
   previewVisible: false,
   previewImage: "",
   previewTitle: "",
+
   fileList: [
     {
       uid: "-1",
@@ -13,14 +16,6 @@ const intialState = {
       url:
         "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
     },
-    {
-      uid: "-3",
-      name: "image.png",
-      status: "done",
-      url:
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-   
   ],
 };
 function getBase64(file) {
@@ -31,7 +26,6 @@ function getBase64(file) {
     reader.onerror = (error) => reject(error);
   });
 }
-
 export class Thumbnail extends Component {
   state = intialState;
   handleCancel = () => this.setState({ previewVisible: false });
@@ -49,7 +43,26 @@ export class Thumbnail extends Component {
     });
   };
 
-  handleChange = ({ fileList }) => this.setState({ fileList });
+  handleChange = ({fileList}) => {
+    console.log("fileList", fileList);
+    console.log("this.props", this.props);
+  
+    this.setState({ fileList });
+  };
+
+  onUpload=()=>{
+    this.setState({loading:true})
+    var formData = new FormData();
+    formData.append("id", this.props.video);
+    formData.append("picture",this.state.fileList[1].originFileObj);
+    videoService
+      .addThumbnail(formData)
+      .then((data) => {
+        console.log('data', data);
+        this.setState({loading:false})
+      })
+      .catch((err) => console.log("err", err));
+  }
 
   render() {
     const { previewVisible, previewImage, fileList, previewTitle } = this.state;
@@ -62,13 +75,14 @@ export class Thumbnail extends Component {
     return (
       <>
         <Upload
-          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          // customRequest={this.handleChange}
           listType="picture-card"
           fileList={fileList}
           onPreview={this.handlePreview}
           onChange={this.handleChange}
+          className="w-auto m-2"
         >
-          {fileList.length >= 8 ? null : uploadButton}
+          {fileList.length >= 2 ? null : uploadButton}
         </Upload>
         <Modal
           visible={previewVisible}
@@ -78,6 +92,17 @@ export class Thumbnail extends Component {
         >
           <img alt="example" style={{ width: "100%" }} src={previewImage} />
         </Modal>
+        {fileList.length >= 2 && (
+          <Button
+            className="flex my-4 w-auto"
+            type="primary"
+            onClick={this.onUpload}
+            loading={this.state.uploading}
+            style={{ marginTop: 16 }}
+          >
+            {this.state.uploading ? "Uploading" : "Start Upload"}
+          </Button>
+        )}
       </>
     );
   }

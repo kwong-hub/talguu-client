@@ -6,9 +6,15 @@ import {
   CREATE_USER_SUCCESS,
   INCREMENT,
   INCREMENT_ASYNC,
+  UPLOAD_ASYNC,
+  VIDEO_FAILURE,
+  VIDEO_READY,
+  VIDEO_READY_ASYNC,
+  VIDEO_SUCCESS,
 } from "../types";
 import { userConstants } from "../../_constants";
 import { userService } from "../../_services/user.service";
+import videoService from "../../_services/video.service";
 
 function* incrementAsync() {
   yield put({ type: INCREMENT, payload: 1 });
@@ -36,6 +42,22 @@ function* logout() {
   yield put({ type: userConstants.LOGOUT });
 }
 
+function* videoUpload(action) {
+  console.log('action', action)
+  let video = yield call(videoService.addVideo, action.payload);
+  // console.log(video);
+  if (video && video.success) {
+    yield put({ type:VIDEO_SUCCESS, payload: video.data });
+  } else {
+    yield put({ type: VIDEO_FAILURE, payload: video.messages });
+  }
+}
+
+
+function* videoOnReady(action) {
+  yield put({ type: VIDEO_READY, payload: action.payload });
+}
+
 function* watchAll() {
   yield all([
     takeLatest(CREATE_USER_ASYNC, createUserAsync),
@@ -43,6 +65,8 @@ function* watchAll() {
     takeLatest("LOGIN_ASYNC", loginSuccess),
     takeLatest("LOGIN_FAIL", loginFail),
     takeLatest(userConstants.LOGOUT_ASYNC, logout),
+    takeLatest(UPLOAD_ASYNC, videoUpload),
+    takeLatest(VIDEO_READY_ASYNC, videoOnReady),
   ]);
 }
 

@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Header from "../../partials/header/Header";
 
+
 const Account = (props) => {
   var history = useHistory();
   const logout = () => {
