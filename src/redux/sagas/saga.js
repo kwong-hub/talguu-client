@@ -1,5 +1,5 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import userService from "../../services/user.service";
+// import userService from "../../services/user.service";
 import {
   CREATE_USER_ASYNC,
   CREATE_USER_FAILURE,
@@ -8,6 +8,7 @@ import {
   INCREMENT_ASYNC,
 } from "../types";
 import { userConstants } from "../../_constants";
+import { userService } from "../../_services/user.service";
 
 function* incrementAsync() {
   yield put({ type: INCREMENT, payload: 1 });

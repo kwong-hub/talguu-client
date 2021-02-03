@@ -212,7 +212,7 @@ class UploadVideo extends Component {
                     }}
                   ></textarea>
                 </label>
-                {this.state.active == "detail" && (
+                {this.state.active === "detail" && (
                   <>
                     <div className="flex items-center w-3/4 ">
                       <span className="text-gray-500">Add Thumbnail</span>

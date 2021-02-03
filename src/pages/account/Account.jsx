@@ -1,6 +1,5 @@
 import { Avatar } from "antd";
-import React, { Component } from "react";
-import SideNav from "../../partials/sideNav/SideNav";
+import React from "react";
 import { UserOutlined } from "@ant-design/icons";
 import { userActions } from "../../_actions";
 import { connect } from "react-redux";

@@ -2,14 +2,14 @@ import axios from "axios";
 
 import { environment } from "../config/config";
 
-axios.create({
-  baseURL: environment,
-  headers: {
-    "Content-type": "application/json",
-  },
-});
+// axios.create({
+//   baseURL: environment,
+//   headers: {
+//     "Content-type": "application/json",
+//   },
+// });
 
-export default {
+export default  {
   addVideo: async function (body, onUploadProgress) {
     try {
       return await axios.post(`${environment}/video`, body, onUploadProgress);

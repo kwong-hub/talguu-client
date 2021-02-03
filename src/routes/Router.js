@@ -6,7 +6,7 @@ import Landing from "../pages/landing/Landing";
 import Profile from "../pages/profile/Profile";
 import SavedPlayList from "../pages/savedPlaylist/SavedPlayList";
 import Settings from "../pages/settings/Settings";
-import StreamVideo from "../pages/streamVideo/StreamVideo";
+// import StreamVideo from "../pages/streamVideo/StreamVideo";
 import UploadVideo from "../pages/uploadVideo/UploadVideo";
 import WatchVideo from "../pages/watchVideo/WatchVideo";
 import { Login } from "../pages/authentication/Login";

@@ -1,10 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { Form, Input, Button, Checkbox } from "antd";
 import { FaFacebook, FaGoogle, FaLock, FaUser } from "react-icons/fa";
 import logo from "../../assets/images/logo.svg";
 import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { userActions } from "../../_actions";
 import { userService } from "../../_services/user.service";
 import Header from "../../partials/header/Header";
 
