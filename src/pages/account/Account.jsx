@@ -8,6 +8,8 @@ import Header from "../../partials/header/Header";
 
 
 const Account = (props) => {
+  console.log('props', props);
+  
   var history = useHistory();
   const logout = () => {
     props.logout();
@@ -18,7 +20,7 @@ const Account = (props) => {
     <div className="bg-gray-100">
       <Header className="transparent bg-opacity-20" ></Header>
 
-      <section className="relative block w-full" style={{ height: "400px" }}>
+      <section className="relative block w-full" style={{ height: "340px" }}>
         <div
           className="absolute bg-opacity-70 top-0 w-full h-full bg-center bg-cover bg-gray-500"
           style={{
@@ -50,7 +52,7 @@ const Account = (props) => {
           </svg>
         </div>
       </section>
-      <section className="relative py-16 w-4/5  mx-auto bg-gray-100">
+      <section className="relative py-20 w-4/5  mx-auto bg-gray-100">
         <div className="container mx-auto px-4">
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
             <div className="px-8">
@@ -102,20 +104,13 @@ const Account = (props) => {
               </div>
               <div className="text-center mt-12">
                 <h3 className="text-4xl font-semibold leading-normal text-gray-800 mb-2">
-                  Jenna Stones
+                 {props.user.name}
                 </h3>
                 <div className="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
                   <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>{" "}
-                  Los Angeles, California
+                  {props.user.email}
                 </div>
-                <div className="mb-2 text-gray-700 mt-10">
-                  <i className="fas fa-briefcase mr-2 text-lg text-gray-500"></i>
-                  Solution Manager - Creative Tim Officer
-                </div>
-                <div className="mb-2 text-gray-700">
-                  <i className="fas fa-university mr-2 text-lg text-gray-500"></i>
-                  University of Computer Science
-                </div>
+               
               </div>
             </div>
           </div>
@@ -125,7 +120,11 @@ const Account = (props) => {
   );
 };
 
-const mapStateToProps = (response) => ({ response });
+const mapStateToProps = (props) => {
+  return {
+    ...props.authentication,
+  };
+};
 const actionCreators = {
   logout: userActions.logout,
 };

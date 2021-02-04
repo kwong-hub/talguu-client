@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {
   RiVideoUploadFill,
   RiUploadCloud2Line,
-  RiUploadCloud2Fill,
+ RiArrowRightCircleLine
 } from "react-icons/ri";
 import { Button, Progress, message } from "antd";
 import videoService from "../../_services/video.service";
@@ -226,7 +226,7 @@ class UploadVideo extends Component {
                   size={60}
                   type="primary"
                   shape="round"
-                  icon={<RiUploadCloud2Fill />}
+                  icon={<RiArrowRightCircleLine />}
                   onClick={this.submit}
                   className="w-64 my-4 py-5 flex justify-center items-center text-xl p-4 transform hover:scale-110 motion-reduce:transform-none"
                 >

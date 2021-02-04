@@ -26,6 +26,14 @@ export default {
       throw error;
     }
   },
+  updateVideo: async function (body) {
+    try {
+      const video = await axios.patch(`${environment}/video`,body);
+      return video.data;
+    } catch (error) {
+      throw error;
+    }
+  },
 
   addThumbnail: async function (body) {
     try {

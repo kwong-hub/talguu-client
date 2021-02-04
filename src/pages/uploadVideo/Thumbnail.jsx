@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Upload, Modal, Button } from "antd";
+import { Upload, Modal, Button, message } from "antd";
 import { FaPlus } from "react-icons/fa";
 import videoService from "../../_services/video.service";
 const intialState = {
-  loading:false,
+  uploading:false,
+  uploaded:false,
   previewVisible: false,
   previewImage: "",
   previewTitle: "",
@@ -46,12 +47,15 @@ export class Thumbnail extends Component {
   handleChange = ({fileList}) => {
     console.log("fileList", fileList);
     console.log("this.props", this.props);
-  
+    this.setState({uploading:true})
     this.setState({ fileList });
+  };
+  successMessage = () => {
+    message.success("Successfull Upload");
   };
 
   onUpload=()=>{
-    this.setState({loading:true})
+    this.setState({uploaded:true})
     var formData = new FormData();
     formData.append("id", this.props.video);
     formData.append("picture",this.state.fileList[1].originFileObj);
@@ -59,7 +63,8 @@ export class Thumbnail extends Component {
       .addThumbnail(formData)
       .then((data) => {
         console.log('data', data);
-        this.setState({loading:false})
+        this.setState({uploading:false,uploaded:false})
+        this.successMessage();
       })
       .catch((err) => console.log("err", err));
   }
@@ -92,15 +97,15 @@ export class Thumbnail extends Component {
         >
           <img alt="example" style={{ width: "100%" }} src={previewImage} />
         </Modal>
-        {fileList.length >= 2 && (
+        {this.state.uploading && (
           <Button
             className="flex my-4 w-auto"
             type="primary"
             onClick={this.onUpload}
-            loading={this.state.uploading}
+            loading={this.state.uploaded}
             style={{ marginTop: 16 }}
           >
-            {this.state.uploading ? "Uploading" : "Start Upload"}
+            {this.state.uploaded ? "Uploading" : "Start Upload"}
           </Button>
         )}
       </>

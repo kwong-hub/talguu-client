@@ -6,14 +6,31 @@ import { useHistory } from "react-router-dom";
 import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
 import Header from "../../partials/header/Header";
 import SideNav from "../../partials/sideNav/SideNav";
+import videoService from "../../_services/video.service";
 import Thumbnail from "./Thumbnail";
 import Trailer from "./Trailer";
 
 const EditUploadVideos = (props) => {
-  console.log("props", props);
-  var history = useHistory()
+  var history = useHistory();
   const [video, setVideo] = useState(props.location.state);
-  const onPersonalFinish = () => {};
+  const [title, setTitle] = useState(video.title);
+  const [describe, setDescribe] = useState(video.describe);
+
+  const publishVideo = () => {
+    console.log("title,describe", title, describe);
+
+    videoService
+      .updateVideo({ id:video.id,title: title, describe: describe })
+      .then((data) => {
+        if(data[0]){
+          history.push("/stream_video")
+        }
+      })
+      .catch((err) => {
+        console.log('err', err)
+      });
+
+  };
   const videoJsOptions = {
     autoplay: false,
     controls: true,
@@ -22,12 +39,12 @@ const EditUploadVideos = (props) => {
     sources: [
       {
         src: video.videoLink,
-        type: "video/av1",
+        type: "video/mkv",
       },
     ],
   };
   return (
-    <div className="mx-2 my-20">
+    <div className="mx-2 my-20 relative">
       {/* <SideNav /> */}
       <Header />
       <PageHeader
@@ -35,12 +52,15 @@ const EditUploadVideos = (props) => {
         onBack={() => history.goBack()}
         title="Edit Video"
         subTitle="Add extra additional infromation"
-        extra={[
-          <Button key="1" type="primary">
-            Save Changes
-          </Button>,
-        ]}
       />
+      <Button
+        className="absolute top-3 right-2"
+        onClick={publishVideo}
+        key="1"
+        type="primary"
+      >
+        Publish Changes
+      </Button>
       <div className="flex mx-4">
         <div className="w-full">
           <Form
@@ -52,7 +72,7 @@ const EditUploadVideos = (props) => {
               title: video.title,
               description: video.describe,
             }}
-            onFinish={onPersonalFinish}
+            onFinish={publishVideo}
           >
             <Form.Item
               label="Title"
@@ -61,6 +81,8 @@ const EditUploadVideos = (props) => {
               rules={[{ required: true, message: "Please input your Title!" }]}
             >
               <Input
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
                 className="rounded-lg text-gray-700 text-lg p-2"
                 placeholder="Title*"
               />
@@ -73,6 +95,8 @@ const EditUploadVideos = (props) => {
               ]}
             >
               <TextArea
+                value={describe}
+                onChange={(e) => setDescribe(e.target.value)}
                 className="rounded-lg text-gray-700 text-lg p-2"
                 prefix={<FaInfo className="site-form-item-icon" />}
                 placeholder="Description*"
@@ -97,7 +121,7 @@ const EditUploadVideos = (props) => {
                 Select or upload a picture that shows what's in your video. A
                 good thumbnail stands out and draws viewers' attention.
               </h3>
-              <Thumbnail video={video.id}  />
+              <Thumbnail video={video.id} thumbnails={video.thumbnial} />
             </div>
             <div className="flex flex-col items-start justify-start">
               <h2 className="text-lg">Trailer</h2>
