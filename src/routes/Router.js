@@ -15,6 +15,8 @@ import YourVideo from "../pages/yourVideos/YourVideo";
 import PrivateRoute from "./privateRoute";
 import NotFound from "../pages/NotFound";
 import EditUploadVideos from "../pages/uploadVideo/EditUploadVideos";
+import StreamVideo from "../pages/streamVideo/StreamVideo";
+import Stream from "../pages/streamVideo/Stream";
 
 const Router = () => {
   return (
@@ -25,7 +27,8 @@ const Router = () => {
           <PrivateRoute exact path="/" component={WatchVideo}  />
           <PrivateRoute path="/saved_playlist" component={SavedPlayList} />
           <PrivateRoute path="/upload_video" component={UploadVideo} />
-          <PrivateRoute path="/stream_video" component={YourVideo} />
+          <PrivateRoute path="/stream_video" component={StreamVideo} />
+          <PrivateRoute path="/your_video" component={YourVideo} />
           <Route path="/settings" component={Settings} />
           <Route path="/account" component={Account} />
           <Route exact path="/" component={Home} />
@@ -35,6 +38,7 @@ const Router = () => {
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/finish-upload" component={EditUploadVideos} />
+          <Route exact path="/live_stream" component={Stream} />
           <Route  component={NotFound} />
         </Switch>
       </BrowserRouter>

@@ -23,7 +23,7 @@ const EditUploadVideos = (props) => {
       .updateVideo({ id:video.id,title: title, describe: describe })
       .then((data) => {
         if(data[0]){
-          history.push("/stream_video")
+          history.push("/your_video")
         }
       })
       .catch((err) => {
