@@ -43,7 +43,7 @@ export class YourVideo extends Component {
             className=""
           >
             <Menu.Item key="mail">Watched Videos</Menu.Item>
-            <Menu.Item key="app">Videos</Menu.Item>
+            <Menu.Item key="app">Live Videos</Menu.Item>
             <Menu.Item key="video">Videos</Menu.Item>
           </Menu>
         </div>
