@@ -27,4 +27,13 @@ export default {
       throw error;
     }
   },
+
+  createViewer: async function (data) {
+    try {
+      const user = await axios.post(`${environment}/account/viewer_sign_up`, data);
+      return user.data;
+    } catch (error) {
+      throw error;
+    }
+  },
 };

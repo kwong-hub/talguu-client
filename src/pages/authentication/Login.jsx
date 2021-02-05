@@ -10,14 +10,14 @@ import Header from "../../partials/header/Header";
 const Login = (props) => {
   var history = useHistory();
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+    // console.log("Received values of form: ", values);
     if (values.email && values.password) {
       // this.props.dispatch({ type: "LOGIN_ASYNC", values });
     }
     userService
       .login(values)
       .then((resp) => {
-        console.log(resp, "respons");
+        // console.log(resp, "response");
         if (resp.success) {
           props.dispatch({ type: "LOGIN_ASYNC", payload: resp });
           history.push("/");
@@ -49,7 +49,7 @@ const Login = (props) => {
                   Login
                 </Button>
               </Link>
-              <Link to="/signup">
+              <Link to="/signup_viewer">
                 <Button
                   shape="round"
                   className="flex items-center border-transparent bg-transparent m-1 px-4">
