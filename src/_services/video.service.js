@@ -35,6 +35,15 @@ export default {
     }
   },
 
+  createStreamKey: async function (body) {
+    try {
+      const video = await axios.post(`${environment}/video/stream`,{producerId:2});
+      return video.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   addThumbnail: async function (body) {
     try {
       const thumb = await axios.post(`${environment}/video/thumbnail`, body);
