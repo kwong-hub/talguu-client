@@ -13,6 +13,8 @@ import { Login } from "../pages/authentication/Login";
 import Signup from "../pages/authentication/Signup";
 import YourVideo from "../pages/yourVideos/YourVideo";
 import PrivateRoute from "./privateRoute";
+import SignupPrd from "../pages/authentication/SignupPrd";
+import SignupViewer from "../pages/authentication/SignupViewer";
 
 const Router = () => {
   return (
@@ -20,7 +22,7 @@ const Router = () => {
       {/* <Home /> */}
       <BrowserRouter>
         <Switch>
-          <PrivateRoute exact path="/" component={WatchVideo}  />
+          <PrivateRoute exact path="/" component={WatchVideo} />
           <PrivateRoute path="/saved_playlist" component={SavedPlayList} />
           <PrivateRoute path="/upload_video" component={UploadVideo} />
           <PrivateRoute path="/stream_video" component={YourVideo} />
@@ -28,7 +30,8 @@ const Router = () => {
           <Route path="/account" component={Account} />
           <Route exact path="/" component={Home} />
           <Route exact path="/landing" component={Landing} />
-
+          <Route path="/signupprd" component={SignupPrd} />
+          <Route path="/signup_viewer" component={SignupViewer} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />

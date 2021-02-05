@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Steps } from "antd";
 import {
   FaEnvelope,
@@ -12,60 +12,66 @@ import {
   FaBuilding,
 } from "react-icons/fa";
 import logo from "../../assets/images/logo.svg";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./SignupPrd.css";
-import { connect } from "react-redux";
-import { CREATE_USER_ASYNC } from "../../redux/types";
+import { useDispatch, useSelector } from "react-redux";
+import { CREATE_PRODUCER_ASYNC } from "../../redux/types";
 import Header from "../../partials/header/Header";
 
 const { Step } = Steps;
 
-export class SignupPrd extends Component {
-  state = {
-    formValues: { phoneNumber: "123412341234" },
-    currentForm: 0,
-    loading: false,
-    errMessages: "",
-  };
+const SignupPrd = () => {
+  const [formValues, setFormValues] = useState(() => {
+    return { phoneNumber: "12341234234" };
+  });
+  const [currentForm, setCurrentForm] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [errMessages, setErrMessage] = useState("");
+  const serverErrors = useSelector((state) => state.account.errMessages);
+  const dispatch = useDispatch();
+  const createUserStatus = useSelector((state) => state.account.createUserStatus);
 
-  componentDidUpdate(prevProps) {
-    if (
-      prevProps.createUserStatus != this.props.createUserStatus ||
-      prevProps.errMessages != this.props.errMessages
-    ) {
-      if (this.props.createUserStatus == "SUCCESSFUL") {
-        this.setState({ currentForm: 2, formValues: {}, loading: false });
-      } else if (this.props.createUserStatus == "FAILED") {
-        this.setState({ loading: false, errMessages: this.props.errMessages });
-      }
+  useEffect(() => {
+    setErrMessage(serverErrors);
+    setLoading(false);
+  }, serverErrors);
+
+  useEffect(() => {
+    if (createUserStatus == "SUCCESSFUL") {
+      setCurrentForm(2);
+      setLoading(false);
+      setErrMessage("");
+      setFormValues(() => {
+        return { phoneNumber: "12341234234" };
+      });
     }
-  }
+  }, createUserStatus);
 
-  onPersonalFinish = (values) => {
-    this.setState({
-      currentForm: 1,
-      formValues: { ...this.state.formValues, ...values },
-      errMessages: "",
+  const onPersonalFinish = (values) => {
+    setCurrentForm(1);
+    setFormValues((prevValue) => {
+      return { ...prevValue, ...values };
     });
+    setErrMessage("");
   };
 
-  onAddressFinish = (values) => {
-    this.setState({
-      formValues: { ...this.state.formValues, ...values },
-      loading: true,
-      errMessages: "",
+  const onAddressFinish = (values) => {
+    setLoading(true);
+    setFormValues((prevValue) => {
+      return { ...prevValue, ...values };
     });
-    this.props.dispatch({ type: CREATE_USER_ASYNC, payload: this.state.formValues });
+    setErrMessage("");
+    dispatch({ type: CREATE_PRODUCER_ASYNC, payload: { ...formValues, ...values } });
   };
 
-  renderPersonal = () => {
+  const renderPersonal = () => {
     return (
       <Form
         layout="vertical"
         name="normal_login"
         className="login-form"
         initialValues={{ remember: true }}
-        onFinish={this.onPersonalFinish}>
+        onFinish={onPersonalFinish}>
         <Form.Item
           name="firstName"
           rules={[{ required: true, message: "Please input your first Name!" }]}>
@@ -88,14 +94,14 @@ export class SignupPrd extends Component {
           <Input
             className="rounded-2xl"
             prefix={<FaBuilding className="site-form-item-icon" />}
-            placeholder="Company Name"
+            placeholder="Company Name*"
           />
         </Form.Item>
         <Form.Item name="email" rules={[{ required: true, message: "Please input your email!" }]}>
           <Input
             className="rounded-2xl"
             prefix={<FaEnvelope className="site-form-item-icon" />}
-            placeholder="E-mail Address"
+            placeholder="E-mail Address*"
           />
         </Form.Item>
         <Form.Item
@@ -105,7 +111,7 @@ export class SignupPrd extends Component {
             className="rounded-2xl "
             prefix={<FaLock className="site-form-item-icon" />}
             type="password"
-            placeholder="Password"
+            placeholder="Password*"
           />
         </Form.Item>
         <Form.Item
@@ -115,7 +121,7 @@ export class SignupPrd extends Component {
             className="rounded-2xl "
             prefix={<FaLock className="site-form-item-icon" />}
             type="password"
-            placeholder="Confirm Password"
+            placeholder="Confirm Password*"
           />
         </Form.Item>
 
@@ -132,39 +138,40 @@ export class SignupPrd extends Component {
     );
   };
 
-  goBack = () => {
-    this.setState({ currentForm: 0 });
+  const goBack = () => {
+    // setState({ currentForm: 0 });
+    setCurrentForm(0);
   };
 
-  renderAddress = () => {
+  const renderAddress = () => {
     return (
       <Form
         layout="vertical"
         name="normal_login"
         className="login-form"
         initialValues={{ remember: true }}
-        onFinish={this.onAddressFinish}>
+        onFinish={onAddressFinish}>
         <Form.Item
           name="zipCode"
           rules={[{ required: true, message: "Please input your zip code!" }]}>
           <Input
             className="rounded-2xl"
             prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
-            placeholder="Zip Code"
+            placeholder="Zip Code*"
           />
         </Form.Item>
         <Form.Item name="city" rules={[{ required: true, message: "Please input your city!" }]}>
           <Input
             className="rounded-2xl"
             prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
-            placeholder="City"
+            placeholder="City*"
           />
         </Form.Item>
         <Form.Item name="state" rules={[{ required: true, message: "Please input your state!" }]}>
           <Input
             className="rounded-2xl"
             prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
-            placeholder="State"
+            placeholder="State*"
           />
         </Form.Item>
         <Form.Item
@@ -174,20 +181,20 @@ export class SignupPrd extends Component {
             className="rounded-2xl "
             prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
             type="text"
-            placeholder="Address"
+            placeholder="Address*"
           />
         </Form.Item>
 
         <Form.Item className="flex justify-around">
           <Button
-            onClick={this.goBack}
+            onClick={goBack}
             type="secondary"
             shape="round"
             className="login-form-button w-5/12">
             Back
           </Button>
           <Button
-            loading={this.state.loading}
+            loading={loading}
             type="primary"
             htmlType="submit"
             shape="round"
@@ -199,7 +206,7 @@ export class SignupPrd extends Component {
     );
   };
 
-  renderVerifyEmail = () => {
+  const renderVerifyEmail = () => {
     return (
       <h2 className="w-80 text-md text-gray-600 text-center mx-auto">
         We have sent an email to your account. Please verify your email to login.
@@ -214,88 +221,70 @@ export class SignupPrd extends Component {
     );
   };
 
-  render() {
-    return (
-      <div>
-        <Header />
-        <div className="flex m-auto items-center w-auto p-8 pt-2 mt-14">
-          <div className="self-start p-4 shadow-md">
-            <Steps
-              current={this.state.currentForm}
-              direction="vertical"
-              className="bg-white h-80 p-8">
-              <Step
-                icon={<FaUserCircle />}
-                title="Personal/Corporate"
-                description="Fill your personal/corporate information"
-              />
-              <Step icon={<FaMapMarkerAlt />} title="Address" description="Fill your address" />
-              <Step icon={<FaCheckSquare />} title="Verify" description="Verify your email" />
-            </Steps>
-          </div>
-          <div className="flex justify-center items-center h-full w-8/12 max-w-xl">
-            {this.state.currentForm != 2 ? (
-              <div className="w-full flex flex-col justify-center m-4 p-4 py-8 shadow-md rounded-2xl bg-white">
-                <div className="flex justify-center flex-col items-center ">
-                  <img className="" src={logo} alt="Logo" width={50} />
+  return (
+    <div>
+      <Header />
+      <div className="flex m-auto items-center w-auto p-8 pt-2 mt-14">
+        <div className="self-start p-4 shadow-md">
+          <Steps current={currentForm} direction="vertical" className="bg-white h-80 p-8">
+            <Step
+              icon={<FaUserCircle />}
+              title="Personal/Corporate"
+              description="Fill your personal/corporate information"
+            />
+            <Step icon={<FaMapMarkerAlt />} title="Address" description="Fill your address" />
+            <Step icon={<FaCheckSquare />} title="Verify" description="Verify your email" />
+          </Steps>
+        </div>
+        <div className="flex justify-center items-center h-full w-8/12 max-w-xl">
+          {currentForm !== 2 ? (
+            <div className="w-full flex flex-col justify-center m-4 p-4 py-8 shadow-md rounded-2xl bg-white">
+              <div className="flex justify-center flex-col items-center ">
+                <img className="" src={logo} alt="Logo" width={50} />
 
-                  <p className="text-2xl text-gray-700 my-6">Create a New Account</p>
-                  <div className="flex bg-gray-100 rounded-3xl mb-8">
-                    <Link to="/login">
-                      <Button
-                        shape="round"
-                        className="flex items-center border-transparent bg-transparent m-1 px-4">
-                        Login
-                      </Button>
-                    </Link>
-                    <Link to="/signupprd">
-                      <Button shape="round" className="flex items-center   m-1 px-4">
-                        Sign Up
-                      </Button>
-                    </Link>
-                  </div>
+                <p className="text-2xl text-gray-700 my-6">Create Producer Account</p>
+                <div className="flex bg-gray-100 rounded-3xl mb-8">
+                  <Link to="/login">
+                    <Button
+                      shape="round"
+                      className="flex items-center border-transparent bg-transparent m-1 px-4">
+                      Login
+                    </Button>
+                  </Link>
+                  <Link to="/signupprd">
+                    <Button shape="round" className="flex items-center   m-1 px-4">
+                      Sign Up
+                    </Button>
+                  </Link>
                 </div>
-                <div className="w-full text-red-500 text-md text-center mb-4">
-                  {this.state.errMessages}
-                </div>
+              </div>
+              <div className="w-full text-red-500 text-md text-center mb-4">{errMessages}</div>
+              <div>
+                {currentForm === 0 ? renderPersonal() : currentForm === 1 ? renderAddress() : ""}
                 <div>
-                  {this.state.currentForm == 0
-                    ? this.renderPersonal()
-                    : this.state.currentForm == 1
-                    ? this.renderAddress()
-                    : ""}
-                  <div>
-                    <p className="my-6">OR USING</p>
-                    <div className="flex justify-evenly">
-                      <Button shape="round" icon={<FaGoogle />} className="flex items-center p-2">
-                        Google
-                      </Button>
-                      <Button
-                        className="flex items-center p-2"
-                        type="primary"
-                        shape="round"
-                        icon={<FaFacebook />}>
-                        Facebook
-                      </Button>
-                    </div>
+                  <p className="my-6">OR USING</p>
+                  <div className="flex justify-evenly">
+                    <Button shape="round" icon={<FaGoogle />} className="flex items-center p-2">
+                      Google
+                    </Button>
+                    <Button
+                      className="flex items-center p-2"
+                      type="primary"
+                      shape="round"
+                      icon={<FaFacebook />}>
+                      Facebook
+                    </Button>
                   </div>
                 </div>
               </div>
-            ) : (
-              this.renderVerifyEmail()
-            )}
-          </div>
+            </div>
+          ) : (
+            renderVerifyEmail()
+          )}
         </div>
       </div>
-    );
-  }
-}
-
-const mapStateToProps = (props) => {
-  console.log(props.account);
-  return {
-    ...props.account,
-  };
+    </div>
+  );
 };
 
-export default withRouter(connect(mapStateToProps, null)(SignupPrd));
+export default SignupPrd;

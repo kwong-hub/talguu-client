@@ -1,16 +1,14 @@
 import axios from "axios";
-import { apiUrl } from "../config/config";
+import { environment } from "../config/config";
 
 function login({ email, password }) {
-  return axios
-    .post(`${apiUrl}/account/login`, { email, password })
-    .then((user) => {
-      // store user details and jwt token in local storage to keep user logged in between page refreshes
-      if (user.data.success) {
-        localStorage.setItem("user", JSON.stringify(user.data));
-      }
-      return user.data;
-    });
+  return axios.post(`${environment}/account/login`, { email, password }).then((user) => {
+    // store user details and jwt token in local storage to keep user logged in between page refreshes
+    if (user.data.success) {
+      localStorage.setItem("user", JSON.stringify(user.data));
+    }
+    return user.data;
+  });
 }
 
 function logout() {
@@ -18,7 +16,7 @@ function logout() {
   localStorage.removeItem("user");
 }
 
-/// this might help to do some intercepter handle 403 401 request 
+/// this might help to do some intercepter handle 403 401 request
 function handleResponse(response) {
   return response.text().then((text) => {
     const data = text && JSON.parse(text);
@@ -37,9 +35,7 @@ function handleResponse(response) {
   });
 }
 
-
 export const userService = {
-    login,
-    logout,
-  };
-  
+  login,
+  logout,
+};

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import SideNav from "../../partials/sideNav/SideNav";
 import { connect } from "react-redux";
 import { Button, Input, Tooltip, Modal, Radio } from "antd";
-import { INCREMENT_ASYNC } from "../../redux/types";
 import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
 import {
   FaPlayCircle,
@@ -166,9 +165,6 @@ export class WatchVideo extends Component {
     super(props);
     this.playerRef = React.createRef();
   }
-  handleIncrement = () => {
-    this.props.dispatch({ type: INCREMENT_ASYNC, payload: 1 });
-  };
 
   paymentMethodChange = (event) => {
     this.setState({ paymentMethod: event.target.value });
