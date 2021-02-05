@@ -1,15 +1,12 @@
 import { combineReducers } from "redux";
 
 import { authentication } from "./authentication.reducer";
-import { registration } from "./registration.reducer";
-import videoReducer from "./videoReducer";
-import account from "./accountReducer";
-
+import accountReducer from "./accountReducer";
+import videoReducer from "./video.reducer";
 const rootReducer = combineReducers({
-  videoReducer,
   authentication,
-  registration,
-  account,
+  account: accountReducer,
+  video: videoReducer,
 });
 
 export default rootReducer;

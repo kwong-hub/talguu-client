@@ -15,6 +15,14 @@ function logout() {
   // remove user from local storage to log user out
   localStorage.removeItem("user");
 }
+async function getUser() {
+  try {
+    const user = await axios.get(`${environment}/user`);
+    return user.data;
+  } catch (error) {
+    throw error;
+  }
+}
 
 /// this might help to do some intercepter handle 403 401 request
 function handleResponse(response) {
@@ -34,8 +42,27 @@ function handleResponse(response) {
     return data;
   });
 }
+async function createProducer(data) {
+  try {
+    const user = await axios.post(`${environment}/account/producer_sign_up`, data);
+    return user.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function createViewer(data) {
+  try {
+    const user = await axios.post(`${environment}/account/viewer_sign_up`, data);
+    return user.data;
+  } catch (error) {
+    throw error;
+  }
+}
 
 export const userService = {
   login,
   logout,
+  createProducer,
+  createViewer,
 };

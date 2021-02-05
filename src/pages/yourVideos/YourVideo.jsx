@@ -3,9 +3,8 @@ import { Menu } from "antd";
 import Video from "../../components/videos/Video";
 import SideNav from "../../partials/sideNav/SideNav";
 import videoService from "../../_services/video.service";
-import { FaTimes, FaVideo } from "react-icons/fa";
-import { RiTimeFill } from "react-icons/ri";
-const { SubMenu } = Menu;
+
+
 export class YourVideo extends Component {
   state = {
     videos: [],
@@ -44,7 +43,7 @@ export class YourVideo extends Component {
             className=""
           >
             <Menu.Item key="mail">Watched Videos</Menu.Item>
-            <Menu.Item key="app">Videos</Menu.Item>
+            <Menu.Item key="app">Live Videos</Menu.Item>
             <Menu.Item key="video">Videos</Menu.Item>
           </Menu>
         </div>
