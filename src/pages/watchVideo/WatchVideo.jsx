@@ -23,138 +23,18 @@ import image6 from "../../assets/images/thumbnail6.png";
 import image7 from "../../assets/images/thumbnail7.png";
 import mastercard from "../../assets/images/mastercard.png";
 import visa from "../../assets/images/visa.png";
+import {
+  GET_PAID_VIDEO_URL_ASYNC,
+  PURCHASE_VIDEO_ASYNC,
+  VIEWER_VIDEOS_ASYNC,
+} from "../../redux/types";
 
 const { Search } = Input;
 
 export class WatchVideo extends Component {
   state = {
-    videos: [
-      {
-        id: 1,
-        src:
-          "https://multiplatform-f.akamaihd.net/i/multi/will/bunny/big_buck_bunny_,640x360_400,640x360_700,640x360_1000,950x540_1500,.f4v.csmil/master.m3u8",
-        type: "application/x-mpegURL",
-        poster: image1,
-        length: 835,
-        title: "Lorem ipsum dolor sit amet consectetur adipisicing elit 1",
-        views: 1938,
-        likes: 252,
-        dislikes: 9,
-        live: false,
-        premiered: "2021-01-28 12:26:13",
-        paid: true,
-        price: 0.23,
-      },
-      {
-        id: 2,
-        src:
-          "https://multiplatform-f.akamaihd.net/i/multi/april11/sintel/sintel-hd_,512x288_450_b,640x360_700_b,768x432_1000_b,1024x576_1400_m,.mp4.csmil/master.m3u8",
-        type: "application/x-mpegURL",
-        poster: image2,
-        length: 835,
-        title: "Lorem ipsum dolor sit amet consectetur adipisicing elit 2",
-        views: 1938,
-        likes: 252,
-        dislikes: 9,
-        live: false,
-        premiered: "2021-01-28 12:26:13",
-        paid: true,
-        price: 0.23,
-      },
-      {
-        id: 3,
-        src: "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8",
-        type: "application/x-mpegURL",
-        poster: image3,
-        length: 835,
-        title: "Lorem ipsum dolor sit amet consectetur adipisicing elit 3",
-        views: 1938,
-        likes: 252,
-        dislikes: 9,
-        live: false,
-        premiered: "2021-01-28 12:26:13",
-        paid: true,
-        price: 0.23,
-      },
-      {
-        id: 4,
-        src:
-          "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8",
-        type: "application/x-mpegURL",
-        poster: image4,
-        length: 835,
-        title: "Lorem ipsum dolor sit amet consectetur adipisicing elit 4",
-        views: 1938,
-        likes: 252,
-        dislikes: 9,
-        live: false,
-        premiered: "2021-01-28 12:26:13",
-        paid: true,
-        price: 0.23,
-      },
-      {
-        id: 5,
-        src: "https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8",
-        type: "application/x-mpegURL",
-        poster: image5,
-        length: 835,
-        title: "Lorem ipsum dolor sit amet consectetur adipisicing elit 5",
-        views: 1938,
-        likes: 252,
-        dislikes: 9,
-        live: false,
-        premiered: "2021-01-28 12:26:13",
-        paid: true,
-        price: 0.23,
-      },
-      {
-        id: 6,
-        src: "https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8",
-        type: "application/x-mpegURL",
-        poster: image6,
-        length: 835,
-        title: "Lorem ipsum dolor sit amet consectetur adipisicing elit 6",
-        views: 1938,
-        likes: 252,
-        dislikes: 9,
-        live: false,
-        premiered: "2021-01-28 12:26:13",
-        paid: true,
-        price: 0.23,
-      },
-      {
-        id: 7,
-        src:
-          "http://d3rlna7iyyu8wu.cloudfront.net/skip_armstrong/skip_armstrong_multi_language_subs.m3u8",
-        type: "application/x-mpegURL",
-        poster: image7,
-        length: 835,
-        title: "Lorem ipsum dolor sit amet consectetur adipisicing elit 7",
-        views: 1938,
-        likes: 252,
-        dislikes: 9,
-        live: false,
-        premiered: "2021-01-28 12:26:13",
-        paid: true,
-        price: 0.23,
-      },
-    ],
-    currentVideo: {
-      id: 1,
-      src:
-        "http://d3rlna7iyyu8wu.cloudfront.net/skip_armstrong/skip_armstrong_multi_language_subs.m3u8",
-      type: "application/x-mpegURL",
-      poster: image7,
-      length: 835,
-      title: "Lorem ipsum dolor sit amet consectetur adipisicing elit 1",
-      views: 1938,
-      likes: 252,
-      dislikes: 9,
-      live: false,
-      premiered: "2021-01-28 12:26:13",
-      paid: true,
-      price: 0.23,
-    },
+    videos: [],
+    currentVideo: null,
     autoplay: false,
     paymentModalVisible: false,
     tempVideo: {},
@@ -164,6 +44,8 @@ export class WatchVideo extends Component {
   constructor(props) {
     super(props);
     this.playerRef = React.createRef();
+    props.dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: "" });
+    // console.log(this.props.viewerVideos);
   }
 
   paymentMethodChange = (event) => {
@@ -172,7 +54,7 @@ export class WatchVideo extends Component {
 
   playVideo = (video) => {
     this.setState({
-      currentVideo: video,
+      currentVideo: { ...video },
       autoplay: true,
     });
     this.scrollToPlayer();
@@ -194,45 +76,73 @@ export class WatchVideo extends Component {
 
   paymentModalVisible = (value, video, event) => {
     if (event) event.stopPropagation();
-    if (value) this.setState({ paymentModalVisible: value, tempVideo: video });
-    else this.setState({ paymentModalVisible: value });
+    // console.log(video);
+    if (video && video.paid) {
+      this.props.dispatch({ type: GET_PAID_VIDEO_URL_ASYNC, payload: video.id });
+      this.playVideo({ ...video, video_link: this.props.video_link });
+      // console.log({ ...video, video_link: this.props.video_link });
+    } else {
+      if (value) this.setState({ paymentModalVisible: value, tempVideo: video });
+      else this.setState({ paymentModalVisible: value });
+    }
+  };
+
+  purchaseVideo = (id) => {
+    this.props.dispatch({ type: PURCHASE_VIDEO_ASYNC, payload: id });
+    this.playVideo({ ...this.state.tempVideo, video_link: this.props.video_link });
+    this.paymentModalVisible(false);
   };
 
   renderVideos = () => {
-    return this.state.videos.map((video) => {
+    return this.props.viewerVideos.map((video) => {
       return (
         <div
           key={video.id}
           onClick={() => this.playVideo(video)}
-          className="mb-2 relative cursor-pointer md:w-4/12 w-6/12 lg:min-w-full video_thumbnail">
-          <img src={video.poster} alt="" className="min-w-full" />
-          <div className="absolute thumbnail_button_container">
-            <FaPlayCircle className="text-gray-600 thumbnail_button" />
-          </div>
-          <div
-            onClick={(event) => this.saveLater(event)}
-            className="watch_later bg-gray-700 p-2 rounded-sm absolute right-2 top-2 bg-opacity-25">
-            <FaClock className="text-white text-base" />
-          </div>
-          <div className="bg-gray-600 rounded-sm absolute bottom-1 right-1 py-0 px-4 bg-opacity-40">
-            2:23
-          </div>
-
-          <div className="absolute bottom-1 left-1 py-0 invisible watch_video_buttons">
-            <Button
-              onClick={(event) => this.paymentModalVisible(true, video, event)}
-              className="mr-1 rounded-2xl text-xs px-2 py-0 opacity-80">
-              Watch Full Video
-            </Button>
-            {/* <Button className="ml-1 rounded-2xl text-xs opacity-80">Trailer</Button> */}
-          </div>
-          {video.paid ? (
-            <div className="flex items-center bg-white text-gray-700 rounded-sm absolute top-1 left-1 py-0 px-4">
-              <FaDollarSign className="text-gray-700 text-xs" /> {video.price}
+          className={`flex-col w-full md:w-4/12 lg:w-3/12 ${
+            this.state.currentVideo ? "lg:w-full" : ""
+          } sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch`}>
+          <div className="relative">
+            <img src={video.thumbnial} alt="" className="min-w-full" />
+            <div className="absolute thumbnail_button_container">
+              <FaPlayCircle className="text-gray-600 thumbnail_button" />
             </div>
-          ) : (
-            ""
-          )}
+            <div
+              onClick={(event) => this.saveLater(event)}
+              className="watch_later bg-gray-700 p-2 rounded-sm absolute right-2 top-2 bg-opacity-25">
+              <FaClock className="text-white text-base" />
+            </div>
+            <div className="bg-gray-600 rounded-sm absolute bottom-1 right-1 py-0 px-4 bg-opacity-40"></div>
+
+            <div className="absolute bottom-1 left-1 py-0 invisible watch_video_buttons">
+              <Button
+                onClick={(event) => this.paymentModalVisible(true, video, event)}
+                className="mr-1 rounded-2xl text-xs px-2 py-0 opacity-80">
+                Watch Full Video
+              </Button>
+              {/* <Button className="ml-1 rounded-2xl text-xs opacity-80">Trailer</Button> */}
+            </div>
+            {!video.paid ? (
+              <div className="flex items-center bg-white text-gray-700 rounded-sm absolute top-1 left-1 py-0 px-4">
+                <FaDollarSign className="text-gray-700 text-xs" /> {0.23}
+              </div>
+            ) : (
+              ""
+            )}
+            <div className="flex items-center bg-white text-gray-700 rounded-sm absolute bottom-1 right-1 py-0 px-4">
+              {moment(video.video_duration.split(".")[0], [moment.ISO_8601, "HH:mm:ss"]).format(
+                "H:m:ss"
+              )}
+            </div>
+          </div>
+          <div className="flex-col">
+            <h4 className="my-2 text-left text-md text-gray-600 video_title">{video.title}</h4>
+            <div className="flex">
+              <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2">
+                {video.viewVount} views
+              </span>
+            </div>
+          </div>
         </div>
       );
     });
@@ -250,11 +160,11 @@ export class WatchVideo extends Component {
         onOk={() => this.paymentModalVisible(false)}
         onCancel={() => this.paymentModalVisible(false)}>
         <div className="absolute -left-8 top-1 w-16 h-16 rounded-full bg-blue-500 text-white flex items-center justify-center font-semibold">
-          <FaDollarSign /> {this.state.tempVideo.price}
+          <FaDollarSign /> {0.23}
         </div>
         <h3 className="text-gray-600 uppercase text-center w-full text-lg mb-3">Payment</h3>
         <div>
-          <img src={this.state.tempVideo.poster} alt="" />
+          <img src={this.state.tempVideo.thumbnial} alt="" />
         </div>
         <Radio.Group
           onChange={this.paymentMethodChange}
@@ -276,33 +186,79 @@ export class WatchVideo extends Component {
         <p className="text-gray-700 text-xs text-center w-full mb-2">
           Notice: Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam illo quas, facilis
         </p>
-        <div className="h-10 bg-blue-500 -mx-6 text-center text-white text-md flex items-center justify-center cursor-pointer font-semibold pay_button">
+        <div
+          onClick={() => this.purchaseVideo(this.state.tempVideo.id)}
+          className="h-10 bg-blue-500 -mx-6 text-center text-white text-md flex items-center justify-center cursor-pointer font-semibold pay_button">
           Pay <FaDollarSign />
-          {this.state.tempVideo.price}
+          {0.23}
         </div>
       </Modal>
     );
   };
 
-  render = () => {
+  renderPlayer() {
     const videoJsOptions = {
       autoplay: this.state.autoplay,
       controls: true,
-      poster: this.state.currentVideo.poster,
+      thubnail: this.state.currentVideo ? this.state.currentVideo.thumbnial : "",
       aspectRatio: "16:9",
       responsive: true,
       sources: [
         {
-          src: this.state.currentVideo.src,
-          type: this.state.currentVideo.type,
+          src: this.state.currentVideo
+            ? this.props.video_link
+              ? this.state.currentVideo.video_link
+              : this.state.currentVideo.trailer
+            : "",
+          type: "video/mp4",
         },
       ],
     };
+    if (this.state.currentVideo) {
+      return (
+        <>
+          <div className="flex ml-2 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
+            <VideoPlayer {...videoJsOptions}></VideoPlayer>
+          </div>
+          <div className="flex-col ml-2 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
+            <div className="text-gray-800 lg:text-2xl text-md w-full text-left">
+              {this.state.currentVideo?.title}
+            </div>
+            <div className="flex justify-between text-gray-800 text-2xl w-full text-left">
+              <div className="flex items-end">
+                <span className="text-gray-400 text-lg">
+                  {" "}
+                  {this.state.currentVideo?.viewCount} views
+                </span>
+                <span className="text-gray-600 ml-4 text-base">
+                  {moment(this.state.currentVideo?.premiered).format("MMM DD, YYYY")}
+                </span>
+              </div>
+              <div className="flex">
+                <Tooltip placement="bottom" title="Like">
+                  <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg">
+                    {this.state.currentVideo?.likeCount} <FaHeart className="ml-1" />
+                  </span>
+                </Tooltip>
+                <Tooltip placement="bottom" title="Dislike">
+                  <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2">
+                    {9} <FaHeartBroken className="ml-1" />
+                  </span>
+                </Tooltip>
+              </div>
+            </div>
+          </div>
+        </>
+      );
+    }
+  }
+
+  render = () => {
     const suffix = <FaSearch className="text-xl text-gray-300" />;
     return (
-      <div className="pt-2" ref={this.playerRef}>
+      <div className="pt-2 ml-14" ref={this.playerRef}>
         <SideNav></SideNav>
-        <div className="flex ml-16 sm:max-w-full lg:max-w-3xl xl:max-w-4xl max-h-12">
+        <div className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl max-h-12">
           <Search
             placeholder="Search videos here..."
             enterButton="Search"
@@ -311,46 +267,26 @@ export class WatchVideo extends Component {
             onSearch={this.onSearch}
           />
         </div>
-        <div className="flex ml-16 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
-          <VideoPlayer {...videoJsOptions}></VideoPlayer>
-        </div>
-        <div className="flex-col ml-16 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
-          <div className="text-gray-800 text-2xl w-full text-left">
-            {this.state.currentVideo.title}
+        {this.renderPlayer()}
+        {this.state.currentVideo ? (
+          <div className="flex relative lg:absolute right-0  bottom-0 border-2 mt-4 lg:top-0 lg:flex-col lg:ml-0 flex-wrap lg:flex-nowrap xl:w-1/4 lg:w-1/5 lg:min-h-full border-white">
+            {this.renderVideos()}
           </div>
-          <div className="flex justify-between text-gray-800 text-2xl w-full text-left">
-            <div className="flex items-end">
-              <span className="text-gray-400 text-lg"> {this.state.currentVideo.views} views</span>
-              <span className="text-gray-600 ml-4 text-base">
-                {moment(this.state.currentVideo.premiered).format("MMM DD, YYYY")}
-              </span>
-            </div>
-            <div className="flex">
-              <Tooltip placement="bottom" title="Like">
-                <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg">
-                  {this.state.currentVideo.likes} <FaHeart className="ml-1" />
-                </span>
-              </Tooltip>
-              <Tooltip placement="bottom" title="Dislike">
-                <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2">
-                  {this.state.currentVideo.dislikes} <FaHeartBroken className="ml-1" />
-                </span>
-              </Tooltip>
-            </div>
+        ) : (
+          <div className="flex relative right-0  bottom-0 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
+            {this.renderVideos()}
           </div>
-        </div>
-        <div className="flex relative lg:absolute right-0 ml-16  bottom-0 border-2 mt-4 lg:top-0 lg:flex-col lg:ml-0 flex-wrap lg:flex-nowrap lg:w-48 xl:w-3/12 lg:min-h-full">
-          {this.renderVideos()}
-        </div>
+        )}
         {this.renderPaymentModal()}
       </div>
     );
   };
 }
 
-const mapStateToProps = (props) => {
+const mapStateToProps = (state) => {
   return {
-    // count: props.counter.count,
+    viewerVideos: state.video.viewerVideos,
+    video_link: state.video.video_link,
   };
 };
 

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "./axiosDefault";
 import { environment } from "../config/config";
 
 function login({ email, password }) {
