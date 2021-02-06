@@ -1,13 +1,14 @@
 import axios from "axios";
 
 import { environment } from "../config/config";
+import { authHeader } from "../_helpers";
 
-// axios.create({
-//   baseURL: environment,
-//   headers: {
-//     "Content-type": "application/json",
-//   },
-// });
+axios.interceptors.request.use(function (config) {
+  console.log('authHeader()', authHeader())
+  config.headers.Authorization = authHeader();
+
+  return config;
+});
 
 export default {
   addVideo: async function (body, onUploadProgress) {
@@ -28,7 +29,7 @@ export default {
   },
   updateVideo: async function (body) {
     try {
-      const video = await axios.patch(`${environment}/video`,body);
+      const video = await axios.patch(`${environment}/video`, body);
       return video.data;
     } catch (error) {
       throw error;
@@ -37,7 +38,9 @@ export default {
 
   createStreamKey: async function (body) {
     try {
-      const video = await axios.post(`${environment}/video/stream`,{producerId:2});
+      const video = await axios.post(`${environment}/video/stream`, {
+        producerId: 2,
+      });
       return video.data;
     } catch (error) {
       throw error;

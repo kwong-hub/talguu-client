@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {
   RiVideoUploadFill,
   RiUploadCloud2Line,
- RiArrowRightCircleLine
+  RiArrowRightCircleLine,
 } from "react-icons/ri";
 import { Button, Progress, message } from "antd";
 import videoService from "../../_services/video.service";
@@ -24,7 +24,7 @@ const initialState = {
 
 class UploadVideo extends Component {
   state = initialState;
- 
+
   fileList = [];
   uploadFiles = (files) => {
     for (var i = 0; i < files.length; i++) {
@@ -35,8 +35,8 @@ class UploadVideo extends Component {
       this.props.dispatch({ type: VIDEO_READY, payload: this.state.files });
     }
   };
-  successMessage = () => {
-    message.success("Successfull Upload");
+  errorMessage = () => {
+    message.error("Failed to Upload");
   };
 
   dropRef = React.createRef();
@@ -98,8 +98,8 @@ class UploadVideo extends Component {
       onUploadProgress: (progressEvent) => {
         this.setState({
           progress: Math.round(
-            (progressEvent.loaded * 100) / progressEvent.total
-          ),
+            (progressEvent.loaded * 100 ) / progressEvent.total
+          )-5,
         });
       },
     };
@@ -109,15 +109,18 @@ class UploadVideo extends Component {
       .then((json) => {
         let data = json.data;
         this.resetState();
-        // this.successMessage();
-        console.log('json', json)
-        this.props.history.push("/finish-upload",{...data})
+        this.successMessage();
+        console.log("json", json);
+        this.props.history.push("/finish-upload", { ...data });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        this.errorMessage();
+        this.resetState();
+      });
   };
   nextClick = (to) => {
     this.setState({ active: to });
-    this.props.history.push("/finish-upload")
+    this.props.history.push("/finish-upload");
   };
   componentDidMount = () => {
     let div = this.dropRef.current;
@@ -143,7 +146,6 @@ class UploadVideo extends Component {
   );
 
   render() {
-
     return (
       <>
         <SideNav></SideNav>
@@ -163,34 +165,33 @@ class UploadVideo extends Component {
               Publish Video
             </Button>
           </div>
-         
-            <div ref={this.dropRef} className="flex justify-center my-4">
-              <div className="shadow-inner border bg-white cursor-pointer border-gray-100 rounded-md w-2/3 max-w-3/4 transition duration-500 ease-in-out hover:bg-gray-100 transform hover:-translate-y-1 hover:scale-110">
-                <div className="h-64 flex flex-col justify-center items-center container mx-auto px-6 ">
-                  <RiVideoUploadFill className="text-5xl" />
-                  <p className="tracking-wider text-lg text-gray-500">
-                    {" "}
-                    Drag and Drop the video{" "}
-                  </p>
-                  <input
-                    type="file"
-                    id="file-id"
-                    ref={this.fileInput}
-                    onChange={this.handleFileSelect}
-                    className="hidden"
+
+          <div ref={this.dropRef} className="flex justify-center my-4">
+            <div className="shadow-inner border bg-white cursor-pointer border-gray-100 rounded-md w-2/3 max-w-3/4 transition duration-500 ease-in-out hover:bg-gray-100 transform hover:-translate-y-1 hover:scale-110">
+              <div className="h-64 flex flex-col justify-center items-center container mx-auto px-6 ">
+                <RiVideoUploadFill className="text-5xl" />
+                <p className="tracking-wider text-lg text-gray-500">
+                  {" "}
+                  Drag and Drop the video{" "}
+                </p>
+                <input
+                  type="file"
+                  id="file-id"
+                  ref={this.fileInput}
+                  onChange={this.handleFileSelect}
+                  className="hidden"
+                />
+                <button>Upload file</button>
+                {this.state.progress > 0 && (
+                  <Progress
+                    type="line"
+                    percent={this.state.progress}
+                    status="active"
                   />
-                  <button>Upload file</button>
-                  {this.state.progress > 0 && (
-                    <Progress
-                      type="line"
-                      percent={this.state.progress}
-                      status="active"
-                    />
-                  )}
-                </div>
+                )}
               </div>
             </div>
-         
+          </div>
 
           <div>
             {this.state.active !== "" && (
@@ -221,7 +222,7 @@ class UploadVideo extends Component {
                     }}
                   ></textarea>
                 </label>
-               
+
                 <Button
                   size={60}
                   type="primary"
@@ -230,7 +231,7 @@ class UploadVideo extends Component {
                   onClick={this.submit}
                   className="w-64 my-4 py-5 flex justify-center items-center text-xl p-4 transform hover:scale-110 motion-reduce:transform-none"
                 >
-                Next
+                  Next
                 </Button>
               </form>
             )}
