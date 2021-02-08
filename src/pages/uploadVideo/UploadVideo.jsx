@@ -109,8 +109,8 @@ class UploadVideo extends Component {
       .then((json) => {
         let data = json.data;
         this.resetState();
-        this.successMessage();
-        // console.log("json", json);
+        // this.successMessage();
+        console.log("json", json);
         this.props.history.push("/finish-upload", { ...data });
       })
       .catch((err) => {

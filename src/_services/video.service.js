@@ -3,12 +3,6 @@ import axios from "./axiosDefault";
 import { environment } from "../config/config";
 import { authHeader } from "../_helpers";
 
-axios.interceptors.request.use(function (config) {
-  console.log('authHeader()', authHeader())
-  config.headers.Authorization = authHeader();
-
-  return config;
-});
 
 export default {
   addVideo: async function (body, onUploadProgress) {
@@ -50,6 +44,14 @@ export default {
   addThumbnail: async function (body) {
     try {
       const thumb = await axios.post(`${environment}/video/thumbnail`, body);
+      return thumb.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  addTrailer: async function (body) {
+    try {
+      const thumb = await axios.post(`${environment}/video/trailer`, body);
       return thumb.data;
     } catch (error) {
       throw error;

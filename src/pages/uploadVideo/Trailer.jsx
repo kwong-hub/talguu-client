@@ -1,21 +1,44 @@
 import React, { Component } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import { Upload, message, Button } from "antd";
+import videoService from "../../_services/video.service";
 export default class Trailer extends Component {
   state = {
     fileList: [],
     uploading: false,
   };
-  handleUpload = () => {
-    const { fileList } = this.state;
-    const formData = new FormData();
-    fileList.forEach((file) => {
-      formData.append("files[]", file);
-    });
+  resetForm = () => {
+    this.setState({ fileList: [], uploading: false });
+  };
 
+  successMessage = () => {
+    message.success("Successfull Upload");
+  };
+  failedMessage = () => {
+    message.error("Failed to upload");
+  };
+
+  handleUpload = () => {
     this.setState({
       uploading: true,
     });
+    const { fileList } = this.state;
+    var formData = new FormData();
+    formData.append("id", this.props.video);
+    formData.append("trailer", fileList[0]);
+    console.log("fileList,formData", fileList[0], formData);
+    videoService
+      .addTrailer(formData)
+      .then((data) => {
+        if (data[0]) {
+          this.resetForm();
+          this.successMessage();
+        }
+      })
+      .catch((err) => {
+        this.resetForm();
+        this.failedMessage();
+      });
   };
   render() {
     const { uploading, fileList } = this.state;
@@ -32,7 +55,7 @@ export default class Trailer extends Component {
       },
       beforeUpload: (file) => {
         this.setState((state) => ({
-          fileList: [...state.fileList, file],
+          fileList: [file],
         }));
         return false;
       },

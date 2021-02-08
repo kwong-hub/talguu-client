@@ -130,7 +130,7 @@ const EditUploadVideos = (props) => {
                 Select or upload a trailer that shows what's in your video in a
                 minute. A good trailer draws viewers' attention.
               </h3>
-              <Trailer />
+              <Trailer  video={video.id}  />
             </div>
           </div>
         </div>
