@@ -13,9 +13,12 @@ import Trailer from "./Trailer";
 const EditUploadVideos = (props) => {
   var history = useHistory();
   const [video, setVideo] = useState(props.location.state);
-  const [title, setTitle] = useState(video.title);
-  const [describe, setDescribe] = useState(video.describe);
-
+  const [title, setTitle] = useState(video?.title);
+  const [describe, setDescribe] = useState(video?.describe);
+  
+  if(!title){
+    history.goBack();
+  }
 
   const publishVideo = () => {
     console.log("title,describe", title, describe);

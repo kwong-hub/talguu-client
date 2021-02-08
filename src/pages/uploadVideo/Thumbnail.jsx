@@ -5,6 +5,7 @@ import videoService from "../../_services/video.service";
 import ImgCrop from "antd-img-crop";
 import { environment } from "../../config/config";
 const intialState = {
+  formatError: "",
   uploading: false,
   uploaded: false,
   previewVisible: false,
@@ -31,6 +32,24 @@ function getBase64(file) {
 }
 export class Thumbnail extends Component {
   state = intialState;
+  beforeCrop = (file) => {
+    this.setState(intialState);
+    if (file.size > 1000000) {
+      this.setState({ formatError: "Max file size is 1MB." });
+      return false;
+    } else if (
+      file.type !== "image/png" &&
+      file.type !== "image/jpeg" &&
+      file.type !== "images/jpg"
+    ) {
+      this.setState({
+        formatError:
+          "Unsupported file type! File type should be .png .jpeg, .jpg",
+      });
+      return false;
+    }
+    return true;
+  };
   handleCancel = () => this.setState({ previewVisible: false });
 
   handlePreview = async (file) => {
@@ -81,9 +100,8 @@ export class Thumbnail extends Component {
     );
     return (
       <>
-        <ImgCrop rotate aspect={245 / 164}>
+        <ImgCrop rotate aspect={245 / 164} beforeCrop={this.beforeCrop}>
           <Upload
-            
             listType="picture-card"
             fileList={fileList}
             onPreview={this.handlePreview}
@@ -102,6 +120,10 @@ export class Thumbnail extends Component {
         >
           <img alt="example" style={{ width: "100%" }} src={previewImage} />
         </Modal>
+        <p className="bg-gray-100 text-red-600 text-sm">
+          {this.state.formatError}
+        </p>
+
         {this.state.uploading && (
           <Button
             className="flex my-4 w-auto"
