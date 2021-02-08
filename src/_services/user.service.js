@@ -16,6 +16,7 @@ function logout() {
   localStorage.removeItem("user");
 
 }
+
 async function getUser() {
   try {
     const user = await axios.get(`${environment}/user`);
@@ -25,15 +26,13 @@ async function getUser() {
   }
 }
 
-/// this might help to do some intercepter handle 403 401 request
+/// this might help to do some intercept handle 403 401 request
 function handleResponse(response) {
   return response.text().then((text) => {
     const data = text && JSON.parse(text);
     if (!response.ok) {
       if (response.status === 401) {
-        // auto logout if 401 response returned from api
         logout();
-        // location.reload(true);
       }
 
       const error = (data && data.message) || response.statusText;
@@ -43,6 +42,7 @@ function handleResponse(response) {
     return data;
   });
 }
+
 async function createProducer(data) {
   try {
     const user = await axios.post(`${environment}/account/producer_sign_up`, data);

@@ -59,9 +59,10 @@ export default {
   getViewerVideos: async function () {
     try {
       const videos = await axios.get(`${environment}/video/user`);
-      return videos.data;
+      console.log(videos.data);
+      return { data: videos.data, success: true };
     } catch (error) {
-      throw error;
+      throw { error, success: false };
     }
   },
 
