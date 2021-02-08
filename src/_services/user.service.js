@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 import { environment } from "../config/config";
 
 function login({ email, password }) {
@@ -14,6 +15,7 @@ function login({ email, password }) {
 function logout() {
   // remove user from local storage to log user out
   localStorage.removeItem("user");
+
 }
 async function getUser() {
   try {
