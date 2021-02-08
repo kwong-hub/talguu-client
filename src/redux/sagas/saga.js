@@ -7,11 +7,20 @@ import {
   CREATE_VIEWER_ASYNC,
   CREATE_VIEWER_FAILURE,
   CREATE_VIEWER_SUCCESS,
+  GET_PAID_VIDEO_URL_ASYNC,
+  GET_PAID_VIDEO_URL_FAILURE,
+  GET_PAID_VIDEO_URL_SUCCESS,
+  PURCHASE_VIDEO_ASYNC,
+  PURCHASE_VIDEO_FAILURE,
+  PURCHASE_VIDEO_SUCCESS,
   UPLOAD_ASYNC,
   VIDEO_FAILURE,
   VIDEO_READY,
   VIDEO_READY_ASYNC,
   VIDEO_SUCCESS,
+  VIEWER_VIDEOS_ASYNC,
+  VIEWER_VIDEOS_FAILURE,
+  VIEWER_VIDEOS_SUCCESS,
 } from "../types";
 import { userConstants } from "../../_constants";
 import { userService } from "../../_services/user.service";
@@ -57,6 +66,36 @@ function* videoUpload(action) {
   }
 }
 
+function* getViewerVideosAsync(action) {
+  console.log("getting viewer videos...");
+  let videos = yield call(videoService.getViewerVideos);
+  if (videos) {
+    yield put({ type: VIEWER_VIDEOS_SUCCESS, payload: videos });
+  } else {
+    yield put({ type: VIEWER_VIDEOS_FAILURE, payload: "Server Error" });
+  }
+}
+
+function* getPaidVideoUrlAsync(action) {
+  let video = yield call(videoService.getPaidVideoUrl, action.payload);
+
+  if (video && video) {
+    yield put({ type: GET_PAID_VIDEO_URL_SUCCESS, payload: video });
+  } else {
+    yield put({ type: GET_PAID_VIDEO_URL_FAILURE, payload: video });
+  }
+}
+
+function* purchaseVideoAsync(action) {
+  let video = yield call(videoService.purchaseVideo, action.payload);
+
+  if (video && video) {
+    yield put({ type: PURCHASE_VIDEO_SUCCESS, payload: video });
+  } else {
+    yield put({ type: PURCHASE_VIDEO_FAILURE, payload: video });
+  }
+}
+
 function* videoOnReady(action) {
   yield put({ type: VIDEO_READY, payload: action.payload });
 }
@@ -70,6 +109,9 @@ function* watchAll() {
     takeLatest(userConstants.LOGOUT_ASYNC, logout),
     takeLatest(UPLOAD_ASYNC, videoUpload),
     takeLatest(VIDEO_READY_ASYNC, videoOnReady),
+    takeLatest(VIEWER_VIDEOS_ASYNC, getViewerVideosAsync),
+    takeLatest(GET_PAID_VIDEO_URL_ASYNC, getPaidVideoUrlAsync),
+    takeLatest(PURCHASE_VIDEO_ASYNC, purchaseVideoAsync),
   ]);
 }
 

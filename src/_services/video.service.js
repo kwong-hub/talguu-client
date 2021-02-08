@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "./axiosDefault";
 
 import { environment } from "../config/config";
 import { authHeader } from "../_helpers";
@@ -50,6 +50,33 @@ export default {
   addThumbnail: async function (body) {
     try {
       const thumb = await axios.post(`${environment}/video/thumbnail`, body);
+      return thumb.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  getViewerVideos: async function () {
+    try {
+      const videos = await axios.get(`${environment}/video/user`);
+      return videos.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  getPaidVideoUrl: async function (videoId) {
+    try {
+      const videos = await axios.get(`${environment}/video/purchase_video_url?videoId=${videoId}`);
+      return videos.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  purchaseVideo: async function (videoId) {
+    try {
+      const thumb = await axios.post(`${environment}/video/purchase`, { videoId });
       return thumb.data;
     } catch (error) {
       throw error;

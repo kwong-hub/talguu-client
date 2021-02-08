@@ -49,9 +49,13 @@
   transition: all 0.2s;
 }
 
-.video_thumbnail:hover > .watch_later,
-.video_thumbnail:hover > .watch_video_buttons {
+.video_thumbnail:hover > div > .watch_later,
+.video_thumbnail:hover > div > .watch_video_buttons {
   visibility: visible;
+}
+
+.video_thumbnail:hover > div > .video_title {
+  color: #222;
 }
 
 /* .video_thumbnail:active {
