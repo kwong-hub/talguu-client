@@ -7,6 +7,7 @@ import {
   CREATE_VIEWER_ASYNC,
   CREATE_VIEWER_FAILURE,
   CREATE_VIEWER_SUCCESS,
+  // ERROR_UNAUTHORIZED,
   GET_PAID_VIDEO_URL_ASYNC,
   GET_PAID_VIDEO_URL_FAILURE,
   GET_PAID_VIDEO_URL_SUCCESS,
@@ -56,7 +57,7 @@ function* logout() {
 }
 
 function* videoUpload(action) {
-  console.log("action", action);
+  // console.log("action", action);
   let video = yield call(videoService.addVideo, action.payload);
   // console.log(video);
   if (video && video.success) {
@@ -67,11 +68,15 @@ function* videoUpload(action) {
 }
 
 function* getViewerVideosAsync(action) {
-  console.log("getting viewer videos...");
-  let videos = yield call(videoService.getViewerVideos);
-  if (videos) {
-    yield put({ type: VIEWER_VIDEOS_SUCCESS, payload: videos });
+  let res = yield call(videoService.getViewerVideos);
+  if (res.success) {
+    yield put({ type: VIEWER_VIDEOS_SUCCESS, payload: res.data });
   } else {
+    // if (res.error.toString().includes("401")) {
+    //   userService.logout();
+    //   // yield put({ type: ERROR_UNAUTHORIZED });
+    // } else {
+    // }
     yield put({ type: VIEWER_VIDEOS_FAILURE, payload: "Server Error" });
   }
 }

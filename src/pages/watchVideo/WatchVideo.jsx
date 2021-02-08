@@ -14,13 +14,6 @@ import {
 import "./WatchVideo.css";
 import moment from "moment";
 
-import image1 from "../../assets/images/thumbnail1.png";
-import image2 from "../../assets/images/thumbnail2.png";
-import image3 from "../../assets/images/thumbnail3.png";
-import image4 from "../../assets/images/thumbnail4.png";
-import image5 from "../../assets/images/thumbnail5.png";
-import image6 from "../../assets/images/thumbnail6.png";
-import image7 from "../../assets/images/thumbnail7.png";
 import mastercard from "../../assets/images/mastercard.png";
 import visa from "../../assets/images/visa.png";
 import {
