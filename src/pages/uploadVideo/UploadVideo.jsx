@@ -66,7 +66,7 @@ class UploadVideo extends Component {
     this.setState({ drag: false });
     if (e.target.files && e.target.files.length > 0) {
       this.uploadFiles(e.target.files);
-      // e.target.clearData();
+      e.target.clearData();
       this.dragCounter = 0;
     }
   };
