@@ -15,6 +15,7 @@ import {
 } from "../../redux/types";
 import { Link, withRouter } from "react-router-dom";
 import Avatar from "antd/lib/avatar/avatar";
+import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
 
 const { Search } = Input;
 
@@ -26,6 +27,7 @@ export class LiveVideos extends Component {
     paymentModalVisible: false,
     tempVideo: {},
     paymentMethod: "mastercard",
+    currentLive: null,
   };
 
   constructor(props) {
@@ -40,7 +42,8 @@ export class LiveVideos extends Component {
   };
 
   playVideo = (video) => {
-    this.props.history.push(`/watch/${video.id}`);
+    console.log("video", video);
+    this.setState({ currentLive: video.stream_key });
   };
 
   playTrailer = (video) => {
@@ -81,7 +84,7 @@ export class LiveVideos extends Component {
   renderVideos = () => {
     return this.props.liveVideos.map((video) => {
       video["paid"] = true;
-      video["viewVount"]=0;
+      video["viewVount"] = 0;
       return (
         <div
           key={video.stream_key}
@@ -212,6 +215,18 @@ export class LiveVideos extends Component {
   };
 
   render = () => {
+    const videoJsOptions = {
+      autoplay: false,
+      controls: true,
+      aspectRatio: "21:9",
+      responsive: true,
+      sources: [
+        {
+          src: `http://8mspbb.com/hls/${this.state.currentLive}.m3u8`,
+          type: "application/x-mpegURL",
+        },
+      ],
+    };
     const suffix = <FaSearch className="text-xl text-gray-300" />;
     return (
       <div className="pt-4 ml-14" ref={this.playerRef}>
@@ -234,6 +249,11 @@ export class LiveVideos extends Component {
           <h1 className="text-4xl font-black block">Browse</h1>
           <p className="text-lg font-semibold text-blue-700">Live Videos</p>
         </div>
+        {this.state.currentLive && (
+          <div className="flex ml-2 my-6 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
+            <VideoPlayer {...videoJsOptions}></VideoPlayer>
+          </div>
+        )}
         <div className="flex relative mt-12 md:mt-0 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
           {this.renderVideos()}
         </div>
