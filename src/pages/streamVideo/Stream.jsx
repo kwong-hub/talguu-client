@@ -13,10 +13,10 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const Stream = (props) => {
   const [property, setProperty] = useState(props.location.state.data);
-  console.log("property", property);
-  const [title, setTitle] = useState(property.title);
-  const [describe, setDescribe] = useState(property.description);
-  const [streamKey, setStreamKey] = useState(property.stream_key);
+  // console.log("property", property);
+  const [title, setTitle] = useState(property?.title);
+  const [describe, setDescribe] = useState(property?.description);
+  const [streamKey, setStreamKey] = useState(property?.stream_key);
   const [streamURL, setStreamURL] = useState("rtmp://8mspbb.com/show");
   var history = useHistory();
   const goLive = () => {};
@@ -57,8 +57,7 @@ const Stream = (props) => {
           className="absolute top-3 right-2"
           onClick={(e) => endStream()}
           key="1"
-          type="danger"
-        >
+          type="danger">
           End Stream
         </Button>
         <div className="flex mx-4">
@@ -73,10 +72,7 @@ const Stream = (props) => {
                   readOnly
                   value={streamKey}
                   suffix={
-                    <CopyToClipboard
-                      text={streamKey}
-                      onCopy={() => copiedMessage()}
-                    >
+                    <CopyToClipboard text={streamKey} onCopy={() => copiedMessage()}>
                       <span className="cursor-pointer">
                         <FaCopy />
                       </span>
@@ -90,10 +86,7 @@ const Stream = (props) => {
                   readOnly
                   value={streamURL}
                   suffix={
-                    <CopyToClipboard
-                      text={streamURL}
-                      onCopy={() => copiedMessage()}
-                    >
+                    <CopyToClipboard text={streamURL} onCopy={() => copiedMessage()}>
                       <span className="cursor-pointer">
                         <FaCopy />
                       </span>
@@ -110,20 +103,16 @@ const Stream = (props) => {
               className="login-form"
               initialValues={{
                 remember: true,
-                title: property.title,
-                description: property.description,
-                select: property.privacy,
+                title: property?.title,
+                description: property?.description,
+                select: property?.privacy,
               }}
-              onFinish={goLive}
-            >
+              onFinish={goLive}>
               <Form.Item
                 label="Title"
                 name="title"
                 className="text-lg text-gray-600"
-                rules={[
-                  { required: true, message: "Please input your Title!" },
-                ]}
-              >
+                rules={[{ required: true, message: "Please input your Title!" }]}>
                 <Input
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -139,8 +128,7 @@ const Stream = (props) => {
                     required: false,
                     message: "Please input your Description!",
                   },
-                ]}
-              >
+                ]}>
                 <TextArea
                   value={describe}
                   onChange={(e) => setDescribe(e.target.value)}
@@ -154,14 +142,10 @@ const Stream = (props) => {
                 name="select"
                 label="Select Privacy"
                 hasFeedback
-                rules={[
-                  { required: true, message: "Please select your Privacy!" },
-                ]}
-              >
+                rules={[{ required: true, message: "Please select your Privacy!" }]}>
                 <Select
                   placeholder="Select audience"
-                  className="rounded-lg w-20 text-gray-700 text-base p-2"
-                >
+                  className="rounded-lg w-20 text-gray-700 text-base p-2">
                   <Option value="private">Private</Option>
                   <Option value="public">Public</Option>
                 </Select>
@@ -183,8 +167,8 @@ const Stream = (props) => {
               <div className="flex flex-col items-start justify-start">
                 <h2 className="text-lg">Thumbnail</h2>
                 <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                  Select or upload a picture that shows what's in your video. A
-                  good thumbnail stands out and draws viewers' attention.
+                  Select or upload a picture that shows what's in your video. A good thumbnail
+                  stands out and draws viewers' attention.
                 </h3>
                 {/* <Thumbnail video={video.id} thumbnails={video.thumbnial} /> */}
               </div>

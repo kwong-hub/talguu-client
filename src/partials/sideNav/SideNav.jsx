@@ -8,6 +8,7 @@ import {
   FaUser,
   FaFilm,
   FaBinoculars,
+  FaSignInAlt,
 } from "react-icons/fa";
 import { Tooltip } from "antd";
 import "./SideNav.css";
@@ -17,7 +18,7 @@ import logo from "../../assets/images/logo512.png";
 
 const SideNav = () => {
   let location = useLocation();
-  let user = localStorage.getItem("user");
+  let user = JSON.parse(localStorage.getItem("user"));
   return (
     <div className="container w-14 min-h-full fixed left-0 top-0 bottom-0 border-r p-1 bg-white">
       <ul className="list-disc space-y-5">
@@ -48,45 +49,58 @@ const SideNav = () => {
           <>
             <li
               className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                location.pathname === "/saved_playlist" ? "bg-gray-400" : ""
+                location.pathname === "/live_video" ? "bg-gray-400" : ""
               }`}>
               <Link to="/live_video">
-                <Tooltip placement="rightTop" title="Saved Videos">
+                <Tooltip placement="rightTop" title="Live Videos">
                   <FaSave className={`text-3xl inline text-gray-300 hover:text-white`} />
                 </Tooltip>
               </Link>
             </li>
-            <li
-              className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                location.pathname === "/purchased_playlist" ? "bg-gray-400" : ""
-              }`}>
-              <Link to="/purchased_playlist">
-                <Tooltip placement="rightTop" title="Purchased Videos">
-                  <FaFilm className={`text-3xl inline text-gray-300 hover:text-white`} />
-                </Tooltip>
-              </Link>
-            </li>
-            <li
-              className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                location.pathname === "/upload_video" ? "bg-gray-400" : ""
-              }`}>
-              <Link to="/upload_video">
-                <Tooltip placement="rightTop" title="Upload Video">
-                  <FaCloudUploadAlt className={`text-3xl inline text-gray-300 hover:text-white`} />
-                </Tooltip>
-              </Link>
-            </li>
-            <li
-              className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                location.pathname === "/stream_video" ? "bg-gray-400" : ""
-              }`}>
-              <Link to="/stream_video">
-                <Tooltip placement="rightTop" title="Stream Video">
-                  <FaStream className={`text-3xl inline text-gray-300 hover:text-white`} />
-                </Tooltip>
-              </Link>
-            </li>
-
+            {user.role == "VIEWER" ? (
+              <li
+                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
+                  location.pathname === "/purchased_playlist" ? "bg-gray-400" : ""
+                }`}>
+                <Link to="/purchased_playlist">
+                  <Tooltip placement="rightTop" title="Purchased Videos">
+                    <FaFilm className={`text-3xl inline text-gray-300 hover:text-white`} />
+                  </Tooltip>
+                </Link>
+              </li>
+            ) : (
+              ""
+            )}
+            {user.role == "PRODUCER" ? (
+              <li
+                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
+                  location.pathname === "/upload_video" ? "bg-gray-400" : ""
+                }`}>
+                <Link to="/upload_video">
+                  <Tooltip placement="rightTop" title="Upload Video">
+                    <FaCloudUploadAlt
+                      className={`text-3xl inline text-gray-300 hover:text-white`}
+                    />
+                  </Tooltip>
+                </Link>
+              </li>
+            ) : (
+              ""
+            )}
+            {user.role == "PRODUCER" ? (
+              <li
+                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
+                  location.pathname === "/stream_video" ? "bg-gray-400" : ""
+                }`}>
+                <Link to="/stream_video">
+                  <Tooltip placement="rightTop" title="Stream Video">
+                    <FaStream className={`text-3xl inline text-gray-300 hover:text-white`} />
+                  </Tooltip>
+                </Link>
+              </li>
+            ) : (
+              ""
+            )}
             <li
               className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
                 location.pathname === "/settings" ? "bg-gray-400" : ""
@@ -109,7 +123,16 @@ const SideNav = () => {
             </li>
           </>
         ) : (
-          ""
+          <li
+            className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
+              location.pathname === "/login" ? "bg-gray-400" : ""
+            }`}>
+            <Link to="/login">
+              <Tooltip placement="rightTop" title="Login">
+                <FaSignInAlt className={`text-3xl inline text-gray-300 hover:text-white`} />
+              </Tooltip>
+            </Link>
+          </li>
         )}
       </ul>
     </div>

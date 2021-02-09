@@ -5,6 +5,7 @@ import { FaCamera } from "react-icons/fa";
 import { RiCamera2Fill, RiLiveFill } from "react-icons/ri";
 import { useHistory } from "react-router-dom";
 import Header from "../../partials/header/Header";
+import SideNav from "../../partials/sideNav/SideNav";
 import StreamForm from "./StreamForm";
 
 const StreamVideo = () => {
@@ -22,8 +23,8 @@ const StreamVideo = () => {
   return (
     <div>
       <div>
-        <Header></Header>
-        <div className="mx-8 my-20">
+        <SideNav></SideNav>
+        <div className="mx-8 ml-14 my-20">
           <Menu
             onClick={handleClick}
             style={{ width: 256 }}
