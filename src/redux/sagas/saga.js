@@ -7,6 +7,9 @@ import {
   CREATE_VIEWER_ASYNC,
   CREATE_VIEWER_FAILURE,
   CREATE_VIEWER_SUCCESS,
+  VIEWER_LIVE_SUCCESS,
+  VIEWER_LIVE_FAILURE,
+  VIEWER_LIVE_ASYNC,
   // ERROR_UNAUTHORIZED,
   GET_PAID_VIDEO_URL_ASYNC,
   GET_PAID_VIDEO_URL_FAILURE,
@@ -79,6 +82,15 @@ function* getViewerVideosAsync(action) {
   }
 }
 
+function* getViewerLiveVideos(action) {
+  let res = yield call(videoService.getViewerLiveVideos);
+  if (res.success) {
+    yield put({ type: VIEWER_LIVE_SUCCESS, payload: res.data });
+  } else {
+    yield put({ type: VIEWER_LIVE_FAILURE, payload: "Server Error" });
+  }
+}
+
 function* getPaidVideoUrlAsync(action) {
   // console.log(action);
   let video = yield call(videoService.getPaidVideoUrl, action.payload);
@@ -123,6 +135,7 @@ function* watchAll() {
     takeLatest(UPLOAD_ASYNC, videoUpload),
     takeLatest(VIDEO_READY_ASYNC, videoOnReady),
     takeLatest(VIEWER_VIDEOS_ASYNC, getViewerVideosAsync),
+    takeLatest(VIEWER_LIVE_ASYNC, getViewerLiveVideos),
     takeLatest(GET_PAID_VIDEO_URL_ASYNC, getPaidVideoUrlAsync),
     takeLatest(PURCHASE_VIDEO_ASYNC, purchaseVideoAsync),
     takeLatest(PAID_VIEWER_VIDEOS_ASYNC, getPaidUserVideosAsync),

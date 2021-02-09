@@ -21,6 +21,7 @@ import StreamVideo from "../pages/streamVideo/StreamVideo";
 import Stream from "../pages/streamVideo/Stream";
 import PurchasedPlaylist from "../pages/purchasedPlaylist/PurchasedPlaylist";
 import WatchVideo from "../pages/watchVideo/WatchVideo";
+import LiveVideos from "../pages/live/LiveVideos";
 
 const Router = () => {
   return (
@@ -30,7 +31,7 @@ const Router = () => {
         <Switch>
           <Route exact path="/" component={Videos} />
           <Route path="/watch/:vidId" component={WatchVideo} />
-          <PrivateRoute path="/saved_playlist" component={SavedPlayList} />
+          <PrivateRoute path="/live_video" component={LiveVideos} />
           <PrivateRoute path="/purchased_playlist" component={PurchasedPlaylist} />
           <PrivateRoute path="/upload_video" component={UploadVideo} />
           <PrivateRoute path="/stream_video" component={StreamVideo} />

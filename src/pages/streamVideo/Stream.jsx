@@ -26,7 +26,7 @@ const Stream = (props) => {
   const endStream = () => {
     videoService
       .endStream(streamKey)
-      .then((data) => history.push("/your_video"))
+      .then((data) => history.push("/live_video"))
       .catch((err) => console.log("err", err));
     // history.push("/your_video");
   };

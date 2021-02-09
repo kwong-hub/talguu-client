@@ -78,6 +78,16 @@ export default {
     }
   },
 
+  getViewerLiveVideos: async function () {
+    try {
+      const videos = await axios.get(`${environment}/video/live/user`);
+      console.log(videos.data,"Fet");
+      return { data: videos.data, success: true };
+    } catch (error) {
+      throw { error, success: false };
+    }
+  },
+
   getPaidVideoUrl: async function (videoId) {
     try {
       const videos = await axios.get(`${environment}/video/purchase_video_url?videoId=${videoId}`);

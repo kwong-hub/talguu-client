@@ -50,7 +50,7 @@ const SideNav = () => {
               className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
                 location.pathname === "/saved_playlist" ? "bg-gray-400" : ""
               }`}>
-              <Link to="/saved_playlist">
+              <Link to="/live_video">
                 <Tooltip placement="rightTop" title="Saved Videos">
                   <FaSave className={`text-3xl inline text-gray-300 hover:text-white`} />
                 </Tooltip>

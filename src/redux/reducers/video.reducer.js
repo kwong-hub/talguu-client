@@ -10,6 +10,8 @@ import {
   VIDEO_SUCCESS,
   VIEWER_VIDEOS_FAILURE,
   VIEWER_VIDEOS_SUCCESS,
+  VIEWER_LIVE_FAILURE,
+  VIEWER_LIVE_SUCCESS,
 } from "../types";
 
 const INITIAL_STATE = {
@@ -17,6 +19,7 @@ const INITIAL_STATE = {
   videoStatus: null,
   errMessages: null,
   viewerVideos: [],
+  liveVideos: [],
   currentVideo: null,
   video_link: null,
   purchasedVideos: [],
@@ -34,6 +37,10 @@ export default (state = INITIAL_STATE, action) => {
     case VIEWER_VIDEOS_SUCCESS:
       return { ...state, viewerVideos: action.payload };
     case VIEWER_VIDEOS_FAILURE:
+      return { ...state, errMessages: action.payload };
+    case VIEWER_LIVE_SUCCESS:
+      return { ...state, liveVideos: action.payload };
+    case VIEWER_LIVE_FAILURE:
       return { ...state, errMessages: action.payload };
     case GET_PAID_VIDEO_URL_SUCCESS:
       return { ...state, currentVideo: action.payload };
