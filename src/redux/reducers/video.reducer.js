@@ -1,6 +1,8 @@
 import {
   GET_PAID_VIDEO_URL_FAILURE,
   GET_PAID_VIDEO_URL_SUCCESS,
+  PAID_VIEWER_VIDEOS_FAILURE,
+  PAID_VIEWER_VIDEOS_SUCCESS,
   PURCHASE_VIDEO_FAILURE,
   PURCHASE_VIDEO_SUCCESS,
   VIDEO_FAILURE,
@@ -17,6 +19,7 @@ const INITIAL_STATE = {
   viewerVideos: [],
   currentVideo: null,
   video_link: null,
+  purchasedVideos: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -39,6 +42,10 @@ export default (state = INITIAL_STATE, action) => {
     case PURCHASE_VIDEO_SUCCESS:
       return { ...state, video_link: action.video_link };
     case PURCHASE_VIDEO_FAILURE:
+      return { ...state, errMessages: action.payload };
+    case PAID_VIEWER_VIDEOS_SUCCESS:
+      return { ...state, purchasedVideos: action.payload };
+    case PAID_VIEWER_VIDEOS_FAILURE:
       return { ...state, errMessages: action.payload };
     default:
       return state;

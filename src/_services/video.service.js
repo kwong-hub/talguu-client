@@ -3,7 +3,6 @@ import axios from "./axiosDefault";
 import { environment } from "../config/config";
 import { authHeader } from "../_helpers";
 
-
 export default {
   addVideo: async function (body, onUploadProgress) {
     try {
@@ -94,6 +93,15 @@ export default {
       return thumb.data;
     } catch (error) {
       throw error;
+    }
+  },
+
+  getPaidUserVideos: async function () {
+    try {
+      const videos = await axios.get(`${environment}/video/purchased_videos`);
+      return { data: videos.data, success: true };
+    } catch (error) {
+      throw { error, success: false };
     }
   },
 };

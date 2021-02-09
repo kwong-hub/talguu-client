@@ -9,6 +9,11 @@ import videoService from "../../_services/video.service";
 const StreamForm = () => {
   var history = useHistory();
   const goLive = (values) => {
+<<<<<<< HEAD
+    history.push("/live_stream", { ...values });
+    console.log("values", values);
+=======
+>>>>>>> 1c422acd7debc79b571b75d24c1a59ad9c985e8d
     videoService
       .createStreamKey(values)
       .then((data) => {

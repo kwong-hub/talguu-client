@@ -51,7 +51,7 @@ const SideNav = () => {
                 location.pathname === "/saved_playlist" ? "bg-gray-400" : ""
               }`}>
               <Link to="/saved_playlist">
-                <Tooltip placement="rightTop" title="Saved Playlist">
+                <Tooltip placement="rightTop" title="Saved Videos">
                   <FaSave className={`text-3xl inline text-gray-300 hover:text-white`} />
                 </Tooltip>
               </Link>
@@ -61,7 +61,7 @@ const SideNav = () => {
                 location.pathname === "/purchased_playlist" ? "bg-gray-400" : ""
               }`}>
               <Link to="/purchased_playlist">
-                <Tooltip placement="rightTop" title="Purchased Playlist">
+                <Tooltip placement="rightTop" title="Purchased Videos">
                   <FaFilm className={`text-3xl inline text-gray-300 hover:text-white`} />
                 </Tooltip>
               </Link>
