@@ -9,13 +9,10 @@ import videoService from "../../_services/video.service";
 const StreamForm = () => {
   var history = useHistory();
   const goLive = (values) => {
-    // console.log("values", values);
-    history.push("/live_stream", { ...values });
-    console.log("values", values);
     videoService
       .createStreamKey(values)
       .then((data) => {
-        history.push("/live_stream", { ...values, streamKey: data.stream_key });
+        history.push("/live_stream", { data });
       })
       .catch((err) => console.log("err", err));
   };
@@ -56,9 +53,9 @@ const StreamForm = () => {
           </Form.Item>
           <Form.Item
             name="privacy"
-            label="Select audience"
+            label="Select Privacy"
             hasFeedback
-            rules={[{ required: true, message: "Please select your country!" }]}>
+            rules={[{ required: true, message: "Please select Privacy!" }]}>
             <Select placeholder="Select audience">
               <Option value="PRIVATE">Private</Option>
               <Option value="PUBLIC">Public</Option>

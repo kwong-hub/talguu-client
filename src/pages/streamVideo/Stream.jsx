@@ -12,17 +12,24 @@ import { Option } from "antd/lib/mentions";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const Stream = (props) => {
-  const [property, setProperty] = useState(props.location.state);
+  const [property, setProperty] = useState(props.location.state.data);
   console.log("property", property);
   const [title, setTitle] = useState(property.title);
   const [describe, setDescribe] = useState(property.description);
-  const [streamKey, setStreamKey] = useState(property.streamKey);
+  const [streamKey, setStreamKey] = useState(property.stream_key);
   const [streamURL, setStreamURL] = useState("rtmp://8mspbb.com/show");
   var history = useHistory();
   const goLive = () => {};
-  const copiedMessage=()=>{
-    message.info("Copied!")
-  }
+  const copiedMessage = () => {
+    message.info("Copied!");
+  };
+  const endStream = () => {
+    videoService
+      .endStream(streamKey)
+      .then((data) => history.push("/your_video"))
+      .catch((err) => console.log("err", err));
+    // history.push("/your_video");
+  };
   const videoJsOptions = {
     autoplay: false,
     controls: true,
@@ -48,7 +55,7 @@ const Stream = (props) => {
         />
         <Button
           className="absolute top-3 right-2"
-          onClick={(e) => history.push("/your_video")}
+          onClick={(e) => endStream()}
           key="1"
           type="danger"
         >
@@ -66,7 +73,10 @@ const Stream = (props) => {
                   readOnly
                   value={streamKey}
                   suffix={
-                    <CopyToClipboard text={streamKey} onCopy={() => copiedMessage()}>
+                    <CopyToClipboard
+                      text={streamKey}
+                      onCopy={() => copiedMessage()}
+                    >
                       <span className="cursor-pointer">
                         <FaCopy />
                       </span>
@@ -80,7 +90,10 @@ const Stream = (props) => {
                   readOnly
                   value={streamURL}
                   suffix={
-                    <CopyToClipboard text={streamURL}  onCopy={() => copiedMessage()}>
+                    <CopyToClipboard
+                      text={streamURL}
+                      onCopy={() => copiedMessage()}
+                    >
                       <span className="cursor-pointer">
                         <FaCopy />
                       </span>
@@ -139,10 +152,10 @@ const Stream = (props) => {
               <Form.Item
                 className="w-64 flex"
                 name="select"
-                label="Select audience"
+                label="Select Privacy"
                 hasFeedback
                 rules={[
-                  { required: true, message: "Please select your country!" },
+                  { required: true, message: "Please select your Privacy!" },
                 ]}
               >
                 <Select
