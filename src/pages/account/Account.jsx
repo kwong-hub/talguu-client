@@ -12,7 +12,7 @@ const Account = (props) => {
   var history = useHistory();
   const logout = () => {
     props.logout();
-    history.push("/login");
+    // history.push("/login");
   };
   return (
     <div className="bg-gray-100">

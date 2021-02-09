@@ -1,6 +1,8 @@
 import axios from "./axiosDefault";
 
 import { environment } from "../config/config";
+import { authHeader } from "../_helpers";
+
 
 export default {
   addVideo: async function (body, onUploadProgress) {
@@ -28,9 +30,28 @@ export default {
     }
   },
 
+  createStreamKey: async function (body) {
+    try {
+      const video = await axios.post(`${environment}/video/stream`, {
+        producerId: 2,
+      });
+      return video.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   addThumbnail: async function (body) {
     try {
       const thumb = await axios.post(`${environment}/video/thumbnail`, body);
+      return thumb.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  addTrailer: async function (body) {
+    try {
+      const thumb = await axios.post(`${environment}/video/trailer`, body);
       return thumb.data;
     } catch (error) {
       throw error;

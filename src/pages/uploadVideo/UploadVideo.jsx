@@ -31,8 +31,8 @@ class UploadVideo extends Component {
       this.props.dispatch({ type: VIDEO_READY, payload: this.state.files });
     }
   };
-  successMessage = () => {
-    message.success("Successfull Upload");
+  errorMessage = () => {
+    message.error("Failed to Upload");
   };
 
   dropRef = React.createRef();
@@ -93,7 +93,7 @@ class UploadVideo extends Component {
     const config = {
       onUploadProgress: (progressEvent) => {
         this.setState({
-          progress: Math.round((progressEvent.loaded * 100) / progressEvent.total),
+          progress: Math.round((progressEvent.loaded * 100) / progressEvent.total) - 5,
         });
       },
     };
@@ -104,10 +104,13 @@ class UploadVideo extends Component {
         let data = json.data;
         this.resetState();
         // this.successMessage();
-        // console.log("json", json);
+        console.log("json", json);
         this.props.history.push("/finish-upload", { ...data });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        this.errorMessage();
+        this.resetState();
+      });
   };
   nextClick = (to) => {
     this.setState({ active: to });

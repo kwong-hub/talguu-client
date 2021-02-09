@@ -4,12 +4,20 @@ import { Option } from "antd/lib/mentions";
 import React from "react";
 import { FaInfo } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
+import videoService from "../../_services/video.service";
 
 const StreamForm = () => {
   var history = useHistory();
   const goLive = (values) => {
     // console.log("values", values);
     history.push("/live_stream", { ...values });
+    console.log("values", values);
+    videoService
+      .createStreamKey({})
+      .then((data) => {
+        history.push("/live_stream", { ...values, streamKey: data.stream_key });
+      })
+      .catch((err) => console.log("err", err));
   };
   return (
     <div>

@@ -2,7 +2,7 @@ import { useHistory } from "react-router-dom";
 import { Button, Form, Input, PageHeader, Select } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import React, { useState } from "react";
-import { FaInfo, FaTag, FaUser } from "react-icons/fa";
+import { FaCopy, FaInfo, FaTag, FaUser } from "react-icons/fa";
 import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
 import Header from "../../partials/header/Header";
 import SideNav from "../../partials/sideNav/SideNav";
@@ -12,9 +12,10 @@ import { Option } from "antd/lib/mentions";
 
 const Stream = (props) => {
   const [property, setProperty] = useState(props.location.state);
+  console.log("property", property);
   const [title, setTitle] = useState(property.title);
   const [describe, setDescribe] = useState(property.description);
-  const [streamKey, setStreamKey] = useState("u8ks8Qiq91kjIUH71JK90hkjs7");
+  const [streamKey, setStreamKey] = useState(property.streamKey);
   const [streamURL, setStreamURL] = useState("rmtn://talguu.com/live.go");
   var history = useHistory();
   const goLive = () => {};
@@ -57,11 +58,25 @@ const Stream = (props) => {
               <h2 className="text-lg font-semibold">Stream Setting</h2>
               <div className="flex flex-col items-start my-2">
                 <span>Stream Key</span>
-                <Input value={streamKey} suffix="Copy" />
+                <Input
+                  value={streamKey}
+                  suffix={
+                    <span className="cursor-pointer">
+                      <FaCopy />
+                    </span>
+                  }
+                />
               </div>
               <div className="flex flex-col items-start my-2">
                 <span>Stream URL</span>
-                <Input value={streamURL} suffix="Copy" />
+                <Input
+                  value={streamURL}
+                  suffix={
+                    <span className="cursor-pointer">
+                      <FaCopy />
+                    </span>
+                  }
+                /> 
               </div>
             </div>
           </div>
@@ -74,7 +89,7 @@ const Stream = (props) => {
                 remember: true,
                 title: property.title,
                 description: property.description,
-                select:property.select
+                select: property.select,
               }}
               onFinish={goLive}
             >
@@ -120,7 +135,10 @@ const Stream = (props) => {
                   { required: true, message: "Please select your country!" },
                 ]}
               >
-                <Select placeholder="Select audience"  className="rounded-lg w-20 text-gray-700 text-base p-2">
+                <Select
+                  placeholder="Select audience"
+                  className="rounded-lg w-20 text-gray-700 text-base p-2"
+                >
                   <Option value="private">Private</Option>
                   <Option value="public">Public</Option>
                 </Select>
