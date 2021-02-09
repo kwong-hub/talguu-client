@@ -17,19 +17,18 @@ const EditUploadVideos = (props) => {
   const [describe, setDescribe] = useState(video.describe);
 
   const publishVideo = () => {
-    console.log("title,describe", title, describe);
+    // console.log("title,describe", title, describe);
 
     videoService
-      .updateVideo({ id:video.id,title: title, describe: describe })
+      .updateVideo({ id: video.id, title: title, describe: describe })
       .then((data) => {
-        if(data[0]){
-          history.push("/your_video")
+        if (data[0]) {
+          history.push("/your_video");
         }
       })
       .catch((err) => {
-        console.log('err', err)
+        console.log("err", err);
       });
-
   };
   const videoJsOptions = {
     autoplay: false,
@@ -53,12 +52,7 @@ const EditUploadVideos = (props) => {
         title="Edit Video"
         subTitle="Add extra additional infromation"
       />
-      <Button
-        className="absolute top-3 right-2"
-        onClick={publishVideo}
-        key="1"
-        type="primary"
-      >
+      <Button className="absolute top-3 right-2" onClick={publishVideo} key="1" type="primary">
         Publish Changes
       </Button>
       <div className="flex mx-4">
@@ -72,14 +66,12 @@ const EditUploadVideos = (props) => {
               title: video.title,
               description: video.describe,
             }}
-            onFinish={publishVideo}
-          >
+            onFinish={publishVideo}>
             <Form.Item
               label="Title"
               name="title"
               className="text-lg text-gray-600"
-              rules={[{ required: true, message: "Please input your Title!" }]}
-            >
+              rules={[{ required: true, message: "Please input your Title!" }]}>
               <Input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -90,10 +82,7 @@ const EditUploadVideos = (props) => {
             <Form.Item
               label="Description"
               name="description"
-              rules={[
-                { required: false, message: "Please input your Description!" },
-              ]}
-            >
+              rules={[{ required: false, message: "Please input your Description!" }]}>
               <TextArea
                 value={describe}
                 onChange={(e) => setDescribe(e.target.value)}
@@ -118,16 +107,16 @@ const EditUploadVideos = (props) => {
             <div className="flex flex-col items-start justify-start">
               <h2 className="text-lg">Thumbnail</h2>
               <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                Select or upload a picture that shows what's in your video. A
-                good thumbnail stands out and draws viewers' attention.
+                Select or upload a picture that shows what's in your video. A good thumbnail stands
+                out and draws viewers' attention.
               </h3>
               <Thumbnail video={video.id} thumbnails={video.thumbnial} />
             </div>
             <div className="flex flex-col items-start justify-start">
               <h2 className="text-lg">Trailer</h2>
               <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                Select or upload a trailer that shows what's in your video in a
-                minute. A good trailer draws viewers' attention.
+                Select or upload a trailer that shows what's in your video in a minute. A good
+                trailer draws viewers' attention.
               </h3>
               <Trailer />
             </div>

@@ -8,7 +8,7 @@ import SavedPlayList from "../pages/savedPlaylist/SavedPlayList";
 import Settings from "../pages/settings/Settings";
 // import StreamVideo from "../pages/streamVideo/StreamVideo";
 import UploadVideo from "../pages/uploadVideo/UploadVideo";
-import WatchVideo from "../pages/watchVideo/WatchVideo";
+import Videos from "../pages/videos/Videos";
 import { Login } from "../pages/authentication/Login";
 import Signup from "../pages/authentication/Signup";
 import YourVideo from "../pages/yourVideos/YourVideo";
@@ -19,6 +19,8 @@ import NotFound from "../pages/NotFound";
 import EditUploadVideos from "../pages/uploadVideo/EditUploadVideos";
 import StreamVideo from "../pages/streamVideo/StreamVideo";
 import Stream from "../pages/streamVideo/Stream";
+import PurchasedPlaylist from "../pages/purchasedPlaylist/PurchasedPlaylist";
+import WatchVideo from "../pages/watchVideo/WatchVideo";
 
 const Router = () => {
   return (
@@ -26,8 +28,10 @@ const Router = () => {
       {/* <Home /> */}
       <BrowserRouter>
         <Switch>
-          <PrivateRoute exact path="/" component={WatchVideo} />
+          <Route exact path="/" component={Videos} />
+          <Route path="/watch/:vidId" component={WatchVideo} />
           <PrivateRoute path="/saved_playlist" component={SavedPlayList} />
+          <PrivateRoute path="/purchased_playlist" component={PurchasedPlaylist} />
           <PrivateRoute path="/upload_video" component={UploadVideo} />
           <PrivateRoute path="/stream_video" component={StreamVideo} />
           <PrivateRoute path="/your_video" component={YourVideo} />

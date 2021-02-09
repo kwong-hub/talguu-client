@@ -70,6 +70,7 @@ function* videoUpload(action) {
 function* getViewerVideosAsync(action) {
   let res = yield call(videoService.getViewerVideos);
   if (res.success) {
+    // console.log(res.data);
     yield put({ type: VIEWER_VIDEOS_SUCCESS, payload: res.data });
   } else {
     // if (res.error.toString().includes("401")) {
@@ -82,6 +83,7 @@ function* getViewerVideosAsync(action) {
 }
 
 function* getPaidVideoUrlAsync(action) {
+  // console.log(action);
   let video = yield call(videoService.getPaidVideoUrl, action.payload);
 
   if (video && video) {

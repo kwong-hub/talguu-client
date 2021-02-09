@@ -3,8 +3,8 @@ import { Upload, Modal, Button, message } from "antd";
 import { FaPlus } from "react-icons/fa";
 import videoService from "../../_services/video.service";
 const intialState = {
-  uploading:false,
-  uploaded:false,
+  uploading: false,
+  uploaded: false,
   previewVisible: false,
   previewImage: "",
   previewTitle: "",
@@ -14,8 +14,7 @@ const intialState = {
       uid: "-1",
       name: "image.png",
       status: "done",
-      url:
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
     },
   ],
 };
@@ -39,35 +38,34 @@ export class Thumbnail extends Component {
     this.setState({
       previewImage: file.url || file.preview,
       previewVisible: true,
-      previewTitle:
-        file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
+      previewTitle: file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
     });
   };
 
-  handleChange = ({fileList}) => {
-    console.log("fileList", fileList);
-    console.log("this.props", this.props);
-    this.setState({uploading:true})
+  handleChange = ({ fileList }) => {
+    // console.log("fileList", fileList);
+    // console.log("this.props", this.props);
+    this.setState({ uploading: true });
     this.setState({ fileList });
   };
   successMessage = () => {
     message.success("Successfull Upload");
   };
 
-  onUpload=()=>{
-    this.setState({uploaded:true})
+  onUpload = () => {
+    this.setState({ uploaded: true });
     var formData = new FormData();
     formData.append("id", this.props.video);
-    formData.append("picture",this.state.fileList[1].originFileObj);
+    formData.append("picture", this.state.fileList[1].originFileObj);
     videoService
       .addThumbnail(formData)
       .then((data) => {
-        console.log('data', data);
-        this.setState({uploading:false,uploaded:false})
+        // console.log("data", data);
+        this.setState({ uploading: false, uploaded: false });
         this.successMessage();
       })
       .catch((err) => console.log("err", err));
-  }
+  };
 
   render() {
     const { previewVisible, previewImage, fileList, previewTitle } = this.state;
@@ -85,16 +83,14 @@ export class Thumbnail extends Component {
           fileList={fileList}
           onPreview={this.handlePreview}
           onChange={this.handleChange}
-          className="w-auto m-2"
-        >
+          className="w-auto m-2">
           {fileList.length >= 2 ? null : uploadButton}
         </Upload>
         <Modal
           visible={previewVisible}
           title={previewTitle}
           footer={null}
-          onCancel={this.handleCancel}
-        >
+          onCancel={this.handleCancel}>
           <img alt="example" style={{ width: "100%" }} src={previewImage} />
         </Modal>
         {this.state.uploading && (
@@ -103,8 +99,7 @@ export class Thumbnail extends Component {
             type="primary"
             onClick={this.onUpload}
             loading={this.state.uploaded}
-            style={{ marginTop: 16 }}
-          >
+            style={{ marginTop: 16 }}>
             {this.state.uploaded ? "Uploading" : "Start Upload"}
           </Button>
         )}

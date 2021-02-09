@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 const StreamForm = () => {
   var history = useHistory();
   const goLive = (values) => {
-    console.log("values", values);
+    // console.log("values", values);
     history.push("/live_stream", { ...values });
   };
   return (
@@ -23,18 +23,13 @@ const StreamForm = () => {
             title: "",
             description: "",
           }}
-          onFinish={goLive}
-        >
+          onFinish={goLive}>
           <Form.Item
             label="Title"
             name="title"
             className="text-lg text-gray-600"
-            rules={[{ required: true, message: "Please input your Title!" }]}
-          >
-            <Input
-              className="rounded-md text-gray-700 text-md p-2"
-              placeholder="Title*"
-            />
+            rules={[{ required: true, message: "Please input your Title!" }]}>
+            <Input className="rounded-md text-gray-700 text-md p-2" placeholder="Title*" />
           </Form.Item>
           <Form.Item
             label="Description"
@@ -44,8 +39,7 @@ const StreamForm = () => {
                 required: false,
                 message: "Please input your Description!",
               },
-            ]}
-          >
+            ]}>
             <TextArea
               className="rounded-md text-gray-700 text-md p-2"
               prefix={<FaInfo className="site-form-item-icon" />}
@@ -56,8 +50,7 @@ const StreamForm = () => {
             name="select"
             label="Select audience"
             hasFeedback
-            rules={[{ required: true, message: "Please select your country!" }]}
-          >
+            rules={[{ required: true, message: "Please select your country!" }]}>
             <Select placeholder="Select audience">
               <Option value="private">Private</Option>
               <Option value="public">Public</Option>
@@ -69,8 +62,7 @@ const StreamForm = () => {
               type="primary"
               htmlType="submit"
               shape="round"
-              className="login-form-button w-full"
-            >
+              className="login-form-button w-full">
               Start Stream
             </Button>
           </Form.Item>
