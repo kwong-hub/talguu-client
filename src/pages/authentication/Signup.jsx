@@ -8,7 +8,7 @@ export class Signup extends Component {
   state = {};
 
   onFinish = (values) => {
-    console.log("Received values of form: ", values);
+    // console.log("Received values of form: ", values);
     // userService
     //   .login(values)
     //   .then((resp) => {

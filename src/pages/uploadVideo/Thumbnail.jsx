@@ -17,8 +17,7 @@ const intialState = {
       uid: "-1",
       name: "image.png",
       status: "done",
-      url:
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
     },
   ],
 };
@@ -43,8 +42,7 @@ export class Thumbnail extends Component {
       file.type !== "images/jpg"
     ) {
       this.setState({
-        formatError:
-          "Unsupported file type! File type should be .png .jpeg, .jpg",
+        formatError: "Unsupported file type! File type should be .png .jpeg, .jpg",
       });
       return false;
     }
@@ -60,14 +58,13 @@ export class Thumbnail extends Component {
     this.setState({
       previewImage: file.url || file.preview,
       previewVisible: true,
-      previewTitle:
-        file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
+      previewTitle: file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
     });
   };
 
   handleChange = ({ fileList }) => {
-    console.log("fileList", fileList);
-    console.log("this.props", this.props);
+    // console.log("fileList", fileList);
+    // console.log("this.props", this.props);
     this.setState({ uploading: true });
     this.setState({ fileList });
   };
@@ -83,7 +80,7 @@ export class Thumbnail extends Component {
     videoService
       .addThumbnail(formData)
       .then((data) => {
-        console.log("data", data);
+        // console.log("data", data);
         this.setState({ uploading: false, uploaded: false });
         this.successMessage();
       })
@@ -106,8 +103,7 @@ export class Thumbnail extends Component {
             fileList={fileList}
             onPreview={this.handlePreview}
             onChange={this.handleChange}
-            className="w-auto m-2"
-          >
+            className="w-auto m-2">
             {fileList.length >= 2 ? null : uploadButton}
           </Upload>
         </ImgCrop>
@@ -116,13 +112,10 @@ export class Thumbnail extends Component {
           visible={previewVisible}
           title={previewTitle}
           footer={null}
-          onCancel={this.handleCancel}
-        >
+          onCancel={this.handleCancel}>
           <img alt="example" style={{ width: "100%" }} src={previewImage} />
         </Modal>
-        <p className="bg-gray-100 text-red-600 text-sm">
-          {this.state.formatError}
-        </p>
+        <p className="bg-gray-100 text-red-600 text-sm">{this.state.formatError}</p>
 
         {this.state.uploading && (
           <Button
@@ -130,8 +123,7 @@ export class Thumbnail extends Component {
             type="primary"
             onClick={this.onUpload}
             loading={this.state.uploaded}
-            style={{ marginTop: 16 }}
-          >
+            style={{ marginTop: 16 }}>
             {this.state.uploaded ? "Uploading" : "Start Upload"}
           </Button>
         )}

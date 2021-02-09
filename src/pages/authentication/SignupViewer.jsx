@@ -67,7 +67,7 @@ const SignupViewer = () => {
   };
 
   const onPaymentFinish = (values) => {
-    console.log(values);
+    // console.log(values);
   };
 
   const renderPersonal = () => {
@@ -211,7 +211,7 @@ const SignupViewer = () => {
   };
 
   const onYearChange = (event) => {
-    console.log(event);
+    // console.log(event);
   };
 
   const renderPayment = () => {

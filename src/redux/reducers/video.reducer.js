@@ -15,7 +15,8 @@ const INITIAL_STATE = {
   videoStatus: null,
   errMessages: null,
   viewerVideos: [],
-  video_link: "",
+  currentVideo: null,
+  video_link: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -32,7 +33,7 @@ export default (state = INITIAL_STATE, action) => {
     case VIEWER_VIDEOS_FAILURE:
       return { ...state, errMessages: action.payload };
     case GET_PAID_VIDEO_URL_SUCCESS:
-      return { ...state, video_link: action.payload.video_link };
+      return { ...state, currentVideo: action.payload };
     case GET_PAID_VIDEO_URL_FAILURE:
       return { ...state, errMessages: action.payload };
     case PURCHASE_VIDEO_SUCCESS:

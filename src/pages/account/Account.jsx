@@ -6,19 +6,17 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Header from "../../partials/header/Header";
 
-
 const Account = (props) => {
-  console.log('props', props);
-  
+  // console.log('props', props);
+
   var history = useHistory();
   const logout = () => {
     props.logout();
     // history.push("/login");
   };
   return (
-
     <div className="bg-gray-100">
-      <Header className="transparent bg-opacity-20" ></Header>
+      <Header className="transparent bg-opacity-20"></Header>
 
       <section className="relative block w-full" style={{ height: "340px" }}>
         <div
@@ -26,16 +24,13 @@ const Account = (props) => {
           style={{
             backgroundImage:
               "url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80')",
-          }}
-        ></div>
+          }}></div>
         <span
           id="blackOverlay"
-          className="w-full h-full left-0 top-0 bg-center bg-cover absolute bg-opacity-70 bg-blue-900"
-        ></span>
+          className="w-full h-full left-0 top-0 bg-center bg-cover absolute bg-opacity-70 bg-blue-900"></span>
         <div
           className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden"
-          style={{ height: "70px", transform: "translateZ(0)" }}
-        >
+          style={{ height: "70px", transform: "translateZ(0)" }}>
           <svg
             className="absolute bottom-0 overflow-hidden"
             xmlns="http://www.w3.org/2000/svg"
@@ -43,12 +38,10 @@ const Account = (props) => {
             version="1.1"
             viewBox="0 0 2560 100"
             x="0"
-            y="0"
-          >
+            y="0">
             <polygon
               className="text-gray-100 fill-current"
-              points="2560 0 2560 100 0 100"
-            ></polygon>
+              points="2560 0 2560 100 0 100"></polygon>
           </svg>
         </div>
       </section>
@@ -72,8 +65,7 @@ const Account = (props) => {
                       onClick={(e) => logout()}
                       className="bg-blue-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1"
                       type="button"
-                      style={{ transition: "all .15s ease" }}
-                    >
+                      style={{ transition: "all .15s ease" }}>
                       Log-out
                     </button>
                   </div>
@@ -104,13 +96,12 @@ const Account = (props) => {
               </div>
               <div className="text-center mt-12">
                 <h3 className="text-4xl font-semibold leading-normal text-gray-800 mb-2">
-                 {props.user.name}
+                  {props.user.name}
                 </h3>
                 <div className="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
                   <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>{" "}
                   {props.user.email}
                 </div>
-               
               </div>
             </div>
           </div>
