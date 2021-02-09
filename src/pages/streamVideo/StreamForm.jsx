@@ -9,12 +9,8 @@ import videoService from "../../_services/video.service";
 const StreamForm = () => {
   var history = useHistory();
   const goLive = (values) => {
-<<<<<<< Updated upstream
-  
-=======
     history.push("/live_stream", { ...values });
     console.log("values", values);
->>>>>>> Stashed changes
     videoService
       .createStreamKey(values)
       .then((data) => {
