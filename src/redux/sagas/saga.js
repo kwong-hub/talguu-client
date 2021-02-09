@@ -11,6 +11,9 @@ import {
   GET_PAID_VIDEO_URL_ASYNC,
   GET_PAID_VIDEO_URL_FAILURE,
   GET_PAID_VIDEO_URL_SUCCESS,
+  PAID_VIEWER_VIDEOS_ASYNC,
+  PAID_VIEWER_VIDEOS_FAILURE,
+  PAID_VIEWER_VIDEOS_SUCCESS,
   PURCHASE_VIDEO_ASYNC,
   PURCHASE_VIDEO_FAILURE,
   PURCHASE_VIDEO_SUCCESS,
@@ -70,14 +73,8 @@ function* videoUpload(action) {
 function* getViewerVideosAsync(action) {
   let res = yield call(videoService.getViewerVideos);
   if (res.success) {
-    // console.log(res.data);
     yield put({ type: VIEWER_VIDEOS_SUCCESS, payload: res.data });
   } else {
-    // if (res.error.toString().includes("401")) {
-    //   userService.logout();
-    //   // yield put({ type: ERROR_UNAUTHORIZED });
-    // } else {
-    // }
     yield put({ type: VIEWER_VIDEOS_FAILURE, payload: "Server Error" });
   }
 }
@@ -103,6 +100,15 @@ function* purchaseVideoAsync(action) {
   }
 }
 
+function* getPaidUserVideosAsync(action) {
+  let res = yield call(videoService.getPaidUserVideos);
+  if (res.success) {
+    yield put({ type: PAID_VIEWER_VIDEOS_SUCCESS, payload: res.data });
+  } else {
+    yield put({ type: PAID_VIEWER_VIDEOS_FAILURE, payload: "Server Error" });
+  }
+}
+
 function* videoOnReady(action) {
   yield put({ type: VIDEO_READY, payload: action.payload });
 }
@@ -119,6 +125,7 @@ function* watchAll() {
     takeLatest(VIEWER_VIDEOS_ASYNC, getViewerVideosAsync),
     takeLatest(GET_PAID_VIDEO_URL_ASYNC, getPaidVideoUrlAsync),
     takeLatest(PURCHASE_VIDEO_ASYNC, purchaseVideoAsync),
+    takeLatest(PAID_VIEWER_VIDEOS_ASYNC, getPaidUserVideosAsync),
   ]);
 }
 

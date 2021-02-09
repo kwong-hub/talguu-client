@@ -2,26 +2,14 @@ import React, { Component } from "react";
 import SideNav from "../../partials/sideNav/SideNav";
 import { connect } from "react-redux";
 import { Button, Input, Tooltip, Modal, Radio } from "antd";
-import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
-import {
-  FaPlayCircle,
-  FaSearch,
-  FaHeart,
-  FaHeartBroken,
-  FaClock,
-  FaDollarSign,
-} from "react-icons/fa";
+import { FaPlayCircle, FaSearch, FaClock, FaDollarSign } from "react-icons/fa";
 import "./Videos.css";
 import moment from "moment";
 
 import mastercard from "../../assets/images/mastercard.png";
 import visa from "../../assets/images/visa.png";
-import {
-  GET_PAID_VIDEO_URL_ASYNC,
-  PURCHASE_VIDEO_ASYNC,
-  VIEWER_VIDEOS_ASYNC,
-} from "../../redux/types";
-import { withRouter } from "react-router-dom";
+import { PURCHASE_VIDEO_ASYNC, VIEWER_VIDEOS_ASYNC } from "../../redux/types";
+import { Link, withRouter } from "react-router-dom";
 
 const { Search } = Input;
 
@@ -188,69 +176,17 @@ export class Videos extends Component {
     );
   };
 
-  renderPlayer() {
-    const videoJsOptions = {
-      autoplay: this.state.autoplay,
-      controls: true,
-      thubnail: this.state.currentVideo ? this.state.currentVideo.thumbnial : "",
-      aspectRatio: "16:9",
-      responsive: true,
-      sources: [
-        {
-          src: this.state.currentVideo
-            ? this.props.video_link
-              ? this.state.currentVideo.video_link
-              : this.state.currentVideo.trailer
-            : "",
-          type: "video/mp4",
-        },
-      ],
-    };
-    if (this.state.currentVideo) {
-      return (
-        <>
-          <div className="flex ml-2 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
-            <VideoPlayer {...videoJsOptions}></VideoPlayer>
-          </div>
-          <div className="flex-col ml-2 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
-            <div className="text-gray-800 lg:text-2xl text-md w-full text-left">
-              {this.state.currentVideo?.title}
-            </div>
-            <div className="flex justify-between text-gray-800 text-2xl w-full text-left">
-              <div className="flex items-end">
-                <span className="text-gray-400 text-lg">
-                  {" "}
-                  {this.state.currentVideo?.viewVount} views
-                </span>
-                <span className="text-gray-600 ml-4 text-base">
-                  {moment(this.state.currentVideo?.premiered).format("MMM DD, YYYY")}
-                </span>
-              </div>
-              <div className="flex">
-                <Tooltip placement="bottom" title="Like">
-                  <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg">
-                    {this.state.currentVideo?.likeCount} <FaHeart className="ml-1" />
-                  </span>
-                </Tooltip>
-                <Tooltip placement="bottom" title="Dislike">
-                  <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2">
-                    {9} <FaHeartBroken className="ml-1" />
-                  </span>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
-        </>
-      );
-    }
-  }
-
   render = () => {
     const suffix = <FaSearch className="text-xl text-gray-300" />;
     return (
       <div className="pt-2 ml-14" ref={this.playerRef}>
         <SideNav></SideNav>
         <div className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl max-h-12">
+          <div className="text-2xl mr-4 flex items-center justify-center header_title text-gray-500">
+            <Link to="/" className="flex items-center">
+              TALGUU
+            </Link>
+          </div>
           <Search
             placeholder="Search videos here..."
             enterButton="Search"
@@ -259,16 +195,9 @@ export class Videos extends Component {
             onSearch={this.onSearch}
           />
         </div>
-        {this.renderPlayer()}
-        {this.state.currentVideo ? (
-          <div className="flex relative lg:absolute right-0  bottom-0 border-2 mt-4 lg:top-0 lg:flex-col lg:ml-0 flex-wrap lg:flex-nowrap xl:w-1/4 lg:w-1/5 lg:min-h-full border-white">
-            {this.renderVideos()}
-          </div>
-        ) : (
-          <div className="flex relative right-0  bottom-0 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
-            {this.renderVideos()}
-          </div>
-        )}
+        <div className="flex relative mt-8 md:mt-0 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
+          {this.renderVideos()}
+        </div>
         {this.renderPaymentModal()}
       </div>
     );
