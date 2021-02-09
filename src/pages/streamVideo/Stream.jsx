@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import { Button, Form, Input, PageHeader, Select } from "antd";
+import { Button, Form, Input, message, PageHeader, Select } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import React, { useState } from "react";
 import { FaCopy, FaInfo, FaTag, FaUser } from "react-icons/fa";
@@ -9,16 +9,27 @@ import SideNav from "../../partials/sideNav/SideNav";
 import videoService from "../../_services/video.service";
 import Thumbnail from "../uploadVideo/Thumbnail";
 import { Option } from "antd/lib/mentions";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const Stream = (props) => {
-  const [property, setProperty] = useState(props.location.state);
+  const [property, setProperty] = useState(props.location.state.data);
   console.log("property", property);
   const [title, setTitle] = useState(property.title);
   const [describe, setDescribe] = useState(property.description);
-  const [streamKey, setStreamKey] = useState(property.streamKey);
-  const [streamURL, setStreamURL] = useState("rmtn://talguu.com/live.go");
+  const [streamKey, setStreamKey] = useState(property.stream_key);
+  const [streamURL, setStreamURL] = useState("rtmp://8mspbb.com/show");
   var history = useHistory();
   const goLive = () => {};
+  const copiedMessage = () => {
+    message.info("Copied!");
+  };
+  const endStream = () => {
+    videoService
+      .endStream(streamKey)
+      .then((data) => history.push("/your_video"))
+      .catch((err) => console.log("err", err));
+    // history.push("/your_video");
+  };
   const videoJsOptions = {
     autoplay: false,
     controls: true,
@@ -26,8 +37,8 @@ const Stream = (props) => {
     responsive: true,
     sources: [
       {
-        src: "",
-        type: "video/mkv",
+        src: `http://8mspbb.com/hls/${streamKey}.m3u8`,
+        type: "application/x-mpegURL",
       },
     ],
   };
@@ -44,7 +55,7 @@ const Stream = (props) => {
         />
         <Button
           className="absolute top-3 right-2"
-          onClick={(e) => history.push("/your_video")}
+          onClick={(e) => endStream()}
           key="1"
           type="danger"
         >
@@ -59,24 +70,36 @@ const Stream = (props) => {
               <div className="flex flex-col items-start my-2">
                 <span>Stream Key</span>
                 <Input
+                  readOnly
                   value={streamKey}
                   suffix={
-                    <span className="cursor-pointer">
-                      <FaCopy />
-                    </span>
+                    <CopyToClipboard
+                      text={streamKey}
+                      onCopy={() => copiedMessage()}
+                    >
+                      <span className="cursor-pointer">
+                        <FaCopy />
+                      </span>
+                    </CopyToClipboard>
                   }
                 />
               </div>
               <div className="flex flex-col items-start my-2">
                 <span>Stream URL</span>
                 <Input
+                  readOnly
                   value={streamURL}
                   suffix={
-                    <span className="cursor-pointer">
-                      <FaCopy />
-                    </span>
+                    <CopyToClipboard
+                      text={streamURL}
+                      onCopy={() => copiedMessage()}
+                    >
+                      <span className="cursor-pointer">
+                        <FaCopy />
+                      </span>
+                    </CopyToClipboard>
                   }
-                /> 
+                />
               </div>
             </div>
           </div>
@@ -89,7 +112,7 @@ const Stream = (props) => {
                 remember: true,
                 title: property.title,
                 description: property.description,
-                select: property.select,
+                select: property.privacy,
               }}
               onFinish={goLive}
             >
@@ -129,10 +152,10 @@ const Stream = (props) => {
               <Form.Item
                 className="w-64 flex"
                 name="select"
-                label="Select audience"
+                label="Select Privacy"
                 hasFeedback
                 rules={[
-                  { required: true, message: "Please select your country!" },
+                  { required: true, message: "Please select your Privacy!" },
                 ]}
               >
                 <Select

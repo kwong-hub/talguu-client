@@ -32,13 +32,24 @@ export default {
   createStreamKey: async function (body) {
     try {
       const video = await axios.post(`${environment}/video/stream`, {
-        producerId: 2,
+        ...body
       });
       return video.data;
     } catch (error) {
       throw error;
     }
   },
+  endStream: async function (body) {
+    try {
+      const video = await axios.patch(`${environment}/video/end/stream`, {
+        stream_key:body
+      });
+      return video.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
 
   addThumbnail: async function (body) {
     try {
