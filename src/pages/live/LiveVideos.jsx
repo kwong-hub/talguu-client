@@ -43,7 +43,7 @@ export class LiveVideos extends Component {
 
   playVideo = (video) => {
     console.log("video", video);
-    this.setState({ currentLive: video.stream_key });
+    this.setState({ currentLive: video });
   };
 
   playTrailer = (video) => {
@@ -216,13 +216,13 @@ export class LiveVideos extends Component {
 
   render = () => {
     const videoJsOptions = {
-      autoplay: false,
+      autoplay: true,
       controls: true,
       aspectRatio: "21:9",
       responsive: true,
       sources: [
         {
-          src: `http://8mspbb.com/hls/${this.state.currentLive}.m3u8`,
+          src: `http://8mspbb.com/hls/${this.state.currentLive?.stream_key}.m3u8`,
           type: "application/x-mpegURL",
         },
       ],
@@ -250,11 +250,13 @@ export class LiveVideos extends Component {
           <p className="text-lg font-semibold text-blue-700">Live Videos</p>
         </div>
         {this.state.currentLive && (
-          <div className="flex ml-2 my-6 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
+          <div className="flex flex-col items-start ml-2 my-6 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
             <VideoPlayer {...videoJsOptions}></VideoPlayer>
+            <p className="text-xl py-2 ">{this.state.currentLive?.title}</p>
           </div>
         )}
         <div className="flex relative mt-12 md:mt-0 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
+          
           {this.renderVideos()}
         </div>
         {this.renderPaymentModal()}
