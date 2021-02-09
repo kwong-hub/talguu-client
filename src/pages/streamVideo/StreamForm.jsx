@@ -11,7 +11,7 @@ const StreamForm = () => {
   const goLive = (values) => {
     console.log("values", values);
     videoService
-      .createStreamKey({})
+      .createStreamKey(values)
       .then((data) => {
         history.push("/live_stream", { ...values, streamKey:data.stream_key });
       })
@@ -59,14 +59,14 @@ const StreamForm = () => {
             />
           </Form.Item>
           <Form.Item
-            name="select"
+            name="privacy"
             label="Select audience"
             hasFeedback
             rules={[{ required: true, message: "Please select your country!" }]}
           >
             <Select placeholder="Select audience">
-              <Option value="private">Private</Option>
-              <Option value="public">Public</Option>
+              <Option value="PRIVATE">Private</Option>
+              <Option value="PUBLIC">Public</Option>
             </Select>
           </Form.Item>
 
