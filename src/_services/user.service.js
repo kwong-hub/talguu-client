@@ -14,7 +14,6 @@ function login({ email, password }) {
 function logout() {
   // remove user from local storage to log user out
   localStorage.removeItem("user");
-
 }
 
 async function getUser() {
@@ -24,6 +23,10 @@ async function getUser() {
   } catch (error) {
     throw error;
   }
+}
+
+function getLocalUser() {
+  return JSON.parse(localStorage.getItem("user"));
 }
 
 /// this might help to do some intercept handle 403 401 request
@@ -66,4 +69,5 @@ export const userService = {
   logout,
   createProducer,
   createViewer,
+  getLocalUser,
 };
