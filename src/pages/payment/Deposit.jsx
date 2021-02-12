@@ -226,16 +226,16 @@ const Deposit = (props) => {
       <SideNav />
       <section></section>
       <section className="max-w-lg min-w-max w-1/2 shadow-md rounded-lg bg-white p-4">
-        <div className="m-4 py-2 px-2 border rounded-full border-gray-100 text-gray-700 ">
+        <div className="m-4 py-2 px-2 border rounded-full border-gray-100 text-gray-700 text-lg">
           Balance
           <span className="font-black px-2">{balance}$</span>
         </div>
-        <h2 className="text-xl text-gray-600 py-4">Payment</h2>
+        <h2 className="text-xl text-gray-800 font-semibold py-4">Payment</h2>
         <div className="flex justify-center pb-4">
-          <span className=" p-2 rounded-xl cursor-pointer">
+          <span className=" px-2 rounded-xl cursor-pointer hover:shadow-lg">
             <img src={mastercard} alt="" className="h-10" />
           </span>
-          <span className=" cursor-pointer rounded-lg hover:shadow-lg p-2">
+          <span className=" cursor-pointer rounded-lg hover:shadow-lg px-2">
             <img src={paypall} alt="" className="h-11" />
           </span>
         </div>
@@ -258,10 +258,10 @@ const Deposit = (props) => {
               onClick={(e) => selectCard(item)}
               className="mx-4 px-8 py-4 cursor-pointer border border-gray-50 hover:border-gray-100 hover:shadow-md hover:bg-gray-100 hover:text-blue-500 bg-white flex flex-col items-start  shadow-sm"
             >
-              <div className="font-semibold text-md flex flex-col  items-center md:flex-row">
+              <div className="w-full font-semibold text-md flex flex-col relative md:flex-row">
                 <span className="mr-2">{item.firstName}</span>
                 <span> {item.lastName}</span>
-                <div className="ml-12">
+                <div className="absolute top-1 right-2">
                   {item.cardType === "MASTER_CARD" && (
                     <div>
                       {" "}
