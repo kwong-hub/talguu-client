@@ -23,7 +23,6 @@ const Deposit = (props) => {
   const [cardNumber, setCardNumber] = useState([]);
   const [selectedCard, setselectedCard] = useState();
   const [newFormCard, setNewCard] = useState(false);
-  console.log("selectedCard", selectedCard);
   const onFinish = (values) => {
     console.log("values", values);
     if (selectedCard) {
@@ -56,6 +55,10 @@ const Deposit = (props) => {
     paymentService
       .getPaymentInfos(user.username)
       .then(paymentInfo)
+      .catch((err) => console.log("err", err));
+    paymentService
+      .getBalance()
+      .then((data) => console.log("data", data))
       .catch((err) => console.log("err", err));
     return () => {};
   }, []);

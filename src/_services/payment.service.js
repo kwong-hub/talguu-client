@@ -10,6 +10,15 @@ async function getPaymentInfos(username) {
   }
 }
 
+async function getBalance() {
+  try {
+    const payment = await axios.get(`${environment}/payment/balance`);
+    return payment.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function addDeposit(data) {
   try {
     const payment = await axios.post(`${environment}/payment/deposit`, data);
@@ -21,5 +30,6 @@ async function addDeposit(data) {
 
 export const paymentService = {
   getPaymentInfos,
+  getBalance,
   addDeposit,
 };
