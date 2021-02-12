@@ -33,6 +33,7 @@ const Router = () => {
           <Route path="/watch/:vidId" component={WatchVideo} />
           <PrivateRoute path="/live_video" component={LiveVideos} />
           <PrivateRoute path="/purchased_playlist" component={PurchasedPlaylist} />
+          <PrivateRoute path="/saved_later" component={SavedPlayList} />
           <PrivateRoute path="/upload_video" component={UploadVideo} />
           <PrivateRoute path="/stream_video" component={StreamVideo} />
           <PrivateRoute path="/your_video" component={YourVideo} />

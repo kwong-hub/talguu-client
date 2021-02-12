@@ -34,6 +34,12 @@ import {
   GET_USER_PAYMENT_INFOS_ASYNC,
   GET_USER_PAYMENT_INFOS_SUCCESS,
   GET_USER_PAYMENT_INFOS_FAILURE,
+  SAVE_LATER_ASYNC,
+  SAVE_LATER_SUCCESS,
+  SAVE_LATER_FAILURE,
+  GET_SAVED_VIDEOS_ASYNC,
+  GET_SAVED_VIDEOS_SUCCESS,
+  GET_SAVED_VIDEOS_FAILURE,
 } from "../types";
 import { userConstants } from "../../_constants";
 import { userService } from "../../_services/user.service";
@@ -119,12 +125,31 @@ function* purchaseVideoAsync(action) {
   }
 }
 
+function* saveLaterVideoAsync(action) {
+  let res = yield call(videoService.saveVideoLater, action.payload);
+
+  if (res && res.success) {
+    yield put({ type: SAVE_LATER_SUCCESS, payload: res.video });
+  } else {
+    yield put({ type: SAVE_LATER_FAILURE, payload: res.video });
+  }
+}
+
 function* getPaidUserVideosAsync(action) {
   let res = yield call(videoService.getPaidUserVideos);
   if (res.success) {
     yield put({ type: PAID_VIEWER_VIDEOS_SUCCESS, payload: res.data });
   } else {
     yield put({ type: PAID_VIEWER_VIDEOS_FAILURE, payload: "Server error" });
+  }
+}
+
+function* getSavedVideosAsync(action) {
+  let res = yield call(videoService.getSavedUserVideos);
+  if (res.success) {
+    yield put({ type: GET_SAVED_VIDEOS_SUCCESS, payload: res.data });
+  } else {
+    yield put({ type: GET_SAVED_VIDEOS_FAILURE, payload: "Server error" });
   }
 }
 
@@ -167,7 +192,9 @@ function* watchAll() {
     takeLatest(VIEWER_VIDEOS_ASYNC, getViewerVideosAsync),
     takeLatest(VIEWER_LIVE_ASYNC, getViewerLiveVideos),
     takeLatest(GET_PAID_VIDEO_URL_ASYNC, getPaidVideoUrlAsync),
+    takeLatest(GET_SAVED_VIDEOS_ASYNC, getSavedVideosAsync),
     takeLatest(PURCHASE_VIDEO_ASYNC, purchaseVideoAsync),
+    takeLatest(SAVE_LATER_ASYNC, saveLaterVideoAsync),
     takeLatest(PAID_VIEWER_VIDEOS_ASYNC, getPaidUserVideosAsync),
     takeLatest(ADD_PAYMENT_INFO_ASYNC, addPaymentInfoAsync),
     takeLatest(GET_USER_PAYMENT_INFOS_ASYNC, getPaymentInfoAsync),

@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import mastercard from "../../assets/images/mastercard.png";
 import visa from "../../assets/images/visa.png";
+import RenderVideo from "../../components/renderVideo/RenderVideo";
 
 const { Search } = Input;
 
@@ -53,12 +54,6 @@ const WatchVideo = () => {
     history.push(`/watch/${video.id}`);
     history.go(0);
   };
-
-  //   useEffect(() => {
-  //     if (videoLink) {
-
-  //     }
-  //   }, [videoLink]);
 
   const paymentModalVisibleFunc = (value, video, event) => {
     if (event) event.stopPropagation();
@@ -203,6 +198,7 @@ const WatchVideo = () => {
     if (viewerVideos) {
       return viewerVideos.map((video) => {
         return (
+          // <RenderVideo />
           <div
             key={video.id}
             onClick={() => play(video)}

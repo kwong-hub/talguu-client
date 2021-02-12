@@ -32,7 +32,7 @@ export default {
   createStreamKey: async function (body) {
     try {
       const video = await axios.post(`${environment}/video/stream`, {
-        ...body
+        ...body,
       });
       return video.data;
     } catch (error) {
@@ -42,14 +42,13 @@ export default {
   endStream: async function (body) {
     try {
       const video = await axios.patch(`${environment}/video/end/stream`, {
-        stream_key:body
+        stream_key: body,
       });
       return video.data;
     } catch (error) {
       throw error;
     }
   },
-
 
   addThumbnail: async function (body) {
     try {
@@ -98,8 +97,8 @@ export default {
 
   purchaseVideo: async function (videoId) {
     try {
-      const thumb = await axios.post(`${environment}/video/purchase`, { videoId });
-      return thumb.data;
+      const res = await axios.post(`${environment}/video/purchase`, { videoId });
+      return res.data;
     } catch (error) {
       throw error;
     }
@@ -111,6 +110,24 @@ export default {
       return { data: videos.data, success: true };
     } catch (error) {
       throw { error, success: false };
+    }
+  },
+
+  getSavedUserVideos: async function () {
+    try {
+      const videos = await axios.get(`${environment}/video/saved_videos`);
+      return { data: videos.data, success: true };
+    } catch (error) {
+      throw { error, success: false };
+    }
+  },
+
+  saveVideoLater: async function (videoId) {
+    try {
+      const res = await axios.post(`${environment}/video/save_later`, { videoId });
+      return res.data;
+    } catch (error) {
+      throw error;
     }
   },
 };
