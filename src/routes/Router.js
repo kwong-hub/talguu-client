@@ -22,6 +22,7 @@ import Stream from "../pages/streamVideo/Stream";
 import PurchasedPlaylist from "../pages/purchasedPlaylist/PurchasedPlaylist";
 import WatchVideo from "../pages/watchVideo/WatchVideo";
 import LiveVideos from "../pages/live/LiveVideos";
+import Deposit from "../pages/payment/Deposit";
 
 const Router = () => {
   return (
@@ -48,6 +49,7 @@ const Router = () => {
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/finish-upload" component={EditUploadVideos} />
           <Route exact path="/live_stream" component={Stream} />
+          <Route exact path="/deposit" component={Deposit} />
           <Route component={NotFound} />
         </Switch>
       </BrowserRouter>
