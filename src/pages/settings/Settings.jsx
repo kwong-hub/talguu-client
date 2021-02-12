@@ -302,7 +302,7 @@ const Settings = (props) => {
             <h1 className="text-gray-800 text-lg text-left">
               Billing and Payment
             </h1>
-            <h4 className="text-gray-700 text-md text-left">
+            <h4 className="text-gray-700 text-md text-left font-light">
               Choose how you make payment
             </h4>
           </div>
@@ -326,8 +326,8 @@ const Settings = (props) => {
             <h1 className="text-gray-800 text-lg text-left">
               Billing and Payment
             </h1>
-            <h4 className="text-gray-700 text-md text-left">
-              Choose how you make payment
+            <h4 className="text-gray-700 text-md text-left font-light">
+              Deposit to your account
             </h4>
           </div>
           <div>
@@ -345,7 +345,7 @@ const Settings = (props) => {
         <div className="flex p-4 rounded-sm  items-center justify-between  max-w-xl m-auto">
           <div>
             <h1 className="text-gray-800 text-lg text-left">Account</h1>
-            <h4 className="text-gray-700 text-md text-left">Account Setting</h4>
+            <h4 className="text-gray-700 text-md text-left font-light">Account Setting</h4>
           </div>
           <div>
             <Button type="secondary">Edit Account</Button>
