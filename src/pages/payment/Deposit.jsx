@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import { FaDollarSign, FaPaypal, FaSortNumericDown } from "react-icons/fa";
 import { RiMastercardFill, RiMoneyDollarBoxLine } from "react-icons/ri";
 import { USER_PAYMENT_INFO } from "../../redux/types";
-import { paymentService } from "../../_services/payment.service";
+import paymentService from "../../_services/payment.service";
 import mastercard from "../../assets/images/mastercard.svg";
 import paypall from "../../assets/images/paypal.svg";
 
@@ -31,7 +31,7 @@ const Deposit = (props) => {
         .then((data) => {
           if (data.success) {
             message.success("Succesfully Deposited!");
-            setBalance(parseInt(balance)+parseInt(values.amount))
+            setBalance(parseInt(balance) + parseInt(values.amount));
           } else {
             message.error("Failed to deposited");
           }

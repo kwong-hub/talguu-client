@@ -11,7 +11,6 @@ export default {
       throw error;
     }
   },
-
   getUserPaymentInfos: async (payload) => {
     try {
       let res = await axios.get(`${environment}/payment/list/${payload}`);
@@ -20,29 +19,30 @@ export default {
       throw error;
     }
   },
-   getPaymentInfos: async (username) =>{
+  getPaymentInfos: async (username) => {
     try {
-      const payment = await axios.get(`${environment}/payment/list/${username}`);
+      const payment = await axios.get(
+        `${environment}/payment/list/${username}`
+      );
       return payment.data;
     } catch (error) {
       throw error;
     }
   },
-   getBalance:async ()=> {
+  getBalance: async () => {
     try {
       const payment = await axios.get(`${environment}/payment/balance`);
       return payment.data;
     } catch (error) {
       throw error;
     }
-  }
-  ,
-  addDeposit:async (data)=> {
+  },
+  addDeposit: async (data) => {
     try {
       const payment = await axios.post(`${environment}/payment/deposit`, data);
       return payment.data;
     } catch (error) {
       throw error;
     }
-  }
+  },
 };
