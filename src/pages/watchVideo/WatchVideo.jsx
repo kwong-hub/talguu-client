@@ -265,7 +265,7 @@ const WatchVideo = () => {
       <div>
         <div className="pt-2 ml-14">
           <SideNav></SideNav>
-          <div className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl max-h-12">
+          <div className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl max-h-12 pt-4">
             <div className="text-2xl mr-4 flex items-center justify-center header_title text-gray-500">
               <Link to="/" className="flex items-center">
                 TALGUU

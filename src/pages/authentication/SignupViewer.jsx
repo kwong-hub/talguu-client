@@ -40,7 +40,7 @@ const SignupViewer = () => {
 
   useEffect(() => {
     if (createViewerStatus == "SUCCESSFUL") {
-      setCurrentForm(2);
+      setCurrentForm(1);
       setLoading(false);
       setErrMessage("");
       setFormValues(() => {
@@ -50,25 +50,25 @@ const SignupViewer = () => {
   }, [createViewerStatus]);
 
   const onPersonalFinish = (values) => {
-    setCurrentForm(1);
-    setFormValues((prevValue) => {
-      return { ...prevValue, ...values };
-    });
-    setErrMessage("");
-  };
-
-  const onAddressFinish = (values) => {
     setLoading(true);
     setFormValues((prevValue) => {
       return { ...prevValue, ...values };
     });
-    setErrMessage("");
     dispatch({ type: CREATE_VIEWER_ASYNC, payload: { ...formValues, ...values } });
+    setErrMessage("");
   };
 
-  const onPaymentFinish = (values) => {
-    // console.log(values);
-  };
+  // const onAddressFinish = (values) => {
+  //   setLoading(true);
+  //   setFormValues((prevValue) => {
+  //     return { ...prevValue, ...values };
+  //   });
+  //   setErrMessage("");
+  // };
+
+  // const onPaymentFinish = (values) => {
+  //   // console.log(values);
+  // };
 
   const renderPersonal = () => {
     return (
@@ -143,78 +143,76 @@ const SignupViewer = () => {
     );
   };
 
-  const goBack = () => {
-    // setState({ currentForm: 0 });
-    setCurrentForm(0);
-  };
+  // const goBack = () => {
+  //   setCurrentForm(0);
+  // };
 
-  const renderAddress = () => {
-    return (
-      <Form
-        layout="vertical"
-        name="address"
-        initialValues={{ remember: true }}
-        onFinish={onAddressFinish}>
-        <Form.Item
-          name="zipCode"
-          rules={[{ required: true, message: "Please input your zip code!" }]}>
-          <Input
-            className="rounded-2xl"
-            prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
-            placeholder="Zip Code"
-          />
-        </Form.Item>
-        <Form.Item name="city" rules={[{ required: true, message: "Please input your city!" }]}>
-          <Input
-            className="rounded-2xl"
-            prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
-            placeholder="City"
-          />
-        </Form.Item>
-        <Form.Item name="state" rules={[{ required: true, message: "Please input your state!" }]}>
-          <Input
-            className="rounded-2xl"
-            prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
-            placeholder="State"
-          />
-        </Form.Item>
-        <Form.Item
-          name="Address"
-          rules={[{ required: true, message: "Please input your Password!" }]}>
-          <Input
-            className="rounded-2xl "
-            prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
-            type="text"
-            placeholder="Address"
-          />
-        </Form.Item>
+  // const renderAddress = () => {
+  //   return (
+  //     <Form
+  //       layout="vertical"
+  //       name="address"
+  //       initialValues={{ remember: true }}
+  //       onFinish={onAddressFinish}>
+  //       <Form.Item
+  //         name="zipCode"
+  //         rules={[{ required: true, message: "Please input your zip code!" }]}>
+  //         <Input
+  //           className="rounded-2xl"
+  //           prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
+  //           placeholder="Zip Code"
+  //         />
+  //       </Form.Item>
+  //       <Form.Item name="city" rules={[{ required: true, message: "Please input your city!" }]}>
+  //         <Input
+  //           className="rounded-2xl"
+  //           prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
+  //           placeholder="City"
+  //         />
+  //       </Form.Item>
+  //       <Form.Item name="state" rules={[{ required: true, message: "Please input your state!" }]}>
+  //         <Input
+  //           className="rounded-2xl"
+  //           prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
+  //           placeholder="State"
+  //         />
+  //       </Form.Item>
+  //       <Form.Item
+  //         name="Address"
+  //         rules={[{ required: true, message: "Please input your Password!" }]}>
+  //         <Input
+  //           className="rounded-2xl "
+  //           prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
+  //           type="text"
+  //           placeholder="Address"
+  //         />
+  //       </Form.Item>
 
-        <Form.Item className="flex justify-around">
-          <Button
-            onClick={goBack}
-            type="secondary"
-            shape="round"
-            className="login-form-button w-5/12">
-            Back
-          </Button>
-          <Button
-            loading={loading}
-            type="primary"
-            htmlType="submit"
-            shape="round"
-            className="login-form-button w-5/12">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-    );
-  };
+  //       <Form.Item className="flex justify-around">
+  //         <Button
+  //           onClick={goBack}
+  //           type="secondary"
+  //           shape="round"
+  //           className="login-form-button w-5/12">
+  //           Back
+  //         </Button>
+  //         <Button
+  //           loading={loading}
+  //           type="primary"
+  //           htmlType="submit"
+  //           shape="round"
+  //           className="login-form-button w-5/12">
+  //           Submit
+  //         </Button>
+  //       </Form.Item>
+  //     </Form>
+  //   );
+  // };
 
-  const onYearChange = (event) => {
-    // console.log(event);
-  };
+  // const onYearChange = (event) => {
+  // };
 
-  const renderPayment = () => {
+  const renderVerifyEmail = () => {
     return (
       <h2 className="w-80 text-md text-gray-600 text-center mx-auto">
         We have sent an email to your account. Please verify your email to login.
@@ -226,78 +224,14 @@ const SignupViewer = () => {
           </Link>
         </div>
       </h2>
-
-      // <div className="w-96">
-      //   <div className="flex justify-center flex-col items-center ">
-      //     <img className="" src={logo} alt="Logo" width={50} />
-      //     <p className="text-2xl text-gray-700 my-6">Payment Information</p>
-      //   </div>
-      //   <div className="w-full text-red-500 text-md text-center mb-4">{viewerErrMessages}</div>
-      //   <div className="w-full flex flex-col justify-center p-4 py-8 shadow-md rounded-2xl bg-white">
-      //     <Form
-      //       layout="vertical"
-      //       name="personal"
-      //       initialValues={{ remember: true }}
-      //       onFinish={onPaymentFinish}>
-      //       <Form.Item
-      //         name="name"
-      //         label="Name of Credit Card"
-      //         rules={[{ required: true, message: "Please input your Password!" }]}>
-      //         <Input
-      //           className="rounded-2xl "
-      //           prefix={<FaUser className="site-form-item-icon" />}
-      //           type="text"
-      //           placeholder="Name of Credit Card"
-      //         />
-      //       </Form.Item>
-
-      //       <Form.Item
-      //         name="creditCard"
-      //         label="Credit Card Number"
-      //         rules={[{ required: true, message: "Please input your Password!" }]}>
-      //         <Input className="rounded-2xl" type="text" placeholder="Credit Card Number" />
-      //       </Form.Item>
-      //       <div className="flex items-center justify-between">
-      //         <Form.Item
-      //           className="w-1/2 pr-2"
-      //           name="exp_year"
-      //           label="Expires on"
-      //           rules={[{ required: true, message: "Please input exp date" }]}>
-      //           <DatePicker
-      //             className="rounded-2xl"
-      //             onChange={onYearChange}
-      //             picker="month"
-      //             placeholder="Select exp date"
-      //           />
-      //         </Form.Item>
-      //         <Form.Item
-      //           className="w-1/2 pl-2"
-      //           name="cvc"
-      //           label="CVC"
-      //           rules={[{ required: true, message: "Please input CVC number" }]}>
-      //           <Input className="rounded-2xl" type="text" placeholder="CVC" />
-      //         </Form.Item>
-      //       </div>
-      //       <Form.Item>
-      //         <Button
-      //           type="primary"
-      //           htmlType="submit"
-      //           shape="round"
-      //           className="login-form-button w-full">
-      //           Submit
-      //         </Button>
-      //       </Form.Item>
-      //     </Form>
-      //   </div>
-      // </div>
     );
   };
 
   return (
     <div>
       <Header />
-      <div className="flex m-auto items-center w-auto p-8 pt-2 mt-14">
-        <div className="self-start p-4 shadow-md">
+      <div className="flex m-auto items-center justify-center w-auto p-8 pt-2 mt-14">
+        {/* <div className="self-start p-4 shadow-md">
           <Steps current={currentForm} direction="vertical" className="bg-white h-80 p-8">
             <Step
               icon={<FaUserCircle />}
@@ -311,9 +245,9 @@ const SignupViewer = () => {
               description="Fill your payment information"
             />
           </Steps>
-        </div>
+        </div> */}
         <div className="flex justify-center items-center h-full w-8/12 max-w-xl">
-          {currentForm !== 2 ? (
+          {currentForm !== 1 ? (
             <div className="w-full flex flex-col justify-center m-4 p-4 py-8 shadow-md rounded-2xl bg-white">
               <div className="flex justify-center flex-col items-center ">
                 <img className="" src={logo} alt="Logo" width={50} />
@@ -338,7 +272,7 @@ const SignupViewer = () => {
                 {viewerErrMessages}
               </div>
               <div>
-                {currentForm === 0 ? renderPersonal() : currentForm === 1 ? renderAddress() : ""}
+                {renderPersonal()}
                 <div>
                   <p className="my-6">OR USING</p>
                   <div className="flex justify-evenly">
@@ -357,7 +291,7 @@ const SignupViewer = () => {
               </div>
             </div>
           ) : (
-            renderPayment()
+            renderVerifyEmail()
           )}
         </div>
       </div>

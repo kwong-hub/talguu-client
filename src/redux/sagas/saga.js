@@ -1,4 +1,4 @@
-import { all, call, put, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeEvery, takeLatest } from "redux-saga/effects";
 // import userService from "../../services/user.service";
 import {
   CREATE_PRODUCER_ASYNC,
@@ -28,10 +28,17 @@ import {
   VIEWER_VIDEOS_ASYNC,
   VIEWER_VIDEOS_FAILURE,
   VIEWER_VIDEOS_SUCCESS,
+  ADD_PAYMENT_INFO_ASYNC,
+  ADD_PAYMENT_INFO_SUCCESS,
+  ADD_PAYMENT_INFO_FAILURE,
+  GET_USER_PAYMENT_INFOS_ASYNC,
+  GET_USER_PAYMENT_INFOS_SUCCESS,
+  GET_USER_PAYMENT_INFOS_FAILURE,
 } from "../types";
 import { userConstants } from "../../_constants";
 import { userService } from "../../_services/user.service";
 import videoService from "../../_services/video.service";
+import paymentService from "../../_services/payment.service";
 
 function* createUserAsync(action) {
   let user = yield call(userService.createProducer, action.payload);
@@ -117,7 +124,30 @@ function* getPaidUserVideosAsync(action) {
   if (res.success) {
     yield put({ type: PAID_VIEWER_VIDEOS_SUCCESS, payload: res.data });
   } else {
-    yield put({ type: PAID_VIEWER_VIDEOS_FAILURE, payload: "Server Error" });
+    yield put({ type: PAID_VIEWER_VIDEOS_FAILURE, payload: "Server error" });
+  }
+}
+
+function* addPaymentInfoAsync(action) {
+  let res = yield call(paymentService.addPaymentInfo, action.payload);
+
+  if (res.success) {
+    yield put({ type: ADD_PAYMENT_INFO_SUCCESS, payload: res.payment_info });
+  } else {
+    yield put({
+      type: ADD_PAYMENT_INFO_FAILURE,
+      payload: "Can not create payment information. Try again.",
+    });
+  }
+}
+
+function* getPaymentInfoAsync(action) {
+  let res = yield call(paymentService.getUserPaymentInfos, action.payload);
+
+  if (res.success) {
+    yield put({ type: GET_USER_PAYMENT_INFOS_SUCCESS, payload: res.payment_infos });
+  } else {
+    yield put({ type: GET_USER_PAYMENT_INFOS_FAILURE, payload: "Server error" });
   }
 }
 
@@ -139,6 +169,8 @@ function* watchAll() {
     takeLatest(GET_PAID_VIDEO_URL_ASYNC, getPaidVideoUrlAsync),
     takeLatest(PURCHASE_VIDEO_ASYNC, purchaseVideoAsync),
     takeLatest(PAID_VIEWER_VIDEOS_ASYNC, getPaidUserVideosAsync),
+    takeLatest(ADD_PAYMENT_INFO_ASYNC, addPaymentInfoAsync),
+    takeLatest(GET_USER_PAYMENT_INFOS_ASYNC, getPaymentInfoAsync),
   ]);
 }
 

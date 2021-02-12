@@ -26,8 +26,11 @@ export class Videos extends Component {
   constructor(props) {
     super(props);
     this.playerRef = React.createRef();
-    props.dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: "" });
     // console.log(this.props.viewerVideos);
+  }
+
+  componentDidMount() {
+    this.props.dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: "" });
   }
 
   paymentMethodChange = (event) => {
@@ -36,6 +39,7 @@ export class Videos extends Component {
 
   playVideo = (video) => {
     this.props.history.push(`/watch/${video.id}`);
+    this.props.history.go(0);
   };
 
   playTrailer = (video) => {
@@ -79,7 +83,7 @@ export class Videos extends Component {
             this.state.currentVideo ? "lg:w-full" : ""
           } sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch`}>
           <div className="relative">
-            <img src={video.thumbnial} alt="" className="min-w-full min-h-full" />
+            <img src={video.thumbnial} alt="" className="min-w-full min-h-full video_image" />
             <div className="absolute thumbnail_button_container">
               <Tooltip placement="bottom" title={video.paid ? "" : "Watch Trailer"}>
                 <FaPlayCircle className="text-gray-600 thumbnail_button" />
@@ -181,7 +185,7 @@ export class Videos extends Component {
     return (
       <div className="pt-2 ml-14" ref={this.playerRef}>
         <SideNav></SideNav>
-        <div className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl max-h-12">
+        <div className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl max-h-12 pt-4">
           <div className="text-2xl mr-4 flex items-center justify-center header_title text-gray-500">
             <Link to="/" className="flex items-center">
               TALGUU
@@ -195,7 +199,7 @@ export class Videos extends Component {
             onSearch={this.onSearch}
           />
         </div>
-        <div className="flex relative mt-8 md:mt-0 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
+        <div className="flex relative mt-2 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
           {this.renderVideos()}
         </div>
         {this.renderPaymentModal()}
