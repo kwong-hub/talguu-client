@@ -49,6 +49,10 @@ const SignupViewer = () => {
     }
   }, [createViewerStatus]);
 
+  useEffect(() => {
+    setCurrentForm(0);
+  }, []);
+
   const onPersonalFinish = (values) => {
     setLoading(true);
     setFormValues((prevValue) => {
@@ -57,18 +61,6 @@ const SignupViewer = () => {
     dispatch({ type: CREATE_VIEWER_ASYNC, payload: { ...formValues, ...values } });
     setErrMessage("");
   };
-
-  // const onAddressFinish = (values) => {
-  //   setLoading(true);
-  //   setFormValues((prevValue) => {
-  //     return { ...prevValue, ...values };
-  //   });
-  //   setErrMessage("");
-  // };
-
-  // const onPaymentFinish = (values) => {
-  //   // console.log(values);
-  // };
 
   const renderPersonal = () => {
     return (
@@ -132,85 +124,17 @@ const SignupViewer = () => {
 
         <Form.Item>
           <Button
+            loading={loading}
             type="primary"
             htmlType="submit"
             shape="round"
             className="login-form-button w-full">
-            Next
+            Sign Up
           </Button>
         </Form.Item>
       </Form>
     );
   };
-
-  // const goBack = () => {
-  //   setCurrentForm(0);
-  // };
-
-  // const renderAddress = () => {
-  //   return (
-  //     <Form
-  //       layout="vertical"
-  //       name="address"
-  //       initialValues={{ remember: true }}
-  //       onFinish={onAddressFinish}>
-  //       <Form.Item
-  //         name="zipCode"
-  //         rules={[{ required: true, message: "Please input your zip code!" }]}>
-  //         <Input
-  //           className="rounded-2xl"
-  //           prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
-  //           placeholder="Zip Code"
-  //         />
-  //       </Form.Item>
-  //       <Form.Item name="city" rules={[{ required: true, message: "Please input your city!" }]}>
-  //         <Input
-  //           className="rounded-2xl"
-  //           prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
-  //           placeholder="City"
-  //         />
-  //       </Form.Item>
-  //       <Form.Item name="state" rules={[{ required: true, message: "Please input your state!" }]}>
-  //         <Input
-  //           className="rounded-2xl"
-  //           prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
-  //           placeholder="State"
-  //         />
-  //       </Form.Item>
-  //       <Form.Item
-  //         name="Address"
-  //         rules={[{ required: true, message: "Please input your Password!" }]}>
-  //         <Input
-  //           className="rounded-2xl "
-  //           prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
-  //           type="text"
-  //           placeholder="Address"
-  //         />
-  //       </Form.Item>
-
-  //       <Form.Item className="flex justify-around">
-  //         <Button
-  //           onClick={goBack}
-  //           type="secondary"
-  //           shape="round"
-  //           className="login-form-button w-5/12">
-  //           Back
-  //         </Button>
-  //         <Button
-  //           loading={loading}
-  //           type="primary"
-  //           htmlType="submit"
-  //           shape="round"
-  //           className="login-form-button w-5/12">
-  //           Submit
-  //         </Button>
-  //       </Form.Item>
-  //     </Form>
-  //   );
-  // };
-
-  // const onYearChange = (event) => {
-  // };
 
   const renderVerifyEmail = () => {
     return (
@@ -231,21 +155,6 @@ const SignupViewer = () => {
     <div>
       <Header />
       <div className="flex m-auto items-center justify-center w-auto p-8 pt-2 mt-14">
-        {/* <div className="self-start p-4 shadow-md">
-          <Steps current={currentForm} direction="vertical" className="bg-white h-80 p-8">
-            <Step
-              icon={<FaUserCircle />}
-              title="Personal/Corporate"
-              description="Fill your personal/corporate information"
-            />
-            <Step icon={<FaMapMarkerAlt />} title="Address" description="Fill your address" />
-            <Step
-              icon={<FaMoneyCheckAlt />}
-              title="Payment"
-              description="Fill your payment information"
-            />
-          </Steps>
-        </div> */}
         <div className="flex justify-center items-center h-full w-8/12 max-w-xl">
           {currentForm !== 1 ? (
             <div className="w-full flex flex-col justify-center m-4 p-4 py-8 shadow-md rounded-2xl bg-white">

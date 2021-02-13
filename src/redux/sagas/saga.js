@@ -116,12 +116,13 @@ function* getPaidVideoUrlAsync(action) {
 }
 
 function* purchaseVideoAsync(action) {
-  let video = yield call(videoService.purchaseVideo, action.payload);
+  let res = yield call(videoService.purchaseVideo, action.payload);
 
-  if (video && video) {
-    yield put({ type: PURCHASE_VIDEO_SUCCESS, payload: video });
+  // console.log("from saga", res);
+  if (res && res.success) {
+    yield put({ type: PURCHASE_VIDEO_SUCCESS, payload: res });
   } else {
-    yield put({ type: PURCHASE_VIDEO_FAILURE, payload: video });
+    yield put({ type: PURCHASE_VIDEO_FAILURE, payload: res.message });
   }
 }
 

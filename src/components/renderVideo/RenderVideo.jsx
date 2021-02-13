@@ -45,9 +45,11 @@ function RenderVideo(props) {
   return (
     <div
       onClick={(event) => playVideo(event)}
-      className={`flex-col w-full md:w-4/12 lg:w-3/12 ${
-        props.video.currentVideo ? "lg:w-full" : ""
-      } sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch`}>
+      className={
+        props.for
+          ? `flex-col w-full md:w-4/12 lg:w-full sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch`
+          : `flex-col w-full md:w-4/12 lg:w-3/12 sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch`
+      }>
       <div className="relative">
         <img src={props.video.thumbnial} alt="" className="min-w-full min-h-full video_image" />
         <div className="absolute thumbnail_button_container">

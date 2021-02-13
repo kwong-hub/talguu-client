@@ -72,3 +72,8 @@
 .header_title {
   font-family: "Pacifico", cursive;
 }
+
+.video_image {
+  min-height: 10rem;
+  /* min-height: 12rem; */
+}

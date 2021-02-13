@@ -21,20 +21,21 @@ import moment from "moment";
 import mastercard from "../../assets/images/mastercard.png";
 import visa from "../../assets/images/visa.png";
 import RenderVideo from "../../components/renderVideo/RenderVideo";
+import PaymentModal from "../../components/paymentModal/PaymentModal";
 
 const { Search } = Input;
 
 const WatchVideo = () => {
   let history = useHistory();
-  let [paymentMethod, setPaymentMethod] = useState("mastercard");
   let [playVideo, setPlayVideo] = useState(false);
-  let videoLink = useSelector((state) => state.video.video_link);
   let [tempVideo, setTempVideo] = useState(null);
   let [paymentModalVisible, setPaymentModalVisible] = useState(false);
   let { vidId } = useParams();
   let dispatch = useDispatch();
   let currentVideo = useSelector((state) => state.video.currentVideo);
   let viewerVideos = useSelector((state) => state.video.viewerVideos);
+  const video_link = useSelector((state) => state.video_link);
+  const errorMessage = useSelector((state) => state.video.errMessages);
 
   useEffect(() => {
     if (vidId) {
@@ -46,9 +47,21 @@ const WatchVideo = () => {
   }, [vidId]);
 
   useEffect(() => {
+    if (video_link) {
+      paymentModalVisibleFunc(false);
+      play(tempVideo);
+    }
+    return () => {};
+  }, [video_link]);
+
+  useEffect(() => {
     setPlayVideo(true);
     return () => {};
   }, [currentVideo]);
+
+  if (errorMessage == "NO_BALANCE") {
+    history.push("/deposit");
+  }
 
   const play = (video) => {
     history.push(`/watch/${video.id}`);
@@ -73,62 +86,20 @@ const WatchVideo = () => {
 
   const purchaseVideo = (id) => {
     dispatch({ type: PURCHASE_VIDEO_ASYNC, payload: id });
-    paymentModalVisibleFunc(false);
-    play(tempVideo);
   };
-
-  const paymentMethodChange = () => {};
 
   const renderPaymentModal = () => {
     return (
-      <Modal
-        className="max-w-xs h-auto px-5 opacity-95"
-        centered
-        closable={false}
-        mask={false}
-        footer={null}
-        visible={paymentModalVisible}
-        onOk={() => paymentModalVisibleFunc(false)}
-        onCancel={() => paymentModalVisibleFunc(false)}>
-        <div className="absolute -left-8 top-1 w-16 h-16 rounded-full bg-blue-500 text-white flex items-center justify-center font-semibold">
-          <FaDollarSign /> {0.23}
-        </div>
-        <h3 className="text-gray-600 uppercase text-center w-full text-lg mb-3">Payment</h3>
-        <div>
-          <img src={tempVideo?.thumbnial} alt="" />
-        </div>
-        <Radio.Group
-          onChange={paymentMethodChange}
-          value={paymentMethod}
-          className="w-full flex-col my-2">
-          <Radio
-            className="flex items-center justify-start w-full border-t-2 border-gray-100 p-3 text-gray-600 text-ls "
-            value="mastercard">
-            <img src={mastercard} alt="" className="h-10 ml-1" />
-            <span className="ml-1">Mastercard</span>
-          </Radio>
-
-          <Radio
-            className="flex items-center justify-start w-full border-t-2 border-gray-100 p-3 text-gray-600 text-ls "
-            value="visa">
-            <img src={visa} alt="" className="h-10 ml-1" /> <span className="ml-1">Visa</span>
-          </Radio>
-        </Radio.Group>
-        <p className="text-gray-700 text-xs text-center w-full mb-2">
-          Notice: Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam illo quas, facilis
-        </p>
-        <div
-          onClick={() => purchaseVideo(tempVideo.id)}
-          className="h-10 bg-blue-500 -mx-6 text-center text-white text-md flex items-center justify-center cursor-pointer font-semibold pay_button">
-          Pay <FaDollarSign />
-          {0.23}
-        </div>
-      </Modal>
+      <PaymentModal
+        paymentModalVisible={paymentModalVisible}
+        paymentModalVisibleFunc={paymentModalVisibleFunc}
+        video={tempVideo}
+        purchaseVideo={purchaseVideo}
+      />
     );
   };
 
   const renderPlayer = (video) => {
-    // console.log(video);
     const videoJsOptions = {
       autoplay: true,
       controls: true,
@@ -198,57 +169,12 @@ const WatchVideo = () => {
     if (viewerVideos) {
       return viewerVideos.map((video) => {
         return (
-          // <RenderVideo />
-          <div
+          <RenderVideo
+            for="watch_video"
             key={video.id}
-            onClick={() => play(video)}
-            className={`flex-col w-full md:w-4/12 lg:w-full sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch`}>
-            <div className="relative">
-              <img src={video.thumbnial} alt="" className="min-w-full min-h-full" />
-              <div className="absolute thumbnail_button_container">
-                <Tooltip placement="bottom" title={video.paid ? "" : "Watch Trailer"}>
-                  <FaPlayCircle className="text-gray-600 thumbnail_button" />
-                </Tooltip>
-              </div>
-              <div
-                onClick={(event) => this.saveLater(event)}
-                className="watch_later bg-gray-700 p-2 rounded-sm absolute right-2 top-2 bg-opacity-25">
-                <FaClock className="text-white text-base" />
-              </div>
-              <div className="bg-gray-600 rounded-sm absolute bottom-1 right-1 py-0 px-4 bg-opacity-40"></div>
-              {video.paid ? (
-                ""
-              ) : (
-                <div className="absolute bottom-1 left-1 py-0 invisible watch_video_buttons">
-                  <Button
-                    onClick={(event) => paymentModalVisibleFunc(true, video, event)}
-                    className="mr-1 rounded-2xl text-xs px-2 py-0 opacity-80">
-                    Watch Full Video
-                  </Button>
-                </div>
-              )}
-              {!video.paid ? (
-                <div className="flex items-center bg-white text-gray-700 rounded-sm absolute top-1 left-1 py-0 px-4">
-                  <FaDollarSign className="text-gray-700 text-xs" /> {0.23}
-                </div>
-              ) : (
-                ""
-              )}
-              <div className="flex items-center bg-white text-gray-700 rounded-sm absolute bottom-1 right-1 py-0 px-4">
-                {moment(video?.video_duration?.split(".")[0], [moment.ISO_8601, "HH:mm:ss"]).format(
-                  "H:m:ss"
-                )}
-              </div>
-            </div>
-            <div className="flex-col">
-              <h4 className="my-2 text-left text-md text-gray-600 video_title">{video.title}</h4>
-              <div className="flex">
-                <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2">
-                  {video.viewVount} views
-                </span>
-              </div>
-            </div>
-          </div>
+            video={video}
+            paymentModalVisible={paymentModalVisibleFunc}
+          />
         );
       });
     }
@@ -278,7 +204,7 @@ const WatchVideo = () => {
           {playVideo && currentVideo ? (
             renderPlayer(currentVideo)
           ) : (
-            <div>
+            <div className="w-screen h-screen flex justify-center items-center -mt-20 -ml-12 lg:-mt-24 lg:-ml-48  xl:-mt-20 xl:-ml-52">
               <Space size="middle">
                 <Spin size="large" />
               </Space>
