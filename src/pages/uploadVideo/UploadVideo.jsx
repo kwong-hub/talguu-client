@@ -66,7 +66,7 @@ class UploadVideo extends Component {
     this.setState({ drag: false });
     if (e.target.files && e.target.files.length > 0) {
       this.uploadFiles(e.target.files);
-      e.target.clearData();
+      // e.target.clearData();
       this.dragCounter = 0;
     }
   };
@@ -150,7 +150,7 @@ class UploadVideo extends Component {
               size={60}
               type="primary"
               shape="round"
-              onClick={this.submit}
+            
               icon={<RiUploadCloud2Line />}
               className="w-48 flex justify-center items-center text-xl p-4 transform hover:scale-110 motion-reduce:transform-none">
               Publish Video

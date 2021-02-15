@@ -15,7 +15,7 @@ import { RiMastercardFill, RiMoneyDollarBoxLine } from "react-icons/ri";
 import { USER_PAYMENT_INFO } from "../../redux/types";
 import paymentService from "../../_services/payment.service";
 import mastercard from "../../assets/images/mastercard.svg";
-import paypall from "../../assets/images/paypal.svg";
+import visa from "../../assets/images/visa.png";
 import { useHistory } from "react-router-dom";
 
 const Deposit = (props) => {
@@ -203,7 +203,7 @@ const Deposit = (props) => {
               <img src={mastercard} alt="" className="h-10" />
             </span>
             <span className=" cursor-pointer rounded-lg hover:shadow-lg px-2">
-              <img src={paypall} alt="" className="h-11" />
+              <img src={visa} alt="" className="h-11" />
             </span>
           </div>
           <div>
@@ -223,7 +223,7 @@ const Deposit = (props) => {
             </div>
           </div>
           <div className="font-semibold text-gray-500 text-md pb-2">
-            Select Card from you existing accounts.
+           {payments.length > 0 ? "Select Card from you existing accounts.":"No payment information added yet." } 
           </div>
           {!selectedCard &&
             payments.map((item) => (

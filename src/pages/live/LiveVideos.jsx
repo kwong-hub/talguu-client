@@ -246,8 +246,8 @@ export class LiveVideos extends Component {
           />
         </div>
         <div className="flex items-end mx-4 my-6">
-          <h1 className="text-4xl font-black block">Browse</h1>
-          <p className="text-lg font-semibold text-blue-700">Live Videos</p>
+          <h1 className="text-4xl font-black block">Videos</h1>
+          <p className="text-lg font-semibold text-blue-700">Live</p>
         </div>
         {this.state.currentLive && (
           <div className="flex flex-col items-start ml-2 my-6 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
