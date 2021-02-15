@@ -1,3 +1,25 @@
 .modal_form {
   min-width: 400px;
 }
+
+.ant-notification-notice {
+  padding: 0.5rem 0.5rem !important;
+  border-radius: 0.5rem;
+}
+
+.ant-notification-notice-with-icon {
+  display: flex;
+  align-items: center;
+}
+
+.ant-notification-notice-message {
+  display: flex;
+  font-size: 0.9rem !important;
+  margin-bottom: 0rem !important;
+  flex: 1 !important;
+}
+
+.ant-notification-notice-close {
+  top: 8px;
+  right: 15px;
+}

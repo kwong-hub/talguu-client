@@ -41,7 +41,6 @@
 .video_thumbnail:hover > div > .video_title {
   color: #222;
 }
-
 .ant-modal-content,
 .ant-modal-body {
   height: 100%;
@@ -76,4 +75,26 @@
 .video_image {
   min-height: 10rem;
   /* min-height: 12rem; */
+}
+
+.ant-notification-notice {
+  padding: 0.5rem 0.5rem !important;
+  border-radius: 0.5rem;
+}
+
+.ant-notification-notice-with-icon {
+  display: flex;
+  align-items: center;
+}
+
+.ant-notification-notice-message {
+  display: flex;
+  font-size: 0.9rem !important;
+  margin-bottom: 0rem !important;
+  flex: 1 !important;
+}
+
+.ant-notification-notice-close {
+  top: 8px;
+  right: 15px;
 }

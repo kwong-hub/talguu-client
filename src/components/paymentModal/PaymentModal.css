@@ -1,0 +1,9 @@
+.pay_button:hover {
+  transition: all 0.2s;
+  color: #ddd;
+}
+
+.pay_button:active {
+  transition: all 0.2s;
+  color: #fff;
+}

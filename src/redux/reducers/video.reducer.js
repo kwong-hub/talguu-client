@@ -12,6 +12,10 @@ import {
   VIEWER_VIDEOS_SUCCESS,
   VIEWER_LIVE_FAILURE,
   VIEWER_LIVE_SUCCESS,
+  SAVE_LATER_SUCCESS,
+  SAVE_LATER_RESET,
+  GET_SAVED_VIDEOS_SUCCESS,
+  GET_SAVED_VIDEOS_FAILURE,
 } from "../types";
 
 const INITIAL_STATE = {
@@ -23,6 +27,8 @@ const INITIAL_STATE = {
   currentVideo: null,
   video_link: null,
   purchasedVideos: [],
+  savedVideos: [],
+  saveLaterStatus: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -54,6 +60,16 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, purchasedVideos: action.payload };
     case PAID_VIEWER_VIDEOS_FAILURE:
       return { ...state, errMessages: action.payload };
+    case GET_SAVED_VIDEOS_SUCCESS:
+      return { ...state, savedVideos: action.payload };
+    case GET_SAVED_VIDEOS_FAILURE:
+      return { ...state, errMessages: action.payload };
+    case SAVE_LATER_SUCCESS:
+      if (action.payload.added) return { ...state, saveLaterStatus: "SUCCESS_ADDED" };
+      else if (action.payload.removed) return { ...state, saveLaterStatus: "SUCCESS_REMOVED" };
+      else return state;
+    case SAVE_LATER_RESET:
+      return { ...state, saveLaterStatus: null };
     default:
       return state;
   }

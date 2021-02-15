@@ -37,7 +37,7 @@ function PurchasedPlaylist(props) {
             onClick={() => play(video)}
             className={`flex-col w-full md:w-4/12 lg:w-3/12 sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch`}>
             <div className="relative">
-              <img src={video.thumbnial} alt="" className="min-w-full min-h-full" />
+              <img src={video.thumbnial} alt="" className="min-w-full min-h-full video_image" />
               <div className="absolute thumbnail_button_container">
                 <Tooltip placement="bottom" title="Watch Video">
                   <FaPlayCircle className="text-gray-600 thumbnail_button" />

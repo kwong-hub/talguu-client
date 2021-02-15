@@ -9,6 +9,7 @@ import {
   FaFilm,
   FaBinoculars,
   FaSignInAlt,
+  FaLifeRing,
 } from "react-icons/fa";
 import { Tooltip } from "antd";
 import "./SideNav.css";
@@ -53,21 +54,33 @@ const SideNav = () => {
               }`}>
               <Link to="/live_video">
                 <Tooltip placement="rightTop" title="Live Videos">
-                  <FaSave className={`text-3xl inline text-gray-300 hover:text-white`} />
+                  <FaLifeRing className={`text-3xl inline text-gray-300 hover:text-white`} />
                 </Tooltip>
               </Link>
             </li>
             {user.role == "VIEWER" ? (
-              <li
-                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                  location.pathname === "/purchased_playlist" ? "bg-gray-400" : ""
-                }`}>
-                <Link to="/purchased_playlist">
-                  <Tooltip placement="rightTop" title="Purchased Videos">
-                    <FaFilm className={`text-3xl inline text-gray-300 hover:text-white`} />
-                  </Tooltip>
-                </Link>
-              </li>
+              <>
+                <li
+                  className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
+                    location.pathname === "/saved_later" ? "bg-gray-400" : ""
+                  }`}>
+                  <Link to="/saved_later">
+                    <Tooltip placement="rightTop" title="Saved Videos">
+                      <FaSave className={`text-3xl inline text-gray-300 hover:text-white`} />
+                    </Tooltip>
+                  </Link>
+                </li>
+                <li
+                  className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
+                    location.pathname === "/purchased_playlist" ? "bg-gray-400" : ""
+                  }`}>
+                  <Link to="/purchased_playlist">
+                    <Tooltip placement="rightTop" title="Purchased Videos">
+                      <FaFilm className={`text-3xl inline text-gray-300 hover:text-white`} />
+                    </Tooltip>
+                  </Link>
+                </li>
+              </>
             ) : (
               ""
             )}
