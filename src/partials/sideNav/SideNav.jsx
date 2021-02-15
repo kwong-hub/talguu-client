@@ -89,6 +89,23 @@ const SideNav = () => {
                 className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
                   location.pathname === "/upload_video" ? "bg-gray-400" : ""
                 }`}>
+                <Link to="/your_video">
+                  <Tooltip placement="rightTop" title="Upload Video">
+                    <FaVideo
+                      className={`text-3xl inline text-gray-300 hover:text-white`}
+                    />
+                  </Tooltip>
+                </Link>
+              </li>
+              
+            ) : (
+              ""
+            )}
+             {user.role == "PRODUCER" ? (
+              <li
+                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
+                  location.pathname === "/upload_video" ? "bg-gray-400" : ""
+                }`}>
                 <Link to="/upload_video">
                   <Tooltip placement="rightTop" title="Upload Video">
                     <FaCloudUploadAlt
@@ -97,6 +114,7 @@ const SideNav = () => {
                   </Tooltip>
                 </Link>
               </li>
+              
             ) : (
               ""
             )}
