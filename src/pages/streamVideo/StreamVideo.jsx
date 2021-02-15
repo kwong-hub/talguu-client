@@ -24,7 +24,7 @@ const StreamVideo = () => {
     <div>
       <div>
         <SideNav></SideNav>
-        <div className="mx-8 ml-14 my-20">
+        <div className="mx-8 ml-14 mt-20">
           <Menu
             onClick={handleClick}
             style={{ width: 256 }}

@@ -72,7 +72,7 @@ const SavedPlayList = () => {
   return (
     <div className="pt-2 ml-14">
       <SideNav></SideNav>
-      <div className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl max-h-12 pt-4">
+      {/* <div className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl max-h-12 pt-4">
         <div className="text-2xl mr-4 flex items-center justify-center header_title text-gray-500">
           <Link to="/" className="flex items-center">
             TALGUU
@@ -85,8 +85,8 @@ const SavedPlayList = () => {
           suffix={suffix}
           onSearch={onSearch}
         />
-      </div>
-      <div className="flex relative mt-4 border-2 flex-wrap min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
+      </div> */}
+      <div className="flex relative mt-20 border-2 flex-wrap min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
         {renderVideos()}
       </div>
     </div>

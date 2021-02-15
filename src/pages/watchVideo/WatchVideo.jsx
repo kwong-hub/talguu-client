@@ -34,7 +34,7 @@ const WatchVideo = () => {
   let dispatch = useDispatch();
   let currentVideo = useSelector((state) => state.video.currentVideo);
   let viewerVideos = useSelector((state) => state.video.viewerVideos);
-  const video_link = useSelector((state) => state.video_link);
+  const video_link = useSelector((state) => state.video.video_link);
   const errorMessage = useSelector((state) => state.video.errMessages);
 
   useEffect(() => {
@@ -47,6 +47,7 @@ const WatchVideo = () => {
   }, [vidId]);
 
   useEffect(() => {
+    console.log(video_link);
     if (video_link) {
       paymentModalVisibleFunc(false);
       play(tempVideo);
@@ -115,8 +116,8 @@ const WatchVideo = () => {
     };
     if (video) {
       return (
-        <>
-          <div className="flex ml-2 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
+        <div className="">
+          <div className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl -z-10">
             <VideoPlayer {...videoJsOptions}></VideoPlayer>
           </div>
           <div className="flex-col ml-2 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
@@ -156,7 +157,7 @@ const WatchVideo = () => {
               </div>
             </div>
           </div>
-        </>
+        </div>
       );
     }
   };
@@ -185,9 +186,9 @@ const WatchVideo = () => {
     <>
       <SideNav></SideNav>
       <div>
-        <div className="pt-2 ml-14">
-          <SideNav></SideNav>
-          <div className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl max-h-12 pt-4">
+        <div className="pt-2 ml-14 mt-20">
+          {/* <SideNav></SideNav> */}
+          {/* <div className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl max-h-12 pt-4">
             <div className="text-2xl mr-4 flex items-center justify-center header_title text-gray-500">
               <Link to="/" className="flex items-center">
                 TALGUU
@@ -200,7 +201,7 @@ const WatchVideo = () => {
               suffix={suffix}
               onSearch={() => onSearch()}
             />
-          </div>
+          </div> */}
           {playVideo && currentVideo ? (
             renderPlayer(currentVideo)
           ) : (
@@ -210,7 +211,7 @@ const WatchVideo = () => {
               </Space>
             </div>
           )}
-          <div className="flex relative lg:absolute right-0  bottom-0 border-2 mt-4 lg:top-0 lg:flex-col lg:ml-0 flex-wrap lg:flex-nowrap xl:w-1/4 lg:w-1/5 lg:min-h-full border-white">
+          <div className="flex relative lg:absolute right-0  bottom-0 border-2 mt-20 lg:top-0 lg:flex-col lg:ml-0 flex-wrap lg:flex-nowrap xl:w-1/4 lg:w-1/5 lg:min-h-full border-white">
             {renderVideos()}
           </div>
         </div>
