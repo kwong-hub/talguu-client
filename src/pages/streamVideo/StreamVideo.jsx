@@ -72,6 +72,7 @@ const StreamVideo = () => {
             title="Stream live"
             centered
             visible={formVisible}
+            okText="back"
             onOk={() => setFormVisible(false)}
             onCancel={() => setFormVisible(false)}>
             <div className="bg-white p-4 shadow-lg">

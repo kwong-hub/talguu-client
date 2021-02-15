@@ -12,9 +12,21 @@ export default {
       throw error;
     }
   },
-  getVideos: async function () {
+  getVideos: async function (pagination) {
     try {
-      const video = await axios.get(`${environment}/video`);
+      const video = await axios.get(
+        `${environment}/video?current=${pagination.current}&pageSize=${pagination.pageSize}`
+      );
+      return video.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  getProdVideoById: async function (id) {
+    try {
+      const video = await axios.get(
+        `${environment}/video/${id}`
+      );
       return video.data;
     } catch (error) {
       throw error;
@@ -88,7 +100,9 @@ export default {
 
   getPaidVideoUrl: async function (videoId) {
     try {
-      const videos = await axios.get(`${environment}/video/purchase_video_url?videoId=${videoId}`);
+      const videos = await axios.get(
+        `${environment}/video/purchase_video_url?videoId=${videoId}`
+      );
       return videos.data;
     } catch (error) {
       throw error;
@@ -97,7 +111,9 @@ export default {
 
   purchaseVideo: async function (videoId) {
     try {
-      const res = await axios.post(`${environment}/video/purchase`, { videoId });
+      const res = await axios.post(`${environment}/video/purchase`, {
+        videoId,
+      });
       return res.data;
     } catch (error) {
       throw error;
@@ -124,7 +140,9 @@ export default {
 
   saveVideoLater: async function (videoId) {
     try {
-      const res = await axios.post(`${environment}/video/save_later`, { videoId });
+      const res = await axios.post(`${environment}/video/save_later`, {
+        videoId,
+      });
       return res.data;
     } catch (error) {
       throw error;

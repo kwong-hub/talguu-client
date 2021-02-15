@@ -76,7 +76,7 @@ export class Thumbnail extends Component {
     this.setState({ uploaded: true });
     var formData = new FormData();
     formData.append("id", this.props.video);
-    formData.append("picture", this.state.fileList[1].originFileObj);
+    formData.append("picture", this.state.fileList[0].originFileObj);
     videoService
       .addThumbnail(formData)
       .then((data) => {
@@ -99,7 +99,7 @@ export class Thumbnail extends Component {
       <>
         <ImgCrop rotate aspect={245 / 164} beforeCrop={this.beforeCrop}>
           <Upload
-            action={this.handleChange}
+            // action={this.handleChange}
             listType="picture-card"
             fileList={fileList}
             onPreview={this.handlePreview}

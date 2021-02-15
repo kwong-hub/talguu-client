@@ -53,16 +53,7 @@ const StreamForm = () => {
               placeholder="Description*"
             />
           </Form.Item>
-          <Form.Item
-            name="privacy"
-            label="Select Privacy"
-            hasFeedback
-            rules={[{ required: true, message: "Please select Privacy!" }]}>
-            <Select placeholder="Select audience">
-              <Option value="PRIVATE">Private</Option>
-              <Option value="PUBLIC">Public</Option>
-            </Select>
-          </Form.Item>
+         
 
           <Form.Item>
             <Button

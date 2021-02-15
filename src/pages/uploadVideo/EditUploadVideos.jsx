@@ -20,7 +20,7 @@ const EditUploadVideos = (props) => {
   if (!title) {
     history.goBack();
   }
-
+  console.log('video', video)
   const publishVideo = () => {
     // console.log("title,describe", title, describe);
 
@@ -42,8 +42,8 @@ const EditUploadVideos = (props) => {
     responsive: true,
     sources: [
       {
-        src: video.videoLink,
-        type: "video/mkv",
+        src: video.video_link,
+        type: video.video_type,
       },
     ],
   };

@@ -26,7 +26,6 @@ const Deposit = (props) => {
   const [selectedCard, setselectedCard] = useState();
   const [newFormCard, setNewCard] = useState(false);
   const onFinish = (values) => {
-    console.log("values", values);
     if (selectedCard) {
       paymentService
         .addDeposit({ ...values, id: selectedCard.id })
@@ -47,8 +46,11 @@ const Deposit = (props) => {
     console.log("selectedCard", selectedCard);
   };
   const reselect = () => {
-    console.log("her");
     setselectedCard(null);
+  };
+
+  const addPaymentInfo = () => {
+    history.push("/settings", { paymentModalVisible: true });
   };
 
   useEffect(() => {
@@ -206,24 +208,30 @@ const Deposit = (props) => {
               <img src={visa} alt="" className="h-11" />
             </span>
           </div>
-          <div>
-            <div className="flex flex-row justify-end pb-4 justify-items-end">
-              {selectedCard ? (
+          {payments.length > 0 && (
+            <div>
+              <div className="flex flex-row justify-end pb-4 justify-items-end">
                 <Button onClick={(e) => reselect()} className="rounded-full">
                   Select another card!
                 </Button>
-              ) : (
-                <Button
-                  onClick={(e) => selectCard({})}
-                  className="rounded-full"
-                >
-                  New card!
-                </Button>
-              )}
+              </div>
             </div>
-          </div>
-          <div className="font-semibold text-gray-500 text-md pb-2">
-           {payments.length > 0 ? "Select Card from you existing accounts.":"No payment information added yet." } 
+          )}
+          <div className="font-semibold  text-gray-500 text-md pb-2">
+            {payments.length > 0 ? (
+              "Select Card from you existing accounts."
+            ) : (
+              <div>
+                <span>"No payment information added yet."</span>
+                <Button
+                  onClick={(e) => addPaymentInfo()}
+                  type="primary"
+                  className="rounded-full mx-auto my-4 flex"
+                >
+                  Add Payment Information
+                </Button>
+              </div>
+            )}
           </div>
           {!selectedCard &&
             payments.map((item) => (
