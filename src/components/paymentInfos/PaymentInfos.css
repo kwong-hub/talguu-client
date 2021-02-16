@@ -1,3 +1,7 @@
 .payment_info {
   background: linear-gradient(#142f93, #142f93);
 }
+
+.ant-modal-body {
+  /* padding: 24px !important; */
+}

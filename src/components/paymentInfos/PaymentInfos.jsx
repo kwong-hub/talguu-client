@@ -30,7 +30,7 @@ function PaymentInfos(props) {
         return (
           <div
             key={paymentInfo.id}
-            className="text-white flex-col justify-center items-center py-6 px-3 rounded-lg m-1 payment_info">
+            className="text-white flex-col justify-center items-center py-6 px-3 rounded-lg m-1 payment_info mb-12">
             <div className="self-center flex justify-center">
               <span>Card Number: **********{paymentInfo.cardNumber.slice(10)}</span>
             </div>

@@ -100,24 +100,9 @@ const Videos = (props) => {
     );
   };
 
-  const suffix = <FaSearch className="text-xl text-gray-300" />;
   return (
-    <div className="pt-2 ml-14">
-      <SideNav></SideNav>
-      <div className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl max-h-12 pt-4">
-        <div className="text-2xl mr-4 flex items-center justify-center header_title text-gray-500">
-          <Link to="/" className="flex items-center">
-            TALGUU
-          </Link>
-        </div>
-        <Search
-          placeholder="Search videos here..."
-          enterButton="Search"
-          size="large"
-          suffix={suffix}
-          onSearch={onSearch}
-        />
-      </div>
+    <div className="pt-2 ml-14 mt-20">
+      <SideNav onSearch={onSearch}></SideNav>
       <div className="flex relative mt-2 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
         {renderVideos()}
       </div>

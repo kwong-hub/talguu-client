@@ -10,18 +10,49 @@ import {
   FaBinoculars,
   FaSignInAlt,
   FaLifeRing,
+  FaSearch,
+  FaSignOutAlt,
 } from "react-icons/fa";
-import { Tooltip } from "antd";
+import { Tooltip, Input } from "antd";
 import "./SideNav.css";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo512.png";
 
-const SideNav = () => {
+const { Search } = Input;
+
+const SideNav = (props) => {
   let location = useLocation();
   let user = JSON.parse(localStorage.getItem("user"));
+
+  const suffix = <FaSearch className="text-xl text-gray-300" />;
   return (
     <div className="container w-14 min-h-full fixed left-0 top-0 bottom-0 border-r p-1 bg-white">
+      <div className="absolute w-screen right-0 left-14 top-0 bg-white shadow-sm">
+        {/* <div className="h-10 w-auto flex justify-end mr-4"></div> */}
+        <div className="flex w-full justify-between items-center p-4">
+          <div className="flex max-w-2xl w-full">
+            <div className="text-2xl mr-4 flex items-center justify-center header_title text-gray-500">
+              <Link to="/" className="flex items-center">
+                TALGUU
+              </Link>
+            </div>
+            <Search
+              placeholder="Search videos here..."
+              enterButton="Search"
+              size="large"
+              suffix={suffix}
+              onSearch={props.onSearch}
+            />
+          </div>
+          <span className="text-gray-500 flex mr-20 cursor-pointer text-lg items-center hover:text-gray-700">
+            <Link to="/account">
+              <Tooltip placement="rightTop" title="Account">
+                <FaUser className={`text-3xl inline text-gray-300`} />
+              </Tooltip>
+            </Link>
+          </span>
+        </div>
+      </div>
       <ul className="list-disc space-y-5">
         <li className="cursor-pointer">
           <img src={logo} alt="" className="rounded" />

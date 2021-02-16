@@ -53,7 +53,7 @@ const Router = () => {
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/finish-upload" component={EditUploadVideos} />
           <Route exact path="/live_stream" component={Stream} />
-          <Route exact path="/deposit" component={Deposit} />
+          <PrivateRoute exact path="/deposit" component={Deposit} />
           <Route component={NotFound} />
         </Switch>
       </BrowserRouter>

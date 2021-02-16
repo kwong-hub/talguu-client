@@ -53,7 +53,8 @@ export default (state = INITIAL_STATE, action) => {
     case GET_PAID_VIDEO_URL_FAILURE:
       return { ...state, errMessages: action.payload };
     case PURCHASE_VIDEO_SUCCESS:
-      return { ...state, video_link: action.video_link };
+      // console.log(action);
+      return { ...state, video_link: action.payload.video_link };
     case PURCHASE_VIDEO_FAILURE:
       return { ...state, errMessages: action.payload };
     case PAID_VIEWER_VIDEOS_SUCCESS:
