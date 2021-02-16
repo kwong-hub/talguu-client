@@ -28,7 +28,7 @@ const SavedPlayList = () => {
   const onSearch = (value) => {};
 
   const renderVideos = () => {
-    if (savedVideos) {
+    if (savedVideos && savedVideos.length) {
       return savedVideos.map((video) => {
         return (
           <div
@@ -65,27 +65,23 @@ const SavedPlayList = () => {
           </div>
         );
       });
+    } else {
+      return (
+        <div
+          className={`flex justify-center items-center w-full p-2 cursor-pointer video_thumbnail self-stretch`}>
+          <p className="text-gray-600 text-md py-4 w-96">
+            You don't have saved videos. You can save a video you like so you can access it later
+            easily!
+          </p>
+        </div>
+      );
     }
   };
 
   const suffix = <FaSearch className="text-xl text-gray-300" />;
   return (
-    <div className="pt-2 ml-14">
+    <div className="pt-2 ml-0 sm:ml-14">
       <SideNav></SideNav>
-      {/* <div className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl max-h-12 pt-4">
-        <div className="text-2xl mr-4 flex items-center justify-center header_title text-gray-500">
-          <Link to="/" className="flex items-center">
-            TALGUU
-          </Link>
-        </div>
-        <Search
-          placeholder="Search videos here..."
-          enterButton="Search"
-          size="large"
-          suffix={suffix}
-          onSearch={onSearch}
-        />
-      </div> */}
       <div className="flex relative mt-20 border-2 flex-wrap min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
         {renderVideos()}
       </div>

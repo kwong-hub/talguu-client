@@ -1,15 +1,10 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideNav from "../../partials/sideNav/SideNav";
-import { connect, useDispatch, useSelector } from "react-redux";
-import { Button, Input, Tooltip, Modal, Radio } from "antd";
-import { FaPlayCircle, FaSearch, FaClock, FaDollarSign } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { Input } from "antd";
 import "./Videos.css";
-import moment from "moment";
-
-import mastercard from "../../assets/images/mastercard.png";
-import visa from "../../assets/images/visa.png";
 import { PURCHASE_VIDEO_ASYNC, VIEWER_VIDEOS_ASYNC } from "../../redux/types";
-import { Link, useHistory, useParams, withRouter } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import RenderVideo from "../../components/renderVideo/RenderVideo";
 import PaymentModal from "../../components/paymentModal/PaymentModal";
 
@@ -17,31 +12,17 @@ const { Search } = Input;
 
 const Videos = (props) => {
   let history = useHistory();
-  // let [paymentMethod, setPaymentMethod] = useState("mastercard");
-  // let [playVideo, setPlayVideo] = useState(false);
   let videoLink = useSelector((state) => state.video.video_link);
   let [tempVideo, setTempVideo] = useState(null);
   let [paymentModalVisible, setPaymentModalVisible] = useState(false);
-  let { vidId } = useParams();
+  // let { vidId } = useParams();
   let dispatch = useDispatch();
-  let currentVideo = useSelector((state) => state.video.currentVideo);
+  // let currentVideo = useSelector((state) => state.video.currentVideo);
   let viewerVideos = useSelector((state) => state.video.viewerVideos);
-  // state = {
-  //   videos: [],
-  //   currentVideo: null,
-  //   autoplay: false,
-  //   paymentModalVisible: false,
-  //   tempVideo: {},
-  //   paymentMethod: "mastercard",
-  // };
 
   useEffect(() => {
-    dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: "" });
+    dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q: "" } });
   }, []);
-
-  // const paymentMethodChange = (event) => {
-  //   setState({ paymentMethod: event.target.value });
-  // };
 
   const playVideo = (video) => {
     history.push(`/watch/${video.id}`);
@@ -54,9 +35,8 @@ const Videos = (props) => {
 
   const onSearch = (value) => {
     // console.log(value);
+    dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q: value } });
   };
-
-  // const scrollToPlayer = () => playerRef.current.scrollIntoView();
 
   const saveLater = (event) => {
     event.stopPropagation();
@@ -101,7 +81,7 @@ const Videos = (props) => {
   };
 
   return (
-    <div className="pt-2 ml-14 mt-20">
+    <div className="pt-2 sm:ml-14 mt-20">
       <SideNav onSearch={onSearch}></SideNav>
       <div className="flex relative mt-2 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
         {renderVideos()}

@@ -67,9 +67,11 @@ export default {
     }
   },
 
-  getViewerVideos: async function () {
+  getViewerVideos: async function (query) {
     try {
-      const videos = await axios.get(`${environment}/video/user`);
+      const videos = await axios.get(
+        `${environment}/video/user` + (query.q ? `?q=${query.q}` : "")
+      );
       // console.log(videos.data);
       return { data: videos.data, success: true };
     } catch (error) {

@@ -16,10 +16,10 @@ const Account = (props) => {
     history.push("/login");
   };
   return (
-    <div className="bg-gray-100">
+    <div className="bg-gray-100 ml-0 mt-24 sm:mt-0 sm:ml-14">
       {/* <Header className="transparent bg-opacity-20"></Header> */}
       <SideNav></SideNav>
-      <div className="flex-col ml-14">
+      <div className="flex-col ">
         <section className="relative block w-full" style={{ height: "340px" }}>
           <div
             className="absolute bg-opacity-70 top-0 w-full h-full bg-center bg-cover bg-gray-500"

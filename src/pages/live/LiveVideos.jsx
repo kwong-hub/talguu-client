@@ -201,25 +201,10 @@ export class LiveVideos extends Component {
     };
     const suffix = <FaSearch className="text-xl text-gray-300" />;
     return (
-      <div className="pt-4 ml-14" ref={this.playerRef}>
+      <div className="pt-4 ml-0 sm:ml-14" ref={this.playerRef}>
         <SideNav></SideNav>
-        {/* <div className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl max-h-12">
-          <div className="text-2xl mr-4 flex items-center justify-center header_title text-gray-500">
-            <Link to="/" className="flex items-center">
-              TALGUU
-            </Link>
-          </div>
-          <Search
-            placeholder="Search videos here..."
-            enterButton="Search"
-            size="large"
-            suffix={suffix}
-            onSearch={this.onSearch}
-          />
-        </div> */}
-        <div className="flex items-end mx-4 my-6 mt-20">
-          {/* <h1 className="text-4xl font-black block">Browse</h1> */}
-          <p className="text-lg font-semibold text-blue-700">Live Videos</p>
+        <div className="flex relative items-end px-4 py-4 mt-24 -mb-10 sm:mb-0">
+          <p className="absolute text-lg font-semibold text-blue-700">Live Videos</p>
         </div>
         {this.state.currentLive && (
           <div className="flex flex-col items-start ml-2 my-6 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
