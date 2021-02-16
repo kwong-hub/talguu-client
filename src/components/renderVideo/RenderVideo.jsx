@@ -39,6 +39,7 @@ function RenderVideo(props) {
 
   const saveLater = (event) => {
     event.stopPropagation();
+    if (!localStorage.getItem("user")) history.push("/login");
     dispatch({ type: SAVE_LATER_ASYNC, payload: props.video.id });
   };
 

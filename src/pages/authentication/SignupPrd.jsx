@@ -1,21 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Steps } from "antd";
-import {
-  FaEnvelope,
-  FaFacebook,
-  FaGoogle,
-  FaLock,
-  FaUser,
-  FaUserCircle,
-  FaMapMarkerAlt,
-  FaCheckSquare,
-  FaBuilding,
-} from "react-icons/fa";
+import { FaEnvelope, FaFacebook, FaGoogle, FaLock, FaUser, FaBuilding } from "react-icons/fa";
 import logo from "../../assets/images/logo.svg";
 import { Link } from "react-router-dom";
 import "./SignupPrd.css";
 import { useDispatch, useSelector } from "react-redux";
-import { CREATE_PRODUCER_ASYNC } from "../../redux/types";
+import { CREATE_PRODUCER_ASYNC, CREATE_PRODUCER_RESET } from "../../redux/types";
 import Header from "../../partials/header/Header";
 
 const { Step } = Steps;
@@ -33,35 +23,31 @@ const SignupPrd = () => {
 
   useEffect(() => {
     setErrMessage(serverErrors);
-    setLoading(false);
   }, serverErrors);
 
   useEffect(() => {
     if (createUserStatus == "SUCCESSFUL") {
-      setCurrentForm(2);
+      setCurrentForm(1);
       setLoading(false);
       setErrMessage("");
       setFormValues(() => {
         return { phoneNumber: "12341234234" };
       });
+      dispatch({ type: CREATE_PRODUCER_RESET, payload: "" });
     }
   }, createUserStatus);
 
-  const onPersonalFinish = (values) => {
-    setCurrentForm(1);
-    setFormValues((prevValue) => {
-      return { ...prevValue, ...values };
-    });
-    setErrMessage("");
-  };
+  useEffect(() => {
+    setCurrentForm(0);
+  }, []);
 
-  const onAddressFinish = (values) => {
+  const onPersonalFinish = (values) => {
     setLoading(true);
     setFormValues((prevValue) => {
       return { ...prevValue, ...values };
     });
-    setErrMessage("");
     dispatch({ type: CREATE_PRODUCER_ASYNC, payload: { ...formValues, ...values } });
+    setErrMessage("");
   };
 
   const renderPersonal = () => {
@@ -127,11 +113,12 @@ const SignupPrd = () => {
 
         <Form.Item>
           <Button
+            loading={loading}
             type="primary"
             htmlType="submit"
             shape="round"
             className="login-form-button w-full">
-            Next
+            Submit
           </Button>
         </Form.Item>
       </Form>
@@ -143,101 +130,29 @@ const SignupPrd = () => {
     setCurrentForm(0);
   };
 
-  const renderAddress = () => {
-    return (
-      <Form
-        layout="vertical"
-        name="normal_login"
-        className="login-form"
-        initialValues={{ remember: true }}
-        onFinish={onAddressFinish}>
-        <Form.Item
-          name="zipCode"
-          rules={[{ required: true, message: "Please input your zip code!" }]}>
-          <Input
-            className="rounded-2xl"
-            prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
-            placeholder="Zip Code*"
-          />
-        </Form.Item>
-        <Form.Item name="city" rules={[{ required: true, message: "Please input your city!" }]}>
-          <Input
-            className="rounded-2xl"
-            prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
-            placeholder="City*"
-          />
-        </Form.Item>
-        <Form.Item name="state" rules={[{ required: true, message: "Please input your state!" }]}>
-          <Input
-            className="rounded-2xl"
-            prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
-            placeholder="State*"
-          />
-        </Form.Item>
-        <Form.Item
-          name="Address"
-          rules={[{ required: true, message: "Please input your Password!" }]}>
-          <Input
-            className="rounded-2xl "
-            prefix={<FaMapMarkerAlt className="site-form-item-icon" />}
-            type="text"
-            placeholder="Address*"
-          />
-        </Form.Item>
-
-        <Form.Item className="flex justify-around">
-          <Button
-            onClick={goBack}
-            type="secondary"
-            shape="round"
-            className="login-form-button w-5/12">
-            Back
-          </Button>
-          <Button
-            loading={loading}
-            type="primary"
-            htmlType="submit"
-            shape="round"
-            className="login-form-button w-5/12">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-    );
-  };
-
   const renderVerifyEmail = () => {
     return (
-      <h2 className="w-80 text-md text-gray-600 text-center mx-auto">
-        We have sent an email to your account. Please verify your email to login.
-        <div className="w-full">
-          <Link to="/login">
-            <Button type="primary" shape="round" className="flex items-center m-1 px-4 mx-auto">
-              Login
-            </Button>
-          </Link>
+      <div className="w-80 h-screen flex items-center text-md text-gray-600 text-center mx-auto">
+        <div style={{ height: "fit-content" }}>
+          We have sent an email to your account. Please verify your email to login.
+          <div className="w-full">
+            <Link to="/login">
+              <Button type="primary" shape="round" className="flex items-center m-1 px-4 mx-auto">
+                Login
+              </Button>
+            </Link>
+          </div>
         </div>
-      </h2>
+      </div>
     );
   };
 
   return (
     <div>
       <Header />
-      <div className="flex m-auto items-center w-auto p-8 pt-2 mt-14">
-        <div className="self-start p-4 shadow-md">
-          <Steps current={currentForm} direction="vertical" className="bg-white h-80 p-8">
-            <Step
-              icon={<FaUserCircle />}
-              title="Personal/Corporate"
-              description="Fill your personal/corporate information"
-            />
-            <Step icon={<FaMapMarkerAlt />} title="Address" description="Fill your address" />
-            <Step icon={<FaCheckSquare />} title="Verify" description="Verify your email" />
-          </Steps>
-        </div>
+      <div className="flex justify-center m-auto items-center w-auto p-8 pt-2 mt-14">
         <div className="flex justify-center items-center h-full w-8/12 max-w-xl">
-          {currentForm !== 2 ? (
+          {currentForm !== 1 ? (
             <div className="w-full flex flex-col justify-center m-4 p-4 py-8 shadow-md rounded-2xl bg-white">
               <div className="flex justify-center flex-col items-center ">
                 <img className="" src={logo} alt="Logo" width={50} />
@@ -260,7 +175,7 @@ const SignupPrd = () => {
               </div>
               <div className="w-full text-red-500 text-md text-center mb-4">{errMessages}</div>
               <div>
-                {currentForm === 0 ? renderPersonal() : currentForm === 1 ? renderAddress() : ""}
+                {currentForm === 0 ? renderPersonal() : ""}
                 <div>
                   <p className="my-6">OR USING</p>
                   <div className="flex justify-evenly">

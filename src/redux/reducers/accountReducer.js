@@ -3,6 +3,8 @@ import {
   CREATE_PRODUCER_FAILURE,
   CREATE_VIEWER_FAILURE,
   CREATE_VIEWER_SUCCESS,
+  CREATE_PRODUCER_RESET,
+  CREATE_VIEWER_RESET,
 } from "../types";
 
 const INITIAL_STATE = {
@@ -24,6 +26,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, viewerUser: action.payload, createViewerStatus: "SUCCESSFUL" };
     case CREATE_VIEWER_FAILURE:
       return { ...state, viewerErrMessages: action.payload, createViewerStatus: "FAILED" };
+    case CREATE_VIEWER_RESET:
+      return { ...state, createViewerStatus: null };
+    case CREATE_PRODUCER_RESET:
+      return { ...state, createUserStatus: null };
     default:
       return state;
   }

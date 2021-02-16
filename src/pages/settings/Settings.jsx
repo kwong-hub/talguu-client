@@ -17,7 +17,7 @@ import { useHistory } from "react-router-dom";
 const Context = React.createContext({ name: "Default" });
 
 const Settings = (props) => {
-  console.log('props', props)
+  console.log("props", props);
   const history = useHistory();
   const [showPaymentInfos, setShowPaymentInfos] = useState(false);
   const [form] = Form.useForm();
@@ -29,7 +29,9 @@ const Settings = (props) => {
     state: "NY",
     address: "Address",
   });
-  const [paymentModalVisible, setPaymentModalVisible] = useState(props.location.state?.paymentModalVisible?true:false);
+  const [paymentModalVisible, setPaymentModalVisible] = useState(
+    props.location.state?.paymentModalVisible ? true : false
+  );
   const [paymentMethod, setPaymentMethod] = useState("MASTER_CARD");
   const dispatch = useDispatch();
   const paymentInfo = useSelector((state) => state.payment.paymentInfo);
@@ -67,7 +69,7 @@ const Settings = (props) => {
       type: ADD_PAYMENT_INFO_ASYNC,
       payload: {
         ...values,
-        // expDate: moment(values.expDate).format("MM / YY"),
+        securityCode: 1234,
         username,
         state: "NY",
         address: "Address",

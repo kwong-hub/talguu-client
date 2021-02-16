@@ -21,6 +21,7 @@ const Videos = (props) => {
   let viewerVideos = useSelector((state) => state.video.viewerVideos);
 
   useEffect(() => {
+    console.log("getting videos values");
     dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q: "" } });
   }, []);
 
