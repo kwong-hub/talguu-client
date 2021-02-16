@@ -4,11 +4,11 @@ import React, { useState } from "react";
 import { FaDollarSign, FaInfo, FaTag, FaUser } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
+import Thumbnail from "../../components/videos/Thumbnail";
+import Trailer from "../../components/videos/Trailer";
 import Header from "../../partials/header/Header";
 import SideNav from "../../partials/sideNav/SideNav";
 import videoService from "../../_services/video.service";
-import Thumbnail from "./Thumbnail";
-import Trailer from "./Trailer";
 
 const EditUploadVideos = (props) => {
   var history = useHistory();

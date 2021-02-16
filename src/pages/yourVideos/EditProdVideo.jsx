@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { FaDollarSign, FaInfo, FaTag, FaUser } from "react-icons/fa";
 import { useHistory, useParams } from "react-router-dom";
 import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
+import Thumbnail from "../../components/videos/Thumbnail";
+import Trailer from "../../components/videos/Trailer";
 import Header from "../../partials/header/Header";
 import SideNav from "../../partials/sideNav/SideNav";
 import videoService from "../../_services/video.service";
@@ -20,7 +22,6 @@ const EditProdVideo = (props) => {
   const [describe, setDescribe] = useState(video?.describe);
   const [price, setPrice] = useState(0.23);
 
-  console.log("video", video);
   useEffect(() => {
     if (vidId) {
       getVideoById(vidId);
@@ -127,20 +128,20 @@ const EditProdVideo = (props) => {
 
           <div>
             <div className="flex flex-col items-start justify-start">
-              <h2 className="text-lg">Thumbnail</h2>
+              <h2 className="text-lg">Change Thumbnail</h2>
               <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
                 Select or upload a picture that shows what's in your video. A
                 good thumbnail stands out and draws viewers' attention.
               </h3>
-              {/* <Thumbnail video={video.id} thumbnails={video.thumbnial} /> */}
+              <Thumbnail video={video?.id} thumbnails={video?.thumbnial} />
             </div>
             <div className="flex flex-col items-start justify-start">
-              <h2 className="text-lg">Trailer</h2>
+              <h2 className="text-lg">Change Trailer</h2>
               <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
                 Select or upload a trailer that shows what's in your video in a
                 minute. A good trailer draws viewers' attention.
               </h3>
-              {/* <Trailer video={video.id} /> */}
+              <Trailer video={video?.id} />
             </div>
           </div>
         </div>

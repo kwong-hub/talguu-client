@@ -7,9 +7,9 @@ import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
 import Header from "../../partials/header/Header";
 import SideNav from "../../partials/sideNav/SideNav";
 import videoService from "../../_services/video.service";
-import Thumbnail from "../uploadVideo/Thumbnail";
 import { Option } from "antd/lib/mentions";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import Thumbnail from "../../components/videos/Thumbnail";
 
 const Stream = (props) => {
   const [property, setProperty] = useState(props.location.state.data);
@@ -152,14 +152,14 @@ const Stream = (props) => {
             </Form>
 
             <div>
-              {/* <div className="flex flex-col items-start justify-start">
+              <div className="flex flex-col items-start justify-start">
                 <h2 className="text-lg">Thumbnail</h2>
                 <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
                   Select or upload a picture that shows what's in your video. A good thumbnail
                   stands out and draws viewers' attention.
                 </h3>
-                <Thumbnail video={video.id} thumbnails={video.thumbnial} />
-              </div> */}
+                {/* <Thumbnail video={video.id} thumbnails={video.thumbnial} /> */}
+              </div>
             </div>
           </div>
 

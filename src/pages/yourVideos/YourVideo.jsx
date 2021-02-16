@@ -1,6 +1,5 @@
 import React, { Component, useEffect } from "react";
-import { Button, Menu, message, Popconfirm, Space, Table, Tag } from "antd";
-import Video from "../../components/videos/Video";
+import { Button, message, Popconfirm, Space, Table } from "antd";
 import SideNav from "../../partials/sideNav/SideNav";
 import videoService from "../../_services/video.service";
 import { useState } from "react";
@@ -40,7 +39,9 @@ const YourVideo = () => {
       width: 200,
       fixed: "left",
       key: "title",
-      render: (text) => <a>{text}</a>,
+      render: (text, record) => (
+        <a onClick={(e) => editVideo(record)}>{text}</a>
+      ),
     },
     {
       title: "Date",
@@ -92,19 +93,18 @@ const YourVideo = () => {
           <Button onClick={(e) => editVideo(record)}>Edit</Button>
           <Popconfirm
             title="Are you sure to delete this video?"
-            onConfirm={(e)=>deleteVideo(record)}
+            onConfirm={(e) => deleteVideo(record)}
             onCancel={cancel}
             okText="Yes"
             cancelText="No"
           >
-            
-            <Button >Delete</Button>
+            <Button>Delete</Button>
           </Popconfirm>
         </Space>
       ),
     },
   ];
- 
+
   function cancel(e) {
     console.log(e);
     // message.error('Click on No');
@@ -120,7 +120,7 @@ const YourVideo = () => {
       .deleteVideo(video.id)
       .then((data) => {
         if (data) {
-          message.success("Videos deleted!.")
+          message.success("Videos deleted!.");
           getVideos(pagination);
         }
       })
