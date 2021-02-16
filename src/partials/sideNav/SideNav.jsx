@@ -39,6 +39,7 @@ const SideNav = (props) => {
           </span>
         </Link>
       </Menu.Item>
+
       <Menu.Item key="2">
         <Link to="/live_video" className="flex items-center justify-center">
           <FaLifeRing className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
@@ -47,38 +48,88 @@ const SideNav = (props) => {
           </span>
         </Link>
       </Menu.Item>
-      <Menu.Item key="3">
-        <Link to="/saved_later" className="flex items-center justify-center">
-          <FaSave className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
-          <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
-            Saved Videos
-          </span>
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="4">
-        <Link to="/purchased_playlist" className="flex items-center justify-center">
-          <FaFilm className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
-          <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
-            Purchased Videos
-          </span>
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="5">
-        <Link to="/settings" className="flex items-center justify-center">
-          <FaCog className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
-          <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
-            Setting
-          </span>
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="6">
-        <Link to="/account" className="flex items-center justify-center">
-          <FaUser className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
-          <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
-            Account
-          </span>
-        </Link>
-      </Menu.Item>
+      {user ? (
+        <>
+          {user.role == "VIEWER" ? (
+            <Menu.Item key="3">
+              <Link to="/saved_later" className="flex items-center justify-center">
+                <FaSave className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
+                <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
+                  Saved Videos
+                </span>
+              </Link>
+            </Menu.Item>
+          ) : (
+            ""
+          )}
+          {user.role == "VIEWER" ? (
+            <Menu.Item key="4">
+              <Link to="/purchased_playlist" className="flex items-center justify-center">
+                <FaFilm className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
+                <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
+                  Purchased Videos
+                </span>
+              </Link>
+            </Menu.Item>
+          ) : (
+            ""
+          )}
+          {user.role == "PRODUCER" ? (
+            <Menu.Item key="6">
+              <Link to="/your_video" className="flex items-center justify-center">
+                <FaVideo className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
+                <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
+                  Your Videos
+                </span>
+              </Link>
+            </Menu.Item>
+          ) : (
+            ""
+          )}
+          {user.role == "PRODUCER" ? (
+            <Menu.Item key="6">
+              <Link to="/upload_video" className="flex items-center justify-center">
+                <FaCloudUploadAlt className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
+                <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
+                  Upload Video
+                </span>
+              </Link>
+            </Menu.Item>
+          ) : (
+            ""
+          )}
+          {user.role == "PRODUCER" ? (
+            <Menu.Item key="6">
+              <Link to="/stream_video" className="flex items-center justify-center">
+                <FaStream className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
+                <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
+                  Stream Video
+                </span>
+              </Link>
+            </Menu.Item>
+          ) : (
+            ""
+          )}
+          <Menu.Item key="5">
+            <Link to="/settings" className="flex items-center justify-center">
+              <FaCog className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
+              <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
+                Setting
+              </span>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="6">
+            <Link to="/account" className="flex items-center justify-center">
+              <FaUser className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
+              <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
+                Account
+              </span>
+            </Link>
+          </Menu.Item>
+        </>
+      ) : (
+        ""
+      )}
     </Menu>
   );
 
