@@ -1,4 +1,4 @@
-import { Button, Form, Input, message, PageHeader } from "antd";
+import { Button, DatePicker, Form, Input, message, PageHeader } from "antd";
 import React, { useEffect, useState } from "react";
 import SideNav from "../../partials/sideNav/SideNav";
 import { BiCheckCircle, BiCheckShield, BiStopwatch } from "react-icons/bi";
@@ -17,6 +17,7 @@ import paymentService from "../../_services/payment.service";
 import mastercard from "../../assets/images/mastercard.svg";
 import visa from "../../assets/images/visa.png";
 import { useHistory } from "react-router-dom";
+import moment from "moment"
 
 const Deposit = (props) => {
   const history = useHistory();
@@ -32,7 +33,8 @@ const Deposit = (props) => {
         .then((data) => {
           if (data.success) {
             message.success("Succesfully Deposited!");
-            setBalance(parseInt(balance) + parseInt(values.amount));
+            getBalance();
+            history.goBack();
           } else {
             message.error("Failed to deposited");
           }
@@ -58,15 +60,18 @@ const Deposit = (props) => {
       .getPaymentInfos(user.username)
       .then(paymentInfo)
       .catch((err) => console.log("err", err));
+    getBalance();
+    return () => {};
+  }, []);
+
+  const getBalance = () => {
     paymentService
       .getBalance()
       .then((data) => {
         if (data.success) setBalance(data.balance);
       })
       .catch((err) => console.log("err", err));
-    return () => {};
-  }, []);
-
+  };
   const paymentInfo = (data) => {
     if (data.success) {
       setPayments(data.payment_infos);
@@ -139,7 +144,9 @@ const Deposit = (props) => {
               className="rounded-md mr-2"
               prefix={<BiStopwatch className="site-form-item-icon" />}
               placeholder="MM/YY"
+             
             />
+          
           </Form.Item>
           <Form.Item
             name="cvc"
@@ -258,7 +265,7 @@ const Deposit = (props) => {
                 </p>
               </div>
             ))}
-          <div>{selectedCard && newCard(selectedCard)}</div>
+          <div>{selectedCard && newCard({...selectedCard,expDate:moment(selectedCard.expDate).format("MM/YY")})}</div>
         </section>
       </div>
     </div>

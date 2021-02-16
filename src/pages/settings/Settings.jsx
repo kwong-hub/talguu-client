@@ -17,7 +17,6 @@ import { useHistory } from "react-router-dom";
 const Context = React.createContext({ name: "Default" });
 
 const Settings = (props) => {
-  console.log("props", props);
   const history = useHistory();
   const [showPaymentInfos, setShowPaymentInfos] = useState(false);
   const [form] = Form.useForm();
