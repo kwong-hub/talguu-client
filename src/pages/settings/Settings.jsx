@@ -248,9 +248,9 @@ const Settings = (props) => {
   };
 
   return (
-    <div className="bg-gray-50">
+    <div className="bg-gray-100 ml-0  sm:ml-14">
       <SideNav></SideNav>
-      <div className="flex-col ml-14 mt-20">
+      <div className="flex-col mt-24 py-4 sm:mt-20">
         <h1 className="text-left ml-8 text-2xl">Settings</h1>
         <div className="flex p-4 rounded-sm  items-center justify-between  max-w-xl m-auto">
           <div>

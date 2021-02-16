@@ -40,7 +40,7 @@ const WatchVideo = () => {
   useEffect(() => {
     if (vidId) {
       dispatch({ type: GET_PAID_VIDEO_URL_ASYNC, payload: vidId });
-      dispatch({ type: VIEWER_VIDEOS_ASYNC });
+      dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q: "" } });
       window.scrollTo(0, 0);
     }
     return () => {};
@@ -163,7 +163,7 @@ const WatchVideo = () => {
   };
 
   const onSearch = (value) => {
-    // console.log(value);
+    dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q: value } });
   };
 
   const renderVideos = () => {
@@ -184,24 +184,9 @@ const WatchVideo = () => {
   const suffix = <FaSearch className="text-xl text-gray-300" />;
   return (
     <>
-      <SideNav></SideNav>
+      <SideNav onSearch={onSearch}></SideNav>
       <div>
         <div className="pt-2 ml-14 mt-20">
-          {/* <SideNav></SideNav> */}
-          {/* <div className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl max-h-12 pt-4">
-            <div className="text-2xl mr-4 flex items-center justify-center header_title text-gray-500">
-              <Link to="/" className="flex items-center">
-                TALGUU
-              </Link>
-            </div>
-            <Search
-              placeholder="Search videos here..."
-              enterButton="Search"
-              size="large"
-              suffix={suffix}
-              onSearch={() => onSearch()}
-            />
-          </div> */}
           {playVideo && currentVideo ? (
             renderPlayer(currentVideo)
           ) : (

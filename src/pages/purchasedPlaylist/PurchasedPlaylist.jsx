@@ -29,7 +29,7 @@ function PurchasedPlaylist(props) {
   const onSearch = (value) => {};
 
   const renderVideos = () => {
-    if (purchasedVideos) {
+    if (purchasedVideos && purchasedVideos.length) {
       return purchasedVideos.map((video) => {
         return (
           <div
@@ -66,27 +66,23 @@ function PurchasedPlaylist(props) {
           </div>
         );
       });
+    } else {
+      return (
+        <div
+          className={`flex justify-center w-full md:w-4/12 lg:w-3/12 sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch`}>
+          <p className="text-gray-600 text-md py-4 w-96">
+            You haven't purchased any videos. Once you purchased a video, you can easily access it
+            from here.
+          </p>
+        </div>
+      );
     }
   };
 
   const suffix = <FaSearch className="text-xl text-gray-300" />;
   return (
-    <div className="pt-2 ml-14">
+    <div className="pt-2 ml-0 sm:ml-14">
       <SideNav></SideNav>
-      {/* <div className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl max-h-12 pt-4">
-        <div className="text-2xl mr-4 flex items-center justify-center header_title text-gray-500">
-          <Link to="/" className="flex items-center">
-            TALGUU
-          </Link>
-        </div>
-        <Search
-          placeholder="Search videos here..."
-          enterButton="Search"
-          size="large"
-          suffix={suffix}
-          onSearch={onSearch}
-        />
-      </div> */}
       <div className="flex relative mt-20 border-2 flex-wrap min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
         {renderVideos()}
       </div>
