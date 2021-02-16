@@ -15,6 +15,7 @@ import { Tooltip, Input, Menu, Dropdown } from "antd";
 import "./SideNav.css";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo512.png";
+import { BiVideoRecording } from "react-icons/bi";
 
 const { Search } = Input;
 
@@ -100,7 +101,7 @@ const SideNav = (props) => {
                 to="/your_video"
                 className="flex items-center justify-center"
               >
-                <FaVideo
+                <BiVideoRecording
                   className={`text-xl inline mr-2 -mt-2  text-gray-500`}
                 />
                 <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
@@ -303,7 +304,7 @@ const SideNav = (props) => {
               >
                 <Link to="/your_video">
                   <Tooltip placement="rightTop" title="Upload Video">
-                    <FaVideo
+                    <BiVideoRecording
                       className={`text-3xl inline text-gray-300 hover:text-white`}
                     />
                   </Tooltip>

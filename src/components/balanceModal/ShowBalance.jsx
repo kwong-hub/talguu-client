@@ -24,7 +24,7 @@ const ShowBalance = (props) => {
   return (
     <div>
       <Modal
-        className="py-4 px-2 w-32 mx-4 opacity-95"
+        className="w-1/2 opacity-95"
       
         centered
         closable={false}
@@ -35,7 +35,7 @@ const ShowBalance = (props) => {
         onCancel={() => props.changePaymentModalVisible(false)}
         okText="back"
       >
-        <div className="p-4">
+        <div className="flex flex-col justify-center items-center py-4 ">
          <h2>Balance</h2>
          <p className="text-2xl font-bold ">{balance}$</p>
         </div>

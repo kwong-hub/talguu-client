@@ -175,6 +175,9 @@ const SignupViewer = () => {
               <div>
                 {renderPersonal()}
                 <div>
+                  <div className="flex px-2 text-blue-500 text-lg">
+                    <Link to="/signupprd">Join as Producer</Link>
+                  </div>
                   <p className="my-6">OR USING</p>
                   <div className="flex justify-evenly">
                     <Button shape="round" icon={<FaGoogle />} className="flex items-center p-2">

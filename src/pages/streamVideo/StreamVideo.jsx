@@ -30,18 +30,21 @@ const StreamVideo = () => {
             style={{ width: 256 }}
             defaultSelectedKeys={["1"]}
             defaultOpenKeys={["sub1"]}
-            mode="inline">
+            mode="inline"
+          >
             <Menu.Item
               className="flex items-center justify-start text-lg"
               onClick={() => setmodalVisible(true)}
               key="1"
-              icon={<RiCamera2Fill />}>
+              icon={<RiCamera2Fill />}
+            >
               Stream
             </Menu.Item>
             <Menu.Item
               className="flex items-center justify-start text-lg"
               key="2"
-              icon={<RiLiveFill />}>
+              icon={<RiLiveFill />}
+            >
               Webcam live
             </Menu.Item>
           </Menu>
@@ -49,33 +52,36 @@ const StreamVideo = () => {
           <Modal
             title="Stream live"
             centered
+            okText="Start Stream"
             visible={modalVisible}
-            okText="Back"
-            onOk={() => setmodalVisible(false)}
-            onCancel={() => setmodalVisible(false)}>
-            <div className="bg-white p-4 shadow-lg">
+           
+            onOk={() =>  startStream()}
+            onCancel={() => setmodalVisible(false)}
+          >
+            <div className="bg-white p-4 ">
               <div className="">
                 <h2 className="text-xl py-2 font-bold">Stream form Software</h2>
                 <p>
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                  Ipsum has been the industry's standard dummy text ever since the 1500s,
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the industry's
+                  standard dummy text ever since the 1500s,
                 </p>
-                <Button
-                  onClick={(e) => startStream()}
-                  type="primary float-right right rounded-full px-6 my-4 ">
-                  Start Streaming
-                </Button>
+               
               </div>
             </div>
           </Modal>
           <Modal
             title="Stream live"
             centered
+            closable={false}
+            mask={false}
+            footer={null}
             visible={formVisible}
             okText="back"
             onOk={() => setFormVisible(false)}
-            onCancel={() => setFormVisible(false)}>
-            <div className="bg-white p-4 shadow-lg">
+            onCancel={() => setFormVisible(false)}
+          >
+            <div className="bg-white p-4 ">
               <StreamForm />
             </div>
           </Modal>
