@@ -13,12 +13,12 @@ const intialState = {
   previewTitle: "",
 
   fileList: [
-    {
-      uid: "-1",
-      name: "image.png",
-      status: "done",
-      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
+    // {
+    //   uid: "-1",
+    //   name: "image.png",
+    //   status: "done",
+    //   url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    // },
   ],
 };
 function getBase64(file) {
@@ -76,7 +76,7 @@ export class Thumbnail extends Component {
     this.setState({ uploaded: true });
     var formData = new FormData();
     formData.append("id", this.props.video);
-    formData.append("picture", this.state.fileList[1].originFileObj);
+    formData.append("picture", this.state.fileList[0].originFileObj);
     videoService
       .addThumbnail(formData)
       .then((data) => {
@@ -99,12 +99,13 @@ export class Thumbnail extends Component {
       <>
         <ImgCrop rotate aspect={245 / 164} beforeCrop={this.beforeCrop}>
           <Upload
+            // action={this.handleChange}
             listType="picture-card"
             fileList={fileList}
             onPreview={this.handlePreview}
             onChange={this.handleChange}
             className="w-auto m-2">
-            {fileList.length >= 2 ? null : uploadButton}
+            {fileList.length >= 1 ? null : uploadButton}
           </Upload>
         </ImgCrop>
 

@@ -7,13 +7,10 @@ import {
   FaCog,
   FaUser,
   FaFilm,
-  FaBinoculars,
   FaSignInAlt,
   FaLifeRing,
   FaSearch,
-  FaSignOutAlt,
 } from "react-icons/fa";
-import { AiOutlineMinus } from "react-icons/ai";
 import { Tooltip, Input, Menu, Dropdown } from "antd";
 import "./SideNav.css";
 import { Link, useLocation } from "react-router-dom";
@@ -193,6 +190,20 @@ const SideNav = (props) => {
                   </Link>
                 </li>
               </>
+            ) : (
+              ""
+            )}
+            {user.role == "PRODUCER" ? (
+              <li
+                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
+                  location.pathname === "/your_video" ? "bg-gray-400" : ""
+                }`}>
+                <Link to="/your_video">
+                  <Tooltip placement="rightTop" title="Upload Video">
+                    <FaVideo className={`text-3xl inline text-gray-300 hover:text-white`} />
+                  </Tooltip>
+                </Link>
+              </li>
             ) : (
               ""
             )}

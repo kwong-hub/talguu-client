@@ -1,54 +1,171 @@
-import React, { Component } from "react";
-import { Menu } from "antd";
+import React, { Component, useEffect } from "react";
+import { Button, Menu, message, Popconfirm, Space, Table, Tag } from "antd";
 import Video from "../../components/videos/Video";
 import SideNav from "../../partials/sideNav/SideNav";
 import videoService from "../../_services/video.service";
+import { useState } from "react";
+import moment from "moment";
+import { useHistory } from "react-router-dom";
 
-export class YourVideo extends Component {
-  state = {
-    videos: [],
-    current: "mail",
-  };
+const YourVideo = () => {
+  const history = useHistory();
+  const [videos, setvideos] = useState([]);
+  const [loading, setloading] = useState(false);
+  const [pagination, setpagination] = useState({
+    current: 1,
+    pageSize: 5,
+  });
 
-  handleClick = (e) => {
-    // console.log("click ", e);
-    this.setState({ current: e.key });
-  };
-  componentDidMount() {
-    this.getVideos();
+  useEffect(() => {
+    getVideos(pagination);
+    return () => {};
+  }, []);
+
+  const columns = [
+    {
+      title: "Video",
+      dataIndex: "thumbnial",
+      key: "thumbnial",
+      width: 150,
+      fixed: "left",
+      render: (text) => (
+        <div className="hover:bg-blue-200 cursor-pointer">
+          <img src={text} className="w-32" alt="thumbnail" />
+        </div>
+      ),
+    },
+    {
+      title: "",
+      dataIndex: "title",
+      width: 200,
+      fixed: "left",
+      key: "title",
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: "Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      width: 150,
+      render: (text) => (
+        <div className="flex flex-col">
+          <span>{moment(text).format("LL")}</span>
+          <span className="font-extralight text-sm">Published</span>
+        </div>
+      ),
+    },
+    {
+      title: "Price",
+      dataIndex: "video_price",
+      key: "video_price",
+      width: 90,
+      render: (text) => (
+        <div>
+          $ <span>{text}</span>
+        </div>
+      ),
+    },
+    {
+      title: "View",
+      dataIndex: "viewVount",
+      key: "viewVount",
+      width: 100,
+    },
+    {
+      title: "Likes",
+      dataIndex: "likeCount",
+      key: "likeCount",
+      width: 100,
+    },
+    {
+      title: "Comments",
+      dataIndex: "likeCount",
+      key: "likeCount",
+      width: 120,
+    },
+
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <Space size="middle">
+          <Button onClick={(e) => editVideo(record)}>Edit</Button>
+          <Popconfirm
+            title="Are you sure to delete this video?"
+            onConfirm={(e)=>deleteVideo(record)}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            
+            <Button >Delete</Button>
+          </Popconfirm>
+        </Space>
+      ),
+    },
+  ];
+ 
+  function cancel(e) {
+    console.log(e);
+    // message.error('Click on No');
   }
-  getVideos = () => {
+
+  const editVideo = (video) => {
+    history.push(`/edit/${video.id}`);
+    history.go(0);
+  };
+
+  const deleteVideo = (video) => {
     videoService
-      .getVideos()
+      .deleteVideo(video.id)
       .then((data) => {
-        // console.log("data", data);
-        this.setState({ videos: data });
+        if (data) {
+          message.success("Videos deleted!.")
+          getVideos(pagination);
+        }
+      })
+      .catch((err) => message.error("Failed to deleted!."));
+  };
+
+  const getVideos = (query) => {
+    videoService
+      .getVideos(query)
+      .then((data) => {
+        console.log("data", data);
+        setvideos(data.rows);
+        setpagination({ ...query, total: data.count });
       })
       .catch((err) => {
-        // console.log("err", err);
+        console.log("err", err);
       });
   };
-
-  render() {
-    const { current } = this.state;
-    return (
-      <div className="m-12">
-        <SideNav></SideNav>
-        <div className="m-6 w-full">
-          <Menu onClick={this.handleClick} selectedKeys={[current]} mode="horizontal" className="">
-            <Menu.Item key="mail">Watched Videos</Menu.Item>
-            <Menu.Item key="app">Live Videos</Menu.Item>
-            <Menu.Item key="video">Videos</Menu.Item>
-          </Menu>
+  const handleTableChange = (pagination, filters, sorter) => {
+    getVideos(pagination);
+  };
+  return (
+    <div>
+      <SideNav />
+      <div className="ml-20 m-4">
+        <div className="flex flex-col items-start m-4">
+          <h2 className="text-xl text-gray-700 font-medium">
+            Your Video Content{" "}
+          </h2>
+          <p className="font-normal text-gray-500">
+            Analyse,Manage,Edit,Delete
+          </p>
         </div>
-        <div className="m-2 flex flex-wrap">
-          {this.state.videos.map((item) => {
-            return <Video {...item} width={400} height={100} />;
-          })}
-        </div>
+        <Table
+          scroll={{ x: 720 }}
+          pagination={pagination}
+          loading={loading}
+          columns={columns}
+          onChange={handleTableChange}
+          rowKey={(record) => record.id}
+          dataSource={videos}
+        />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default YourVideo;

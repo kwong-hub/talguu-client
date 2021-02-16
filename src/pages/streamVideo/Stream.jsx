@@ -44,9 +44,9 @@ const Stream = (props) => {
   };
   return (
     <div>
-      <div className="mx-2 my-20 relative">
-        {/* <SideNav /> */}
-        <Header />
+      <div className="ml-12 my-20 relative">
+        <SideNav />
+        {/* <Header /> */}
         <PageHeader
           className="site-page-header"
           onBack={() => history.goBack()}
@@ -137,19 +137,7 @@ const Stream = (props) => {
                   placeholder="Description*"
                 />
               </Form.Item>
-              <Form.Item
-                className="w-64 flex"
-                name="select"
-                label="Select Privacy"
-                hasFeedback
-                rules={[{ required: true, message: "Please select your Privacy!" }]}>
-                <Select
-                  placeholder="Select audience"
-                  className="rounded-lg w-20 text-gray-700 text-base p-2">
-                  <Option value="private">Private</Option>
-                  <Option value="public">Public</Option>
-                </Select>
-              </Form.Item>
+              
 
               {/* <Form.Item>
               <Button
@@ -164,14 +152,14 @@ const Stream = (props) => {
             </Form>
 
             <div>
-              <div className="flex flex-col items-start justify-start">
+              {/* <div className="flex flex-col items-start justify-start">
                 <h2 className="text-lg">Thumbnail</h2>
                 <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
                   Select or upload a picture that shows what's in your video. A good thumbnail
                   stands out and draws viewers' attention.
                 </h3>
-                {/* <Thumbnail video={video.id} thumbnails={video.thumbnial} /> */}
-              </div>
+                <Thumbnail video={video.id} thumbnails={video.thumbnial} />
+              </div> */}
             </div>
           </div>
 

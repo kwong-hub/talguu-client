@@ -23,6 +23,8 @@ import PurchasedPlaylist from "../pages/purchasedPlaylist/PurchasedPlaylist";
 import WatchVideo from "../pages/watchVideo/WatchVideo";
 import LiveVideos from "../pages/live/LiveVideos";
 import Deposit from "../pages/payment/Deposit";
+import UploadAnt from "../pages/UploadAnt";
+import EditProdVideo from "../pages/yourVideos/EditProdVideo";
 
 const Router = () => {
   return (
@@ -36,8 +38,10 @@ const Router = () => {
           <PrivateRoute path="/purchased_playlist" component={PurchasedPlaylist} />
           <PrivateRoute path="/saved_later" component={SavedPlayList} />
           <PrivateRoute path="/upload_video" component={UploadVideo} />
+          <PrivateRoute path="/upload_2" component={UploadAnt} />
           <PrivateRoute path="/stream_video" component={StreamVideo} />
           <PrivateRoute path="/your_video" component={YourVideo} />
+          <PrivateRoute path="/edit/:vidId" component={EditProdVideo} />
           <Route path="/settings" component={Settings} />
           <Route path="/account" component={Account} />
           <Route exact path="/" component={Home} />
