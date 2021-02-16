@@ -1,5 +1,5 @@
 import React, { Component, useEffect } from "react";
-import { Button, Menu, Space, Table, Tag } from "antd";
+import { Button, Menu, message, Popconfirm, Space, Table, Tag } from "antd";
 import Video from "../../components/videos/Video";
 import SideNav from "../../partials/sideNav/SideNav";
 import videoService from "../../_services/video.service";
@@ -8,7 +8,7 @@ import moment from "moment";
 import { useHistory } from "react-router-dom";
 
 const YourVideo = () => {
-  const history = useHistory()
+  const history = useHistory();
   const [videos, setvideos] = useState([]);
   const [loading, setloading] = useState(false);
   const [pagination, setpagination] = useState({
@@ -42,7 +42,6 @@ const YourVideo = () => {
       key: "title",
       render: (text) => <a>{text}</a>,
     },
-
     {
       title: "Date",
       dataIndex: "createdAt",
@@ -88,18 +87,44 @@ const YourVideo = () => {
     {
       title: "Action",
       key: "action",
-      render: (text,record) => (
+      render: (text, record) => (
         <Space size="middle">
           <Button onClick={(e) => editVideo(record)}>Edit</Button>
-          <Button>Delete</Button>
+          <Popconfirm
+            title="Are you sure to delete this video?"
+            onConfirm={(e)=>deleteVideo(record)}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            
+            <Button >Delete</Button>
+          </Popconfirm>
         </Space>
       ),
     },
   ];
+ 
+  function cancel(e) {
+    console.log(e);
+    // message.error('Click on No');
+  }
 
   const editVideo = (video) => {
     history.push(`/edit/${video.id}`);
     history.go(0);
+  };
+
+  const deleteVideo = (video) => {
+    videoService
+      .deleteVideo(video.id)
+      .then((data) => {
+        if (data) {
+          message.success("Videos deleted!.")
+          getVideos(pagination);
+        }
+      })
+      .catch((err) => message.error("Failed to deleted!."));
   };
 
   const getVideos = (query) => {

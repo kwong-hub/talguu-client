@@ -32,6 +32,14 @@ export default {
       throw error;
     }
   },
+  deleteVideo: async function (id) {
+    try {
+      const video = await axios.delete(`${environment}/video/${id}`);
+      return video.data;
+    } catch (error) {
+      throw error;
+    }
+  },
   updateVideo: async function (body) {
     try {
       const video = await axios.patch(`${environment}/video`, body);
