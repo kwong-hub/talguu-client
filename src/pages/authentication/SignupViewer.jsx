@@ -138,7 +138,7 @@ const SignupViewer = () => {
 
   const renderVerifyEmail = () => {
     return (
-      <h2 className="w-80 text-md text-gray-600 text-center mx-auto">
+      <h2 className="w-80 text-md text-gray-600 text-center mx-auto my-4">
         We have sent an email to your account. Please verify your email to login.
         <div className="w-full">
           <Link to="/login">
@@ -155,7 +155,7 @@ const SignupViewer = () => {
     <div>
       <Header />
       <div className="flex m-auto items-center justify-center w-auto p-8 pt-2 mt-14">
-        <div className="flex justify-center items-center h-full w-8/12 max-w-xl">
+        <div className="flex justify-center items-center h-full w-8/12 max-w-md">
           {currentForm !== 1 ? (
             <div className="w-full flex flex-col justify-center m-4 p-4 py-8 shadow-md rounded-2xl bg-white">
               <div className="flex justify-center flex-col items-center ">
