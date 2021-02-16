@@ -190,7 +190,7 @@ class UploadVideo extends Component {
                 {this.state.progress > 0 && (
                   <Progress
                     type="line"
-                    className="mt-4"
+                    className="mt-4 w-64"
                     percent={this.state.progress}
                     status="active"
                   />

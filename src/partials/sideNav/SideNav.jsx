@@ -135,7 +135,7 @@ const SideNav = (props) => {
 
   const suffix = <FaSearch className="text-xl text-gray-300" />;
   return (
-    <div className="container  sm:flex w-14 min-h-full fixed left-0 top-0 bottom-0 bg-transparent  sm:bg-white">
+    <div className="container z-50 sm:flex w-14 min-h-full fixed left-0 top-0 bottom-0 bg-transparent  sm:bg-white">
       <div className="absolute w-screen right-0 left-0 sm:left-14 top-0 bg-white shadow-sm">
         {/* <div className="h-10 w-auto flex justify-end mr-4"></div> */}
         <div className="flex justify-between sm:hidden pl-2 pt-2">

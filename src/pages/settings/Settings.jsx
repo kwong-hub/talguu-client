@@ -272,7 +272,7 @@ const Settings = (props) => {
         </div>
         <div className="flex p-4 rounded-sm  items-center justify-between  max-w-xl m-auto">
           <div>
-            <h1 className="text-gray-800 text-lg text-left">Billing and Payment</h1>
+            <h1 className="text-gray-800 text-lg text-left">Deposit and Payment</h1>
             <h4 className="text-gray-700 text-md text-left font-light">Deposit to your account</h4>
           </div>
           <div>
