@@ -145,7 +145,7 @@ const YourVideo = () => {
   return (
     <div>
       <SideNav />
-      <div className="ml-20 m-4">
+      <div className="ml-20 mt-20 m-4">
         <div className="flex flex-col items-start m-4">
           <h2 className="text-xl text-gray-700 font-medium">
             Your Video Content{" "}

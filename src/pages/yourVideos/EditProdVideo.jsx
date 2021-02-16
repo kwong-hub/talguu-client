@@ -21,7 +21,7 @@ const EditProdVideo = (props) => {
   const [price, setPrice] = useState(0.23);
 
   console.log("video", video);
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (vidId) {
       getVideoById(vidId);
       window.scrollTo(0, 0);
@@ -73,7 +73,7 @@ const EditProdVideo = (props) => {
     ],
   };
   return (
-    <div className="ml-16 my-8 relative">
+    <div className="ml-16 mt-16 relative">
       <SideNav />
       {/* <Header /> */}
       <PageHeader
