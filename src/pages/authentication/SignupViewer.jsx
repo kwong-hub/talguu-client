@@ -1,22 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Button, Steps, DatePicker } from "antd";
-import {
-  FaEnvelope,
-  FaFacebook,
-  FaGoogle,
-  FaLock,
-  FaUser,
-  FaUserCircle,
-  FaMapMarkerAlt,
-  // FaCheckSquare,
-  // FaBuilding,
-  FaMoneyCheckAlt,
-} from "react-icons/fa";
+import { Form, Input, Button, Steps } from "antd";
+import { FaEnvelope, FaFacebook, FaGoogle, FaLock, FaUser } from "react-icons/fa";
 import logo from "../../assets/images/logo.svg";
 import { Link } from "react-router-dom";
 import "./SignupViewer.css";
 import { useDispatch, useSelector } from "react-redux";
-import { CREATE_VIEWER_ASYNC } from "../../redux/types";
+import { CREATE_VIEWER_ASYNC, CREATE_VIEWER_RESET } from "../../redux/types";
 import Header from "../../partials/header/Header";
 
 const { Step } = Steps;
@@ -46,6 +35,7 @@ const SignupViewer = () => {
       setFormValues(() => {
         return { phoneNumber: "12341234234" };
       });
+      dispatch({ type: CREATE_VIEWER_RESET, payload: "" });
     }
   }, [createViewerStatus]);
 
@@ -138,16 +128,18 @@ const SignupViewer = () => {
 
   const renderVerifyEmail = () => {
     return (
-      <h2 className="w-80 text-md text-gray-600 text-center mx-auto">
-        We have sent an email to your account. Please verify your email to login.
-        <div className="w-full">
-          <Link to="/login">
-            <Button type="primary" shape="round" className="flex items-center m-1 px-4 mx-auto">
-              Login
-            </Button>
-          </Link>
+      <div className="w-80 h-screen flex items-center text-md text-gray-600 text-center mx-auto">
+        <div style={{ height: "fit-content" }}>
+          We have sent an email to your account. Please verify your email to login.
+          <div className="w-full">
+            <Link to="/login">
+              <Button type="primary" shape="round" className="flex items-center m-1 px-4 mx-auto">
+                Login
+              </Button>
+            </Link>
+          </div>
         </div>
-      </h2>
+      </div>
     );
   };
 

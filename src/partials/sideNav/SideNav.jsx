@@ -173,13 +173,15 @@ const SideNav = (props) => {
               onSearch={props.onSearch}
             />
           </div>
-          <span className="text-gray-500 hidden sm:flex mr-16 ml-6 cursor-pointer text-lg items-center hover:text-gray-700">
-            <Link to="/account">
-              <Tooltip placement="rightTop" title="Account">
-                <FaUser className={`text-3xl inline text-gray-300`} />
-              </Tooltip>
-            </Link>
-          </span>
+          {user && (
+            <span className="text-gray-500 hidden sm:flex mr-16 ml-6 cursor-pointer text-lg items-center hover:text-gray-700">
+              <Link to="/account">
+                <Tooltip placement="rightTop" title="Account">
+                  <FaUser className={`text-3xl inline text-gray-300`} />
+                </Tooltip>
+              </Link>
+            </span>
+          )}
         </div>
       </div>
       <ul className="list-disc space-y-5 p-1 border-r hidden sm:block">
