@@ -13,12 +13,14 @@ import { userService } from "../../_services/user.service";
 import PaymentInfos from "../../components/paymentInfos/PaymentInfos";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
+import ShowBalance from "../../components/balanceModal/ShowBalance";
 
 const Context = React.createContext({ name: "Default" });
 
 const Settings = (props) => {
   const history = useHistory();
   const [showPaymentInfos, setShowPaymentInfos] = useState(false);
+  const [showBalance, setshowBalance] = useState(false);
   const [form] = Form.useForm();
   const [viewerErrMessages, setViewerErrMessages] = useState("");
   const [loading, setLoading] = useState(false);
@@ -90,6 +92,9 @@ const Settings = (props) => {
 
   const changePaymentInfosVisible = (value) => {
     setShowPaymentInfos(value);
+  };
+  const changeBalanceInfosVisible = (value) => {
+    setshowBalance(value);
   };
   const depositAccount = (value) => {
     history.push("/deposit");
@@ -275,8 +280,8 @@ const Settings = (props) => {
             <h4 className="text-gray-700 text-md text-left font-light">Deposit to your account</h4>
           </div>
           <div>
-            <Button onClick={() => changePaymentInfosVisible(true)} className="mx-2">
-              View
+            <Button onClick={() => changeBalanceInfosVisible(true)} className="mx-2">
+              Balance
             </Button>
             <Button onClick={() => depositAccount(true)} type="secondary">
               Deposit
@@ -294,6 +299,7 @@ const Settings = (props) => {
         </div> */}
       </div>
       {renderPayment()}
+      {showBalance && <ShowBalance modalVisible={showBalance} changePaymentModalVisible={changeBalanceInfosVisible}  />}
       {showPaymentInfos ? (
         <PaymentInfos
           username={username}

@@ -195,7 +195,7 @@ const Deposit = (props) => {
     <div>
       <SideNav />
       <PageHeader
-        className="ml-16"
+        className="ml-16 my-16"
         onBack={() => history.goBack()}
         title="Deposit"
         subTitle="deposit money for later use"
