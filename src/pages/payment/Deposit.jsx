@@ -256,6 +256,12 @@ const Deposit = (props) => {
                         <img src={mastercard} alt="" className="h-7" />
                       </div>
                     )}
+                    {item.cardType === "VISA" && (
+                      <div>
+                        {" "}
+                        <img src={visa} alt="" className="h-7" />
+                      </div>
+                    )}
                   </div>
                 </div>
 

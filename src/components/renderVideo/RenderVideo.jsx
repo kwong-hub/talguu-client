@@ -85,7 +85,7 @@ function RenderVideo(props) {
         )}
         {!props.video.paid ? (
           <div className="flex items-center bg-white text-gray-700 rounded-sm absolute top-1 left-1 py-0 px-4">
-            <FaDollarSign className="text-gray-700 text-xs" /> {0.23}
+            <FaDollarSign className="text-gray-700 text-xs" /> {props.video?.video_price}
           </div>
         ) : (
           ""
