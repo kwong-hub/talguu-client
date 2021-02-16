@@ -15,7 +15,7 @@ function PaymentModal(props) {
       onOk={() => props.paymentModalVisibleFunc(false)}
       onCancel={() => props.paymentModalVisibleFunc(false)}>
       <div className="absolute -left-8 top-1 w-16 h-16 rounded-full bg-blue-500 text-white flex items-center justify-center font-semibold">
-        <FaDollarSign /> {0.23}
+        <FaDollarSign /> {props.video?.video_price}
       </div>
       <h3 className="text-gray-600 uppercase text-center w-full text-lg mb-3">Payment</h3>
       <div>
@@ -28,7 +28,7 @@ function PaymentModal(props) {
         onClick={() => props.purchaseVideo(props.video.id)}
         className="h-10 bg-blue-500 -mx-6 text-center text-white text-md flex items-center justify-center cursor-pointer font-semibold pay_button">
         Pay From Balance <FaDollarSign />
-        {0.23}
+        {props.video?.video_price}
       </div>
     </Modal>
   );
