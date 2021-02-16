@@ -163,27 +163,19 @@ class UploadVideo extends Component {
     return (
       <>
         <SideNav></SideNav>
-        <div className="flex flex-col mt-8 m-4 mx-auto w-full max-w-4xl justify-center ">
-          <div className="flex justify-around mx-4 ">
+        <div className="flex flex-col mt-20 m-4 mx-auto w-full max-w-4xl justify-center ">
+          <div className="flex justify-around mx-4 my-4 ">
             <p className="text-2xl text-gray-600 m-2">
               One Step to Publish your video!{" "}
             </p>
-            <Button
-              size={60}
-              type="primary"
-              shape="round"
-              icon={<RiUploadCloud2Line />}
-              className="w-48 flex justify-center items-center text-xl p-4 transform hover:scale-110 motion-reduce:transform-none"
-            >
-              Publish Video
-            </Button>
+           
           </div>
 
           <div ref={this.dropRef} className="flex justify-center my-4">
             <div className="shadow-inner border bg-white cursor-pointer border-gray-100 rounded-md w-2/3 max-w-3/4 transition duration-500 ease-in-out hover:bg-gray-100 transform hover:-translate-y-1 hover:scale-110">
               <div className="h-64 flex flex-col justify-center items-center container mx-auto px-6 ">
-                <RiVideoUploadFill className="text-5xl" />
-                <p className="tracking-wider text-lg text-gray-500">
+                <RiVideoUploadFill className="text-5xl text-gray-600" />
+                <p className="my-2 text-xl text-gray-600 font-medium uppercase">
                   {" "}
                   Drag and Drop the video{" "}
                 </p>
@@ -194,10 +186,11 @@ class UploadVideo extends Component {
                   onChange={this.handleFileSelect}
                   className="hidden"
                 />
-                <button>Upload file</button>
+                <Button type="primary">Upload file</Button>
                 {this.state.progress > 0 && (
                   <Progress
                     type="line"
+                    className="mt-4"
                     percent={this.state.progress}
                     status="active"
                   />

@@ -48,7 +48,7 @@ const EditUploadVideos = (props) => {
     ],
   };
   return (
-    <div className="ml-16 my-8 relative">
+    <div className="ml-16 mt-20 relative">
       <SideNav />
       {/* <Header /> */}
       <PageHeader

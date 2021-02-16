@@ -26,7 +26,7 @@ const SideNav = (props) => {
 
   const suffix = <FaSearch className="text-xl text-gray-300" />;
   return (
-    <div className="container w-14 min-h-full fixed left-0 top-0 bottom-0 border-r p-1 bg-white">
+    <div className="container z-50 w-14 min-h-full fixed left-0 top-0 bottom-0 border-r p-1 bg-white">
       <div className="absolute w-screen right-0 left-14 top-0 bg-white shadow-sm">
         {/* <div className="h-10 w-auto flex justify-end mr-4"></div> */}
         <div className="flex w-full justify-between items-center p-4">
@@ -118,7 +118,7 @@ const SideNav = (props) => {
             {user.role == "PRODUCER" ? (
               <li
                 className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                  location.pathname === "/upload_video" ? "bg-gray-400" : ""
+                  location.pathname === "/your_video" ? "bg-gray-400" : ""
                 }`}>
                 <Link to="/your_video">
                   <Tooltip placement="rightTop" title="Upload Video">
