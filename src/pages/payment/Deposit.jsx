@@ -1,4 +1,12 @@
-import { Button, DatePicker, Form, Input, message, PageHeader } from "antd";
+import {
+  Button,
+  DatePicker,
+  Form,
+  Input,
+  message,
+  PageHeader,
+  Select,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import SideNav from "../../partials/sideNav/SideNav";
 import { BiCheckCircle, BiCheckShield, BiStopwatch } from "react-icons/bi";
@@ -17,7 +25,7 @@ import paymentService from "../../_services/payment.service";
 import mastercard from "../../assets/images/mastercard.svg";
 import visa from "../../assets/images/visa.png";
 import { useHistory } from "react-router-dom";
-import moment from "moment"
+import moment from "moment";
 
 const Deposit = (props) => {
   const history = useHistory();
@@ -27,28 +35,20 @@ const Deposit = (props) => {
   const [selectedCard, setselectedCard] = useState();
   const [newFormCard, setNewCard] = useState(false);
   const onFinish = (values) => {
-    if (selectedCard) {
-      paymentService
-        .addDeposit({ ...values, id: selectedCard.id })
-        .then((data) => {
-          if (data.success) {
-            message.success("Succesfully Deposited!");
-            getBalance();
-            history.goBack();
-          } else {
-            message.error("Failed to deposited");
-          }
-          console.log("data", data);
-        })
-        .catch((err) => message.error("Failed to deposited!" + err));
-    }
-  };
-  const selectCard = (item) => {
-    setselectedCard(item);
-    console.log("selectedCard", selectedCard);
-  };
-  const reselect = () => {
-    setselectedCard(null);
+    console.log("values", values);
+    paymentService
+      .addDeposit({ ...values, id: values.selectedCard })
+      .then((data) => {
+        if (data.success) {
+          message.success("Succesfully Deposited!");
+          getBalance();
+          history.goBack();
+        } else {
+          message.error("Failed to deposited");
+        }
+        console.log("data", data);
+      })
+      .catch((err) => message.error("Failed to deposited!" + err));
   };
 
   const addPaymentInfo = () => {
@@ -79,123 +79,11 @@ const Deposit = (props) => {
     }
   };
 
-  const newCard = (intials) => (
-    <div>
-      <Form
-        name="normal_login"
-        className="login-form"
-        initialValues={{ remember: true, ...intials }}
-        onFinish={onFinish}
-        layout="vertical"
-      >
-        <div className="flex">
-          <Form.Item
-            name="firstName"
-            label="First Name"
-            rules={[
-              { required: true, message: "Please input your First Name!" },
-            ]}
-          >
-            <Input
-              readOnly={selectedCard}
-              className="rounded-md mr-2"
-              prefix={<AiOutlineUser className="site-form-item-icon" />}
-              placeholder="First Name"
-            />
-          </Form.Item>
-          <Form.Item
-            name="lastName"
-            label="Last Name"
-            rules={[
-              { required: true, message: "Please input your Last Name!" },
-            ]}
-          >
-            <Input
-              readOnly={selectedCard}
-              className="rounded-md"
-              prefix={<AiOutlineUser className="site-form-item-icon" />}
-              placeholder="Last Name"
-            />
-          </Form.Item>
-        </div>
-
-        <Form.Item
-          name="cardNumber"
-          label="Card Number"
-          rules={[
-            { required: true, message: "Please input your Card Number!" },
-          ]}
-        >
-          <Input
-            readOnly={selectedCard}
-            className="rounded-md"
-            prefix={<AiFillCreditCard className="site-form-item-icon" />}
-            placeholder="Credit card"
-          />
-        </Form.Item>
-        <div className="flex">
-          <Form.Item
-            name="expDate"
-            label="Expire Date"
-            rules={[{ required: true, message: "Please input your expDate!" }]}
-          >
-            <Input
-              readOnly={selectedCard}
-              className="rounded-md mr-2"
-              prefix={<BiStopwatch className="site-form-item-icon" />}
-              placeholder="MM/YY"
-             
-            />
-          
-          </Form.Item>
-          <Form.Item
-            name="cvc"
-            label="CVC"
-            rules={[{ required: true, message: "Please input your cvc!" }]}
-          >
-            <Input
-              readOnly={selectedCard}
-              className="rounded-md"
-              prefix={<BiCheckShield className="site-form-item-icon" />}
-              placeholder="CVC"
-            />
-          </Form.Item>
-        </div>
-
-        <Form.Item
-          name="amount"
-          label="Amount"
-          rules={[{ required: true, message: "Please input your Amount!" }]}
-          help="Deposit amount should greater than 2$"
-        >
-          <Input
-            className="rounded-md "
-            prefix={<FaDollarSign className="site-form-item-icon" />}
-            type="number"
-            min="2"
-            placeholder="Deposit Amount"
-          />
-        </Form.Item>
-
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            shape="round"
-            className="login-form-button w-full my-4 bg-blue-600 border-blue-600"
-          >
-            Deposit
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
-  );
-
   return (
     <div>
       <SideNav />
       <PageHeader
-        className="ml-16 my-16"
+        className="ml-16 mt-16"
         onBack={() => history.goBack()}
         title="Deposit"
         subTitle="deposit money for later use"
@@ -204,29 +92,109 @@ const Deposit = (props) => {
         <section className="max-w-lg min-w-max w-1/2 shadow-md rounded-lg bg-gray-50 p-4">
           <div className="m-4 py-2 px-2 border rounded-full border-gray-100 text-gray-700 text-lg">
             Balance
-            <span className="font-black px-2">{(Math.round(balance * 100) / 100).toFixed(2)}$</span>
+            <span className="font-black px-2">
+              {(Math.round(balance * 100) / 100).toFixed(2)}$
+            </span>
           </div>
           <h2 className="text-xl text-gray-800 font-semibold py-4">Payment</h2>
           <div className="flex justify-center pb-4">
-            <span className=" px-2 rounded-xl cursor-pointer hover:shadow-lg">
+            <span className=" px-2 rounded-xl ">
               <img src={mastercard} alt="" className="h-10" />
             </span>
-            <span className=" cursor-pointer rounded-lg hover:shadow-lg px-2">
+            <span className=" cursor-pointer px-2">
               <img src={visa} alt="" className="h-11" />
             </span>
           </div>
-          {selectedCard && (
-            <div>
-              <div className="flex flex-row justify-end pb-4 justify-items-end">
-                <Button onClick={(e) => reselect()} className="rounded-full">
-                  Select another card!
-                </Button>
-              </div>
-            </div>
-          )}
-          <div className="font-semibold  text-gray-500 text-md pb-2">
+
+          <div className="text-gray-700 text-md pb-2">
             {payments.length > 0 ? (
-              "Select Card from you existing accounts."
+              <Form
+                name="normal_login"
+                className="login-form px-4 w-full md:px-8"
+                initialValues={{ amount: 10 }}
+                onFinish={onFinish}
+                layout="vertical"
+              >
+                <Form.Item
+                  name="selectedCard"
+                  label="Select Card"
+                  className=""
+                  rules={[
+                    { required: true, message: "Please select your card!" },
+                  ]}
+                >
+                  <Select
+                    className="rounded-xl"
+                    defaultValue={<h2>Select Your card.</h2>}
+                  >
+                    {payments.map((item) => (
+                      <option value={item.id}>
+                        <div>
+                          <div className="">
+                            <div className="w-full font-semibold text-md flex flex-col relative md:flex-row">
+                              <span className="mr-2">{item.firstName}</span>
+                              <span> {item.lastName}</span>
+                              <div className="absolute top-1 right-2">
+                                {item.cardType === "MASTER_CARD" && (
+                                  <div>
+                                    <img
+                                      src={mastercard}
+                                      alt=""
+                                      className="h-7"
+                                    />
+                                  </div>
+                                )}
+                                {item.cardType === "VISA" && (
+                                  <div>
+                                    <img src={visa} alt="" className="h-7" />
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            <p className="text-sm  font-extralight">
+                              <span> Card-Number:</span>
+                              {item.cardNumber}
+                            </p>
+                          </div>
+                        </div>
+                      </option>
+                    ))}
+                  </Select>
+                </Form.Item>
+
+                <Form.Item
+                  name="amount"
+                  label="Amount"
+                  rules={[
+                    {
+                      required: true,
+                      min: 2,
+                      message: "Please input your Amount!",
+                    },
+                  ]}
+                  help="Deposit amount should greater than 10$"
+                >
+                  <Input
+                    className="rounded-md "
+                    prefix={<FaDollarSign className="site-form-item-icon" />}
+                    type="number"
+                    min="10"
+                    placeholder="Deposit Amount"
+                  />
+                </Form.Item>
+
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    shape="round"
+                    className="login-form-button w-full my-4 bg-blue-600 border-blue-600"
+                  >
+                    Deposit
+                  </Button>
+                </Form.Item>
+              </Form>
             ) : (
               <div>
                 <span>"No payment information added yet."</span>
@@ -240,45 +208,12 @@ const Deposit = (props) => {
               </div>
             )}
           </div>
-          {!selectedCard &&
-            payments.map((item) => (
-              <div
-                onClick={(e) => selectCard(item)}
-                className="mx-4 my-2 px-8 py-4 bg-white cursor-pointer rounded-xl border border-blue-100 hover:border-gray-100 hover:shadow-lg hover:bg-gray-100 hover:text-blue-500 flex flex-col items-start  shadow-md"
-              >
-                <div className="w-full font-semibold text-md flex flex-col relative md:flex-row">
-                  <span className="mr-2">{item.firstName}</span>
-                  <span> {item.lastName}</span>
-                  <div className="absolute top-1 right-2">
-                    {item.cardType === "MASTER_CARD" && (
-                      <div>
-                        {" "}
-                        <img src={mastercard} alt="" className="h-7" />
-                      </div>
-                    )}
-                    {item.cardType === "VISA" && (
-                      <div>
-                        {" "}
-                        <img src={visa} alt="" className="h-7" />
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <p className="text-sm  font-extralight">
-                  <span> Card-Number:</span>
-                  {item.cardNumber}
-                </p>
-              </div>
-            ))}
-          <div>{selectedCard && newCard({...selectedCard,expDate:moment(selectedCard.expDate).format("MM/YY")})}</div>
         </section>
       </div>
     </div>
   );
 };
 const mapStateToProps = (props) => {
-  console.log("props", props);
   return {
     user: props.authentication,
   };
