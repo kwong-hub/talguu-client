@@ -204,7 +204,7 @@ const Deposit = (props) => {
         <section className="max-w-lg min-w-max w-1/2 shadow-md rounded-lg bg-gray-50 p-4">
           <div className="m-4 py-2 px-2 border rounded-full border-gray-100 text-gray-700 text-lg">
             Balance
-            <span className="font-black px-2">{balance}$</span>
+            <span className="font-black px-2">{(Math.round(balance * 100) / 100).toFixed(2)}$</span>
           </div>
           <h2 className="text-xl text-gray-800 font-semibold py-4">Payment</h2>
           <div className="flex justify-center pb-4">
@@ -215,7 +215,7 @@ const Deposit = (props) => {
               <img src={visa} alt="" className="h-11" />
             </span>
           </div>
-          {payments.length > 0 && (
+          {selectedCard && (
             <div>
               <div className="flex flex-row justify-end pb-4 justify-items-end">
                 <Button onClick={(e) => reselect()} className="rounded-full">
@@ -244,7 +244,7 @@ const Deposit = (props) => {
             payments.map((item) => (
               <div
                 onClick={(e) => selectCard(item)}
-                className="mx-4 my-2 px-8 py-4 bg-white cursor-pointer border border-gray-50 hover:border-gray-100 hover:shadow-md hover:bg-gray-100 hover:text-blue-500 flex flex-col items-start  shadow-sm"
+                className="mx-4 my-2 px-8 py-4 bg-white cursor-pointer rounded-xl border border-blue-100 hover:border-gray-100 hover:shadow-lg hover:bg-gray-100 hover:text-blue-500 flex flex-col items-start  shadow-md"
               >
                 <div className="w-full font-semibold text-md flex flex-col relative md:flex-row">
                   <span className="mr-2">{item.firstName}</span>

@@ -6,6 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { userService } from "../../_services/user.service";
 import Header from "../../partials/header/Header";
+import axios from "axios";
 
 const Login = (props) => {
   const [error, setError] = useState();
@@ -22,6 +23,7 @@ const Login = (props) => {
         if (resp.success) {
           props.dispatch({ type: "LOGIN_ASYNC", payload: resp });
           history.push("/");
+          window.location.reload(false);
         } else {
           props.dispatch({ type: "LOGIN_FAIL" });
           console.log("resp", resp);

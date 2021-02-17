@@ -27,17 +27,17 @@ const ShowBalance = (props) => {
         className="w-1/2 opacity-95"
       
         centered
-        closable={false}
+        closable={true}
         mask={false}
-        footer={null}
+        // footer={null}
         visible={props.modalVisible}
         onOk={() => props.changePaymentModalVisible(false)}
         onCancel={() => props.changePaymentModalVisible(false)}
-        okText="back"
+        okText="Ok"
       >
         <div className="flex flex-col justify-center items-center py-4 ">
          <h2>Balance</h2>
-         <p className="text-2xl font-bold ">{balance}$</p>
+         <p className="text-2xl font-bold ">{(Math.round(balance * 100) / 100).toFixed(2)}$</p>
         </div>
       </Modal>
     </div>
