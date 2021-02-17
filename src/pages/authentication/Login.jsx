@@ -23,7 +23,7 @@ const Login = (props) => {
         if (resp.success) {
           props.dispatch({ type: "LOGIN_ASYNC", payload: resp });
           history.push("/");
-          window.location.reload(false);
+          // window.location.reload(false);
         } else {
           props.dispatch({ type: "LOGIN_FAIL" });
           console.log("resp", resp);

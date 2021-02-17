@@ -1,7 +1,6 @@
 import axios from "./axiosDefault";
 
 import { environment } from "../config/config";
-
 export default {
   addPaymentInfo: async (payload) => {
     try {

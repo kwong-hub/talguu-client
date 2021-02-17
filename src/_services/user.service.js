@@ -1,6 +1,5 @@
 import axios from "./axiosDefault";
 import { environment } from "../config/config";
-
 function login({ email, password }) {
   return axios.post(`${environment}/account/login`, { email, password }).then((user) => {
     // store user details and jwt token in local storage to keep user logged in between page refreshes

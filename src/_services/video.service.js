@@ -2,7 +2,6 @@ import axios from "./axiosDefault";
 
 import { environment } from "../config/config";
 import { authHeader } from "../_helpers";
-
 export default {
   addVideo: async function (body, onUploadProgress) {
     try {

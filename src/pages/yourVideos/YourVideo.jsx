@@ -88,6 +88,7 @@ const YourVideo = () => {
     {
       title: "Action",
       key: "action",
+      width: 150,
       render: (text, record) => (
         <Space size="middle">
           <Button onClick={(e) => editVideo(record)}>Edit</Button>
