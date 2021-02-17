@@ -1,6 +1,5 @@
 import {
   Button,
-  DatePicker,
   Form,
   Input,
   message,
@@ -9,36 +8,29 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import SideNav from "../../partials/sideNav/SideNav";
-import { BiCheckCircle, BiCheckShield, BiStopwatch } from "react-icons/bi";
-import {
-  AiFillCreditCard,
-  AiFillDollarCircle,
-  AiOutlineNumber,
-  AiOutlineUser,
-} from "react-icons/ai";
+
+
 import { connect } from "react-redux";
 
-import { FaDollarSign, FaPaypal, FaSortNumericDown } from "react-icons/fa";
-import { RiMastercardFill, RiMoneyDollarBoxLine } from "react-icons/ri";
-import { USER_PAYMENT_INFO } from "../../redux/types";
+import { FaDollarSign } from "react-icons/fa";
+
 import paymentService from "../../_services/payment.service";
 import mastercard from "../../assets/images/mastercard.svg";
 import visa from "../../assets/images/visa.png";
 import { useHistory } from "react-router-dom";
-import moment from "moment";
 
 const Deposit = (props) => {
   const history = useHistory();
   const [user, setUser] = useState(props?.user?.user);
   const [payments, setPayments] = useState([]);
   const [balance, setBalance] = useState(0);
-  const [selectedCard, setselectedCard] = useState();
-  const [newFormCard, setNewCard] = useState(false);
+  const [loading, setloading] = useState(false);
   const onFinish = (values) => {
-    console.log("values", values);
+    setloading(true);
     paymentService
       .addDeposit({ ...values, id: values.selectedCard })
       .then((data) => {
+        setloading(false);
         if (data.success) {
           message.success("Succesfully Deposited!");
           getBalance();
@@ -46,9 +38,11 @@ const Deposit = (props) => {
         } else {
           message.error("Failed to deposited");
         }
-        console.log("data", data);
       })
-      .catch((err) => message.error("Failed to deposited!" + err));
+      .catch((err) => {
+        message.error("Failed to deposited!" + err);
+        setloading(false);
+      });
   };
 
   const addPaymentInfo = () => {
@@ -74,8 +68,7 @@ const Deposit = (props) => {
   };
   const paymentInfo = (data) => {
     if (data.success) {
-      setPayments(data.payment_infos);
-      let cards = [];
+      setPayments(data.payment_infos); 
     }
   };
 
@@ -131,7 +124,7 @@ const Deposit = (props) => {
                       <option value={item.id}>
                         <div>
                           <div className="">
-                            <div className="w-full font-semibold text-md flex flex-col relative md:flex-row">
+                            <div className="w-full font-semibold text-md flex  relative ">
                               <span className="mr-2">{item.firstName}</span>
                               <span> {item.lastName}</span>
                               <div className="absolute top-1 right-2">
@@ -179,7 +172,7 @@ const Deposit = (props) => {
                     className="rounded-md "
                     prefix={<FaDollarSign className="site-form-item-icon" />}
                     type="number"
-                    min="10"
+                    min="9"
                     placeholder="Deposit Amount"
                   />
                 </Form.Item>
@@ -188,6 +181,7 @@ const Deposit = (props) => {
                   <Button
                     type="primary"
                     htmlType="submit"
+                    loading={loading}
                     shape="round"
                     className="login-form-button w-full my-4 bg-blue-600 border-blue-600"
                   >
