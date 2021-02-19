@@ -10,11 +10,14 @@ function PaymentModal(props) {
   const history = useHistory();
 
   useEffect(() => {
+    // console.log("getting balance");
     paymentService
       .getBalance()
       .then((res) => {
         if (res.success) {
-          setBalance(res?.balance);
+          if (!isNaN(res.balance)) {
+            setBalance(res?.balance);
+          }
         }
       })
       .catch((err) => console.log(err));
