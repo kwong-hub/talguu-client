@@ -15,6 +15,8 @@ function RenderVideo(props) {
   const [notificationActive, setNotificationActive] = useState(false);
   const saveLaterStatus = useSelector((state) => state.video.saveLaterStatus);
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
   if (saveLaterStatus == "SUCCESS_ADDED") {
     dispatch({ type: SAVE_LATER_RESET });
     dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: "" });
@@ -58,31 +60,33 @@ function RenderVideo(props) {
             <FaPlayCircle className="text-gray-600 thumbnail_button" />
           </Tooltip>
         </div>
-        <div
-          onClick={(event) => saveLater(event)}
-          className="watch_later bg-gray-700 p-2 rounded-sm absolute right-2 top-2 bg-opacity-25">
-          <Tooltip
-            placement="bottom"
-            title={props.video.saveLater ? "Remove Watch Later" : "Add to Watch Later"}>
-            {props.video.saveLater ? (
-              <FaTrash className="text-white text-base" />
-            ) : (
-              <FaClock className="text-white text-base" />
-            )}
-          </Tooltip>
-        </div>
-        <div className="bg-gray-600 rounded-sm absolute bottom-1 right-1 py-0 px-4 bg-opacity-40"></div>
-        {props.video.paid ? (
-          ""
-        ) : (
-          <div className="absolute bottom-1 left-1 py-0 invisible watch_video_buttons">
-            <Button
-              onClick={(event) => props.paymentModalVisible(true, props.video, event)}
-              className="mr-1 rounded-2xl text-xs px-2 py-0 opacity-80">
-              Watch Full Video
-            </Button>
+        {(!user || user.role == "VIEWER") && (
+          <div
+            onClick={(event) => saveLater(event)}
+            className="watch_later bg-gray-700 p-2 rounded-sm absolute right-2 top-2 bg-opacity-25">
+            <Tooltip
+              placement="bottom"
+              title={props.video.saveLater ? "Remove Watch Later" : "Add to Watch Later"}>
+              {props.video.saveLater ? (
+                <FaTrash className="text-white text-base" />
+              ) : (
+                <FaClock className="text-white text-base" />
+              )}
+            </Tooltip>
           </div>
         )}
+        <div className="bg-gray-600 rounded-sm absolute bottom-1 right-1 py-0 px-4 bg-opacity-40"></div>
+        {props.video.paid
+          ? ""
+          : (!user || user.role == "VIEWER") && (
+              <div className="absolute bottom-1 left-1 py-0 invisible watch_video_buttons">
+                <Button
+                  onClick={(event) => props.paymentModalVisible(true, props.video, event)}
+                  className="mr-1 rounded-2xl text-xs px-2 py-0 opacity-80">
+                  Watch Full Video
+                </Button>
+              </div>
+            )}
         {!props.video.paid ? (
           <div className="flex items-center bg-white text-gray-700 rounded-sm absolute top-1 left-1 py-0 px-4">
             <FaDollarSign className="text-gray-700 text-xs" /> {props.video?.video_price}
