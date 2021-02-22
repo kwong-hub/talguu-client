@@ -42,16 +42,16 @@ const Router = () => {
           <PrivateRoute path="/stream_video" component={StreamVideo} />
           <PrivateRoute path="/your_video" component={YourVideo} />
           <PrivateRoute path="/edit/:vidId" component={EditProdVideo} />
-          <Route path="/settings" component={Settings} />
-          <Route path="/account" component={Account} />
+          <PrivateRoute path="/settings" component={Settings} />
+          <PrivateRoute path="/account" component={Account} />
           <Route exact path="/" component={Home} />
           <Route exact path="/landing" component={Landing} />
           <Route path="/signupprd" component={SignupPrd} />
           <Route path="/signup_viewer" component={SignupViewer} />
-          <Route exact path="/profile" component={Profile} />
+          <PrivateRoute exact path="/profile" component={Profile} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/finish-upload" component={EditUploadVideos} />
+          <PrivateRoute exact path="/finish-upload" component={EditUploadVideos} />
           <Route exact path="/live_stream" component={Stream} />
           <PrivateRoute exact path="/deposit" component={Deposit} />
           <Route component={NotFound} />

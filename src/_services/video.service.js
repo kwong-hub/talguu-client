@@ -2,6 +2,7 @@ import axios from "./axiosDefault";
 
 import { environment } from "../config/config";
 import { authHeader } from "../_helpers";
+import { userService } from "./user.service";
 export default {
   addVideo: async function (body, onUploadProgress) {
     try {
@@ -23,9 +24,7 @@ export default {
   },
   getProdVideoById: async function (id) {
     try {
-      const video = await axios.get(
-        `${environment}/video/${id}`
-      );
+      const video = await axios.get(`${environment}/video/${id}`);
       return video.data;
     } catch (error) {
       throw error;
@@ -94,7 +93,8 @@ export default {
       // console.log(videos.data);
       return { data: videos.data, success: true };
     } catch (error) {
-      throw { error, success: false };
+      return checkResponse(error);
+      // throw { error, success: false };
     }
   },
 
@@ -109,9 +109,7 @@ export default {
 
   getPaidVideoUrl: async function (videoId) {
     try {
-      const videos = await axios.get(
-        `${environment}/video/purchase_video_url?videoId=${videoId}`
-      );
+      const videos = await axios.get(`${environment}/video/purchase_video_url?videoId=${videoId}`);
       return videos.data;
     } catch (error) {
       throw error;
@@ -157,4 +155,11 @@ export default {
       throw error;
     }
   },
+};
+
+const checkResponse = (error) => {
+  console.log(error.toString(), "error");
+  if (error && error.toString().includes("401")) {
+    userService.logout();
+  }
 };

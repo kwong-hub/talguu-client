@@ -98,11 +98,11 @@ const Account = (props) => {
                 </div>
                 <div className="text-center mt-12">
                   <h3 className="text-4xl font-semibold leading-normal text-gray-800 mb-2">
-                    {props.user.name}
+                    {props.user?.name}
                   </h3>
                   <div className="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
                     <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>{" "}
-                    {props.user.email}
+                    {props.user?.email}
                   </div>
                 </div>
               </div>

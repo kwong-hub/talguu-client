@@ -25,6 +25,8 @@ const Videos = (props) => {
     dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q } });
   }, []);
 
+  // dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q } });
+
   const playVideo = (video) => {
     history.push(`/watch/${video.id}`);
     history.go(0);

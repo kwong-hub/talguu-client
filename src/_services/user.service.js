@@ -11,8 +11,10 @@ function login({ email, password }) {
 }
 
 function logout() {
+  console.log("about to log user out");
   // remove user from local storage to log user out
   localStorage.removeItem("user");
+  window.location.reload();
 }
 
 async function getUser() {
