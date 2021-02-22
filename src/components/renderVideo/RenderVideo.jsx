@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
-import { Tooltip, Button, notification } from "antd";
+import { Tooltip, Button, notification, message } from "antd";
 import { FaCheck, FaClock, FaDollarSign, FaPlayCircle, FaTrash } from "react-icons/fa";
 import moment from "moment";
 
@@ -20,18 +20,20 @@ function RenderVideo(props) {
   if (saveLaterStatus == "SUCCESS_ADDED") {
     dispatch({ type: SAVE_LATER_RESET });
     dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: "" });
-    notification.open({
-      message: "Saved to watch later.",
-      icon: <FaCheck className="text-sm text-green-600" />,
-      duration: 60,
-    });
+    message.success("Saved to watch later.");
+    // notification.open({
+    //   message: "Saved to watch later.",
+    //   icon: <FaCheck className="text-sm text-green-600" />,
+    //   duration: 60,
+    // });
   } else if (saveLaterStatus == "SUCCESS_REMOVED") {
     dispatch({ type: SAVE_LATER_RESET });
     dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: "" });
-    notification.open({
-      message: "Removed from watch later",
-      icon: <FaCheck className="text-sm text-red-600" />,
-    });
+    message.info("Removed from watch later.");
+    // notification.open({
+    //   message: "Removed from watch later",
+    //   icon: <FaCheck className="text-sm text-red-600" />,
+    // });
   }
 
   const playVideo = (event) => {

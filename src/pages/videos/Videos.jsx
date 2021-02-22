@@ -15,14 +15,14 @@ const Videos = (props) => {
   let videoLink = useSelector((state) => state.video.video_link);
   let [tempVideo, setTempVideo] = useState(null);
   let [paymentModalVisible, setPaymentModalVisible] = useState(false);
-  // let { vidId } = useParams();
+  let { q } = useParams();
   let dispatch = useDispatch();
   // let currentVideo = useSelector((state) => state.video.currentVideo);
   let viewerVideos = useSelector((state) => state.video.viewerVideos);
 
   useEffect(() => {
-    console.log("getting videos values");
-    dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q: "" } });
+    // console.log("getting videos values");
+    dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q } });
   }, []);
 
   const playVideo = (video) => {
@@ -37,10 +37,6 @@ const Videos = (props) => {
   const onSearch = (value) => {
     // console.log(value);
     dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q: value } });
-  };
-
-  const saveLater = (event) => {
-    event.stopPropagation();
   };
 
   const paymentModalVisibleFunc = (value, video, event) => {

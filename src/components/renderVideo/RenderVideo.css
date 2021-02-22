@@ -77,7 +77,7 @@
   /* min-height: 12rem; */
 }
 
-.ant-notification-notice {
+/* .ant-notification-notice {
   padding: 0.5rem 0.5rem !important;
   border-radius: 0.5rem;
 }
@@ -97,4 +97,9 @@
 .ant-notification-notice-close {
   top: 8px;
   right: 15px;
+} */
+
+.ant-message-custom-content {
+  display: flex;
+  align-items: center;
 }
