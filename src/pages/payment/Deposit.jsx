@@ -1,15 +1,13 @@
 import { Button, Form, Input, message, PageHeader, Select } from "antd";
 import React, { useEffect, useState } from "react";
-import SideNav from "../../partials/sideNav/SideNav";
-
-import { connect } from "react-redux";
-
 import { FaDollarSign } from "react-icons/fa";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import paymentService from "../../_services/payment.service";
 import mastercard from "../../assets/images/mastercard.svg";
 import visa from "../../assets/images/visa.png";
-import { useHistory } from "react-router-dom";
+import SideNav from "../../partials/sideNav/SideNav";
 
 const Deposit = (props) => {
   const history = useHistory();

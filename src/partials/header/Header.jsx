@@ -1,6 +1,7 @@
-import React, { Component } from "react";
 import "./Header.css";
+
 import { Button } from "antd";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
@@ -28,7 +29,7 @@ const Header = () => {
             shape="round"
             className={
               `flex items-center m-1 px-4` +
-              (currentURL != "/signup_viewer" ? `border-transparent bg-transparent` : ``)
+              (currentURL !== "/signup_viewer" ? `border-transparent bg-transparent` : ``)
             }>
             Sign Up
           </Button>

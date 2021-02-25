@@ -1,10 +1,11 @@
-import React, { Component, useEffect } from "react";
 import { Button, message, Popconfirm, Space, Table } from "antd";
-import SideNav from "../../partials/sideNav/SideNav";
-import videoService from "../../_services/video.service";
-import { useState } from "react";
 import moment from "moment";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
+
+import videoService from "../../_services/video.service";
+import SideNav from "../../partials/sideNav/SideNav";
 
 const YourVideo = () => {
   const history = useHistory();
@@ -39,9 +40,7 @@ const YourVideo = () => {
       width: 200,
       fixed: "left",
       key: "title",
-      render: (text, record) => (
-        <a onClick={(e) => editVideo(record)}>{text}</a>
-      ),
+      render: (text, record) => <a onClick={(e) => editVideo(record)}>{text}</a>,
     },
     {
       title: "Date",
@@ -97,8 +96,7 @@ const YourVideo = () => {
             onConfirm={(e) => deleteVideo(record)}
             onCancel={cancel}
             okText="Yes"
-            cancelText="No"
-          >
+            cancelText="No">
             <Button>Delete</Button>
           </Popconfirm>
         </Space>
@@ -148,12 +146,8 @@ const YourVideo = () => {
       <SideNav />
       <div className="ml-20 mt-20 m-4">
         <div className="flex flex-col items-start m-4">
-          <h2 className="text-xl text-gray-700 font-medium">
-            Your Video Content{" "}
-          </h2>
-          <p className="font-normal text-gray-500">
-            Analyse,Manage,Edit,Delete
-          </p>
+          <h2 className="text-xl text-gray-700 font-medium">Your Video Content </h2>
+          <p className="font-normal text-gray-500">Analyse,Manage,Edit,Delete</p>
         </div>
         <Table
           scroll={{ x: 720 }}

@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
 import "./App.css";
 import "./styles/color.style.css";
+
+import React, { useEffect } from "react";
+
 import Router from "./routes/Router";
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 
 function App() {
   // let history = useHistory();

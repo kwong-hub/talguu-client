@@ -1,15 +1,13 @@
-import { useHistory } from "react-router-dom";
-import { Button, Form, Input, message, PageHeader, Select } from "antd";
+import { Button, Form, Input, message, PageHeader } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import React, { useState } from "react";
-import { FaCopy, FaInfo, FaTag, FaUser } from "react-icons/fa";
-import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
-import Header from "../../partials/header/Header";
-import SideNav from "../../partials/sideNav/SideNav";
-import videoService from "../../_services/video.service";
-import { Option } from "antd/lib/mentions";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import Thumbnail from "../../components/videos/Thumbnail";
+import { FaCopy, FaInfo } from "react-icons/fa";
+import { useHistory } from "react-router-dom";
+
+import videoService from "../../_services/video.service";
+import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
+import SideNav from "../../partials/sideNav/SideNav";
 
 const Stream = (props) => {
   const [property, setProperty] = useState(props.location.state.data);
@@ -137,7 +135,6 @@ const Stream = (props) => {
                   placeholder="Description*"
                 />
               </Form.Item>
-              
 
               {/* <Form.Item>
               <Button

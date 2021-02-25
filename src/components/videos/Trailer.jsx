@@ -1,7 +1,9 @@
-import React, { Component } from "react";
 import { UploadOutlined } from "@ant-design/icons";
-import { Upload, message, Button, notification } from "antd";
+import { Button, message, notification, Upload } from "antd";
+import React, { Component } from "react";
+
 import videoService from "../../_services/video.service";
+
 export default class Trailer extends Component {
   state = {
     fileList: [],
@@ -56,18 +58,14 @@ export default class Trailer extends Component {
       beforeUpload: (file) => {
         if (file.size > 1000000) {
           notification.info({
-            message:
-              "Max file size is 100MB.",
+            message: "Max file size is 100MB.",
             placement: "bottomRight",
             duration: 3.3,
           });
           return false;
-        } else if (
-          !file.type.toString().startsWith("video")
-        ) {
+        } else if (!file.type.toString().startsWith("video")) {
           notification.info({
-            message:
-              "Unsupported file type! File type should be .MP4 .MOV, .MKV .MPEG",
+            message: "Unsupported file type! File type should be .MP4 .MOV, .MKV .MPEG",
             placement: "bottomRight",
             duration: 3.3,
           });
@@ -92,8 +90,7 @@ export default class Trailer extends Component {
             type="primary"
             onClick={this.handleUpload}
             loading={uploading}
-            style={{ marginTop: 16 }}
-          >
+            style={{ marginTop: 16 }}>
             {uploading ? "Uploading" : "Start Upload"}
           </Button>
         )}

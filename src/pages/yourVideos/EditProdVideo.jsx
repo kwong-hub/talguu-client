@@ -1,16 +1,16 @@
-import { Button, Form, Input, PageHeader } from "antd";
+import { Button, Input, PageHeader } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import React, { useState } from "react";
-import { useLayoutEffect } from "react";
 import { useEffect } from "react";
-import { FaDollarSign, FaInfo, FaTag, FaUser } from "react-icons/fa";
+import { FaDollarSign, FaInfo } from "react-icons/fa";
 import { useHistory, useParams } from "react-router-dom";
+
+import videoService from "../../_services/video.service";
 import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
 import Thumbnail from "../../components/videos/Thumbnail";
 import Trailer from "../../components/videos/Trailer";
-import Header from "../../partials/header/Header";
 import SideNav from "../../partials/sideNav/SideNav";
-import videoService from "../../_services/video.service";
+
 // import Thumbnail from "./Thumbnail";
 // import Trailer from "./Trailer";
 
@@ -83,12 +83,7 @@ const EditProdVideo = (props) => {
         title="Edit Video"
         subTitle="Add extra additional infromation"
       />
-      <Button
-        className="absolute top-3 right-2"
-        onClick={editVideo}
-        key="1"
-        type="primary"
-      >
+      <Button className="absolute top-3 right-2" onClick={editVideo} key="1" type="primary">
         Save Changes
       </Button>
       <div className="flex mx-4">
@@ -130,16 +125,16 @@ const EditProdVideo = (props) => {
             <div className="flex flex-col items-start justify-start">
               <h2 className="text-lg">Change Thumbnail</h2>
               <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                Select or upload a picture that shows what's in your video. A
-                good thumbnail stands out and draws viewers' attention.
+                Select or upload a picture that shows what's in your video. A good thumbnail stands
+                out and draws viewers' attention.
               </h3>
               <Thumbnail video={video?.id} thumbnails={video?.thumbnial} />
             </div>
             <div className="flex flex-col items-start justify-start">
               <h2 className="text-lg">Change Trailer</h2>
               <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                Select or upload a trailer that shows what's in your video in a
-                minute. A good trailer draws viewers' attention.
+                Select or upload a trailer that shows what's in your video in a minute. A good
+                trailer draws viewers' attention.
               </h3>
               <Trailer video={video?.id} />
             </div>

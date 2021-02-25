@@ -1,17 +1,16 @@
-import React, { Component } from "react";
-import SideNav from "../../partials/sideNav/SideNav";
-import { connect } from "react-redux";
-import { Button, Input, Tooltip, Modal, Radio } from "antd";
-import { FaPlayCircle, FaSearch, FaClock, FaDollarSign } from "react-icons/fa";
 import "./LiveVideos.css";
-import moment from "moment";
+
+import { Input, Modal, Radio, Tooltip } from "antd";
+import React, { Component } from "react";
+import { FaDollarSign, FaPlayCircle, FaSearch } from "react-icons/fa";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 import mastercard from "../../assets/images/mastercard.png";
 import visa from "../../assets/images/visa.png";
-import { PURCHASE_VIDEO_ASYNC, VIEWER_LIVE_ASYNC, VIEWER_VIDEOS_ASYNC } from "../../redux/types";
-import { Link, withRouter } from "react-router-dom";
-import Avatar from "antd/lib/avatar/avatar";
 import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
+import SideNav from "../../partials/sideNav/SideNav";
+import { PURCHASE_VIDEO_ASYNC, VIEWER_LIVE_ASYNC } from "../../redux/types";
 
 const { Search } = Input;
 

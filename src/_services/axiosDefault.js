@@ -1,4 +1,5 @@
 import axios from "axios";
+
 // axios.defaults.baseURL = 'http://localhost:1010/'
 // if (localStorage.getItem("user")) {
 //   let user = JSON.parse(localStorage.getItem("user"));
@@ -9,7 +10,6 @@ import axios from "axios";
 
 axios.interceptors.request.use(
   (config) => {
-    
     let user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       config.headers["Authorization"] = "Bearer " + user.idToken;

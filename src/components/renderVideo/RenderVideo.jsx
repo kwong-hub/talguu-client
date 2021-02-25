@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
-import { Tooltip, Button, notification, message } from "antd";
-import { FaCheck, FaClock, FaDollarSign, FaPlayCircle, FaTrash } from "react-icons/fa";
-import moment from "moment";
-
 import "./RenderVideo.css";
-import { SAVE_LATER_ASYNC, SAVE_LATER_RESET, VIEWER_VIDEOS_ASYNC } from "../../redux/types";
+
+import { Button, message, Tooltip } from "antd";
+import moment from "moment";
+import PropTypes from "prop-types";
+import React, { useState } from "react";
+import { FaClock, FaDollarSign, FaPlayCircle, FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+
+import { SAVE_LATER_ASYNC, SAVE_LATER_RESET, VIEWER_VIDEOS_ASYNC } from "../../redux/types";
 
 function RenderVideo(props) {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [notificationActive, setNotificationActive] = useState(false);
+  // const [notificationActive, setNotificationActive] = useState(false);
   const saveLaterStatus = useSelector((state) => state.video.saveLaterStatus);
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-  if (saveLaterStatus == "SUCCESS_ADDED") {
+  if (saveLaterStatus === "SUCCESS_ADDED") {
     dispatch({ type: SAVE_LATER_RESET });
     dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: "" });
     message.success("Saved to watch later.");
@@ -26,7 +27,7 @@ function RenderVideo(props) {
     //   icon: <FaCheck className="text-sm text-green-600" />,
     //   duration: 60,
     // });
-  } else if (saveLaterStatus == "SUCCESS_REMOVED") {
+  } else if (saveLaterStatus === "SUCCESS_REMOVED") {
     dispatch({ type: SAVE_LATER_RESET });
     dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: "" });
     message.info("Removed from watch later.");
@@ -62,7 +63,7 @@ function RenderVideo(props) {
             <FaPlayCircle className="text-gray-600 thumbnail_button" />
           </Tooltip>
         </div>
-        {(!user || user.role == "VIEWER") && (
+        {(!user || user.role === "VIEWER") && (
           <div
             onClick={(event) => saveLater(event)}
             className="watch_later bg-gray-700 p-2 rounded-sm absolute right-2 top-2 bg-opacity-25">
@@ -80,7 +81,7 @@ function RenderVideo(props) {
         <div className="bg-gray-600 rounded-sm absolute bottom-1 right-1 py-0 px-4 bg-opacity-40"></div>
         {props.video.paid
           ? ""
-          : (!user || user.role == "VIEWER") && (
+          : (!user || user.role === "VIEWER") && (
               <div className="absolute bottom-1 left-1 py-0 invisible watch_video_buttons">
                 <Button
                   onClick={(event) => props.paymentModalVisible(true, props.video, event)}

@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Form, Input, Button, Steps } from "antd";
-import { FaEnvelope, FaFacebook, FaGoogle, FaLock, FaUser, FaBuilding } from "react-icons/fa";
-import logo from "../../assets/images/logo.svg";
-import { Link } from "react-router-dom";
 import "./SignupPrd.css";
+
+import { Button, Form, Input, Steps } from "antd";
+import React, { useEffect, useState } from "react";
+import { FaBuilding, FaEnvelope, FaFacebook, FaGoogle, FaLock, FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { CREATE_PRODUCER_ASYNC, CREATE_PRODUCER_RESET } from "../../redux/types";
+import { Link } from "react-router-dom";
+
+import logo from "../../assets/images/logo.svg";
 import Header from "../../partials/header/Header";
+import { CREATE_PRODUCER_ASYNC, CREATE_PRODUCER_RESET } from "../../redux/types";
 
 const { Step } = Steps;
 
@@ -26,7 +28,7 @@ const SignupPrd = () => {
   }, serverErrors);
 
   useEffect(() => {
-    if (createUserStatus == "SUCCESSFUL") {
+    if (createUserStatus === "SUCCESSFUL") {
       setCurrentForm(1);
       setLoading(false);
       setErrMessage("");

@@ -1,10 +1,10 @@
+import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 import React from "react";
-import { UserOutlined } from "@ant-design/icons";
-import { userActions } from "../../_actions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import Header from "../../partials/header/Header";
+
+import { userActions } from "../../_actions";
 import SideNav from "../../partials/sideNav/SideNav";
 
 const Account = (props) => {

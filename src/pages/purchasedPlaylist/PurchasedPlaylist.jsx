@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import SideNav from "../../partials/sideNav/SideNav";
-import { useDispatch, useSelector } from "react-redux";
-import { PAID_VIEWER_VIDEOS_ASYNC } from "../../redux/types";
-import { Link, useHistory } from "react-router-dom";
-import { Input, Tooltip } from "antd";
-import { FaClock, FaPlayCircle, FaSearch } from "react-icons/fa";
-import moment from "moment";
 import "./PurchasedPlaylist.css";
+
+import { Input, Tooltip } from "antd";
+import moment from "moment";
+import React, { useEffect } from "react";
+import { FaClock, FaPlayCircle, FaSearch } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+
+import SideNav from "../../partials/sideNav/SideNav";
+import { PAID_VIEWER_VIDEOS_ASYNC } from "../../redux/types";
 
 const { Search } = Input;
 
@@ -79,7 +80,6 @@ function PurchasedPlaylist(props) {
     }
   };
 
-  const suffix = <FaSearch className="text-xl text-gray-300" />;
   return (
     <div className="pt-2 ml-0 sm:ml-14">
       <SideNav></SideNav>

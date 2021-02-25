@@ -1,6 +1,7 @@
+import { Button, Form, Input, message, Upload } from "antd";
 import React, { useState } from "react";
-import { Upload, Form, Input, Button, message  } from "antd";
 import { RiVideoUploadFill } from "react-icons/ri";
+
 import SideNav from "../partials/sideNav/SideNav";
 
 const { Dragger } = Upload;
@@ -12,17 +13,17 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 const props = {
-  name: 'file',
+  name: "file",
   multiple: true,
-  action: './',
+  action: "./",
   onChange(info) {
     const { status } = info.file;
-    if (status !== 'uploading') {
+    if (status !== "uploading") {
       console.log(info.file, info.fileList);
     }
-    if (status === 'done') {
+    if (status === "done") {
       message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === 'error') {
+    } else if (status === "error") {
       message.error(`${info.file.name} file upload failed.`);
     }
   },
@@ -33,17 +34,12 @@ const UploadAnt = () => {
 
   const uploadFile = (info) => {
     setUploaded(true);
-   
   };
 
   return (
     <div class="flex items-center flex-col">
-      <SideNav/>
-      <Dragger
-        className=""
-        {...props}
-        onChange={uploadFile}
-      >
+      <SideNav />
+      <Dragger className="" {...props} onChange={uploadFile}>
         <div class=" h-64 flex flex-col justify-center items-center container mx-auto px-6 ">
           <p className="text-5xl">
             <RiVideoUploadFill />
@@ -62,8 +58,7 @@ const UploadAnt = () => {
             label="Title"
             name="title"
             valuePropName="title"
-            rules={[{ required: true, message: "Please input your username!" }]}
-          >
+            rules={[{ required: true, message: "Please input your username!" }]}>
             <Input />
           </Form.Item>
 
@@ -71,8 +66,7 @@ const UploadAnt = () => {
             label="Description"
             name="description"
             valuePropName="description"
-            rules={[{ required: true, message: "Please input your password!" }]}
-          >
+            rules={[{ required: true, message: "Please input your password!" }]}>
             <Input />
           </Form.Item>
 

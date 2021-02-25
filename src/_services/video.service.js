@@ -1,8 +1,9 @@
-import axios from "./axiosDefault";
+import axiosOr from "axios";
 
 import { environment } from "../config/config";
-import { authHeader } from "../_helpers";
+import axios from "./axiosDefault";
 import { userService } from "./user.service";
+
 export default {
   addVideo: async function (body, onUploadProgress) {
     try {
@@ -153,6 +154,24 @@ export default {
       return res.data;
     } catch (error) {
       throw error;
+    }
+  },
+
+  getUploadUrl: async function (body) {
+    try {
+      const res = await axios.post(`${environment}/video/get_upload_url`, body);
+      return res.data.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  uploadVideoToS3: async function (signedRequest, file, options) {
+    try {
+      const res = await axiosOr.put(signedRequest, file, options);
+      return res;
+    } catch (err) {
+      console.log(err);
     }
   },
 };

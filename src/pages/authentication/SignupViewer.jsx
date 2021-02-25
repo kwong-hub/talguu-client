@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Form, Input, Button, Steps } from "antd";
-import { FaEnvelope, FaFacebook, FaGoogle, FaLock, FaUser } from "react-icons/fa";
-import logo from "../../assets/images/logo.svg";
-import { Link } from "react-router-dom";
 import "./SignupViewer.css";
+
+import { Button, Form, Input, Steps } from "antd";
+import React, { useEffect, useState } from "react";
+import { FaEnvelope, FaFacebook, FaGoogle, FaLock, FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { CREATE_VIEWER_ASYNC, CREATE_VIEWER_RESET } from "../../redux/types";
+import { Link } from "react-router-dom";
+
+import logo from "../../assets/images/logo.svg";
 import Header from "../../partials/header/Header";
+import { CREATE_VIEWER_ASYNC, CREATE_VIEWER_RESET } from "../../redux/types";
 
 const { Step } = Steps;
 
@@ -28,7 +30,7 @@ const SignupViewer = () => {
   }, [serverErrors]);
 
   useEffect(() => {
-    if (createViewerStatus == "SUCCESSFUL") {
+    if (createViewerStatus === "SUCCESSFUL") {
       setCurrentForm(1);
       setLoading(false);
       setErrMessage("");

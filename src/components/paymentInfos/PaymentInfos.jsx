@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
 import "./PaymentInfos.css";
-import { GET_USER_PAYMENT_INFOS_ASYNC } from "../../redux/types";
-import Modal from "antd/lib/modal/Modal";
-// import { prototype } from "react-copy-to-clipboard";
-import moment from "moment";
-import { Button } from "antd";
 
+import { Button } from "antd";
+import Modal from "antd/lib/modal/Modal";
+import moment from "moment";
+import PropTypes from "prop-types";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { GET_USER_PAYMENT_INFOS_ASYNC } from "../../redux/types";
+
+// import { prototype } from "react-copy-to-clipboard";
 function PaymentInfos(props) {
   const paymentInfos = useSelector((state) => state.payment.paymentInfos);
   const dispatch = useDispatch();

@@ -1,12 +1,14 @@
+import "./SavedPlaylist.css";
+
 import { Input, Tooltip } from "antd";
-import React, { Component, useEffect } from "react";
-import { FaClock, FaPlayCircle, FaSearch } from "react-icons/fa";
+import moment from "moment";
+import React, { useEffect } from "react";
+import { FaPlayCircle, FaSearch } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
 import SideNav from "../../partials/sideNav/SideNav";
 import { GET_SAVED_VIDEOS_ASYNC } from "../../redux/types";
-import moment from "moment";
-import "./SavedPlaylist.css";
 
 const { Search } = Input;
 

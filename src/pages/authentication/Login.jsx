@@ -1,12 +1,12 @@
+import { Button, Checkbox, Form, Input } from "antd";
 import React, { useState } from "react";
-import { Form, Input, Button, Checkbox } from "antd";
 import { FaFacebook, FaGoogle, FaLock, FaUser } from "react-icons/fa";
-import logo from "../../assets/images/logo.svg";
-import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+
 import { userService } from "../../_services/user.service";
+import logo from "../../assets/images/logo.svg";
 import Header from "../../partials/header/Header";
-import axios from "axios";
 
 const Login = (props) => {
   const [error, setError] = useState();

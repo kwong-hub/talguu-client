@@ -1,21 +1,23 @@
-import React, { useState } from "react";
-import {
-  FaVideo,
-  FaSave,
-  FaCloudUploadAlt,
-  FaStream,
-  FaCog,
-  FaUser,
-  FaFilm,
-  FaSignInAlt,
-  FaLifeRing,
-  FaSearch,
-} from "react-icons/fa";
-import { Tooltip, Input, Menu, Dropdown } from "antd";
 import "./SideNav.css";
-import { Link, useHistory, useLocation } from "react-router-dom";
-import logo from "../../assets/images/logo512.png";
+
+import { Dropdown, Input, Menu, Tooltip } from "antd";
+import React, { useState } from "react";
 import { BiVideoRecording } from "react-icons/bi";
+import {
+  FaCloudUploadAlt,
+  FaCog,
+  FaFilm,
+  FaLifeRing,
+  FaSave,
+  FaSearch,
+  FaSignInAlt,
+  FaStream,
+  FaUser,
+  FaVideo,
+} from "react-icons/fa";
+import { Link, useHistory, useLocation } from "react-router-dom";
+
+import logo from "../../assets/images/logo512.png";
 
 const { Search } = Input;
 
@@ -56,7 +58,7 @@ const SideNav = (props) => {
       </Menu.Item>
       {user ? (
         <>
-          {user.role == "VIEWER" ? (
+          {user.role === "VIEWER" ? (
             <Menu.Item key="3">
               <Link to="/saved_later" className="flex items-center justify-center">
                 <FaSave className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
@@ -68,7 +70,7 @@ const SideNav = (props) => {
           ) : (
             ""
           )}
-          {user.role == "VIEWER" ? (
+          {user.role === "VIEWER" ? (
             <Menu.Item key="4">
               <Link to="/purchased_playlist" className="flex items-center justify-center">
                 <FaFilm className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
@@ -80,7 +82,7 @@ const SideNav = (props) => {
           ) : (
             ""
           )}
-          {user.role == "VIEWER" && (
+          {user.role === "VIEWER" && (
             <Menu.Item key="5">
               <Link to="/settings" className="flex items-center justify-center">
                 <FaCog className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
@@ -90,7 +92,7 @@ const SideNav = (props) => {
               </Link>
             </Menu.Item>
           )}
-          {user.role == "PRODUCER" ? (
+          {user.role === "PRODUCER" ? (
             <Menu.Item key="6">
               <Link to="/your_video" className="flex items-center justify-center">
                 <BiVideoRecording className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
@@ -102,7 +104,7 @@ const SideNav = (props) => {
           ) : (
             ""
           )}
-          {user.role == "PRODUCER" ? (
+          {user.role === "PRODUCER" ? (
             <Menu.Item key="6">
               <Link to="/upload_video" className="flex items-center justify-center">
                 <FaCloudUploadAlt className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
@@ -114,7 +116,7 @@ const SideNav = (props) => {
           ) : (
             ""
           )}
-          {user.role == "PRODUCER" ? (
+          {user.role === "PRODUCER" ? (
             <Menu.Item key="6">
               <Link to="/stream_video" className="flex items-center justify-center">
                 <FaStream className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
@@ -219,7 +221,7 @@ const SideNav = (props) => {
         </li> */}
         {user ? (
           <>
-            {user.role == "VIEWER" ? (
+            {user.role === "VIEWER" ? (
               <>
                 <li
                   className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
@@ -255,7 +257,7 @@ const SideNav = (props) => {
             ) : (
               ""
             )}
-            {user.role == "PRODUCER" ? (
+            {user.role === "PRODUCER" ? (
               <li
                 className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
                   location.pathname === "/your_video" ? "bg-gray-400" : ""
@@ -271,7 +273,7 @@ const SideNav = (props) => {
             ) : (
               ""
             )}
-            {user.role == "PRODUCER" ? (
+            {user.role === "PRODUCER" ? (
               <li
                 className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
                   location.pathname === "/upload_video" ? "bg-gray-400" : ""
@@ -287,7 +289,7 @@ const SideNav = (props) => {
             ) : (
               ""
             )}
-            {user.role == "PRODUCER" ? (
+            {user.role === "PRODUCER" ? (
               <li
                 className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
                   location.pathname === "/stream_video" ? "bg-gray-400" : ""

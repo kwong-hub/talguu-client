@@ -1,29 +1,19 @@
-import React, { Component, useEffect, useState } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Button, Space, Spin, Tooltip } from "antd";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { FaHeart, FaHeartBroken } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+
+import PaymentModal from "../../components/paymentModal/PaymentModal";
+import RenderVideo from "../../components/renderVideo/RenderVideo";
+import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
+import SideNav from "../../partials/sideNav/SideNav";
 import {
   GET_PAID_VIDEO_URL_ASYNC,
   PURCHASE_VIDEO_ASYNC,
   VIEWER_VIDEOS_ASYNC,
 } from "../../redux/types";
-import { Button, Input, Tooltip, Modal, Radio, Space, Spin } from "antd";
-import {
-  FaClock,
-  FaDollarSign,
-  FaHeart,
-  FaHeartBroken,
-  FaPlayCircle,
-  FaSearch,
-} from "react-icons/fa";
-import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
-import SideNav from "../../partials/sideNav/SideNav";
-import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
-import mastercard from "../../assets/images/mastercard.png";
-import visa from "../../assets/images/visa.png";
-import RenderVideo from "../../components/renderVideo/RenderVideo";
-import PaymentModal from "../../components/paymentModal/PaymentModal";
-
-const { Search } = Input;
 
 const WatchVideo = () => {
   let history = useHistory();
@@ -61,7 +51,7 @@ const WatchVideo = () => {
   }, [currentVideo]);
   console.log("errorMessage", errorMessage);
 
-  if (errorMessage == "NO_BALANCE" || errorMessage == "NOT_ENOUGH_BALANCE") {
+  if (errorMessage === "NO_BALANCE" || errorMessage === "NOT_ENOUGH_BALANCE") {
     history.push("/deposit");
   }
 
@@ -123,20 +113,15 @@ const WatchVideo = () => {
           </div>
           <div className="flex-col ml-2 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
             <div className="w-full flex justify-between">
-              <div className="text-gray-800 lg:text-2xl text-md  text-left">
-                {video?.title}
-              </div>
+              <div className="text-gray-800 lg:text-2xl text-md  text-left">{video?.title}</div>
               {video.paid ? (
                 ""
               ) : (
                 <div className="py-0">
                   <Button
                     type="primary"
-                    onClick={(event) =>
-                      paymentModalVisibleFunc(true, video, event)
-                    }
-                    className="mr-1 rounded-2xl text-xs px-2 py-0 opacity-80"
-                  >
+                    onClick={(event) => paymentModalVisibleFunc(true, video, event)}
+                    className="mr-1 rounded-2xl text-xs px-2 py-0 opacity-80">
                     Watch Full Video
                   </Button>
                 </div>
@@ -144,10 +129,7 @@ const WatchVideo = () => {
             </div>
             <div className="flex justify-between text-gray-800 text-2xl w-full text-left">
               <div className="flex items-end">
-                <span className="text-gray-400 text-lg">
-                  {" "}
-                  {video?.viewVount} views
-                </span>
+                <span className="text-gray-400 text-lg"> {video?.viewVount} views</span>
                 <span className="text-gray-600 ml-4 text-base">
                   {moment(video?.premiered).format("MMM DD, YYYY")}
                 </span>
@@ -190,7 +172,6 @@ const WatchVideo = () => {
     }
   };
 
-  const suffix = <FaSearch className="text-xl text-gray-300" />;
   return (
     <>
       <SideNav onSearch={onSearch}></SideNav>

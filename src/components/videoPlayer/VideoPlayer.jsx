@@ -1,8 +1,9 @@
-import React, { Component } from "react";
-import videojs from "video.js";
-// import videojs_contrib_hls from "videojs-contrib-hls";
 import "./VideoPlayer.css";
 
+import React, { Component } from "react";
+import videojs from "video.js";
+
+// import videojs_contrib_hls from "videojs-contrib-hls";
 export class VideoPlayer extends Component {
   componentDidMount() {
     // videojs.registerPlugin("videojs-contrib-hls", videojs_contrib_hls);

@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
-import SideNav from "../../partials/sideNav/SideNav";
-import { useDispatch, useSelector } from "react-redux";
-import { Input } from "antd";
 import "./Videos.css";
-import { PURCHASE_VIDEO_ASYNC, VIEWER_VIDEOS_ASYNC } from "../../redux/types";
-import { useHistory, useParams } from "react-router-dom";
-import RenderVideo from "../../components/renderVideo/RenderVideo";
-import PaymentModal from "../../components/paymentModal/PaymentModal";
 
-const { Search } = Input;
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+
+import PaymentModal from "../../components/paymentModal/PaymentModal";
+import RenderVideo from "../../components/renderVideo/RenderVideo";
+import SideNav from "../../partials/sideNav/SideNav";
+import { PURCHASE_VIDEO_ASYNC, VIEWER_VIDEOS_ASYNC } from "../../redux/types";
 
 const Videos = (props) => {
   let history = useHistory();
@@ -17,24 +16,20 @@ const Videos = (props) => {
   let [paymentModalVisible, setPaymentModalVisible] = useState(false);
   let { q } = useParams();
   let dispatch = useDispatch();
-  // let currentVideo = useSelector((state) => state.video.currentVideo);
   let viewerVideos = useSelector((state) => state.video.viewerVideos);
 
   useEffect(() => {
-    // console.log("getting videos values");
     dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q } });
   }, []);
-
-  // dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q } });
 
   const playVideo = (video) => {
     history.push(`/watch/${video.id}`);
     history.go(0);
   };
 
-  const playTrailer = (video) => {
-    // console.log(video);
-  };
+  // const playTrailer = (video) => {
+  //   // console.log(video);
+  // };
 
   const onSearch = (value) => {
     // console.log(value);

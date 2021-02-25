@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import Modal from "antd/lib/modal/Modal";
+import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 import { FaDollarSign } from "react-icons/fa";
-import paymentService from "../../_services/payment.service";
 import { useHistory } from "react-router-dom";
+
+import paymentService from "../../_services/payment.service";
 
 function PaymentModal(props) {
   const [balance, setBalance] = useState(null);

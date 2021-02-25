@@ -1,51 +1,51 @@
-import { all, call, put, takeEvery, takeLatest } from "redux-saga/effects";
-// import userService from "../../services/user.service";
+import { all, call, put, takeLatest } from "redux-saga/effects";
+
+import { userConstants } from "../../_constants";
+import paymentService from "../../_services/payment.service";
+import { userService } from "../../_services/user.service";
+import videoService from "../../_services/video.service";
 import {
+  ADD_PAYMENT_INFO_ASYNC,
+  ADD_PAYMENT_INFO_FAILURE,
+  ADD_PAYMENT_INFO_SUCCESS,
   CREATE_PRODUCER_ASYNC,
   CREATE_PRODUCER_FAILURE,
   CREATE_PRODUCER_SUCCESS,
   CREATE_VIEWER_ASYNC,
   CREATE_VIEWER_FAILURE,
   CREATE_VIEWER_SUCCESS,
-  VIEWER_LIVE_SUCCESS,
-  VIEWER_LIVE_FAILURE,
-  VIEWER_LIVE_ASYNC,
-  // ERROR_UNAUTHORIZED,
   GET_PAID_VIDEO_URL_ASYNC,
   GET_PAID_VIDEO_URL_FAILURE,
   GET_PAID_VIDEO_URL_SUCCESS,
+  GET_SAVED_VIDEOS_ASYNC,
+  GET_SAVED_VIDEOS_FAILURE,
+  GET_SAVED_VIDEOS_SUCCESS,
+  GET_USER_PAYMENT_INFOS_ASYNC,
+  GET_USER_PAYMENT_INFOS_FAILURE,
+  GET_USER_PAYMENT_INFOS_SUCCESS,
   PAID_VIEWER_VIDEOS_ASYNC,
   PAID_VIEWER_VIDEOS_FAILURE,
   PAID_VIEWER_VIDEOS_SUCCESS,
   PURCHASE_VIDEO_ASYNC,
   PURCHASE_VIDEO_FAILURE,
   PURCHASE_VIDEO_SUCCESS,
+  SAVE_LATER_ASYNC,
+  SAVE_LATER_FAILURE,
+  SAVE_LATER_SUCCESS,
   UPLOAD_ASYNC,
   VIDEO_FAILURE,
   VIDEO_READY,
   VIDEO_READY_ASYNC,
   VIDEO_SUCCESS,
+  VIEWER_LIVE_ASYNC,
+  VIEWER_LIVE_FAILURE,
+  VIEWER_LIVE_SUCCESS,
   VIEWER_VIDEOS_ASYNC,
   VIEWER_VIDEOS_FAILURE,
   VIEWER_VIDEOS_SUCCESS,
-  ADD_PAYMENT_INFO_ASYNC,
-  ADD_PAYMENT_INFO_SUCCESS,
-  ADD_PAYMENT_INFO_FAILURE,
-  GET_USER_PAYMENT_INFOS_ASYNC,
-  GET_USER_PAYMENT_INFOS_SUCCESS,
-  GET_USER_PAYMENT_INFOS_FAILURE,
-  SAVE_LATER_ASYNC,
-  SAVE_LATER_SUCCESS,
-  SAVE_LATER_FAILURE,
-  GET_SAVED_VIDEOS_ASYNC,
-  GET_SAVED_VIDEOS_SUCCESS,
-  GET_SAVED_VIDEOS_FAILURE,
 } from "../types";
-import { userConstants } from "../../_constants";
-import { userService } from "../../_services/user.service";
-import videoService from "../../_services/video.service";
-import paymentService from "../../_services/payment.service";
 
+// import userService from "../../services/user.service";
 function* createUserAsync(action) {
   let user = yield call(userService.createProducer, action.payload);
   if (user && user.success) {

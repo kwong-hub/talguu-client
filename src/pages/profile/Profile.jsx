@@ -1,4 +1,5 @@
 import React from "react";
+
 import SideNav from "../../partials/sideNav/SideNav";
 
 const Profile = () => {

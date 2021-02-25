@@ -1,21 +1,22 @@
-import { Form, Button, DatePicker, Input, Radio, notification } from "antd";
+import "./Settings.css";
+
+import { Button, DatePicker, Form, Input, notification, Radio } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React, { useEffect, useState } from "react";
 import { FaCheck, FaUser } from "react-icons/fa";
-import SideNav from "../../partials/sideNav/SideNav";
-import logo from "../../assets/images/logo.svg";
-import visa from "../../assets/images/visa.png";
-import mastercard from "../../assets/images/mastercard.png";
-import "./Settings.css";
 import { useDispatch, useSelector } from "react-redux";
-import { ADD_PAYMENT_INFO_ASYNC } from "../../redux/types";
-import { userService } from "../../_services/user.service";
-import PaymentInfos from "../../components/paymentInfos/PaymentInfos";
-import moment from "moment";
 import { useHistory } from "react-router-dom";
-import ShowBalance from "../../components/balanceModal/ShowBalance";
 
-const Context = React.createContext({ name: "Default" });
+import { userService } from "../../_services/user.service";
+import logo from "../../assets/images/logo.svg";
+import mastercard from "../../assets/images/mastercard.png";
+import visa from "../../assets/images/visa.png";
+import ShowBalance from "../../components/balanceModal/ShowBalance";
+import PaymentInfos from "../../components/paymentInfos/PaymentInfos";
+import SideNav from "../../partials/sideNav/SideNav";
+import { ADD_PAYMENT_INFO_ASYNC } from "../../redux/types";
+
+// const Context = React.createContext({ name: "Default" });
 
 const Settings = (props) => {
   const history = useHistory();
@@ -40,7 +41,7 @@ const Settings = (props) => {
   const username = userService.getLocalUser().username;
 
   useEffect(() => {
-    if (addPaymentInfoStatus == "SUCCESS") {
+    if (addPaymentInfoStatus === "SUCCESS") {
       setLoading(false);
       setPaymentModalVisible(false);
       form.resetFields();
@@ -48,7 +49,7 @@ const Settings = (props) => {
         message: "Payment Information Created!!",
         icon: <FaCheck className="text-sm text-green-600" />,
       });
-    } else if (addPaymentInfoStatus == "ERROR") {
+    } else if (addPaymentInfoStatus === "ERROR") {
       setViewerErrMessages("Can not create payment information.");
     }
     return () => {};
@@ -58,7 +59,7 @@ const Settings = (props) => {
     // console.log(values);
     setViewerErrMessages("");
     let pattern =
-      values.cardType == "MASTER_CARD" ? /^5[1-5][0-9]{14}$/ : /^4[0-9]{12}(?:[0-9]{3})?$/;
+      values.cardType === "MASTER_CARD" ? /^5[1-5][0-9]{14}$/ : /^4[0-9]{12}(?:[0-9]{3})?$/;
     let valid = pattern.test(values.cardNumber);
     if (!valid) {
       setViewerErrMessages("Please Enter Valid Information");
@@ -193,7 +194,7 @@ const Settings = (props) => {
                 rules={[
                   {
                     pattern:
-                      paymentMethod == "MASTER_CARD"
+                      paymentMethod === "MASTER_CARD"
                         ? /^5[1-5][0-9]{14}$/
                         : /^4[0-9]{12}(?:[0-9]{3})?$/,
                     required: true,
@@ -299,7 +300,12 @@ const Settings = (props) => {
         </div> */}
       </div>
       {renderPayment()}
-      {showBalance && <ShowBalance modalVisible={showBalance} changePaymentModalVisible={changeBalanceInfosVisible}  />}
+      {showBalance && (
+        <ShowBalance
+          modalVisible={showBalance}
+          changePaymentModalVisible={changeBalanceInfosVisible}
+        />
+      )}
       {showPaymentInfos ? (
         <PaymentInfos
           username={username}

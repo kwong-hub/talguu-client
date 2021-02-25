@@ -1,10 +1,11 @@
 import { combineReducers } from "redux";
 
-import { authentication } from "./authentication.reducer";
 import accountReducer from "./accountReducer";
-import videoReducer from "./video.reducer";
+import { authentication } from "./authentication.reducer";
 import errorReducer from "./errorReducer";
 import paymentReducer from "./paymentReducer";
+import videoReducer from "./video.reducer";
+
 const rootReducer = combineReducers({
   authentication,
   account: accountReducer,
