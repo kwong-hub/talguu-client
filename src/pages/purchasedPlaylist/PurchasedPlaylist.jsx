@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import SideNav from "../../partials/sideNav/SideNav";
-import { useDispatch, useSelector } from "react-redux";
-import { PAID_VIEWER_VIDEOS_ASYNC } from "../../redux/types";
-import { Link, useHistory } from "react-router-dom";
-import { Input, Tooltip } from "antd";
-import { FaClock, FaPlayCircle, FaSearch } from "react-icons/fa";
-import moment from "moment";
 import "./PurchasedPlaylist.css";
+
+import { Input, Tooltip } from "antd";
+import moment from "moment";
+import React, { useEffect } from "react";
+import { FaClock, FaPlayCircle, FaSearch } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+
+import SideNav from "../../partials/sideNav/SideNav";
+import { PAID_VIEWER_VIDEOS_ASYNC } from "../../redux/types";
 
 const { Search } = Input;
 
@@ -69,7 +70,7 @@ function PurchasedPlaylist(props) {
     } else {
       return (
         <div
-          className={`flex justify-center w-full md:w-4/12 lg:w-3/12 sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch`}>
+          className={`flex justify-center w-full p-2 cursor-pointer video_thumbnail self-stretch`}>
           <p className="text-gray-600 text-md py-4 w-96">
             You haven't purchased any videos. Once you purchased a video, you can easily access it
             from here.
@@ -79,7 +80,6 @@ function PurchasedPlaylist(props) {
     }
   };
 
-  const suffix = <FaSearch className="text-xl text-gray-300" />;
   return (
     <div className="pt-2 ml-0 sm:ml-14">
       <SideNav></SideNav>

@@ -1,9 +1,9 @@
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import { Option } from "antd/lib/mentions";
 import React from "react";
 import { FaInfo } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
+
 import videoService from "../../_services/video.service";
 
 const StreamForm = () => {
@@ -53,7 +53,6 @@ const StreamForm = () => {
               placeholder="Description*"
             />
           </Form.Item>
-         
 
           <Form.Item>
             <Button

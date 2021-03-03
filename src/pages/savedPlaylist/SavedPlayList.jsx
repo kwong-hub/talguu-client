@@ -1,12 +1,14 @@
+import "./SavedPlaylist.css";
+
 import { Input, Tooltip } from "antd";
-import React, { Component, useEffect } from "react";
-import { FaClock, FaPlayCircle, FaSearch } from "react-icons/fa";
+import moment from "moment";
+import React, { useEffect } from "react";
+import { FaPlayCircle, FaSearch } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
 import SideNav from "../../partials/sideNav/SideNav";
 import { GET_SAVED_VIDEOS_ASYNC } from "../../redux/types";
-import moment from "moment";
-import "./SavedPlaylist.css";
 
 const { Search } = Input;
 
@@ -42,11 +44,11 @@ const SavedPlayList = () => {
                   <FaPlayCircle className="text-gray-600 thumbnail_button" />
                 </Tooltip>
               </div>
-              <div
+              {/* <div
                 onClick={(event) => this.saveLater(event)}
                 className="watch_later bg-gray-700 p-2 rounded-sm absolute right-2 top-2 bg-opacity-25">
                 <FaClock className="text-white text-base" />
-              </div>
+              </div> */}
               <div className="bg-gray-600 rounded-sm absolute bottom-1 right-1 py-0 px-4 bg-opacity-40"></div>
               <div className="flex items-center bg-white text-gray-700 rounded-sm absolute bottom-1 right-1 py-0 px-4">
                 {moment(video?.video_duration?.split(".")[0], [moment.ISO_8601, "HH:mm:ss"]).format(

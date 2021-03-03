@@ -1,9 +1,10 @@
-import React, { Component } from "react";
-import { Upload, Modal, Button, message } from "antd";
-import { FaPlus } from "react-icons/fa";
-import videoService from "../../_services/video.service";
+import { Button, message, Modal, Upload } from "antd";
 import ImgCrop from "antd-img-crop";
-import { environment } from "../../config/config";
+import React, { Component } from "react";
+import { FaPlus } from "react-icons/fa";
+
+import videoService from "../../_services/video.service";
+
 const intialState = {
   formatError: "",
   uploading: false,

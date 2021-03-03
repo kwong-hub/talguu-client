@@ -1,10 +1,10 @@
 import {
-  CREATE_PRODUCER_SUCCESS,
   CREATE_PRODUCER_FAILURE,
-  CREATE_VIEWER_FAILURE,
-  CREATE_VIEWER_SUCCESS,
   CREATE_PRODUCER_RESET,
+  CREATE_PRODUCER_SUCCESS,
+  CREATE_VIEWER_FAILURE,
   CREATE_VIEWER_RESET,
+  CREATE_VIEWER_SUCCESS,
 } from "../types";
 
 const INITIAL_STATE = {
@@ -16,7 +16,7 @@ const INITIAL_STATE = {
   viewerUser: {},
 };
 
-export default (state = INITIAL_STATE, action) => {
+const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CREATE_PRODUCER_SUCCESS:
       return { ...state, user: action.payload, createUserStatus: "SUCCESSFUL" };
@@ -34,3 +34,5 @@ export default (state = INITIAL_STATE, action) => {
       return state;
   }
 };
+
+export default reducer;

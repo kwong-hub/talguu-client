@@ -1,6 +1,6 @@
+import { environment } from "../config/config";
 import axios from "./axiosDefault";
 
-import { environment } from "../config/config";
 export default {
   addPaymentInfo: async (payload) => {
     try {
@@ -20,9 +20,7 @@ export default {
   },
   getPaymentInfos: async (username) => {
     try {
-      const payment = await axios.get(
-        `${environment}/payment/list/${username}`
-      );
+      const payment = await axios.get(`${environment}/payment/list/${username}`);
       return payment.data;
     } catch (error) {
       throw error;

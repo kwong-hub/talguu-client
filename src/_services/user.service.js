@@ -1,5 +1,6 @@
-import axios from "./axiosDefault";
 import { environment } from "../config/config";
+import axios from "./axiosDefault";
+
 function login({ email, password }) {
   return axios.post(`${environment}/account/login`, { email, password }).then((user) => {
     // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -11,8 +12,10 @@ function login({ email, password }) {
 }
 
 function logout() {
+  console.log("about to log user out");
   // remove user from local storage to log user out
   localStorage.removeItem("user");
+  window.location.reload();
 }
 
 async function getUser() {
@@ -29,21 +32,21 @@ function getLocalUser() {
 }
 
 /// this might help to do some intercept handle 403 401 request
-function handleResponse(response) {
-  return response.text().then((text) => {
-    const data = text && JSON.parse(text);
-    if (!response.ok) {
-      if (response.status === 401) {
-        logout();
-      }
+// function handleResponse(response) {
+//   return response.text().then((text) => {
+//     const data = text && JSON.parse(text);
+//     if (!response.ok) {
+//       if (response.status === 401) {
+//         logout();
+//       }
 
-      const error = (data && data.message) || response.statusText;
-      return Promise.reject(error);
-    }
+//       const error = (data && data.message) || response.statusText;
+//       return Promise.reject(error);
+//     }
 
-    return data;
-  });
-}
+//     return data;
+//   });
+// }
 
 async function createProducer(data) {
   try {
@@ -69,4 +72,5 @@ export const userService = {
   createProducer,
   createViewer,
   getLocalUser,
+  getUser,
 };

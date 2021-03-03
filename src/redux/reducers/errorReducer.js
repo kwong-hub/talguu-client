@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   authorized: true,
 };
 
-export default (state = INITIAL_STATE, action) => {
+const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ERROR_UNAUTHORIZED:
       return { ...state, authorized: false };
@@ -12,3 +12,5 @@ export default (state = INITIAL_STATE, action) => {
       return state;
   }
 };
+
+export default reducer;

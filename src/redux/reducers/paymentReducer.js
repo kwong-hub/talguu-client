@@ -1,8 +1,8 @@
 import {
-  ADD_PAYMENT_INFO_SUCCESS,
   ADD_PAYMENT_INFO_FAILURE,
-  GET_USER_PAYMENT_INFOS_SUCCESS,
+  ADD_PAYMENT_INFO_SUCCESS,
   GET_USER_PAYMENT_INFOS_FAILURE,
+  GET_USER_PAYMENT_INFOS_SUCCESS,
 } from "../types";
 
 const INITIAL_STATE = {
@@ -12,7 +12,7 @@ const INITIAL_STATE = {
   getPaymentInfosStatus: null,
 };
 
-export default (state = INITIAL_STATE, action) => {
+const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ADD_PAYMENT_INFO_SUCCESS:
       return { ...state, addPaymentInfoStatus: "SUCCESS", paymentInfo: action.payload };
@@ -26,3 +26,5 @@ export default (state = INITIAL_STATE, action) => {
       return state;
   }
 };
+
+export default reducer;

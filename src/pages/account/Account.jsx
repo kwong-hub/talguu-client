@@ -1,10 +1,10 @@
+import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 import React from "react";
-import { UserOutlined } from "@ant-design/icons";
-import { userActions } from "../../_actions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import Header from "../../partials/header/Header";
+
+import { userActions } from "../../_actions";
 import SideNav from "../../partials/sideNav/SideNav";
 
 const Account = (props) => {
@@ -51,17 +51,17 @@ const Account = (props) => {
           <div className="container mx-auto px-4">
             <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
               <div className="px-8">
-                <div className="flex flex-wrap justify-center">
-                  <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
-                    <div className="relative">
-                      <Avatar
-                        className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16"
-                        size={120}
-                        icon={<UserOutlined />}
-                      />
-                    </div>
+                <div className="flex flex-wrap justify-center items-center">
+                  <div className="w-full lg:-mt-32 lg:w-3/12 px-4 lg:order-2 flex justify-center items-center">
+                    {/* <div className="relative"> */}
+                    <Avatar
+                      className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16"
+                      size={120}
+                      icon={<UserOutlined />}
+                    />
+                    {/* </div> */}
                   </div>
-                  <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
+                  <div className="w-full mt-12 lg:mt-0 lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
                     <div className="py-6 px-3 mt-32 sm:mt-0">
                       <button
                         onClick={(e) => logout()}
@@ -98,11 +98,11 @@ const Account = (props) => {
                 </div>
                 <div className="text-center mt-12">
                   <h3 className="text-4xl font-semibold leading-normal text-gray-800 mb-2">
-                    {props.user.name}
+                    {props.user?.name}
                   </h3>
                   <div className="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
                     <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>{" "}
-                    {props.user.email}
+                    {props.user?.email}
                   </div>
                 </div>
               </div>

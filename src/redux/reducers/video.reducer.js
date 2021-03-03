@@ -1,21 +1,21 @@
 import {
   GET_PAID_VIDEO_URL_FAILURE,
   GET_PAID_VIDEO_URL_SUCCESS,
+  GET_SAVED_VIDEOS_FAILURE,
+  GET_SAVED_VIDEOS_SUCCESS,
   PAID_VIEWER_VIDEOS_FAILURE,
   PAID_VIEWER_VIDEOS_SUCCESS,
   PURCHASE_VIDEO_FAILURE,
   PURCHASE_VIDEO_SUCCESS,
+  SAVE_LATER_RESET,
+  SAVE_LATER_SUCCESS,
   VIDEO_FAILURE,
   VIDEO_READY,
   VIDEO_SUCCESS,
-  VIEWER_VIDEOS_FAILURE,
-  VIEWER_VIDEOS_SUCCESS,
   VIEWER_LIVE_FAILURE,
   VIEWER_LIVE_SUCCESS,
-  SAVE_LATER_SUCCESS,
-  SAVE_LATER_RESET,
-  GET_SAVED_VIDEOS_SUCCESS,
-  GET_SAVED_VIDEOS_FAILURE,
+  VIEWER_VIDEOS_FAILURE,
+  VIEWER_VIDEOS_SUCCESS,
 } from "../types";
 
 const INITIAL_STATE = {
@@ -31,7 +31,7 @@ const INITIAL_STATE = {
   saveLaterStatus: null,
 };
 
-export default (state = INITIAL_STATE, action) => {
+const reducer = (state = INITIAL_STATE, action) => {
   // console.log("action-red", action);
   switch (action.type) {
     case VIDEO_READY:
@@ -75,3 +75,5 @@ export default (state = INITIAL_STATE, action) => {
       return state;
   }
 };
+
+export default reducer;
