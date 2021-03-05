@@ -19,6 +19,7 @@ const Videos = (props) => {
   let viewerVideos = useSelector((state) => state.video.viewerVideos);
 
   useEffect(() => {
+    // console.log("fetching videos...");
     dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q } });
   }, []);
 
@@ -27,18 +28,15 @@ const Videos = (props) => {
     history.go(0);
   };
 
-  // const playTrailer = (video) => {
-  //   // console.log(video);
-  // };
-
   const onSearch = (value) => {
-    // console.log(value);
     dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q: value } });
   };
 
   const paymentModalVisibleFunc = (value, video, event) => {
     if (event) event.stopPropagation();
-    if (!localStorage.getItem("user")) history.push("/login");
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (!user || user.role != "VIEWER")
+      history.push({ pathname: "/login", search: `?return_url=/watch/${video.id}` });
     if (video && video.paid) {
       history.push(`/watch/${video.id}`);
     } else {
@@ -80,7 +78,7 @@ const Videos = (props) => {
       <div className="flex relative mt-2 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
         {renderVideos()}
       </div>
-      {renderPaymentModal()}
+      {paymentModalVisible && renderPaymentModal()}
     </div>
   );
 };

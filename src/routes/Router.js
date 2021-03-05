@@ -25,13 +25,13 @@ import WatchVideo from "../pages/watchVideo/WatchVideo";
 import EditProdVideo from "../pages/yourVideos/EditProdVideo";
 import YourVideo from "../pages/yourVideos/YourVideo";
 import PrivateRoute from "./privateRoute";
-
+import history from "./history";
 // import StreamVideo from "../pages/streamVideo/StreamVideo";
 const Router = () => {
   return (
     <div>
       {/* <Home /> */}
-      <BrowserRouter>
+      <BrowserRouter history={history}>
         <Switch>
           <Route exact path="/" component={Videos} />
           <Route path="/watch/:vidId" component={WatchVideo} />

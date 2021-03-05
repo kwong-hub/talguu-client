@@ -1,5 +1,6 @@
 import { environment } from "../config/config";
 import axios from "./axiosDefault";
+import { checkResponse } from "./errorHandler";
 
 export default {
   addPaymentInfo: async (payload) => {
@@ -7,7 +8,7 @@ export default {
       let res = await axios.post(`${environment}/payment/create`, payload);
       return res.data;
     } catch (error) {
-      throw error;
+      return checkResponse(error);
     }
   },
   getUserPaymentInfos: async (payload) => {
@@ -15,7 +16,7 @@ export default {
       let res = await axios.get(`${environment}/payment/list/${payload}`);
       return res.data;
     } catch (error) {
-      throw error;
+      return checkResponse(error);
     }
   },
   getPaymentInfos: async (username) => {
@@ -23,7 +24,7 @@ export default {
       const payment = await axios.get(`${environment}/payment/list/${username}`);
       return payment.data;
     } catch (error) {
-      throw error;
+      return checkResponse(error);
     }
   },
   getBalance: async () => {
@@ -31,7 +32,8 @@ export default {
       const payment = await axios.get(`${environment}/payment/balance`);
       return payment.data;
     } catch (error) {
-      throw error;
+      return checkResponse(error);
+      // throw error;
     }
   },
   addDeposit: async (data) => {
@@ -39,7 +41,7 @@ export default {
       const payment = await axios.post(`${environment}/payment/deposit`, data);
       return payment.data;
     } catch (error) {
-      throw error;
+      return checkResponse(error);
     }
   },
 };

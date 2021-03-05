@@ -27,6 +27,8 @@ const WatchVideo = () => {
   const video_link = useSelector((state) => state.video.video_link);
   const errorMessage = useSelector((state) => state.video.errMessages);
 
+  let user = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     if (vidId) {
       dispatch({ type: GET_PAID_VIDEO_URL_ASYNC, payload: vidId });
@@ -62,7 +64,9 @@ const WatchVideo = () => {
 
   const paymentModalVisibleFunc = (value, video, event) => {
     if (event) event.stopPropagation();
-    if (!localStorage.getItem("user")) history.push("/login");
+
+    if (!user || user.role != "VIEWER")
+      history.push({ pathname: "/login", search: `?return_url=/watch/${video.id}` });
     else {
       if (video && video.paid) {
         history.push(`/watch/${video.id}`);
@@ -102,6 +106,8 @@ const WatchVideo = () => {
         {
           src: video ? (video.paid ? video.video_link : video.trailer) : "",
           type: video.video_type,
+          // src: "http://talguu-vout.s3.amazonaws.com/test3/1613457497318video_v1.m3u8",
+          // type: "application/x-mpegURL",
         },
       ],
     };
@@ -114,7 +120,7 @@ const WatchVideo = () => {
           <div className="flex-col ml-2 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
             <div className="w-full flex justify-between">
               <div className="text-gray-800 lg:text-2xl text-md  text-left">{video?.title}</div>
-              {video.paid ? (
+              {video.paid || (user && user.role != "VIEWER") ? (
                 ""
               ) : (
                 <div className="py-0">
@@ -190,7 +196,7 @@ const WatchVideo = () => {
             {renderVideos()}
           </div>
         </div>
-        {renderPaymentModal()}
+        {paymentModalVisible && renderPaymentModal()}
       </div>
     </>
   );

@@ -2,7 +2,7 @@ import { Button, Checkbox, Form, Input } from "antd";
 import React, { useState } from "react";
 import { FaFacebook, FaGoogle, FaLock, FaUser } from "react-icons/fa";
 import { connect } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 
 import { userService } from "../../_services/user.service";
 import logo from "../../assets/images/logo.svg";
@@ -11,28 +11,36 @@ import Header from "../../partials/header/Header";
 const Login = (props) => {
   const [error, setError] = useState();
   var history = useHistory();
+  let param = useParams();
+  let user = localStorage.getItem("user");
+
   const onFinish = (values) => {
     // console.log("Received values of form: ", values);
     if (values.email && values.password) {
       // this.props.dispatch({ type: "LOGIN_ASYNC", values });
     }
+    // console.log(param);
     userService
       .login(values)
       .then((resp) => {
         // console.log(resp, "response");
         if (resp.success) {
           props.dispatch({ type: "LOGIN_ASYNC", payload: resp });
-          history.push("/");
+          if (param.return_url) {
+            history.push({ pathname: param.return_url });
+          } else {
+            history.push("/");
+          }
           // window.location.reload(false);
         } else {
           props.dispatch({ type: "LOGIN_FAIL" });
-          console.log("resp", resp);
+          // console.log("resp", resp);
           setError("Can not login try again");
         }
       })
       .catch((err) => {
         props.dispatch({ type: "LOGIN_FAIL" });
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -45,12 +53,6 @@ const Login = (props) => {
       <div className="absolute top-0 right-0 w-64 ">
         <img src={require("../../assets/images/login-svg.svg").default} alt="Logo" />
       </div>
-      {/* <div className="absolute bottom-12 left-0 w-64 ">
-        <img
-          src={require("../../assets/images/login-svg.svg").default}
-          alt="Logo"
-        />
-      </div> */}
       <div className="flex justify-center items-center h-full pt-2 mt-14">
         <div className="w-full max-w-xs flex flex-col justify-center m-4 p-4 py-8 shadow-md rounded-2xl bg-white">
           <div className="flex justify-center flex-col items-center ">

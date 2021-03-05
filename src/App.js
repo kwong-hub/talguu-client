@@ -1,7 +1,7 @@
 import "./App.css";
 import "./styles/color.style.css";
 
-import React, { useEffect } from "react";
+import React from "react";
 
 import Router from "./routes/Router";
 
