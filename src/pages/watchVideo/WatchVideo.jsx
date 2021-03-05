@@ -105,9 +105,10 @@ const WatchVideo = () => {
       sources: [
         {
           src: video ? (video.paid ? video.video_link : video.trailer) : "",
-          type: video.video_type,
-          // src: "http://talguu-vout.s3.amazonaws.com/test3/1613457497318video_v1.m3u8",
-          // type: "application/x-mpegURL",
+          // type: video.video_type,
+          // src: "http://8mspbb.com/hls/1614928651645video.mp4.m3u8",
+          // src: "https://talguu-vout.s3.us-west-2.amazonaws.com/test5/master.m3u8",
+          type: "application/x-mpegURL",
         },
       ],
     };
