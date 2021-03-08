@@ -107,7 +107,7 @@ function RenderVideo(props) {
         <h4 className="my-2 text-left text-md text-gray-600 video_title">{props.video.title}</h4>
         <div className="flex">
           <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2">
-            {props.video.viewVount} views
+            {props.video.viewCount} views
           </span>
         </div>
       </div>
@@ -121,7 +121,7 @@ RenderVideo.propTypes = {
     thumbnial: PropTypes.string,
     paid: PropTypes.bool,
     video_duration: PropTypes.string,
-    viewVount: PropTypes.number,
+    viewCount: PropTypes.number,
     title: PropTypes.string,
     currentVideo: PropTypes.bool,
   }),

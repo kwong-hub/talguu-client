@@ -2,6 +2,7 @@ import "./VideoPlayer.css";
 
 import React, { Component } from "react";
 import videojs from "video.js";
+import videoService from "../../_services/video.service";
 
 // import videojs_contrib_hls from "videojs-contrib-hls";
 export class VideoPlayer extends Component {
@@ -14,6 +15,19 @@ export class VideoPlayer extends Component {
         //   console.log("onPlayerReady", this);
       }
     );
+
+    setTimeout(() => {
+      if (this.player.currentTime() >= 10) {
+        videoService
+          .incrementVideoView({ videoId: this.props.videoId })
+          .then((res) => {
+            if (res.success) {
+              console.log("OK");
+            }
+          })
+          .catch((err) => console.log(err));
+      }
+    }, 15000);
   }
 
   componentDidUpdate(prevProps) {

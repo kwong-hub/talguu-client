@@ -2,6 +2,7 @@ import { Button, Space, Spin, Tooltip } from "antd";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { FaHeart, FaHeartBroken } from "react-icons/fa";
+import { AiOutlineDownCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
@@ -11,9 +12,12 @@ import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
 import SideNav from "../../partials/sideNav/SideNav";
 import {
   GET_PAID_VIDEO_URL_ASYNC,
+  GET_PAID_VIDEO_URL_SUCCESS,
   PURCHASE_VIDEO_ASYNC,
   VIEWER_VIDEOS_ASYNC,
 } from "../../redux/types";
+import videoService from "../../_services/video.service";
+import TextArea from "antd/lib/input/TextArea";
 
 const WatchVideo = () => {
   let history = useHistory();
@@ -33,13 +37,14 @@ const WatchVideo = () => {
     if (vidId) {
       dispatch({ type: GET_PAID_VIDEO_URL_ASYNC, payload: vidId });
       dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q: "" } });
+
       window.scrollTo(0, 0);
     }
     return () => {};
   }, [vidId]);
 
   useEffect(() => {
-    console.log(video_link);
+    // console.log(video_link);
     if (video_link) {
       paymentModalVisibleFunc(false);
       play(tempVideo);
@@ -51,7 +56,6 @@ const WatchVideo = () => {
     setPlayVideo(true);
     return () => {};
   }, [currentVideo]);
-  console.log("errorMessage", errorMessage);
 
   if (errorMessage === "NO_BALANCE" || errorMessage === "NOT_ENOUGH_BALANCE") {
     history.push("/deposit");
@@ -84,6 +88,20 @@ const WatchVideo = () => {
     dispatch({ type: PURCHASE_VIDEO_ASYNC, payload: id });
   };
 
+  const likeDislikeVideo = (video, val) => {
+    val = video.val == val ? 2 : val;
+    videoService
+      .likeDislikeVideo({ videoId: video.id, like: val })
+      .then((res) => {
+        if (res.data && res.data.success) {
+          dispatch({ type: GET_PAID_VIDEO_URL_SUCCESS, payload: res.data.video });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const renderPaymentModal = () => {
     return (
       <PaymentModal
@@ -96,7 +114,10 @@ const WatchVideo = () => {
   };
 
   const renderPlayer = (video) => {
+    // console.log(video);
+
     const videoJsOptions = {
+      videoId: video.id,
       autoplay: true,
       controls: true,
       poster: video?.thumbnial,
@@ -136,22 +157,46 @@ const WatchVideo = () => {
             </div>
             <div className="flex justify-between text-gray-800 text-2xl w-full text-left">
               <div className="flex items-end">
-                <span className="text-gray-400 text-lg"> {video?.viewVount} views</span>
+                <span className="text-gray-400 text-lg"> {video?.viewCount} views</span>
                 <span className="text-gray-600 ml-4 text-base">
                   {moment(video?.premiered).format("MMM DD, YYYY")}
                 </span>
               </div>
               <div className="flex">
-                <Tooltip placement="bottom" title="Like">
-                  <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg">
+                <Tooltip
+                  onClick={() => {
+                    likeDislikeVideo(video, 1);
+                  }}
+                  placement="bottom"
+                  title="Like">
+                  <span
+                    className={`flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ${
+                      video.like == 1 ? "text-blue-400" : ""
+                    }`}>
                     {video?.likeCount} <FaHeart className="ml-1" />
                   </span>
                 </Tooltip>
-                <Tooltip placement="bottom" title="Dislike">
-                  <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2">
-                    {9} <FaHeartBroken className="ml-1" />
+                <Tooltip
+                  onClick={() => {
+                    likeDislikeVideo(video, 0);
+                  }}
+                  placement="bottom"
+                  title="Dislike">
+                  <span
+                    className={`flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2 ${
+                      video.like == 0 ? "text-blue-400" : ""
+                    }`}>
+                    {video.dislikeCount} <FaHeartBroken className="ml-1" />
                   </span>
                 </Tooltip>
+              </div>
+            </div>
+            <div className="flex flex-col justify-center items-center cursor-pointer rounded-xl shadow-sm border-gray-100 border-2 p-1">
+              <span className="flex items-center self-center text-md my-2">
+                Show Messages <AiOutlineDownCircle className=" ml-2" />
+              </span>
+              <div className="w-full">
+                <TextArea placeholder="Insert you comment here." showCount maxLength={100} />
               </div>
             </div>
           </div>

@@ -175,4 +175,31 @@ export default {
       return checkResponse(error);
     }
   },
+
+  likeDislikeVideo: async function (likeObject) {
+    try {
+      const res = await axios.post(`${environment}/video/like_dislike`, likeObject);
+      return res;
+    } catch (error) {
+      return checkResponse(error);
+    }
+  },
+
+  commentVideo: async function (commentObject) {
+    try {
+      const res = await axios.post(`${environment}/video/like_dislike`, commentObject);
+      return res;
+    } catch (error) {
+      return checkResponse(error);
+    }
+  },
+
+  incrementVideoView: async function (viewObject) {
+    try {
+      const res = await axios.post(`${environment}/video/view`, viewObject);
+      return res;
+    } catch (error) {
+      return checkResponse(error);
+    }
+  },
 };

@@ -67,8 +67,8 @@ const YourVideo = () => {
     },
     {
       title: "View",
-      dataIndex: "viewVount",
-      key: "viewVount",
+      dataIndex: "viewCount",
+      key: "viewCount",
       width: 100,
     },
     {

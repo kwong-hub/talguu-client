@@ -60,7 +60,7 @@ function PurchasedPlaylist(props) {
               <h4 className="my-2 text-left text-md text-gray-600 video_title">{video.title}</h4>
               <div className="flex">
                 <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2">
-                  {video.viewVount} views
+                  {video.viewCount} views
                 </span>
               </div>
             </div>

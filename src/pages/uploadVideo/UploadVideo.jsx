@@ -2,12 +2,14 @@ import { Button, message, notification, Progress } from "antd";
 import React, { Component } from "react";
 import { FaPlus } from "react-icons/fa";
 import { RiArrowRightCircleLine, RiVideoUploadFill } from "react-icons/ri";
+import { AiOutlineInbox } from "react-icons/ai";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import videoService from "../../_services/video.service";
 import SideNav from "../../partials/sideNav/SideNav";
 import { VIDEO_READY } from "../../redux/types";
+import Dragger from "antd/lib/upload/Dragger";
 
 // const { Dragger } = Upload;
 
@@ -265,15 +267,15 @@ class UploadVideo extends Component {
             )}
           </div>
         </div>
-        {/* <Dragger {...this.state.uploadProps}>
+        <Dragger {...this.state.uploadProps}>
           <p className="ant-upload-drag-icon">
-            <InboxOutlined />
+            <AiOutlineInbox />
           </p>
           <p className="ant-upload-text">Click or drag file to this area to upload</p>
           <p className="ant-upload-hint">
             Support for a single. Strictly prohibit from uploading company data or other band files
           </p>
-        </Dragger> */}
+        </Dragger>
         ,
       </>
     );
