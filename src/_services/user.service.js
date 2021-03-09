@@ -26,6 +26,39 @@ async function getUser() {
     throw error;
   }
 }
+async function getUserProfile() {
+  try {
+    const user = await axios.get(`${environment}/account/profile`);
+    return user.data;
+  } catch (error) {
+    throw error;
+  }
+}
+async function updateUserProfile(body) {
+  try {
+    const user = await axios.put(`${environment}/account/profile`, body);
+    return user.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function updateCompanyProfile(body) {
+  try {
+    const user = await axios.put(`${environment}/account/profile/company`, body);
+    return user.data;
+  } catch (error) {
+    throw error;
+  }
+}
+async function updatePassword(body) {
+  try {
+    const user = await axios.put(`${environment}/account/update_password`, body);
+    return user.data;
+  } catch (error) {
+    throw error;
+  }
+}
 
 function getLocalUser() {
   return JSON.parse(localStorage.getItem("user"));
@@ -73,4 +106,8 @@ export const userService = {
   createViewer,
   getLocalUser,
   getUser,
+  getUserProfile,
+  updateUserProfile,
+  updateCompanyProfile,
+  updatePassword
 };

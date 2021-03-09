@@ -56,7 +56,7 @@ export default class Trailer extends Component {
         });
       },
       beforeUpload: (file) => {
-        if (file.size > 1000000) {
+        if (file.size > 100000000) {
           notification.info({
             message: "Max file size is 100MB.",
             placement: "bottomRight",
@@ -65,7 +65,8 @@ export default class Trailer extends Component {
           return false;
         } else if (!file.type.toString().startsWith("video")) {
           notification.info({
-            message: "Unsupported file type! File type should be .MP4 .MOV, .MKV .MPEG",
+            message:
+              "Unsupported file type! File type should be .MP4 .MOV, .MKV .MPEG",
             placement: "bottomRight",
             duration: 3.3,
           });
@@ -90,7 +91,8 @@ export default class Trailer extends Component {
             type="primary"
             onClick={this.handleUpload}
             loading={uploading}
-            style={{ marginTop: 16 }}>
+            style={{ marginTop: 16 }}
+          >
             {uploading ? "Uploading" : "Start Upload"}
           </Button>
         )}

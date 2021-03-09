@@ -23,6 +23,8 @@ import {
   GET_USER_PAYMENT_INFOS_ASYNC,
   GET_USER_PAYMENT_INFOS_FAILURE,
   GET_USER_PAYMENT_INFOS_SUCCESS,
+  GET_USER_PROFILE,
+  GET_USER_PROFILE_ASYNC,
   PAID_VIEWER_VIDEOS_ASYNC,
   PAID_VIEWER_VIDEOS_FAILURE,
   PAID_VIEWER_VIDEOS_SUCCESS,
@@ -177,6 +179,15 @@ function* getPaymentInfoAsync(action) {
   }
 }
 
+function* getUserProfileInfo(action) {
+  let res = yield call(userService.getUserProfile, action.payload);
+  console.log('res', res)
+  if (res.success) {
+    yield put({ type: GET_USER_PROFILE, payload: { company: res.producer ? res.producer : res.viewer, user: res.user } });
+  } else {
+  }
+}
+
 function* videoOnReady(action) {
   yield put({ type: VIDEO_READY, payload: action.payload });
 }
@@ -199,6 +210,7 @@ function* watchAll() {
     takeLatest(PAID_VIEWER_VIDEOS_ASYNC, getPaidUserVideosAsync),
     takeLatest(ADD_PAYMENT_INFO_ASYNC, addPaymentInfoAsync),
     takeLatest(GET_USER_PAYMENT_INFOS_ASYNC, getPaymentInfoAsync),
+    takeLatest(GET_USER_PROFILE_ASYNC, getUserProfileInfo),
   ]);
 }
 
