@@ -2,7 +2,8 @@ import axiosOr from "axios";
 
 import { environment } from "../config/config";
 import axios from "./axiosDefault";
-import { userService } from "./user.service";
+
+import { checkResponse } from "./errorHandler";
 
 export default {
   addVideo: async function (body, onUploadProgress) {
@@ -10,7 +11,7 @@ export default {
       return await axios.post(`${environment}/video`, body, onUploadProgress);
       // return user.data;
     } catch (error) {
-      throw error;
+      return checkResponse(error);
     }
   },
   getVideos: async function (pagination) {
@@ -20,7 +21,7 @@ export default {
       );
       return video.data;
     } catch (error) {
-      throw error;
+      return checkResponse(error);
     }
   },
   getProdVideoById: async function (id) {
@@ -28,7 +29,7 @@ export default {
       const video = await axios.get(`${environment}/video/${id}`);
       return video.data;
     } catch (error) {
-      throw error;
+      return checkResponse(error);
     }
   },
   deleteVideo: async function (id) {
@@ -36,7 +37,7 @@ export default {
       const video = await axios.delete(`${environment}/video/${id}`);
       return video.data;
     } catch (error) {
-      throw error;
+      return checkResponse(error);
     }
   },
   updateVideo: async function (body) {
@@ -44,7 +45,7 @@ export default {
       const video = await axios.patch(`${environment}/video`, body);
       return video.data;
     } catch (error) {
-      throw error;
+      return checkResponse(error);
     }
   },
 
@@ -55,7 +56,7 @@ export default {
       });
       return video.data;
     } catch (error) {
-      throw error;
+      return checkResponse(error);
     }
   },
   endStream: async function (body) {
@@ -65,7 +66,7 @@ export default {
       });
       return video.data;
     } catch (error) {
-      throw error;
+      return checkResponse(error);
     }
   },
 
@@ -74,7 +75,7 @@ export default {
       const thumb = await axios.post(`${environment}/video/thumbnail`, body);
       return thumb.data;
     } catch (error) {
-      throw error;
+      return checkResponse(error);
     }
   },
   addTrailer: async function (body) {
@@ -82,7 +83,7 @@ export default {
       const thumb = await axios.post(`${environment}/video/trailer`, body);
       return thumb.data;
     } catch (error) {
-      throw error;
+      return checkResponse(error);
     }
   },
 
@@ -104,7 +105,7 @@ export default {
       const videos = await axios.get(`${environment}/video/live/user`);
       return { data: videos.data, success: true };
     } catch (error) {
-      throw { error, success: false };
+      return checkResponse(error);
     }
   },
 
@@ -113,7 +114,7 @@ export default {
       const videos = await axios.get(`${environment}/video/purchase_video_url?videoId=${videoId}`);
       return videos.data;
     } catch (error) {
-      throw error;
+      return checkResponse(error);
     }
   },
 
@@ -124,7 +125,7 @@ export default {
       });
       return res.data;
     } catch (error) {
-      throw error;
+      return checkResponse(error);
     }
   },
 
@@ -133,7 +134,7 @@ export default {
       const videos = await axios.get(`${environment}/video/purchased_videos`);
       return { data: videos.data, success: true };
     } catch (error) {
-      throw { error, success: false };
+      return checkResponse(error);
     }
   },
 
@@ -142,7 +143,7 @@ export default {
       const videos = await axios.get(`${environment}/video/saved_videos`);
       return { data: videos.data, success: true };
     } catch (error) {
-      throw { error, success: false };
+      return checkResponse(error);
     }
   },
 
@@ -153,7 +154,7 @@ export default {
       });
       return res.data;
     } catch (error) {
-      throw error;
+      return checkResponse(error);
     }
   },
 
@@ -162,7 +163,7 @@ export default {
       const res = await axios.post(`${environment}/video/get_upload_url`, body);
       return res.data.data;
     } catch (error) {
-      throw error;
+      return checkResponse(error);
     }
   },
 
@@ -170,15 +171,8 @@ export default {
     try {
       const res = await axiosOr.put(signedRequest, file, options);
       return res;
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      return checkResponse(error);
     }
   },
-};
-
-const checkResponse = (error) => {
-  console.log(error.toString(), "error");
-  if (error && error.toString().includes("401")) {
-    userService.logout();
-  }
 };

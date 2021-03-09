@@ -63,7 +63,7 @@ function RenderVideo(props) {
             <FaPlayCircle className="text-gray-600 thumbnail_button" />
           </Tooltip>
         </div>
-        {(!user || user.role === "VIEWER") && (
+        {
           <div
             onClick={(event) => saveLater(event)}
             className="watch_later bg-gray-700 p-2 rounded-sm absolute right-2 top-2 bg-opacity-25">
@@ -77,7 +77,7 @@ function RenderVideo(props) {
               )}
             </Tooltip>
           </div>
-        )}
+        }
         <div className="bg-gray-600 rounded-sm absolute bottom-1 right-1 py-0 px-4 bg-opacity-40"></div>
         {props.video.paid
           ? ""

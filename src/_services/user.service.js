@@ -1,21 +1,33 @@
+import { useHistory } from "react-router-dom";
 import { environment } from "../config/config";
 import axios from "./axiosDefault";
+import history from "./../routes/history";
+import { checkResponse } from "./errorHandler";
 
 function login({ email, password }) {
-  return axios.post(`${environment}/account/login`, { email, password }).then((user) => {
-    // store user details and jwt token in local storage to keep user logged in between page refreshes
-    if (user.data.success) {
-      localStorage.setItem("user", JSON.stringify(user.data));
-    }
-    return user.data;
-  });
+  return axios
+    .post(`${environment}/account/login`, { email, password })
+    .then((user) => {
+      // store user details and jwt token in local storage to keep user logged in between page refreshes
+      if (user.data.success) {
+        localStorage.setItem("user", JSON.stringify(user.data));
+      }
+      return user.data;
+    })
+    .catch((error) => {
+      return checkResponse(error);
+    });
 }
 
-function logout() {
-  console.log("about to log user out");
-  // remove user from local storage to log user out
+function logout(redirect_url = "") {
   localStorage.removeItem("user");
-  window.location.reload();
+  console.log(history.location);
+  if (redirect_url) {
+    history.push({ pathname: "/login", search: `?redirect_url=${redirect_url}` });
+  } else {
+    history.push({ pathname: "/login" });
+  }
+  history.go(0);
 }
 
 async function getUser() {
@@ -23,7 +35,7 @@ async function getUser() {
     const user = await axios.get(`${environment}/user`);
     return user.data;
   } catch (error) {
-    throw error;
+    return checkResponse(error);
   }
 }
 async function getUserProfile() {
@@ -86,7 +98,7 @@ async function createProducer(data) {
     const user = await axios.post(`${environment}/account/producer_sign_up`, data);
     return user.data;
   } catch (error) {
-    throw error;
+    return checkResponse(error);
   }
 }
 
@@ -95,7 +107,7 @@ async function createViewer(data) {
     const user = await axios.post(`${environment}/account/viewer_sign_up`, data);
     return user.data;
   } catch (error) {
-    throw error;
+    return checkResponse(error);
   }
 }
 
