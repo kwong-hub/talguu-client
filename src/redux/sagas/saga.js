@@ -89,6 +89,7 @@ function* videoUpload(action) {
 }
 
 function* getViewerVideosAsync(action) {
+  console.log('action', action)
   let res = yield call(videoService.getViewerVideos, action.payload);
   if (res.success) {
     yield put({ type: VIEWER_VIDEOS_SUCCESS, payload: res.data });

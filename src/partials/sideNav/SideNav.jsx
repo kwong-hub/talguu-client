@@ -28,15 +28,19 @@ const SideNav = (props) => {
   let location = useLocation();
   let history = useHistory();
   let user = JSON.parse(localStorage.getItem("user"));
-  console.log("props", props);
   const handleVisibleChange = () => {
     setMobileMenuVisible(!mobileMenuVisible);
   };
 
   const handleMenuClick = () => {};
 
-  const onSearch = (value) => {
-    history.push("/", { q: value });
+  const onSearch = (values) => {
+    console.log("values", values);
+    history.push({
+      pathname: "/search",
+      search: "?query=" + values,
+      state: { q: values },
+    });
   };
   const logout = () => {
     userService.logout();
@@ -58,7 +62,7 @@ const SideNav = (props) => {
           <Link to="/account">Account</Link>
         </Menu.Item>
         <Menu.Item className="hover:bg-gray-300">
-          <Link to="/logout">Profile</Link>
+          <Link to="/settings">Settings</Link>
         </Menu.Item>
         <Menu.Item className="hover:bg-gray-300">
           <Link onClick={(e) => logout()}>Sign Out</Link>
@@ -228,7 +232,7 @@ const SideNav = (props) => {
           </span>
         </div>
         <div className="flex w-full justify-between items-center p-2 pr-6">
-          <div className="flex max-w-2xl w-full">
+          <div className="flex justify-between  max-w-full w-full">
             <div className="hidden text-2xl mr-4 sm:flex items-center justify-center header_title text-gray-500">
               <Link to="/" className="flex items-center">
                 TALGUU
@@ -240,18 +244,19 @@ const SideNav = (props) => {
               size="large"
               suffix={suffix}
               onSearch={onSearch}
+              className="w-1/2"
             />
+            {user && (
+              <span className="text-gray-500 hidden sm:flex mr-16 ml-6 cursor-pointer text-lg items-center hover:text-gray-700">
+                {/* <Link to="/account"> */}
+                <Dropdown overlay={accountMenu} placement="bottomRight" arrow>
+                  <FaUser className={`text-3xl inline text-gray-300`} />
+                </Dropdown>
+                {/* <Tooltip placement="rightTop" title="Account"></Tooltip> */}
+                {/* </Link> */}
+              </span>
+            )}
           </div>
-          {user && (
-            <span className="text-gray-500 hidden sm:flex mr-16 ml-6 cursor-pointer text-lg items-center hover:text-gray-700">
-              {/* <Link to="/account"> */}
-              <Dropdown overlay={accountMenu} placement="bottomRight" arrow>
-                <FaUser className={`text-3xl inline text-gray-300`} />
-              </Dropdown>
-              {/* <Tooltip placement="rightTop" title="Account"></Tooltip> */}
-              {/* </Link> */}
-            </span>
-          )}
         </div>
       </div>
       <ul className="list-disc space-y-5 p-1 border-r hidden sm:block">

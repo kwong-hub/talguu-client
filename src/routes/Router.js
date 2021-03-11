@@ -26,6 +26,7 @@ import EditProdVideo from "../pages/yourVideos/EditProdVideo";
 import YourVideo from "../pages/yourVideos/YourVideo";
 import PrivateRoute from "./privateRoute";
 import history from "./history";
+import SearchVideo from "../pages/search/SearchVideo";
 // import StreamVideo from "../pages/streamVideo/StreamVideo";
 const Router = () => {
   return (
@@ -34,6 +35,7 @@ const Router = () => {
       <BrowserRouter history={history}>
         <Switch>
           <Route exact path="/" component={Videos} />
+          <Route exact path="/search" component={SearchVideo} />
           <Route path="/watch/:vidId" component={WatchVideo} />
           <PrivateRoute path="/live_video" component={LiveVideos} />
           <PrivateRoute path="/purchased_playlist" component={PurchasedPlaylist} />
@@ -54,6 +56,7 @@ const Router = () => {
           <Route exact path="/signup" component={Signup} />
           <PrivateRoute exact path="/finish-upload" component={EditUploadVideos} />
           <Route exact path="/live_stream" component={Stream} />
+          <Route exact path="/forgot_password" component={ForgotPassword} />
           <PrivateRoute exact path="/deposit" component={Deposit} />
           <Route component={NotFound} />
         </Switch>

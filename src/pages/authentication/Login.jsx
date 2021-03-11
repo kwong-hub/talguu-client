@@ -13,6 +13,9 @@ const Login = (props) => {
   var history = useHistory();
   let param = useParams();
   let user = localStorage.getItem("user");
+  const forgotPassword = () => {
+    history.push("/forgot_password");
+  };
 
   const onFinish = (values) => {
     // console.log("Received values of form: ", values);
@@ -124,11 +127,15 @@ const Login = (props) => {
                 />
               </Form.Item>
               <Form.Item>
-                <Form.Item name="remember" valuePropName="checked" noStyle>
+                {/* <Form.Item name="remember" valuePropName="checked" noStyle>
                   <Checkbox>Remember me</Checkbox>
-                </Form.Item>
+                </Form.Item> */}
 
-                <a className="login-form-forgot" href="">
+                <a
+                  className="login-form-forgot"
+                  onClick={(e) => forgotPassword()}
+                  href=""
+                >
                   Forgot password
                 </a>
               </Form.Item>
