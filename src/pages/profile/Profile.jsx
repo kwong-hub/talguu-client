@@ -399,7 +399,7 @@ const Profile = (props) => {
         </>
       ) : (
         <Spin
-          size={100}
+          size="large"
           className="flex items-center justify-center h-screen text-4xl"
         />
       )}

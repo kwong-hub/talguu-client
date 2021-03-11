@@ -27,6 +27,7 @@ import YourVideo from "../pages/yourVideos/YourVideo";
 import PrivateRoute from "./privateRoute";
 import history from "./history";
 import SearchVideo from "../pages/search/SearchVideo";
+import ForgotPassword from "../pages/authentication/ForgotPassword";
 // import StreamVideo from "../pages/streamVideo/StreamVideo";
 const Router = () => {
   return (
