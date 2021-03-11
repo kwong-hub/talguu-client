@@ -1,45 +1,53 @@
-import { Button, Input } from "antd";
-import Form from "antd/lib/form/Form";
-import { Header } from "antd/lib/layout/layout";
+import { Button, Input, Form } from "antd";
 import React, { useState } from "react";
 import { FaUser } from "react-icons/fa";
+import Header from "../../partials/header/Header";
+import logo from "../../assets/images/logo.svg";
 
 const ForgotPassword = () => {
-  const [error, setError] = useState("");
+  const [error, setError] = useState();
   const onFinish = (values) => {};
   return (
     <div className="relative">
       <Header />
-      <div>
-        <p className="text-center bg-gray-200 text-red-800 mb-4 ">{error}</p>
-        <Form
-          name="normal_login"
-          className="login-form"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-        >
-          <Form.Item
-            name="email"
-            rules={[{ required: true, message: "Please input your email!" }]}
+      <div className="flex flex-col items-center justify-center h-screen">
+        <img className="" src={logo} alt="Logo" width={50} />
+        <p className="text-gray-800 text-xl py-4">Forgot Password</p>
+        <div className="bg-white p-4 shadow-sm border rounded-xl max-w-md">
+          <p className="">
+            Enter your verifed email address and we will send you a password
+            reset link.
+          </p>
+          <p className="text-center bg-gray-200 text-red-800 mb-4 ">{error}</p>
+          <Form
+            name="normal_login"
+            className="login-form md:px-4"
+            initialValues={{ remember: true }}
+            onFinish={onFinish}
           >
-            <Input
-              className="rounded-2xl"
-              prefix={<FaUser className="site-form-item-icon" />}
-              placeholder="E-mail Address"
-            />
-          </Form.Item>
-
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              shape="round"
-              className="login-form-button w-full bg-green-600 border-green-600"
+            <Form.Item
+              name="email"
+              rules={[{ required: true, message: "Please input your email!" }]}
             >
-              Send Email
-            </Button>
-          </Form.Item>
-        </Form>
+              <Input
+                className="rounded-2xl"
+                prefix={<FaUser className="site-form-item-icon" />}
+                placeholder="E-mail Address"
+              />
+            </Form.Item>
+
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                shape="round"
+                className="login-form-button w-full"
+              >
+                Send Email
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
       </div>
     </div>
   );
