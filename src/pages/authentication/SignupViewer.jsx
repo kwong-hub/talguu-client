@@ -2,11 +2,17 @@ import "./SignupViewer.css";
 
 import { Button, Form, Input, Steps } from "antd";
 import React, { useEffect, useState } from "react";
-import { FaEnvelope, FaFacebook, FaGoogle, FaLock, FaUser } from "react-icons/fa";
+import {
+  FaEnvelope,
+  FaFacebook,
+  FaGoogle,
+  FaLock,
+  FaUser,
+} from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import logo from "../../assets/images/logo.svg";
+import logo from "../../assets/images/streaming.png";
 import Header from "../../partials/header/Header";
 import { CREATE_VIEWER_ASYNC, CREATE_VIEWER_RESET } from "../../redux/types";
 
@@ -22,7 +28,9 @@ const SignupViewer = () => {
 
   const dispatch = useDispatch();
   const serverErrors = useSelector((state) => state.account.viewerErrMessages);
-  const createViewerStatus = useSelector((state) => state.account.createViewerStatus);
+  const createViewerStatus = useSelector(
+    (state) => state.account.createViewerStatus
+  );
 
   useEffect(() => {
     setErrMessage(serverErrors);
@@ -50,7 +58,10 @@ const SignupViewer = () => {
     setFormValues((prevValue) => {
       return { ...prevValue, ...values };
     });
-    dispatch({ type: CREATE_VIEWER_ASYNC, payload: { ...formValues, ...values } });
+    dispatch({
+      type: CREATE_VIEWER_ASYNC,
+      payload: { ...formValues, ...values },
+    });
     setErrMessage("");
   };
 
@@ -60,10 +71,12 @@ const SignupViewer = () => {
         layout="vertical"
         name="personal"
         initialValues={{ remember: true }}
-        onFinish={onPersonalFinish}>
+        onFinish={onPersonalFinish}
+      >
         <Form.Item
           name="firstName"
-          rules={[{ required: true, message: "Please input your first Name!" }]}>
+          rules={[{ required: true, message: "Please input your first Name!" }]}
+        >
           <Input
             className="rounded-2xl"
             prefix={<FaUser className="site-form-item-icon" />}
@@ -72,7 +85,8 @@ const SignupViewer = () => {
         </Form.Item>
         <Form.Item
           name="lastName"
-          rules={[{ required: true, message: "Please input your last Name!" }]}>
+          rules={[{ required: true, message: "Please input your last Name!" }]}
+        >
           <Input
             className="rounded-2xl"
             prefix={<FaUser className="site-form-item-icon" />}
@@ -86,7 +100,10 @@ const SignupViewer = () => {
             placeholder="Company Name"
           />
         </Form.Item> */}
-        <Form.Item name="email" rules={[{ required: true, message: "Please input your email!" }]}>
+        <Form.Item
+          name="email"
+          rules={[{ required: true, message: "Please input your email!" }]}
+        >
           <Input
             className="rounded-2xl"
             prefix={<FaEnvelope className="site-form-item-icon" />}
@@ -95,7 +112,8 @@ const SignupViewer = () => {
         </Form.Item>
         <Form.Item
           name="password"
-          rules={[{ required: true, message: "Please input your Password!" }]}>
+          rules={[{ required: true, message: "Please input your Password!" }]}
+        >
           <Input
             className="rounded-2xl "
             prefix={<FaLock className="site-form-item-icon" />}
@@ -105,7 +123,8 @@ const SignupViewer = () => {
         </Form.Item>
         <Form.Item
           name="confirm_password"
-          rules={[{ required: true, message: "Please Confirm your Password!" }]}>
+          rules={[{ required: true, message: "Please Confirm your Password!" }]}
+        >
           <Input
             className="rounded-2xl "
             prefix={<FaLock className="site-form-item-icon" />}
@@ -120,7 +139,8 @@ const SignupViewer = () => {
             type="primary"
             htmlType="submit"
             shape="round"
-            className="login-form-button w-full">
+            className="login-form-button w-full"
+          >
             Sign Up
           </Button>
         </Form.Item>
@@ -132,10 +152,15 @@ const SignupViewer = () => {
     return (
       <div className="w-80 h-screen flex items-center text-md text-gray-600 text-center mx-auto">
         <div style={{ height: "fit-content" }}>
-          We have sent an email to your account. Please verify your email to login.
+          We have sent an email to your account. Please verify your email to
+          login.
           <div className="w-full">
             <Link to="/login">
-              <Button type="primary" shape="round" className="flex items-center m-1 px-4 mx-auto">
+              <Button
+                type="primary"
+                shape="round"
+                className="flex items-center m-1 px-4 mx-auto"
+              >
                 Login
               </Button>
             </Link>
@@ -155,17 +180,23 @@ const SignupViewer = () => {
               <div className="flex justify-center flex-col items-center ">
                 <img className="" src={logo} alt="Logo" width={50} />
 
-                <p className="text-2xl text-gray-700 my-6">Create a New Account</p>
+                <p className="text-2xl text-gray-700 my-6">
+                  Create a New Account
+                </p>
                 <div className="flex bg-gray-100 rounded-3xl mb-8">
                   <Link to="/login">
                     <Button
                       shape="round"
-                      className="flex items-center border-transparent bg-transparent m-1 px-4">
+                      className="flex items-center border-transparent bg-transparent m-1 px-4"
+                    >
                       Login
                     </Button>
                   </Link>
                   <Link to="/signup_viewer">
-                    <Button shape="round" className="flex items-center   m-1 px-4">
+                    <Button
+                      shape="round"
+                      className="flex items-center   m-1 px-4"
+                    >
                       Sign Up
                     </Button>
                   </Link>
@@ -182,14 +213,19 @@ const SignupViewer = () => {
                   </div>
                   <p className="my-6">OR USING</p>
                   <div className="flex justify-evenly">
-                    <Button shape="round" icon={<FaGoogle />} className="flex items-center p-2">
+                    <Button
+                      shape="round"
+                      icon={<FaGoogle />}
+                      className="flex items-center p-2"
+                    >
                       Google
                     </Button>
                     <Button
                       className="flex items-center p-2"
                       type="primary"
                       shape="round"
-                      icon={<FaFacebook />}>
+                      icon={<FaFacebook />}
+                    >
                       Facebook
                     </Button>
                   </div>

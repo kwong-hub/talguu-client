@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Link, useHistory, useParams } from "react-router-dom";
 
 import { userService } from "../../_services/user.service";
-import logo from "../../assets/images/logo.svg";
+import logo from "../../assets/images/streaming.png";
 import Header from "../../partials/header/Header";
 
 const Login = (props) => {
@@ -26,6 +26,7 @@ const Login = (props) => {
     userService
       .login(values)
       .then((resp) => {
+        console.log("resp", resp);
         if (resp.success) {
           props.dispatch({ type: "LOGIN_ASYNC", payload: resp });
           if (param.return_url) {
@@ -37,7 +38,9 @@ const Login = (props) => {
         } else {
           props.dispatch({ type: "LOGIN_FAIL" });
           // console.log("resp", resp);
-          setError("Can not login try again");
+          setError(
+            resp.messages ? resp.messages[0] : "Can not login try again"
+          );
         }
       })
       .catch((err) => {
@@ -76,7 +79,7 @@ const Login = (props) => {
               <Link to="/login">
                 <Button
                   shape="round"
-                  className="flex items-center text-white m-1 px-4 bg-green-600"
+                  className="flex items-center text-white m-1 px-4 bg-blue-500"
                 >
                   Login
                 </Button>
@@ -134,7 +137,6 @@ const Login = (props) => {
                 <a
                   className="login-form-forgot"
                   onClick={(e) => forgotPassword()}
-                  href=""
                 >
                   Forgot password
                 </a>
@@ -145,7 +147,7 @@ const Login = (props) => {
                   type="primary"
                   htmlType="submit"
                   shape="round"
-                  className="login-form-button w-full bg-green-600 border-green-600"
+                  className="login-form-button w-full "
                 >
                   Log in
                 </Button>

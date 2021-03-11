@@ -63,6 +63,15 @@ async function updateCompanyProfile(body) {
     throw error;
   }
 }
+async function forgotPassword(body) {
+  try {
+    const user = await axios.post(`${environment}/account/change_password_request`, body);
+    return user.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function updatePassword(body) {
   try {
     const user = await axios.put(`${environment}/account/update_password`, body);
@@ -121,5 +130,6 @@ export const userService = {
   getUserProfile,
   updateUserProfile,
   updateCompanyProfile,
-  updatePassword
+  updatePassword,
+  forgotPassword
 };
