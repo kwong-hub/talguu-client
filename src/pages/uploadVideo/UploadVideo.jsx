@@ -12,8 +12,9 @@ import { VIDEO_READY } from "../../redux/types";
 import Dragger from "antd/lib/upload/Dragger";
 
 // const { Dragger } = Upload;
-
 const initialState = {
+  file: null,
+  fileSelected: false,
   drag: false,
   upload: false,
   title: "Title of the video",
@@ -21,166 +22,124 @@ const initialState = {
   files: {},
   progress: 0,
   active: "",
-  uploadProps: {
-    name: "file",
-    multiple: false,
-    action: "",
-    customRequest: (data) => {
-      let name = data.file.name.split(".");
-      let fileName = Date.now() + "video";
-      let fileType = data.file.type;
-      // console.log(fileName, fileType);
-      const callBack = (res) => {
-        console.log("from call back", res);
-      };
-      var options = {
-        headers: {
-          "Content-Type": fileType,
-          "x-amz-acl": "public-read",
-        },
-        onUploadProgress: callBack,
-      };
-      videoService
-        .getUploadUrl({ fileName, fileType })
-        .then((res) => {
-          console.log("before the upload", res.signedRequest, data.file, options);
-          return videoService.uploadVideoToS3(res.signedRequest, data.file, options);
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => console.log(err));
-    },
-  },
 };
 
 class UploadVideo extends Component {
   fileList = [];
-  state = initialState;
+  state = {
+    file: null,
+    fileSelected: false,
+    drag: false,
+    upload: false,
+    title: "Title of the video",
+    describe: "",
+    files: {},
+    progress: 0,
+    active: "",
+    uploadProps: {
+      accept: "video/*",
+      name: "file",
+      multiple: false,
+      action: "",
+      showUploadList: true,
+      customRequest: (data) => {
+        return this.fileSelected(data.file);
+      },
+    },
+  };
 
-  uploadFiles = (files) => {
-    console.log("files", files);
-    if (!files[0].name) return;
-    // this.fileList.push(files[0].name);
-    if (files[0].size > 1200000000) {
+  cancelUpload = () => {
+    this.setState(initialState);
+  };
+
+  uploadFileS3 = () => {
+    let fileType = this.state.file.name.split(".")[1];
+    let fileName = Date.now() + "video" + "." + fileType;
+    const callBack = (res) => {
+      console.log(res);
+      this.setState({ progress: Math.ceil((res.loaded / res.total) * 100) });
+    };
+    videoService
+      .getUploadUrl({ fileName })
+      .then((res) => {
+        let options = { ...res.signedRequest.fields };
+        let formData = new FormData();
+        Object.keys(options).map((key) => {
+          formData.append(key, options[key]);
+        });
+        formData.append("file", this.state.file);
+        return videoService.uploadVideoToS3(res.signedRequest.url, formData, {
+          ...res.config,
+          onUploadProgress: callBack,
+        });
+      })
+      .then((res) => {
+        console.log(res);
+        let video_link = res.config.url + "/" + fileName;
+        let { title, describe } = this.state;
+        let { size, type } = this.state.file;
+        let videoObj = {
+          video_link,
+          title,
+          describe,
+          video_size: size,
+          video_type: type,
+        };
+        return videoService.addVideo(videoObj);
+      })
+      .then((res) => {
+        this.props.history.push("/finish-upload", { ...res.data.video });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  fileSelected = (file) => {
+    this.setState({ file, fileSelected: true });
+  };
+
+  errorMessage = (msg) => {
+    message.error(msg);
+  };
+
+  handleOnclick = (e) => {
+    this.fileInput.current.click();
+  };
+
+  resetState() {
+    this.setState(initialState);
+  }
+
+  checkFile = () => {
+    if (this.state.file.size > 1200000000) {
       notification.info({
         message: "File size should be less than 1.5GB.",
         placement: "bottomRight",
         duration: 3.3,
       });
-      return;
-    } else if (!files[0].type.toString().startsWith("video")) {
+      return false;
+    } else if (!this.state.file.type.toString().startsWith("video")) {
       notification.info({
-        message: "Unsupported file type! File type should be .MP4 .MOV, .MKV .MPEG",
+        message: "Unsupported file type! File type should be video",
         placement: "bottomRight",
         duration: 3.3,
       });
-      return;
+      return false;
     }
-    this.setState({ active: "upload" });
-    this.setState({ title: files[0].name, files: files[0] });
-    this.props.dispatch({ type: VIDEO_READY, payload: this.state.files });
+    return true;
   };
-  errorMessage = () => {
-    message.error("Failed to Upload");
-  };
-
-  dropRef = React.createRef();
-  fileInput = React.createRef();
-  handleDrag = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-  handleDragIn = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    this.dragCounter++;
-    if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
-      this.setState({ drag: true });
-    }
-  };
-  handleDragOut = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    this.dragCounter--;
-    if (this.dragCounter === 0) {
-      this.setState({ drag: false });
-    }
-  };
-  handleOnclick = (e) => {
-    this.fileInput.current.click();
-  };
-  handleFileSelect = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    this.setState({ drag: false });
-    if (e.target.files && e.target.files.length > 0) {
-      this.uploadFiles(e.target.files);
-      // e.target.clearData();
-      this.dragCounter = 0;
-    }
-  };
-  handleDrop = (e) => {
-    // console.log(e);
-    e.preventDefault();
-    e.stopPropagation();
-    this.setState({ drag: false });
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      this.uploadFiles(e.dataTransfer.files);
-      e.dataTransfer.clearData();
-      this.dragCounter = 0;
-    }
-  };
-  resetState() {
-    this.setState(initialState);
-  }
   submit = (e) => {
     e.preventDefault();
-    var formData = new FormData();
-    formData.append("title", this.state.title);
-    formData.append("describe", this.state.describe);
-    formData.append("video", this.state.files, this.state.files.name);
-    const config = {
-      onUploadProgress: (progressEvent) => {
-        this.setState({
-          progress: Math.round((progressEvent.loaded * 100) / progressEvent.total) - 5,
-        });
-      },
-    };
-
-    videoService
-      .addVideo(formData, config)
-      .then((json) => {
-        let data = json.data;
-        this.resetState();
-        // this.successMessage();
-        console.log("json", json);
-        this.props.history.push("/finish-upload", { ...data });
-      })
-      .catch((err) => {
-        this.errorMessage();
-        this.resetState();
-      });
+    if (!this.state.title || !this.state.describe || !this.state.file) {
+      this.errorMessage("Please fill required filled first");
+      return;
+    }
+    if (!this.checkFile()) return;
+    this.uploadFileS3();
   };
+
   nextClick = (to) => {
     this.setState({ active: to });
     this.props.history.push("/finish-upload");
-  };
-  componentDidMount = () => {
-    let div = this.dropRef.current;
-    div.addEventListener("dragenter", this.handleDragIn);
-    div.addEventListener("dragleave", this.handleDragOut);
-    div.addEventListener("dragover", this.handleDrag);
-    div.addEventListener("drop", this.handleDrop);
-    div.addEventListener("click", this.handleOnclick);
-  };
-
-  componentWillUnmount = () => {
-    let div = this.dropRef.current;
-    div.removeEventListener("dragenter", this.handleDragIn);
-    div.removeEventListener("dragleave", this.handleDragOut);
-    div.removeEventListener("dragover", this.handleDrag);
-    div.removeEventListener("drop", this.handleDrop);
   };
   uploadButton = () => (
     <div>
@@ -198,39 +157,34 @@ class UploadVideo extends Component {
             <p className="text-2xl text-gray-600 m-2">One Step to Publish your video! </p>
           </div>
 
-          <div ref={this.dropRef} className="flex justify-center my-4">
-            <div className="shadow-inner border bg-white cursor-pointer border-gray-100 rounded-md w-2/3 max-w-3/4 transition duration-500 ease-in-out hover:bg-gray-100 transform hover:-translate-y-1 hover:scale-105">
-              <div className="h-64 flex flex-col justify-center items-center container mx-auto px-6 ">
-                <RiVideoUploadFill className="text-5xl text-gray-600" />
-                <p className="my-2 text-xl text-gray-600 font-medium uppercase">
-                  {" "}
-                  Drag and Drop the video{" "}
-                </p>
-                <input
-                  type="file"
-                  id="file-id"
-                  ref={this.fileInput}
-                  onChange={this.handleFileSelect}
-                  className="hidden"
-                />
-                <Button type="primary">Upload file</Button>
-                {this.state.progress > 0 && (
-                  <Progress
-                    type="line"
-                    className="mt-4 w-64"
-                    percent={this.state.progress}
-                    status="active"
-                  />
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div>
-            {this.state.active !== "" && (
+          {!this.state.progress > 0 && this.state.active == "" && (
+            <div>
               <form
                 onSubmit={this.submit}
                 className="flex flex-col w-full items-center my-8 text-xl text-gray-500">
+                <div className="w-full">
+                  {!this.state.fileSelected && (
+                    <Dragger className="max-w-lg mx-auto" {...this.state.uploadProps}>
+                      <p className="flex w-full justify-center ant-upload-drag-icon">
+                        <AiOutlineInbox className="text-4xl font-bold" />
+                      </p>
+                      <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                      <p className="ant-upload-hint">
+                        Be sure to upload only video files like .mp4 .flv .mkv .mpeg .mov...
+                      </p>
+                    </Dragger>
+                  )}
+                  {this.state.fileSelected && (
+                    <div className="mx-auto flex justify-center items-center border-2 border-gray-200 p-2 max-w-lg flex-wrap">
+                      {this.state.file.name}
+                      <div className="w-48 m-1">
+                        <Button onClick={this.cancelUpload} danger>
+                          Select a new file
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <label className="flex items-baseline w-3/4">
                   Title
                   <input
@@ -264,19 +218,16 @@ class UploadVideo extends Component {
                   Next
                 </Button>
               </form>
-            )}
-          </div>
+            </div>
+          )}
         </div>
-        <Dragger {...this.state.uploadProps}>
-          <p className="ant-upload-drag-icon">
-            <AiOutlineInbox />
-          </p>
-          <p className="ant-upload-text">Click or drag file to this area to upload</p>
-          <p className="ant-upload-hint">
-            Support for a single. Strictly prohibit from uploading company data or other band files
-          </p>
-        </Dragger>
-        ,
+
+        {this.state.progress > 0 && this.state.active == "" && (
+          <div className="flex-col justify-center mt-4 w-64 mx-auto">
+            <p className="text-gray-500 font-thin text-base">Uploading file</p>
+            <Progress type="line" percent={this.state.progress} status="active" />
+          </div>
+        )}
       </>
     );
   }

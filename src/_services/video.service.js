@@ -1,14 +1,12 @@
-import axiosOr from "axios";
-
 import { environment } from "../config/config";
 import axios from "./axiosDefault";
 
 import { checkResponse } from "./errorHandler";
 
 export default {
-  addVideo: async function (body, onUploadProgress) {
+  addVideo: async function (body) {
     try {
-      return await axios.post(`${environment}/video`, body, onUploadProgress);
+      return await axios.post(`${environment}/video`, body);
       // return user.data;
     } catch (error) {
       return checkResponse(error);
@@ -167,9 +165,10 @@ export default {
     }
   },
 
-  uploadVideoToS3: async function (signedRequest, file, options) {
+  uploadVideoToS3: async function (url, formData, config) {
+    const instance = axios.create();
     try {
-      const res = await axiosOr.put(signedRequest, file, options);
+      const res = await instance.post(url, formData, config);
       return res;
     } catch (error) {
       return checkResponse(error);

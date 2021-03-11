@@ -25,17 +25,35 @@ export default class Trailer extends Component {
       uploading: true,
     });
     const { fileList } = this.state;
-    var formData = new FormData();
-    formData.append("id", this.props.video);
-    formData.append("trailer", fileList[0]);
-    console.log("fileList,formData", fileList[0], formData);
+    let fileName = Date.now() + "trailer" + "." + fileList[0].name.split(".")[1];
+    let callBack = (res) => {
+      console.log(res);
+    };
+
+    let trailer;
+
     videoService
-      .addTrailer(formData)
-      .then((data) => {
-        if (data[0]) {
-          this.resetForm();
-          this.successMessage();
-        }
+      .getUploadUrl({ fileName })
+      .then((res) => {
+        let options = { ...res.signedRequest.fields };
+        let formData = new FormData();
+        Object.keys(options).map((key) => {
+          formData.append(key, options[key]);
+        });
+        formData.append("file", fileList[0].file);
+        trailer = res.signedRequest.url + "/" + fileName;
+        return videoService.uploadVideoToS3(res.signedRequest.url, formData, {
+          ...res.config,
+          onUploadProgress: callBack,
+        });
+      })
+      .then((res) => {
+        return videoService.updateVideo({ id: this.props.videoId, trailer });
+      })
+      .then((res) => {
+        this.setState({ uploading: false, uploaded: false });
+        this.resetForm();
+        this.successMessage();
       })
       .catch((err) => {
         this.resetForm();
@@ -56,7 +74,7 @@ export default class Trailer extends Component {
         });
       },
       beforeUpload: (file) => {
-        if (file.size > 1000000) {
+        if (file.size > 10000000) {
           notification.info({
             message: "Max file size is 100MB.",
             placement: "bottomRight",

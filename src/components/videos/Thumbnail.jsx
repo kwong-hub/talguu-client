@@ -64,28 +64,47 @@ export class Thumbnail extends Component {
   };
 
   handleChange = ({ fileList }) => {
-    // console.log("fileList", fileList);
-    // console.log("this.props", this.props);
     this.setState({ uploading: true });
     this.setState({ fileList });
   };
   successMessage = () => {
-    message.success("Successfull Upload");
+    message.success("Successfully Uploaded");
   };
 
   onUpload = () => {
+    console.log(this.state.fileList[0]);
+    // return;
     this.setState({ uploaded: true });
-    var formData = new FormData();
-    formData.append("id", this.props.video);
-    formData.append("picture", this.state.fileList[0].originFileObj);
+    let fileName = Date.now() + "image" + "." + this.state.fileList[0].name.split(".")[1];
+    let callBack = (res) => {
+      console.log(res);
+    };
+
+    let thumbnial;
+
     videoService
-      .addThumbnail(formData)
-      .then((data) => {
-        // console.log("data", data);
+      .getUploadUrl({ fileName })
+      .then((res) => {
+        let options = { ...res.signedRequest.fields };
+        let formData = new FormData();
+        Object.keys(options).map((key) => {
+          formData.append(key, options[key]);
+        });
+        formData.append("file", this.state.fileList[0].originFileObj);
+        thumbnial = res.signedRequest.url + "/" + fileName;
+        return videoService.uploadVideoToS3(res.signedRequest.url, formData, {
+          ...res.config,
+          onUploadProgress: callBack,
+        });
+      })
+      .then((res) => {
+        return videoService.updateVideo({ id: this.props.videoId, thumbnial });
+      })
+      .then((res) => {
         this.setState({ uploading: false, uploaded: false });
         this.successMessage();
-      })
-      .catch((err) => console.log("err", err));
+        console.log(res);
+      });
   };
 
   render() {

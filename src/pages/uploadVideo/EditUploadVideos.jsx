@@ -20,10 +20,7 @@ const EditUploadVideos = (props) => {
   if (!title) {
     history.goBack();
   }
-  console.log("video", video);
   const publishVideo = () => {
-    // console.log("title,describe", title, describe);
-
     videoService
       .updateVideo({ id: video.id, title: title, describe: describe, video_price: price })
       .then((data) => {
@@ -50,7 +47,6 @@ const EditUploadVideos = (props) => {
   return (
     <div className="ml-16 mt-20 relative">
       <SideNav />
-      {/* <Header /> */}
       <PageHeader
         className="site-page-header"
         onBack={() => history.goBack()}
@@ -110,17 +106,6 @@ const EditUploadVideos = (props) => {
                 placeholder="0.23"
               />
             </Form.Item>
-
-            {/* <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                shape="round"
-                className="login-form-button w-full"
-              >
-                Next
-              </Button>
-            </Form.Item> */}
           </Form>
           <div>
             <div className="flex flex-col items-start justify-start">
@@ -129,7 +114,7 @@ const EditUploadVideos = (props) => {
                 Select or upload a picture that shows what's in your video. A good thumbnail stands
                 out and draws viewers' attention.
               </h3>
-              <Thumbnail video={video.id} thumbnails={video.thumbnial} />
+              <Thumbnail videoId={video.id} thumbnails={video.thumbnial} />
             </div>
             <div className="flex flex-col items-start justify-start">
               <h2 className="text-lg">Trailer</h2>
@@ -137,7 +122,7 @@ const EditUploadVideos = (props) => {
                 Select or upload a trailer that shows what's in your video in a minute. A good
                 trailer draws viewers' attention.
               </h3>
-              <Trailer video={video.id} />
+              <Trailer videoId={video.id} />
             </div>
           </div>
         </div>
