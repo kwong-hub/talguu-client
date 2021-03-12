@@ -73,7 +73,7 @@ const WatchVideo = () => {
     else {
       if (video && video.paid) {
         history.push(`/watch/${video.id}`);
-        history.go(0);
+        // history.go(0);
       } else {
         if (value) {
           setTempVideo(video);
@@ -85,6 +85,7 @@ const WatchVideo = () => {
 
   const purchaseVideo = (id) => {
     dispatch({ type: PURCHASE_VIDEO_ASYNC, payload: id });
+    currentVideo.paid = true;
   };
 
   const renderPaymentModal = () => {

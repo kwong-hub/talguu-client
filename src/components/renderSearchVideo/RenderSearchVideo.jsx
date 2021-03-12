@@ -43,7 +43,7 @@ function RenderSearchVideo(props) {
 
   const playVideo = (event) => {
     history.push(`/watch/${props.video.id}`);
-    history.go(0);
+    // history.go(0);
   };
 
   const saveLater = (event) => {

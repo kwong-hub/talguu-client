@@ -4,6 +4,7 @@ import { FaUser } from "react-icons/fa";
 import Header from "../../partials/header/Header";
 import logo from "../../assets/images/streaming.png";
 import { userService } from "../../_services/user.service";
+import { Link } from "react-router-dom";
 
 const ForgotPassword = () => {
   const [error, setError] = useState();
@@ -33,6 +34,9 @@ const ForgotPassword = () => {
         {success ? (
           <div>
             <p>Reset Link set to you email. Check your email address.</p>
+            <Link to="/login">
+              <Button type="primary"> Back to Login</Button>
+            </Link>
           </div>
         ) : (
           <div className="bg-white p-4 shadow-sm border rounded-xl max-w-md">

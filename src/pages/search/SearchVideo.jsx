@@ -23,7 +23,7 @@ const SearchVideo = (props) => {
   }, [q]);
   const playVideo = (video) => {
     history.push(`/watch/${video.id}`);
-    history.go(0);
+    // history.go(0);
   };
 
   const onSearch = (value) => {

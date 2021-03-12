@@ -167,14 +167,19 @@ const Profile = (props) => {
             <div className="w-1/3 hidden md:inline-block">
               <FaBuilding className="flex text-4xl mx-auto" />
               <div className="m-4">
-                <span className="text-2xl py-4 font-medium leading-tight">
-                  {profile?.companyName}
-                </span>
-                <p className="font-light text-blue-500 flex items-center justify-center">
-                  <ImLocation2 /> {profile?.state}
-                  {", "}
-                  {profile?.city}
-                </p>
+                {profile.companyName ? (
+                  <>
+                    <span className="text-2xl py-4 font-medium leading-tight">
+                      {profile?.companyName}
+                    </span>
+                    <p className="font-light text-blue-500 flex items-center justify-center">
+                      <ImLocation2 /> {profile?.state + " ,"}
+                      {profile?.city}
+                    </p>
+                  </>
+                ) : (
+                  <p>No company Name</p>
+                )}
               </div>
             </div>
             <div className="px-6 w-full md:w-1/2">
