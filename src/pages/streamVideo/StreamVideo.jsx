@@ -17,7 +17,7 @@ const StreamVideo = () => {
     setFormVisible(true);
   };
   useEffect(() => {
-    getStreamed();
+    // getStreamed();
     return () => {};
   }, []);
   const getStreamed = () => {

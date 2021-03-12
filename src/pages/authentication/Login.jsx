@@ -52,13 +52,25 @@ const Login = (props) => {
   return (
     <div className="relative">
       <Header />
-      <div className="absolute bottom-0 left-0 w-64 ">
+      <div className="absolute bottom-20 left-0 w-64 ">
         <img
           src={require("../../assets/images/login-svg-2.svg").default}
           alt="Logo"
         />
       </div>
-      <div className="absolute top-0 right-0 w-64 ">
+      {/* <div className="absolute top-1 right-0 w-32 ">
+        <img
+          src={require("../../assets/images/login-svg-2.svg").default}
+          alt="Logo"
+        />
+      </div> */}
+      {/* <div className="absolute top-20 right-0 w-1/4 ">
+        <img
+          src={require("../../assets/images/login-svg.svg").default}
+          alt="Logo"
+        />
+      </div> */}
+      <div className="absolute bottom-10 left-0 w-1/4 ">
         <img
           src={require("../../assets/images/login-svg.svg").default}
           alt="Logo"

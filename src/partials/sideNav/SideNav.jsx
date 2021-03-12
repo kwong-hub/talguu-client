@@ -173,7 +173,7 @@ const SideNav = (props) => {
           {user.role === "PRODUCER" ? (
             <Menu.Item key="6">
               <Link
-                to="/stream_video"
+                to="/live_stream"
                 className="flex items-center justify-center"
               >
                 <FaStream
@@ -376,10 +376,10 @@ const SideNav = (props) => {
             {user.role === "PRODUCER" ? (
               <li
                 className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                  location.pathname === "/stream_video" ? "bg-gray-400" : ""
+                  location.pathname === "/live_stream" ? "bg-gray-400" : ""
                 }`}
               >
-                <Link to="/stream_video">
+                <Link to="/live_stream">
                   <Tooltip placement="rightTop" title="Stream Video">
                     <FaStream
                       className={`text-3xl inline text-gray-300 hover:text-white`}
@@ -406,7 +406,7 @@ const SideNav = (props) => {
               </li>
             )}
 
-            <li
+            {/* <li
               className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
                 location.pathname === "/account" ? "bg-gray-400" : ""
               }`}
@@ -418,7 +418,7 @@ const SideNav = (props) => {
                   />
                 </Tooltip>
               </Link>
-            </li>
+            </li> */}
           </>
         ) : (
           <li
