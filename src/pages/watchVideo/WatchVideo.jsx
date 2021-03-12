@@ -59,14 +59,17 @@ const WatchVideo = () => {
 
   const play = (video) => {
     history.push(`/watch/${video.id}`);
-    history.go(0);
+    // history.go(0);
   };
 
   const paymentModalVisibleFunc = (value, video, event) => {
     if (event) event.stopPropagation();
 
     if (!user || user.role != "VIEWER")
-      history.push({ pathname: "/login", search: `?return_url=/watch/${video.id}` });
+      history.push({
+        pathname: "/login",
+        search: `?return_url=/watch/${video.id}`,
+      });
     else {
       if (video && video.paid) {
         history.push(`/watch/${video.id}`);
@@ -120,15 +123,20 @@ const WatchVideo = () => {
           </div>
           <div className="flex-col ml-2 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
             <div className="w-full flex justify-between">
-              <div className="text-gray-800 lg:text-2xl text-md  text-left">{video?.title}</div>
+              <div className="text-gray-800 lg:text-2xl text-md  text-left">
+                {video?.title}
+              </div>
               {video.paid || (user && user.role != "VIEWER") ? (
                 ""
               ) : (
                 <div className="py-0">
                   <Button
                     type="primary"
-                    onClick={(event) => paymentModalVisibleFunc(true, video, event)}
-                    className="mr-1 rounded-2xl text-xs px-2 py-0 opacity-80">
+                    onClick={(event) =>
+                      paymentModalVisibleFunc(true, video, event)
+                    }
+                    className="mr-1 rounded-2xl text-xs px-2 py-0 opacity-80"
+                  >
                     Watch Full Video
                   </Button>
                 </div>
@@ -136,7 +144,10 @@ const WatchVideo = () => {
             </div>
             <div className="flex justify-between text-gray-800 text-2xl w-full text-left">
               <div className="flex items-end">
-                <span className="text-gray-400 text-lg"> {video?.viewVount} views</span>
+                <span className="text-gray-400 text-lg">
+                  {" "}
+                  {video?.viewVount} views
+                </span>
                 <span className="text-gray-600 ml-4 text-base">
                   {moment(video?.premiered).format("MMM DD, YYYY")}
                 </span>

@@ -1,17 +1,29 @@
 import { Menu, Modal } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiCamera2Fill, RiLiveFill } from "react-icons/ri";
+import { useHistory } from "react-router";
 
 import SideNav from "../../partials/sideNav/SideNav";
+import videoService from "../../_services/video.service";
 import StreamForm from "./StreamForm";
 
 const StreamVideo = () => {
+  let history = useHistory();
   const [modalVisible, setmodalVisible] = useState(true);
   const [formVisible, setFormVisible] = useState(false);
   const handleClick = (e) => {};
   const startStream = () => {
     setmodalVisible(false);
     setFormVisible(true);
+  };
+  useEffect(() => {
+    getStreamed();
+    return () => {};
+  }, []);
+  const getStreamed = () => {
+    videoService.getStreamed().then((data) => {
+      history.push("/live_stream", { data });
+    });
   };
   return (
     <div>
@@ -23,18 +35,21 @@ const StreamVideo = () => {
             style={{ width: 256 }}
             defaultSelectedKeys={["1"]}
             defaultOpenKeys={["sub1"]}
-            mode="inline">
+            mode="inline"
+          >
             <Menu.Item
               className="flex items-center justify-start text-lg"
               onClick={() => setmodalVisible(true)}
               key="1"
-              icon={<RiCamera2Fill />}>
+              icon={<RiCamera2Fill />}
+            >
               Stream
             </Menu.Item>
             <Menu.Item
               className="flex items-center justify-start text-lg"
               key="2"
-              icon={<RiLiveFill />}>
+              icon={<RiLiveFill />}
+            >
               Webcam live
             </Menu.Item>
           </Menu>
@@ -45,13 +60,14 @@ const StreamVideo = () => {
             okText="Start Stream"
             visible={modalVisible}
             onOk={() => startStream()}
-            onCancel={() => setmodalVisible(false)}>
+            onCancel={() => setmodalVisible(false)}
+          >
             <div className="bg-white p-4 ">
               <div className="">
                 <h2 className="text-xl py-2 font-bold">Stream form Software</h2>
                 <p>
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                  Ipsum has been the industry's standard dummy text ever since the 1500s,
+                  By sending us your video from your streaming software you will
+                  go live. start streamng now.
                 </p>
               </div>
             </div>
@@ -65,7 +81,8 @@ const StreamVideo = () => {
             visible={formVisible}
             okText="back"
             onOk={() => setFormVisible(false)}
-            onCancel={() => setFormVisible(false)}>
+            onCancel={() => setFormVisible(false)}
+          >
             <div className="bg-white p-4 ">
               <StreamForm />
             </div>

@@ -57,7 +57,7 @@ const Router = () => {
           <Route exact path="/signup" component={Signup} />
           <PrivateRoute exact path="/finish-upload" component={EditUploadVideos} />
           <Route exact path="/live_stream" component={Stream} />
-          <Route exact path="/forgot_password" component={ForgotPassword} />
+          <Route exact path="/forgot_password/:id" component={ForgotPassword} />
           <PrivateRoute exact path="/deposit" component={Deposit} />
           <Route component={NotFound} />
         </Switch>

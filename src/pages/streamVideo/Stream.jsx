@@ -17,7 +17,18 @@ const Stream = (props) => {
   const [streamKey, setStreamKey] = useState(property?.stream_key);
   const [streamURL, setStreamURL] = useState("rtmp://8mspbb.com/show");
   var history = useHistory();
-  const goLive = () => {};
+  const saveStreamInfo = (values) => {
+    videoService
+      .editStream({ key: streamKey, ...values })
+      .then((data) => {
+        if (data === true) {
+          message.success("Saved successfully");
+        } else {
+          message.error("Unable to save");
+        }
+      })
+      .catch((err) => console.log("err", err));
+  };
   const copiedMessage = () => {
     message.info("Copied!");
   };
@@ -47,7 +58,7 @@ const Stream = (props) => {
         {/* <Header /> */}
         <PageHeader
           className="site-page-header"
-          onBack={() => history.goBack()}
+          onBack={() => history.push("/")}
           title="Live"
           subTitle="Add extra additional infromation"
         />
@@ -55,13 +66,16 @@ const Stream = (props) => {
           className="absolute top-3 right-2"
           onClick={(e) => endStream()}
           key="1"
-          type="danger">
+          type="danger"
+        >
           End Stream
         </Button>
         <div className="flex mx-4">
           <div className="w-2/5 p-4 ">
             <VideoPlayer {...videoJsOptions} />
-
+            <p className="py-2">
+              Start streaming your video from your software to go live.
+            </p>
             <div className="flex flex-col items-start my-4">
               <h2 className="text-lg font-semibold">Stream Setting</h2>
               <div className="flex flex-col items-start my-2">
@@ -70,7 +84,10 @@ const Stream = (props) => {
                   readOnly
                   value={streamKey}
                   suffix={
-                    <CopyToClipboard text={streamKey} onCopy={() => copiedMessage()}>
+                    <CopyToClipboard
+                      text={streamKey}
+                      onCopy={() => copiedMessage()}
+                    >
                       <span className="cursor-pointer">
                         <FaCopy />
                       </span>
@@ -84,7 +101,10 @@ const Stream = (props) => {
                   readOnly
                   value={streamURL}
                   suffix={
-                    <CopyToClipboard text={streamURL} onCopy={() => copiedMessage()}>
+                    <CopyToClipboard
+                      text={streamURL}
+                      onCopy={() => copiedMessage()}
+                    >
                       <span className="cursor-pointer">
                         <FaCopy />
                       </span>
@@ -100,17 +120,19 @@ const Stream = (props) => {
               name="normal_login"
               className="login-form"
               initialValues={{
-                remember: true,
                 title: property?.title,
                 description: property?.description,
-                select: property?.privacy,
               }}
-              onFinish={goLive}>
+              onFinish={saveStreamInfo}
+            >
               <Form.Item
                 label="Title"
                 name="title"
                 className="text-lg text-gray-600"
-                rules={[{ required: true, message: "Please input your Title!" }]}>
+                rules={[
+                  { required: true, message: "Please input your Title!" },
+                ]}
+              >
                 <Input
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -126,7 +148,8 @@ const Stream = (props) => {
                     required: false,
                     message: "Please input your Description!",
                   },
-                ]}>
+                ]}
+              >
                 <TextArea
                   value={describe}
                   onChange={(e) => setDescribe(e.target.value)}
@@ -135,25 +158,26 @@ const Stream = (props) => {
                   placeholder="Description*"
                 />
               </Form.Item>
-
-              {/* <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                shape="round"
-                className="login-form-button w-full"
-              >
-                Next
-              </Button>
-            </Form.Item> */}
+              <div className="flex justify-end">
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    shape="round"
+                    className="login-form-button "
+                  >
+                    Save Changes
+                  </Button>
+                </Form.Item>
+              </div>
             </Form>
 
             <div>
               <div className="flex flex-col items-start justify-start">
                 <h2 className="text-lg">Thumbnail</h2>
                 <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                  Select or upload a picture that shows what's in your video. A good thumbnail
-                  stands out and draws viewers' attention.
+                  Select or upload a picture that shows what's in your video. A
+                  good thumbnail stands out and draws viewers' attention.
                 </h3>
                 {/* <Thumbnail video={video.id} thumbnails={video.thumbnial} /> */}
               </div>
