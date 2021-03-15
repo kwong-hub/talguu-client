@@ -99,7 +99,7 @@ export default class Trailer extends Component {
     };
     return (
       <div>
-        <Upload {...propsVideo} className="flex my-4 w-auto">
+        <Upload accept=".mp4" {...propsVideo} className="flex my-4 w-auto">
           <Button icon={<UploadOutlined />}>Select File</Button>
         </Upload>
         {fileList.length !== 0 && (

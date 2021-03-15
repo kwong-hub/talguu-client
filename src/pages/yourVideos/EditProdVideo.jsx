@@ -11,9 +11,6 @@ import Thumbnail from "../../components/videos/Thumbnail";
 import Trailer from "../../components/videos/Trailer";
 import SideNav from "../../partials/sideNav/SideNav";
 
-// import Thumbnail from "./Thumbnail";
-// import Trailer from "./Trailer";
-
 const EditProdVideo = (props) => {
   var history = useHistory();
   let { vidId } = useParams();

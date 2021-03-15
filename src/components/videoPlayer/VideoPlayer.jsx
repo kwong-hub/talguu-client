@@ -35,7 +35,7 @@ export class VideoPlayer extends Component {
   componentDidUpdate(prevProps) {
     // console.log(prevProps.sources, this.props.sources);
     if (
-      prevProps.sources[0].src !== this.props.sources[0].src ||
+      (this.props.sources[0].src && prevProps.sources[0].src !== this.props.sources[0].src) ||
       prevProps.autoplay !== this.props.autoplay
     ) {
       this.updatePlayer();
@@ -51,6 +51,7 @@ export class VideoPlayer extends Component {
   }
 
   render() {
+    // console.log(this.props.sources[0]);
     return (
       <div data-vjs-player>
         <video ref={(node) => (this.videoNode = node)} className="video-js"></video>
