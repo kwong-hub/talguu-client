@@ -37,7 +37,7 @@ class UploadVideo extends Component {
     progress: 0,
     active: "",
     uploadProps: {
-      accept: "video/*",
+      accept: "video/*, .mkv",
       name: "file",
       multiple: false,
       action: "",
@@ -53,10 +53,10 @@ class UploadVideo extends Component {
   };
 
   uploadFileS3 = () => {
-    let fileType = this.state.file.name.split(".")[1];
+    let arr = this.state.file.name.split(".");
+    let fileType = arr[arr.length - 1];
     let fileName = Date.now() + "video" + "." + fileType;
     const callBack = (res) => {
-      console.log(res);
       this.setState({ progress: Math.ceil((res.loaded / res.total) * 100) });
     };
     videoService

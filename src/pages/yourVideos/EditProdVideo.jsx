@@ -34,6 +34,7 @@ const EditProdVideo = (props) => {
     videoService
       .getProdVideoById(id)
       .then((data) => {
+        console.log(data);
         setVideo(data);
         setTitle(data.title);
         setDescribe(data.describe);
@@ -128,7 +129,7 @@ const EditProdVideo = (props) => {
                 Select or upload a picture that shows what's in your video. A good thumbnail stands
                 out and draws viewers' attention.
               </h3>
-              <Thumbnail video={video?.id} thumbnails={video?.thumbnial} />
+              <Thumbnail videoId={video?.id} thumbnails={video?.thumbnial} />
             </div>
             <div className="flex flex-col items-start justify-start">
               <h2 className="text-lg">Change Trailer</h2>
@@ -136,7 +137,7 @@ const EditProdVideo = (props) => {
                 Select or upload a trailer that shows what's in your video in a minute. A good
                 trailer draws viewers' attention.
               </h3>
-              <Trailer video={video?.id} />
+              <Trailer videoId={video?.id} />
             </div>
           </div>
         </div>

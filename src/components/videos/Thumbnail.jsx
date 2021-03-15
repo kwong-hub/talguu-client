@@ -12,6 +12,8 @@ const intialState = {
   previewVisible: false,
   previewImage: "",
   previewTitle: "",
+  previousImage: false,
+  previousImageUrl: "",
 
   fileList: [
     // {
@@ -51,6 +53,16 @@ export class Thumbnail extends Component {
   };
   handleCancel = () => this.setState({ previewVisible: false });
 
+  componentDidMount() {
+    if (this.props.thumbnails) {
+      this.setState({
+        previousImage: true,
+        previewImageUrl: this.props.thumbnails,
+        // uploading: false,
+      });
+    }
+  }
+
   handlePreview = async (file) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
@@ -72,8 +84,6 @@ export class Thumbnail extends Component {
   };
 
   onUpload = () => {
-    console.log(this.state.fileList[0]);
-    // return;
     this.setState({ uploaded: true });
     let fileName = Date.now() + "image" + "." + this.state.fileList[0].name.split(".")[1];
     let callBack = (res) => {
@@ -98,16 +108,17 @@ export class Thumbnail extends Component {
         });
       })
       .then((res) => {
+        // console.log(res);
         return videoService.updateVideo({ id: this.props.videoId, thumbnial });
       })
       .then((res) => {
         this.setState({ uploading: false, uploaded: false });
         this.successMessage();
-        console.log(res);
       });
   };
 
   render() {
+    // console.log(this.props);
     const { previewVisible, previewImage, fileList, previewTitle } = this.state;
     const uploadButton = (
       <div>
@@ -117,17 +128,19 @@ export class Thumbnail extends Component {
     );
     return (
       <>
-        <ImgCrop rotate aspect={245 / 164} beforeCrop={this.beforeCrop}>
-          <Upload
-            // action={this.handleChange}
-            listType="picture-card"
-            fileList={fileList}
-            onPreview={this.handlePreview}
-            onChange={this.handleChange}
-            className="w-auto m-2">
-            {fileList.length >= 1 ? null : uploadButton}
-          </Upload>
-        </ImgCrop>
+        <div className="flex items-center justify-center">
+          {this.props.thumbnails && <img src={this.props.thumbnails} className="max-h-24" />}
+          <ImgCrop rotate aspect={245 / 164} beforeCrop={this.beforeCrop}>
+            <Upload
+              listType="picture-card"
+              fileList={fileList}
+              onPreview={this.handlePreview}
+              onChange={this.handleChange}
+              className="w-auto m-2">
+              {fileList.length >= 1 ? null : uploadButton}
+            </Upload>
+          </ImgCrop>
+        </div>
 
         <Modal
           visible={previewVisible}
@@ -137,7 +150,6 @@ export class Thumbnail extends Component {
           <img alt="example" style={{ width: "100%" }} src={previewImage} />
         </Modal>
         <p className="bg-gray-100 text-red-600 text-sm">{this.state.formatError}</p>
-
         {this.state.uploading && (
           <Button
             className="flex my-4 w-auto"

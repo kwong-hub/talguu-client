@@ -1,8 +1,8 @@
-import { Button, Space, Spin, Tooltip } from "antd";
+import { Button, Space, Spin, Tooltip, Comment, Avatar, Form, List, notification } from "antd";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { FaHeart, FaHeartBroken } from "react-icons/fa";
-import { AiOutlineDownCircle } from "react-icons/ai";
+import { AiOutlineDownCircle, AiOutlineUpCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
@@ -18,10 +18,15 @@ import {
 } from "../../redux/types";
 import videoService from "../../_services/video.service";
 import TextArea from "antd/lib/input/TextArea";
+import { BiEditAlt } from "react-icons/bi";
 
 const WatchVideo = () => {
   let history = useHistory();
   let [playVideo, setPlayVideo] = useState(false);
+  let [newComment, setComment] = useState("");
+  const [showMessages, setShowMessages] = useState(false);
+  const [editComment, setEditComment] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   let [tempVideo, setTempVideo] = useState(null);
   let [paymentModalVisible, setPaymentModalVisible] = useState(false);
   let { vidId } = useParams();
@@ -61,6 +66,11 @@ const WatchVideo = () => {
     history.push("/deposit");
   }
 
+  const toggleMessages = (e) => {
+    e.stopPropagation();
+    setShowMessages(!showMessages);
+  };
+
   const play = (video) => {
     history.push(`/watch/${video.id}`);
     history.go(0);
@@ -84,11 +94,52 @@ const WatchVideo = () => {
     }
   };
 
+  const renderComment = (video) => (
+    <div className="flex">
+      <Form.Item className="flex-1 mr-2">
+        <TextArea rows={1} onChange={(e) => setComment(e.target.value)} value={newComment} />
+      </Form.Item>
+      <Form.Item>
+        <Button
+          htmlType="submit"
+          loading={submitting}
+          onClick={(e) => submitComment(e, video)}
+          type="text">
+          Add Comment
+        </Button>
+      </Form.Item>
+    </div>
+  );
+
+  const renderComments = (comments) => {
+    return (
+      <div className="flex-col w-full justify-start">
+        {comments?.map((cm) => {
+          return (
+            <Comment
+              key={cm?.id}
+              className="w-full flex justify-start"
+              author={<a>Anonymous</a>}
+              avatar={
+                <Avatar
+                  src="https://robohash.org/reminventoreveniam.png?size=50x50&set=set1"
+                  alt="Anonymous"
+                />
+              }
+              content={<p>{cm.message}</p>}
+            />
+          );
+        })}
+      </div>
+    );
+  };
+
   const purchaseVideo = (id) => {
     dispatch({ type: PURCHASE_VIDEO_ASYNC, payload: id });
   };
 
-  const likeDislikeVideo = (video, val) => {
+  const likeDislikeVideo = (e, video, val) => {
+    e.stopPropagation();
     val = video.val == val ? 2 : val;
     videoService
       .likeDislikeVideo({ videoId: video.id, like: val })
@@ -100,6 +151,24 @@ const WatchVideo = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const submitComment = (e, video) => {
+    e.stopPropagation();
+    if (!newComment) return;
+    setSubmitting(true);
+    videoService
+      .addComment({ message: newComment, videoId: video.id })
+      .then((res) => {
+        notification.info({
+          message: "Message submitted",
+          placement: "bottomRight",
+          duration: 3.3,
+        });
+        setSubmitting(false);
+        setComment("");
+      })
+      .catch((err) => setSubmitting(false));
   };
 
   const renderPaymentModal = () => {
@@ -126,10 +195,10 @@ const WatchVideo = () => {
       sources: [
         {
           src: video ? (video.paid ? video.video_link : video.trailer) : "",
-          // type: video.video_type,
+          type: video.video_type,
           // src: "http://8mspbb.com/hls/1614928651645video.mp4.m3u8",
-          // src: "https://talguu-vout.s3.us-west-2.amazonaws.com/test5/master.m3u8",
-          type: "application/x-mpegURL",
+          // src: "https://talguu-vout1.s3.us-west-2.amazonaws.com/test8/master.m3u8",
+          // type: "application/x-mpegURL",
         },
       ],
     };
@@ -164,21 +233,21 @@ const WatchVideo = () => {
               </div>
               <div className="flex">
                 <Tooltip
-                  onClick={() => {
-                    likeDislikeVideo(video, 1);
+                  onClick={(e) => {
+                    likeDislikeVideo(e, video, 1);
                   }}
                   placement="bottom"
                   title="Like">
-                  <span
+                  <div
                     className={`flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ${
                       video.like == 1 ? "text-blue-400" : ""
                     }`}>
                     {video?.likeCount} <FaHeart className="ml-1" />
-                  </span>
+                  </div>
                 </Tooltip>
                 <Tooltip
-                  onClick={() => {
-                    likeDislikeVideo(video, 0);
+                  onClick={(e) => {
+                    likeDislikeVideo(e, video, 0);
                   }}
                   placement="bottom"
                   title="Dislike">
@@ -192,11 +261,33 @@ const WatchVideo = () => {
               </div>
             </div>
             <div className="flex flex-col justify-center items-center cursor-pointer rounded-xl shadow-sm border-gray-100 border-2 p-1">
-              <span className="flex items-center self-center text-md my-2">
-                Show Messages <AiOutlineDownCircle className=" ml-2" />
+              <span
+                onClick={(e) => {
+                  toggleMessages(e);
+                }}
+                className="flex items-center self-center text-md my-2">
+                {showMessages ? (
+                  <>
+                    Hide Messages <AiOutlineUpCircle className="ml-2" />
+                  </>
+                ) : (
+                  <>
+                    Show Messages <AiOutlineDownCircle className=" ml-2" />
+                  </>
+                )}
               </span>
-              <div className="w-full">
-                <TextArea placeholder="Insert you comment here." showCount maxLength={100} />
+              {showMessages && renderComments(video.comments)}
+              <div className="w-full flex justify-between items-end">
+                <Comment
+                  className="w-full"
+                  avatar={
+                    <Avatar
+                      src="https://robohash.org/reminventoreveniam.png?size=50x50&set=set1"
+                      alt="Han Solo"
+                    />
+                  }
+                  content={renderComment(video)}
+                />
               </div>
             </div>
           </div>
@@ -224,6 +315,7 @@ const WatchVideo = () => {
     }
   };
 
+  // console.log(editComment, comment);
   return (
     <>
       <SideNav onSearch={onSearch}></SideNav>

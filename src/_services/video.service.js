@@ -184,6 +184,15 @@ export default {
     }
   },
 
+  addComment: async function (commentObject) {
+    try {
+      const res = await axios.post(`${environment}/video/comments`, commentObject);
+      return res;
+    } catch (error) {
+      return checkResponse(error);
+    }
+  },
+
   commentVideo: async function (commentObject) {
     try {
       const res = await axios.post(`${environment}/video/like_dislike`, commentObject);

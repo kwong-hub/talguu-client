@@ -20,6 +20,7 @@ const EditUploadVideos = (props) => {
   if (!title) {
     history.goBack();
   }
+
   const publishVideo = () => {
     videoService
       .updateVideo({ id: video.id, title: title, describe: describe, video_price: price })

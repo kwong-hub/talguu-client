@@ -76,29 +76,37 @@ export class LiveVideos extends Component {
   };
 
   renderVideos = () => {
-    return this.props.liveVideos.map((video) => {
-      video["paid"] = true;
-      video["viewCount"] = 0;
-      return (
+    return this.props.liveVideos.length == 0 ? (
+      <>
         <div
-          key={video.stream_key}
-          onClick={() => this.playVideo(video)}
-          className={`flex-col w-full md:w-4/12 lg:w-3/12 ${
-            this.state.currentVideo ? "lg:w-full" : ""
-          } sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch`}>
-          <div className="relative">
-            <img src={video.thumbnail} alt="" className="min-w-full min-h-full" />
-            <div className="absolute thumbnail_button_container">
-              <Tooltip placement="bottom" title={video.paid ? "" : "Watch Trailer"}>
-                <FaPlayCircle className="text-gray-600 thumbnail_button" />
-              </Tooltip>
-            </div>
-            {/* <div
+          className={`flex justify-center w-full p-2 cursor-pointer video_thumbnail self-stretch`}>
+          <p className="text-gray-600 text-md py-4 w-96">Currently there is no live video.</p>
+        </div>
+      </>
+    ) : (
+      this.props.liveVideos.map((video) => {
+        video["paid"] = true;
+        video["viewCount"] = 0;
+        return (
+          <div
+            key={video.stream_key}
+            onClick={() => this.playVideo(video)}
+            className={`flex-col w-full md:w-4/12 lg:w-3/12 ${
+              this.state.currentVideo ? "lg:w-full" : ""
+            } sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch`}>
+            <div className="relative">
+              <img src={video.thumbnail} alt="" className="min-w-full min-h-full" />
+              <div className="absolute thumbnail_button_container">
+                <Tooltip placement="bottom" title={video.paid ? "" : "Watch Trailer"}>
+                  <FaPlayCircle className="text-gray-600 thumbnail_button" />
+                </Tooltip>
+              </div>
+              {/* <div
               onClick={(event) => this.saveLater(event)}
               className="watch_later bg-gray-700 p-2 rounded-sm absolute right-2 top-2 bg-opacity-25">
               <FaClock className="text-white text-base" />
             </div> */}
-            {/* <div className="bg-gray-600 rounded-sm absolute bottom-1 right-1 py-0 px-4 bg-opacity-40"></div>
+              {/* <div className="bg-gray-600 rounded-sm absolute bottom-1 right-1 py-0 px-4 bg-opacity-40"></div>
             {video.paid ? (
               ""
             ) : (
@@ -117,24 +125,25 @@ export class LiveVideos extends Component {
             ) : (
               ""
             )} */}
-            {/* <div className="flex items-center bg-white text-gray-700 rounded-sm absolute bottom-1 right-1 py-0 px-4">
+              {/* <div className="flex items-center bg-white text-gray-700 rounded-sm absolute bottom-1 right-1 py-0 px-4">
               {moment(video?.video_duration?.split(".")[0], [
                 moment.ISO_8601,
                 "HH:mm:ss",
               ]).format("H:m:ss")}
             </div> */}
-          </div>
-          <div className="flex-col">
-            <h4 className="my-2 text-left text-md text-gray-600 video_title">{video.title}</h4>
-            <div className="flex">
-              <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2">
-                {video.viewCount} views
-              </span>
+            </div>
+            <div className="flex-col">
+              <h4 className="my-2 text-left text-md text-gray-600 video_title">{video.title}</h4>
+              <div className="flex">
+                <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2">
+                  {video.viewCount} views
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      );
-    });
+        );
+      })
+    );
   };
 
   renderPaymentModal = () => {

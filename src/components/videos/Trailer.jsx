@@ -14,7 +14,7 @@ export default class Trailer extends Component {
   };
 
   successMessage = () => {
-    message.success("Successfull Upload");
+    message.success("Successfully Uploaded");
   };
   failedMessage = () => {
     message.error("Failed to upload");
@@ -26,9 +26,9 @@ export default class Trailer extends Component {
     });
     const { fileList } = this.state;
     let fileName = Date.now() + "trailer" + "." + fileList[0].name.split(".")[1];
-    let callBack = (res) => {
-      console.log(res);
-    };
+    // let callBack = (res) => {
+    //   console.log(res);
+    // };
 
     let trailer;
 
@@ -40,11 +40,11 @@ export default class Trailer extends Component {
         Object.keys(options).map((key) => {
           formData.append(key, options[key]);
         });
-        formData.append("file", fileList[0].file);
+        console.log(fileList);
+        formData.append("file", fileList[0]);
         trailer = res.signedRequest.url + "/" + fileName;
         return videoService.uploadVideoToS3(res.signedRequest.url, formData, {
           ...res.config,
-          onUploadProgress: callBack,
         });
       })
       .then((res) => {

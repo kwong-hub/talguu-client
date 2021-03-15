@@ -26,13 +26,16 @@ const Account = (props) => {
             style={{
               backgroundImage:
                 "url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80')",
-            }}></div>
+            }}
+          ></div>
           <span
             id="blackOverlay"
-            className="w-full h-full left-0 top-0 bg-center bg-cover absolute bg-opacity-70 bg-blue-900"></span>
+            className="w-full h-full left-0 top-0 bg-center bg-cover absolute bg-opacity-70 bg-blue-900"
+          ></span>
           <div
             className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden"
-            style={{ height: "70px", transform: "translateZ(0)" }}>
+            style={{ height: "70px", transform: "translateZ(0)" }}
+          >
             <svg
               className="absolute bottom-0 overflow-hidden"
               xmlns="http://www.w3.org/2000/svg"
@@ -40,14 +43,16 @@ const Account = (props) => {
               version="1.1"
               viewBox="0 0 2560 100"
               x="0"
-              y="0">
+              y="0"
+            >
               <polygon
                 className="text-gray-100 fill-current"
-                points="2560 0 2560 100 0 100"></polygon>
+                points="2560 0 2560 100 0 100"
+              ></polygon>
             </svg>
           </div>
         </section>
-        <section className="relative py-20 w-4/5  mx-auto bg-gray-100">
+        <section className="relative py-20 w-full md:w-4/5  mx-auto bg-gray-100">
           <div className="container mx-auto px-4">
             <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
               <div className="px-8">
@@ -67,7 +72,8 @@ const Account = (props) => {
                         onClick={(e) => logout()}
                         className="bg-blue-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1"
                         type="button"
-                        style={{ transition: "all .15s ease" }}>
+                        style={{ transition: "all .15s ease" }}
+                      >
                         Log-out
                       </button>
                     </div>
@@ -91,7 +97,9 @@ const Account = (props) => {
                         <span className="text-xl font-bold block uppercase tracking-wide text-gray-700">
                           89
                         </span>
-                        <span className="text-sm text-gray-500">Live Stream</span>
+                        <span className="text-sm text-gray-500">
+                          Live Stream
+                        </span>
                       </div>
                     </div>
                   </div>

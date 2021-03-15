@@ -5,6 +5,7 @@ import {
   CREATE_VIEWER_FAILURE,
   CREATE_VIEWER_RESET,
   CREATE_VIEWER_SUCCESS,
+  GET_USER_PROFILE,
 } from "../types";
 
 const INITIAL_STATE = {
@@ -14,6 +15,7 @@ const INITIAL_STATE = {
   createViewerStatus: null,
   viewerErrMessages: null,
   viewerUser: {},
+  profile: {}
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -30,6 +32,8 @@ const reducer = (state = INITIAL_STATE, action) => {
       return { ...state, createViewerStatus: null };
     case CREATE_PRODUCER_RESET:
       return { ...state, createUserStatus: null };
+    case GET_USER_PROFILE:
+      return { ...state, profile: action.payload };
     default:
       return state;
   }

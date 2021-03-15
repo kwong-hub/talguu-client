@@ -7,7 +7,6 @@ import videoService from "../../_services/video.service";
 // import videojs_contrib_hls from "videojs-contrib-hls";
 export class VideoPlayer extends Component {
   componentDidMount() {
-    // videojs.registerPlugin("videojs-contrib-hls", videojs_contrib_hls);
     this.player = videojs(
       this.videoNode,
       { ...this.props, withCredentials: true },
@@ -17,7 +16,7 @@ export class VideoPlayer extends Component {
     );
 
     setTimeout(() => {
-      if (this.player.currentTime() >= 10) {
+      if (this.player && this.player.currentTime && this.player.currentTime() >= 10) {
         videoService
           .incrementVideoView({ videoId: this.props.videoId })
           .then((res) => {

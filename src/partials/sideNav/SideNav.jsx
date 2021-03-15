@@ -17,7 +17,9 @@ import {
 } from "react-icons/fa";
 import { Link, useHistory, useLocation } from "react-router-dom";
 
-import logo from "../../assets/images/logo512.png";
+import logo from "../../assets/images/streaming.png";
+import Avatar from "antd/lib/avatar/avatar";
+import { userService } from "../../_services/user.service";
 
 const { Search } = Input;
 
@@ -26,16 +28,44 @@ const SideNav = (props) => {
   let location = useLocation();
   let history = useHistory();
   let user = JSON.parse(localStorage.getItem("user"));
-
   const handleVisibleChange = () => {
     setMobileMenuVisible(!mobileMenuVisible);
   };
 
   const handleMenuClick = () => {};
 
-  const onSearch = (value) => {
-    history.push("/", { q: value });
+  const onSearch = (values) => {
+    console.log("values", values);
+    history.push({
+      pathname: "/search",
+      search: "?query=" + values,
+      state: { q: values },
+    });
   };
+  const logout = () => {
+    userService.logout();
+    history.push("/login");
+  };
+  const accountMenu = (
+    <div className=" bg-white shadow-lg rounded-lg">
+      <div className="flex flex-col py-4 px-8 items-center ">
+        <Avatar className="flex items-center justify-center" size={40} icon={<FaUser />} />
+        <span className="font-semibold pt-2 text-lg">{user?.name}</span>
+        <span className="text-gray-600 text-sm ">{user?.email}</span>
+      </div>
+      <Menu className="text-md">
+        <Menu.Item className="hover:bg-gray-300">
+          <Link to="/account">Account</Link>
+        </Menu.Item>
+        <Menu.Item className="hover:bg-gray-300">
+          <Link to="/settings">Settings</Link>
+        </Menu.Item>
+        <Menu.Item className="hover:bg-gray-300">
+          <Link onClick={(e) => logout()}>Sign Out</Link>
+        </Menu.Item>
+      </Menu>
+    </div>
+  );
 
   let mobileMenu = (
     <Menu onClick={handleMenuClick} className="pt-4 pb-6">
@@ -170,28 +200,30 @@ const SideNav = (props) => {
           </span>
         </div>
         <div className="flex w-full justify-between items-center p-2 pr-6">
-          <div className="flex max-w-2xl w-full">
-            <div className="hidden text-2xl mr-4 sm:flex items-center justify-center header_title text-gray-500">
-              <Link to="/" className="flex items-center">
-                TALGUU
-              </Link>
-            </div>
-            <Search
-              placeholder="Search videos here..."
-              enterButton="Search"
-              size="large"
-              suffix={suffix}
-              onSearch={onSearch}
-            />
+          <div className="hidden text-2xl mr-4 sm:flex items-center justify-center header_title text-gray-500">
+            <Link to="/" className="flex items-center">
+              TALGUU
+            </Link>
           </div>
-          {user && (
-            <span className="text-gray-500 hidden sm:flex mr-16 ml-6 cursor-pointer text-lg items-center hover:text-gray-700">
-              <Link to="/account">
-                <Tooltip placement="rightTop" title="Account">
-                  <FaUser className={`text-3xl inline text-gray-300`} />
-                </Tooltip>
-              </Link>
+          <Search
+            placeholder="Search videos here..."
+            enterButton="Search"
+            size="large"
+            suffix={suffix}
+            onSearch={onSearch}
+            className="w-1/2"
+          />
+          {user ? (
+            <span className="text-gray-500 hidden sm:flex mr-16 ml-6 cursor-pointer text-lg items-center hover:text-gray-700 md:ml-20">
+              {/* <Link to="/account"> */}
+              <Dropdown overlay={accountMenu} placement="bottomRight" arrow>
+                <FaUser className={`text-3xl inline text-gray-300`} />
+              </Dropdown>
+              {/* <Tooltip placement="rightTop" title="Account"></Tooltip> */}
+              {/* </Link> */}
             </span>
+          ) : (
+            <div className="w-64"></div>
           )}
         </div>
       </div>
@@ -263,7 +295,7 @@ const SideNav = (props) => {
                   location.pathname === "/your_video" ? "bg-gray-400" : ""
                 }`}>
                 <Link to="/your_video">
-                  <Tooltip placement="rightTop" title="Upload Video">
+                  <Tooltip placement="rightTop" title="List Video">
                     <BiVideoRecording
                       className={`text-3xl inline text-gray-300 hover:text-white`}
                     />
