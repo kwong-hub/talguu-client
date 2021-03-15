@@ -1,6 +1,6 @@
-import { Button, Form, Input, message, PageHeader } from "antd";
+import { Button, Form, Input, message, PageHeader, Spin } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FaCopy, FaInfo } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
@@ -10,14 +10,29 @@ import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
 import SideNav from "../../partials/sideNav/SideNav";
 
 const Stream = (props) => {
-  const [property, setProperty] = useState(props.location.state.data);
+  const [property, setProperty] = useState(props.location.state?.data);
   // console.log("property", property);
   const [title, setTitle] = useState(property?.title);
   const [describe, setDescribe] = useState(property?.description);
   const [streamKey, setStreamKey] = useState(property?.stream_key);
   const [streamURL, setStreamURL] = useState("rtmp://8mspbb.com/show");
   var history = useHistory();
-  const goLive = () => {};
+  useEffect(() => {
+    getStreamed();
+    return () => {};
+  }, []);
+  const saveStreamInfo = (values) => {
+    videoService
+      .editStream({ key: property.stream_key, ...values })
+      .then((data) => {
+        if (data === true) {
+          message.success("Saved successfully");
+        } else {
+          message.error("Unable to save");
+        }
+      })
+      .catch((err) => console.log("err", err));
+  };
   const copiedMessage = () => {
     message.info("Copied!");
   };
@@ -26,7 +41,20 @@ const Stream = (props) => {
       .endStream(streamKey)
       .then((data) => history.push("/live_video"))
       .catch((err) => console.log("err", err));
-    // history.push("/your_video");
+  };
+  const getStreamed = () => {
+    videoService
+      .getStreamed()
+      .then((data) => {
+        if (data.success) {
+          setProperty(data);
+        } else {
+          history.push("/stream_video");
+        }
+      })
+      .catch((err) => {
+        history.push("/stream_video");
+      });
   };
   const videoJsOptions = {
     autoplay: false,
@@ -45,135 +73,154 @@ const Stream = (props) => {
       <div className="ml-12 my-20 relative">
         <SideNav />
         {/* <Header /> */}
-        <PageHeader
-          className="site-page-header"
-          onBack={() => history.goBack()}
-          title="Live"
-          subTitle="Add extra additional infromation"
-        />
-        <Button
-          className="absolute top-3 right-2"
-          onClick={(e) => endStream()}
-          key="1"
-          type="danger">
-          End Stream
-        </Button>
-        <div className="flex mx-4">
-          <div className="w-2/5 p-4 ">
-            <VideoPlayer {...videoJsOptions} />
-
-            <div className="flex flex-col items-start my-4">
-              <h2 className="text-lg font-semibold">Stream Setting</h2>
-              <div className="flex flex-col items-start my-2">
-                <span>Stream Key</span>
-                <Input
-                  readOnly
-                  value={streamKey}
-                  suffix={
-                    <CopyToClipboard text={streamKey} onCopy={() => copiedMessage()}>
-                      <span className="cursor-pointer">
-                        <FaCopy />
-                      </span>
-                    </CopyToClipboard>
-                  }
-                />
+        {property ? (
+          <>
+            <PageHeader
+              className="site-page-header"
+              onBack={() => history.push("/")}
+              title="Live"
+              subTitle="Add extra additional infromation"
+            />
+            <Button
+              className="absolute top-3 right-2"
+              onClick={(e) => endStream()}
+              key="1"
+              type="danger"
+            >
+              End Stream
+            </Button>
+            <div className="flex mx-4">
+              <div className="w-2/5 p-4 ">
+                <VideoPlayer {...videoJsOptions} />
+                <p className="py-2">
+                  Start streaming your video from your software to go live.
+                </p>
+                <div className="flex flex-col items-start my-4">
+                  <h2 className="text-lg font-semibold">Stream Setting</h2>
+                  <div className="flex flex-col items-start my-2">
+                    <span>Stream Key</span>
+                    <Input
+                      readOnly
+                      value={property?.stream_key}
+                      suffix={
+                        <CopyToClipboard
+                          text={property?.stream_key}
+                          onCopy={() => copiedMessage()}
+                        >
+                          <span className="cursor-pointer">
+                            <FaCopy />
+                          </span>
+                        </CopyToClipboard>
+                      }
+                    />
+                  </div>
+                  <div className="flex flex-col items-start my-2">
+                    <span>Stream URL</span>
+                    <Input
+                      readOnly
+                      value={streamURL}
+                      suffix={
+                        <CopyToClipboard
+                          text={streamURL}
+                          onCopy={() => copiedMessage()}
+                        >
+                          <span className="cursor-pointer">
+                            <FaCopy />
+                          </span>
+                        </CopyToClipboard>
+                      }
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-col items-start my-2">
-                <span>Stream URL</span>
-                <Input
-                  readOnly
-                  value={streamURL}
-                  suffix={
-                    <CopyToClipboard text={streamURL} onCopy={() => copiedMessage()}>
-                      <span className="cursor-pointer">
-                        <FaCopy />
-                      </span>
-                    </CopyToClipboard>
-                  }
-                />
+              <div className="w-3/5">
+                <Form
+                  layout="vertical"
+                  name="normal_login"
+                  className="login-form"
+                  initialValues={{
+                    title: property?.title,
+                    description: property?.description,
+                  }}
+                  onFinish={saveStreamInfo}
+                >
+                  <Form.Item
+                    label="Title"
+                    name="title"
+                    className="text-lg text-gray-600"
+                    rules={[
+                      { required: true, message: "Please input your Title!" },
+                    ]}
+                  >
+                    <Input
+                      className="rounded-lg text-gray-700 text-lg p-2"
+                      placeholder="Title*"
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    label="Description"
+                    name="description"
+                    rules={[
+                      {
+                        required: false,
+                        message: "Please input your Description!",
+                      },
+                    ]}
+                  >
+                    <TextArea
+                      className="rounded-lg text-gray-700 text-lg p-2"
+                      prefix={<FaInfo className="site-form-item-icon" />}
+                      placeholder="Description*"
+                    />
+                  </Form.Item>
+                  <div className="flex justify-end">
+                    <Form.Item>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        shape="round"
+                        className="login-form-button "
+                      >
+                        Save Changes
+                      </Button>
+                    </Form.Item>
+                  </div>
+                </Form>
+
+                <div>
+                  <div className="flex flex-col items-start justify-start">
+                    <h2 className="text-lg">Thumbnail</h2>
+                    <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
+                      Select or upload a picture that shows what's in your
+                      video. A good thumbnail stands out and draws viewers'
+                      attention.
+                    </h3>
+                    {/* <Thumbnail video={video.id} thumbnails={video.thumbnial} /> */}
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-1/5 flex flex-col items-center">
+                <h2 className="font-semibold text-base">Stream Analytics</h2>
+                <div>
+                  <div className="rounded-lg w-32 p-4 m-2 shadow-lg bg-white ">
+                    <b>0</b>
+                    <p>Current Views </p>
+                  </div>
+                  <div className="rounded-lg w-32 p-4 m-2 shadow-lg bg-white ">
+                    <b>0</b>
+                    <p>Current Likes </p>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="w-3/5">
-            <Form
-              layout="vertical"
-              name="normal_login"
-              className="login-form"
-              initialValues={{
-                remember: true,
-                title: property?.title,
-                description: property?.description,
-                select: property?.privacy,
-              }}
-              onFinish={goLive}>
-              <Form.Item
-                label="Title"
-                name="title"
-                className="text-lg text-gray-600"
-                rules={[{ required: true, message: "Please input your Title!" }]}>
-                <Input
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  className="rounded-lg text-gray-700 text-lg p-2"
-                  placeholder="Title*"
-                />
-              </Form.Item>
-              <Form.Item
-                label="Description"
-                name="description"
-                rules={[
-                  {
-                    required: false,
-                    message: "Please input your Description!",
-                  },
-                ]}>
-                <TextArea
-                  value={describe}
-                  onChange={(e) => setDescribe(e.target.value)}
-                  className="rounded-lg text-gray-700 text-lg p-2"
-                  prefix={<FaInfo className="site-form-item-icon" />}
-                  placeholder="Description*"
-                />
-              </Form.Item>
-
-              {/* <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                shape="round"
-                className="login-form-button w-full"
-              >
-                Next
-              </Button>
-            </Form.Item> */}
-            </Form>
-
-            <div>
-              <div className="flex flex-col items-start justify-start">
-                <h2 className="text-lg">Thumbnail</h2>
-                <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                  Select or upload a picture that shows what's in your video. A good thumbnail
-                  stands out and draws viewers' attention.
-                </h3>
-                {/* <Thumbnail video={video.id} thumbnails={video.thumbnial} /> */}
-              </div>
-            </div>
-          </div>
-
-          <div className="w-1/5 flex flex-col items-center">
-            <h2 className="font-semibold text-base">Stream Analytics</h2>
-            <div>
-              <div className="rounded-lg w-32 p-4 m-2 shadow-lg bg-white ">
-                <b>0</b>
-                <p>Current Views </p>
-              </div>
-              <div className="rounded-lg w-32 p-4 m-2 shadow-lg bg-white ">
-                <b>0</b>
-                <p>Current Likes </p>
-              </div>
-            </div>
-          </div>
-        </div>
+          </>
+        ) : (
+          <Spin
+            size="large"
+            className="flex items-center justify-center h-screen text-4xl"
+          />
+        )}
       </div>
     </div>
   );

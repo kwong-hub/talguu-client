@@ -35,7 +35,7 @@ const SideNav = (props) => {
   const handleMenuClick = () => {};
 
   const onSearch = (values) => {
-    console.log("values", values);
+    // console.log("values", values);
     history.push({
       pathname: "/search",
       search: "?query=" + values,
@@ -61,7 +61,9 @@ const SideNav = (props) => {
           <Link to="/settings">Settings</Link>
         </Menu.Item>
         <Menu.Item className="hover:bg-gray-300">
-          <Link onClick={(e) => logout()}>Sign Out</Link>
+          <Link to="" onClick={(e) => logout()}>
+            Sign Out
+          </Link>
         </Menu.Item>
       </Menu>
     </div>
@@ -148,7 +150,7 @@ const SideNav = (props) => {
           )}
           {user.role === "PRODUCER" ? (
             <Menu.Item key="6">
-              <Link to="/stream_video" className="flex items-center justify-center">
+              <Link to="/live_stream" className="flex items-center justify-center">
                 <FaStream className={`text-xl inline mr-2 -mt-2  text-gray-500`} />
                 <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
                   Stream Video
@@ -324,9 +326,9 @@ const SideNav = (props) => {
             {user.role === "PRODUCER" ? (
               <li
                 className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                  location.pathname === "/stream_video" ? "bg-gray-400" : ""
+                  location.pathname === "/live_stream" ? "bg-gray-400" : ""
                 }`}>
-                <Link to="/stream_video">
+                <Link to="/live_stream">
                   <Tooltip placement="rightTop" title="Stream Video">
                     <FaStream className={`text-3xl inline text-gray-300 hover:text-white`} />
                   </Tooltip>
@@ -348,7 +350,7 @@ const SideNav = (props) => {
               </li>
             )}
 
-            <li
+            {/* <li
               className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
                 location.pathname === "/account" ? "bg-gray-400" : ""
               }`}>
@@ -357,7 +359,7 @@ const SideNav = (props) => {
                   <FaUser className={`text-3xl inline text-gray-300 hover:text-white`} />
                 </Tooltip>
               </Link>
-            </li>
+            </li> */}
           </>
         ) : (
           <li

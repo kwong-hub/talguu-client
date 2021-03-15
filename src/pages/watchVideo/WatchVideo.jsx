@@ -73,18 +73,21 @@ const WatchVideo = () => {
 
   const play = (video) => {
     history.push(`/watch/${video.id}`);
-    history.go(0);
+    // history.go(0);
   };
 
   const paymentModalVisibleFunc = (value, video, event) => {
     if (event) event.stopPropagation();
 
     if (!user || user.role != "VIEWER")
-      history.push({ pathname: "/login", search: `?return_url=/watch/${video.id}` });
+      history.push({
+        pathname: "/login",
+        search: `?return_url=/watch/${video.id}`,
+      });
     else {
       if (video && video.paid) {
         history.push(`/watch/${video.id}`);
-        history.go(0);
+        // history.go(0);
       } else {
         if (value) {
           setTempVideo(video);
@@ -136,6 +139,7 @@ const WatchVideo = () => {
 
   const purchaseVideo = (id) => {
     dispatch({ type: PURCHASE_VIDEO_ASYNC, payload: id });
+    currentVideo.paid = true;
   };
 
   const likeDislikeVideo = (e, video, val) => {
@@ -149,7 +153,7 @@ const WatchVideo = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -160,13 +164,21 @@ const WatchVideo = () => {
     videoService
       .addComment({ message: newComment, videoId: video.id })
       .then((res) => {
-        notification.info({
-          message: "Message submitted",
-          placement: "bottomRight",
-          duration: 3.3,
-        });
-        setSubmitting(false);
-        setComment("");
+        if (res) {
+          notification.info({
+            message: "Message submitted",
+            placement: "bottomRight",
+            duration: 3.3,
+          });
+          setComment("");
+        } else {
+          notification.error({
+            message: "Error occurred",
+            placement: "bottomRight",
+            duration: 3.3,
+          });
+          setSubmitting(false);
+        }
       })
       .catch((err) => setSubmitting(false));
   };

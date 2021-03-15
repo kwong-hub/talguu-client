@@ -25,7 +25,7 @@ const Videos = (props) => {
 
   const playVideo = (video) => {
     history.push(`/watch/${video.id}`);
-    history.go(0);
+    // history.go(0);
   };
 
   const onSearch = (value) => {
@@ -36,7 +36,10 @@ const Videos = (props) => {
     if (event) event.stopPropagation();
     let user = JSON.parse(localStorage.getItem("user"));
     if (!user || user.role != "VIEWER")
-      history.push({ pathname: "/login", search: `?return_url=/watch/${video.id}` });
+      history.push({
+        pathname: "/login",
+        search: `?return_url=/watch/${video.id}`,
+      });
     if (video && video.paid) {
       history.push(`/watch/${video.id}`);
     } else {
@@ -56,7 +59,11 @@ const Videos = (props) => {
   const renderVideos = () => {
     return viewerVideos.map((video) => {
       return (
-        <RenderVideo key={video.id} video={video} paymentModalVisible={paymentModalVisibleFunc} />
+        <RenderVideo
+          key={video.id}
+          video={video}
+          paymentModalVisible={paymentModalVisibleFunc}
+        />
       );
     });
   };

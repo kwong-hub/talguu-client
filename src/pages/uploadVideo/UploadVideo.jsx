@@ -74,7 +74,7 @@ class UploadVideo extends Component {
         });
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         let video_link = res.config.url + "/" + fileName;
         let { title, describe } = this.state;
         let { size, type } = this.state.file;

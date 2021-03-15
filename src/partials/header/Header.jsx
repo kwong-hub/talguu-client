@@ -10,7 +10,7 @@ const Header = () => {
     <div className="w-full fixed top-0 left-0 right-0 h-14 shadow-sm bg-white z-10 flex justify-between items-center">
       <div className="text-2xl flex items-center justify-center header_title text-gray-500">
         <Link to="/" className="flex items-center">
-          <img src={logo} alt="" className="rounded h-14" /> TALGUU
+          <img src={logo} alt="" className="rounded h-14 p-2" /> TALGUU
         </Link>
       </div>
       <div className="flex max-h-10 bg-gray-100 rounded-3xl cursor-pointer">

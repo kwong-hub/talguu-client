@@ -14,19 +14,22 @@ export class VideoPlayer extends Component {
         //   console.log("onPlayerReady", this);
       }
     );
+    let user = localStorage.getItem("user");
 
-    setTimeout(() => {
-      if (this.player && this.player.currentTime && this.player.currentTime() >= 10) {
-        videoService
-          .incrementVideoView({ videoId: this.props.videoId })
-          .then((res) => {
-            if (res.success) {
-              console.log("OK");
-            }
-          })
-          .catch((err) => console.log(err));
-      }
-    }, 15000);
+    if (user && user.role == "VIEWER") {
+      setTimeout(() => {
+        if (this.player && this.player?.currentTime && this.player?.currentTime() >= 10) {
+          videoService
+            .incrementVideoView({ videoId: this.props.videoId })
+            .then((res) => {
+              if (res.success) {
+                // console.log("OK");
+              }
+            })
+            .catch((err) => console.log(err));
+        }
+      }, 15000);
+    }
   }
 
   componentDidUpdate(prevProps) {

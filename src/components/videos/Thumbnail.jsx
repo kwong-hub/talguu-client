@@ -87,7 +87,7 @@ export class Thumbnail extends Component {
     this.setState({ uploaded: true });
     let fileName = Date.now() + "image" + "." + this.state.fileList[0].name.split(".")[1];
     let callBack = (res) => {
-      console.log(res);
+      // console.log(res);
     };
 
     let thumbnial;

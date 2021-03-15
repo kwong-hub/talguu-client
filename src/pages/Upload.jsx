@@ -16,7 +16,7 @@ class Upload extends Component {
 
   fileList = [];
   uploadFiles = (files) => {
-    console.log(files);
+    // console.log(files);
     for (var i = 0; i < files.length; i++) {
       if (!files[i].name) return;
       this.fileList.push(files[i].name);
@@ -61,7 +61,7 @@ class Upload extends Component {
     }
   };
   handleDrop = (e) => {
-    console.log(e);
+    // console.log(e);
     e.preventDefault();
     e.stopPropagation();
     this.setState({ drag: false });
@@ -78,7 +78,7 @@ class Upload extends Component {
     var formData = new FormData();
     formData.append("title", this.state.title);
     formData.append("description", this.state.description);
-    console.log(this.state);
+    // console.log(this.state);
     formData.append("video", this.state.files, this.state.files.name);
 
     const config = {
@@ -86,7 +86,7 @@ class Upload extends Component {
         this.setState({
           progress: Math.round((progressEvent.loaded * 100) / progressEvent.total),
         });
-        console.log(this.state.progress);
+        // console.log(this.state.progress);
       },
     };
     videoService

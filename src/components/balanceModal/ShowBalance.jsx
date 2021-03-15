@@ -1,3 +1,4 @@
+import { Spin } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React from "react";
 import { useState } from "react";
@@ -6,8 +7,7 @@ import { useEffect } from "react";
 import paymentService from "../../_services/payment.service";
 
 const ShowBalance = (props) => {
-  console.log("props", props);
-  const [balance, setbalance] = useState(0);
+  const [balance, setbalance] = useState();
   useEffect(() => {
     getBalance();
     return () => {};
@@ -18,7 +18,7 @@ const ShowBalance = (props) => {
       .getBalance()
       .then((data) => {
         if (data.success) {
-          if (!isNaN) {
+          if (!isNaN(data.balance)) {
             setbalance(data.balance);
           } else {
             setbalance(0);
@@ -39,10 +39,13 @@ const ShowBalance = (props) => {
         visible={props.modalVisible}
         onOk={() => props.changePaymentModalVisible(false)}
         onCancel={() => props.changePaymentModalVisible(false)}
-        okText="Ok">
+        okText="Ok"
+      >
         <div className="flex flex-col justify-center items-center py-4 ">
           <h2>Balance</h2>
-          <p className="text-2xl font-bold ">{(Math.round(balance * 100) / 100).toFixed(2)}$</p>
+          <p className="text-2xl font-bold ">
+            {(Math.round(balance * 100) / 100).toFixed(2)}$
+          </p>
         </div>
       </Modal>
     </div>

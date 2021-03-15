@@ -59,11 +59,6 @@ const Account = (props) => {
                 <div className="flex flex-wrap justify-center items-center">
                   <div className="w-full lg:-mt-32 lg:w-3/12 px-4 lg:order-2 flex justify-center items-center">
                     {/* <div className="relative"> */}
-                    <Avatar
-                      className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16"
-                      size={120}
-                      icon={<UserOutlined />}
-                    />
                     {/* </div> */}
                   </div>
                   <div className="w-full mt-12 lg:mt-0 lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">

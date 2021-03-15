@@ -181,10 +181,10 @@ const SignupPrd = () => {
   return (
     <div>
       <Header />
-      <div className="flex justify-center m-auto items-center w-auto p-8 pt-2 mt-14">
-        <div className="flex justify-center items-center h-full w-8/12 max-w-lg">
+      <div className="flex justify-center m-auto items-center w-full md:p-8 pt-2 mt-14">
+        <div className="flex justify-center items-center h-full w-full max-w-lg">
           {currentForm !== 1 ? (
-            <div className="w-full flex flex-col justify-center m-4 p-4 py-8 shadow-md rounded-2xl bg-white">
+            <div className="w-full  max-w-sm flex flex-col justify-center my-4 p-4 py-8 shadow-md rounded-2xl bg-white">
               <div className="flex justify-center flex-col items-center ">
                 <img className="" src={logo} alt="Logo" width={50} />
 

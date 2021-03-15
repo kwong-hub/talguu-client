@@ -67,6 +67,23 @@ export default {
       return checkResponse(error);
     }
   },
+  editStream: async function (body) {
+    try {
+      const video = await axios.put(`${environment}/video/edit/stream`, body);
+      return video.data;
+    } catch (error) {
+      return checkResponse(error);
+    }
+  },
+
+  getStreamed: async function () {
+    try {
+      const video = await axios.get(`${environment}/video/stream`);
+      return video.data;
+    } catch (error) {
+      return checkResponse(error);
+    }
+  },
 
   addThumbnail: async function (body) {
     try {

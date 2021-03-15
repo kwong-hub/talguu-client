@@ -105,13 +105,13 @@ const YourVideo = () => {
   ];
 
   function cancel(e) {
-    console.log(e);
+    // console.log(e);
     // message.error('Click on No');
   }
 
   const editVideo = (video) => {
     history.push(`/edit/${video.id}`);
-    history.go(0);
+    // history.go(0);
   };
 
   const deleteVideo = (video) => {
@@ -130,12 +130,12 @@ const YourVideo = () => {
     videoService
       .getVideos(query)
       .then((data) => {
-        console.log("data", data);
+        // console.log("data", data);
         setvideos(data.rows);
         setpagination({ ...query, total: data.count });
       })
       .catch((err) => {
-        console.log("err", err);
+        // console.log("err", err);
       });
   };
   const handleTableChange = (pagination, filters, sorter) => {

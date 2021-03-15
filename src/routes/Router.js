@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import Account from "../pages/account/Account";
 import { Login } from "../pages/authentication/Login";
 import Signup from "../pages/authentication/Signup";
 import SignupPrd from "../pages/authentication/SignupPrd";
@@ -28,7 +27,6 @@ import PrivateRoute from "./privateRoute";
 import history from "./history";
 import SearchVideo from "../pages/search/SearchVideo";
 import ForgotPassword from "../pages/authentication/ForgotPassword";
-// import StreamVideo from "../pages/streamVideo/StreamVideo";
 const Router = () => {
   return (
     <div>
@@ -56,7 +54,7 @@ const Router = () => {
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
           <PrivateRoute exact path="/finish-upload" component={EditUploadVideos} />
-          <Route exact path="/live_stream" component={Stream} />
+          <PrivateRoute exact path="/live_stream" component={Stream} />
           <Route exact path="/forgot_password" component={ForgotPassword} />
           <PrivateRoute exact path="/deposit" component={Deposit} />
           <Route component={NotFound} />

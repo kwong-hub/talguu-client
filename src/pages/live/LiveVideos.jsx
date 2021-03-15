@@ -37,7 +37,7 @@ export class LiveVideos extends Component {
   };
 
   playVideo = (video) => {
-    console.log("video", video);
+    // console.log("video", video);
     this.setState({ currentLive: video });
   };
 

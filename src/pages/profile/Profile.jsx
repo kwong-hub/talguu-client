@@ -50,7 +50,7 @@ const Profile = (props) => {
     // dispatch({ type: GET_USER_PROFILE_ASYNC });
     // window.scrollTo(0, 0);
     userService.getUserProfile().then((data) => {
-      console.log("data", data);
+      // console.log("data", data);
       if (data.success) {
         setProfile(data.producer ? data.producer : data.viewer);
         setuser(data.user);
@@ -66,11 +66,7 @@ const Profile = (props) => {
           {" "}
           <div className="flex flex-col mt-20 md:flex-row justify-center items-baseline">
             <div className="w-1/3 hidden md:inline-block ">
-              <Avatar
-                className="shadow-xl "
-                size={80}
-                icon={<UserOutlined />}
-              />
+              <Avatar className="shadow-xl " size={80} icon={<UserOutlined />} />
               <div className="m-4">
                 <span className="text-2xl py-4 font-medium leading-tight">
                   {user?.firstName + " " + user?.lastName}{" "}
@@ -81,9 +77,7 @@ const Profile = (props) => {
             <div className="flex px-6 flex-col w-full md:w-1/2">
               <div className="bg-white p-8 border rounded-xl">
                 <div className="">
-                  <p className="text-xl font-semibold flex pb-4">
-                    Basic Information
-                  </p>
+                  <p className="text-xl font-semibold flex pb-4">Basic Information</p>
                 </div>
                 {user && (
                   <Form
@@ -93,8 +87,7 @@ const Profile = (props) => {
                     initialValues={{
                       ...user,
                     }}
-                    onFinish={saveBasic}
-                  >
+                    onFinish={saveBasic}>
                     <div className="flex flex-col md:flex-row w-full ">
                       <Form.Item
                         label="First Name"
@@ -105,8 +98,7 @@ const Profile = (props) => {
                             required: true,
                             message: "Please input your firstName!",
                           },
-                        ]}
-                      >
+                        ]}>
                         <Input
                           className="rounded-xl text-gray-700 text-md p-2"
                           placeholder="firstName*"
@@ -121,8 +113,7 @@ const Profile = (props) => {
                             required: true,
                             message: "Please input your lastName!",
                           },
-                        ]}
-                      >
+                        ]}>
                         <Input
                           className="rounded-xl text-gray-700 text-md p-2"
                           placeholder="lastName*"
@@ -140,8 +131,7 @@ const Profile = (props) => {
                           required: true,
                           message: "Please input your Phone Number!",
                         },
-                      ]}
-                    >
+                      ]}>
                       <Input
                         className="rounded-xl text-gray-700 text-md p-2"
                         placeholder="Title*"
@@ -153,8 +143,7 @@ const Profile = (props) => {
                         type="primary"
                         htmlType="submit"
                         shape="round"
-                        className="login-form-button mt-4 "
-                      >
+                        className="login-form-button mt-4 ">
                         Save Changes
                       </Button>
                     </Form.Item>
@@ -167,14 +156,19 @@ const Profile = (props) => {
             <div className="w-1/3 hidden md:inline-block">
               <FaBuilding className="flex text-4xl mx-auto" />
               <div className="m-4">
-                <span className="text-2xl py-4 font-medium leading-tight">
-                  {profile?.companyName}
-                </span>
-                <p className="font-light text-blue-500 flex items-center justify-center">
-                  <ImLocation2 /> {profile?.state}
-                  {", "}
-                  {profile?.city}
-                </p>
+                {profile.companyName ? (
+                  <>
+                    <span className="text-2xl py-4 font-medium leading-tight">
+                      {profile?.companyName}
+                    </span>
+                    <p className="font-light text-blue-500 flex items-center justify-center">
+                      <ImLocation2 /> {profile?.state + " ,"}
+                      {profile?.city}
+                    </p>
+                  </>
+                ) : (
+                  <p>No company Name</p>
+                )}
               </div>
             </div>
             <div className="px-6 w-full md:w-1/2">
@@ -192,8 +186,7 @@ const Profile = (props) => {
                       ...profile,
                       companyName: profile?.companyName,
                     }}
-                    onFinish={saveCompany}
-                  >
+                    onFinish={saveCompany}>
                     <Form.Item
                       label="Company Name"
                       name="companyName"
@@ -204,8 +197,7 @@ const Profile = (props) => {
                           required: true,
                           message: "Please input your company Name!",
                         },
-                      ]}
-                    >
+                      ]}>
                       <Input
                         className="rounded-xl text-gray-700 text-md p-2"
                         placeholder="Company*"
@@ -217,8 +209,7 @@ const Profile = (props) => {
                         name="companyAddress"
                         className="text-lg w-full text-gray-600"
                         help="Company detail address description."
-                        rules={[{ message: "Please input your address!" }]}
-                      >
+                        rules={[{ message: "Please input your address!" }]}>
                         <Input
                           className="rounded-xl text-gray-700 text-md p-2"
                           placeholder="Company Address"
@@ -233,8 +224,7 @@ const Profile = (props) => {
                             required: true,
                             message: "Please input your Phone Number!",
                           },
-                        ]}
-                      >
+                        ]}>
                         <Input
                           className="rounded-xl  text-gray-700 text-md p-2"
                           placeholder="Phone Number*"
@@ -252,8 +242,7 @@ const Profile = (props) => {
                             required: true,
                             message: "Please input your Phone Number!",
                           },
-                        ]}
-                      >
+                        ]}>
                         <Input
                           className="rounded-xl text-gray-700 text-md p-2"
                           placeholder="state*"
@@ -268,8 +257,7 @@ const Profile = (props) => {
                             required: true,
                             message: "Please input your City!",
                           },
-                        ]}
-                      >
+                        ]}>
                         <Input
                           className="rounded-xl text-gray-700 text-md p-2"
                           placeholder="city*"
@@ -284,8 +272,7 @@ const Profile = (props) => {
                             required: true,
                             message: "Please input your zipcode!",
                           },
-                        ]}
-                      >
+                        ]}>
                         <Input
                           className="rounded-xl text-gray-700 text-md p-2"
                           placeholder="zipcode*"
@@ -297,8 +284,7 @@ const Profile = (props) => {
                         type="primary"
                         htmlType="submit"
                         shape="round"
-                        className="login-form-button  "
-                      >
+                        className="login-form-button  ">
                         Save Changes
                       </Button>
                     </Form.Item>
@@ -311,12 +297,8 @@ const Profile = (props) => {
             <div className="w-1/3 hidden md:inline-block">
               <FaKey className="flex text-4xl  mx-auto" />
               <div className="m-4">
-                <span className="text-2xl py-4 font-medium leading-tight">
-                  Account Security
-                </span>
-                <p className="text-gray-500">
-                  Make your password strong and secured.
-                </p>
+                <span className="text-2xl py-4 font-medium leading-tight">Account Security</span>
+                <p className="text-gray-500">Make your password strong and secured.</p>
               </div>
             </div>
             <div className="px-6 w-full md:w-1/2">
@@ -329,8 +311,7 @@ const Profile = (props) => {
                   layout="vertical"
                   name="normal_login"
                   className="flex flex-col items-start "
-                  onFinish={updatePassword}
-                >
+                  onFinish={updatePassword}>
                   <Form.Item
                     label="Old Password"
                     name="oldPassword"
@@ -340,8 +321,7 @@ const Profile = (props) => {
                         required: true,
                         message: "Please input your Old Password!",
                       },
-                    ]}
-                  >
+                    ]}>
                     <Input
                       type="password"
                       className="rounded-xl text-gray-700 text-md p-2"
@@ -353,10 +333,7 @@ const Profile = (props) => {
                     label="New Password"
                     name="newPassword"
                     className="text-lg flex w-full text-gray-600"
-                    rules={[
-                      { required: true, message: "Please input your address!" },
-                    ]}
-                  >
+                    rules={[{ required: true, message: "Please input your address!" }]}>
                     <Input
                       type="password"
                       className="rounded-xl text-gray-700 text-md p-2"
@@ -373,8 +350,7 @@ const Profile = (props) => {
                         required: true,
                         message: "Please input your Confirm Password!",
                       },
-                    ]}
-                  >
+                    ]}>
                     <Input
                       type="password"
                       className="rounded-xl  text-gray-700 text-md p-2"
@@ -383,12 +359,7 @@ const Profile = (props) => {
                   </Form.Item>
 
                   <Form.Item className="">
-                    <Button
-                      type="primary"
-                      htmlType="submit"
-                      shape="round"
-                      className="mt-4 "
-                    >
+                    <Button type="primary" htmlType="submit" shape="round" className="mt-4 ">
                       Change Password
                     </Button>
                   </Form.Item>
@@ -398,10 +369,7 @@ const Profile = (props) => {
           </div>
         </>
       ) : (
-        <Spin
-          size="large"
-          className="flex items-center justify-center h-screen text-4xl"
-        />
+        <Spin size="large" className="flex items-center justify-center h-screen text-4xl" />
       )}
     </div>
   );

@@ -20,12 +20,12 @@ function login({ email, password }) {
 }
 
 function logout(redirect_url = "") {
-  localStorage.removeItem("user");
-  console.log(history.location);
+  // localStorage.removeItem("user");
+  // console.log(history.location);
   if (redirect_url) {
     history.push({ pathname: "/login", search: `?redirect_url=${redirect_url}` });
   } else {
-    history.push({ pathname: "/login" });
+    history.replace({ pathname: "/login" });
   }
   history.go(0);
 }
@@ -131,5 +131,5 @@ export const userService = {
   updateUserProfile,
   updateCompanyProfile,
   updatePassword,
-  forgotPassword
+  forgotPassword,
 };

@@ -121,7 +121,7 @@ function* getPaidVideoUrlAsync(action) {
 function* purchaseVideoAsync(action) {
   let res = yield call(videoService.purchaseVideo, action.payload);
 
-  console.log("from saga", res);
+  // console.log("from saga", res);
   if (res && res.video_link) {
     yield put({ type: PURCHASE_VIDEO_SUCCESS, payload: res });
   } else {
@@ -182,7 +182,7 @@ function* getPaymentInfoAsync(action) {
 
 function* getUserProfileInfo(action) {
   let res = yield call(userService.getUserProfile, action.payload);
-  console.log("res", res);
+  // console.log("res", res);
   if (res.success) {
     yield put({
       type: GET_USER_PROFILE,

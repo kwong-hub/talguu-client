@@ -21,7 +21,6 @@ const EditProdVideo = (props) => {
   const [title, setTitle] = useState(video?.title);
   const [describe, setDescribe] = useState(video?.describe);
   const [price, setPrice] = useState(0.23);
-
   useEffect(() => {
     if (vidId) {
       getVideoById(vidId);
@@ -34,7 +33,7 @@ const EditProdVideo = (props) => {
     videoService
       .getProdVideoById(id)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setVideo(data);
         setTitle(data.title);
         setDescribe(data.describe);
@@ -138,14 +137,24 @@ const EditProdVideo = (props) => {
                 trailer draws viewers' attention.
               </h3>
               <Trailer videoId={video?.id} />
+              {video?.trailer && (
+                <div className="w-2/3 lg:w-2/6 p-4 ">
+                  <VideoPlayer
+                    {...{
+                      ...videoJsOptions,
+                      sources: [{ src: video?.trailer, type: video?.video_type }],
+                    }}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
-        <div className="w-3/4 p-4 ">
-          <VideoPlayer {...videoJsOptions} />
-
-          <div></div>
-        </div>
+        {video && video.video_link && (
+          <div className="w-3/4 p-4 ">
+            <VideoPlayer {...videoJsOptions} />
+          </div>
+        )}
       </div>
     </div>
   );

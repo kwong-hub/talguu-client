@@ -30,7 +30,7 @@ const EditUploadVideos = (props) => {
         }
       })
       .catch((err) => {
-        console.log("err", err);
+        // console.log("err", err);
       });
   };
   const videoJsOptions = {

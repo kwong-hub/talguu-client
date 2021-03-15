@@ -40,7 +40,7 @@ export default class Trailer extends Component {
         Object.keys(options).map((key) => {
           formData.append(key, options[key]);
         });
-        console.log(fileList);
+        // console.log(fileList);
         formData.append("file", fileList[0]);
         trailer = res.signedRequest.url + "/" + fileName;
         return videoService.uploadVideoToS3(res.signedRequest.url, formData, {
