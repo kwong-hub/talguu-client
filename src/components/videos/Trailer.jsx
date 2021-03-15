@@ -25,7 +25,8 @@ export default class Trailer extends Component {
       uploading: true,
     });
     const { fileList } = this.state;
-    let fileName = Date.now() + "trailer" + "." + fileList[0].name.split(".")[1];
+    let fileName =
+      Date.now() + "trailer" + "." + fileList[0].name.split(".")[1];
     // let callBack = (res) => {
     //   console.log(res);
     // };
@@ -63,6 +64,7 @@ export default class Trailer extends Component {
   render() {
     const { uploading, fileList } = this.state;
     const propsVideo = {
+      accept: "video/*, .mkv",
       onRemove: (file) => {
         this.setState((state) => {
           const index = state.fileList.indexOf(file);
@@ -83,7 +85,8 @@ export default class Trailer extends Component {
           return false;
         } else if (!file.type.toString().startsWith("video")) {
           notification.info({
-            message: "Unsupported file type! File type should be .MP4 .MOV, .MKV .MPEG",
+            message:
+              "Unsupported file type! File type should be .MP4 .MOV, .MKV .MPEG",
             placement: "bottomRight",
             duration: 3.3,
           });
@@ -108,7 +111,8 @@ export default class Trailer extends Component {
             type="primary"
             onClick={this.handleUpload}
             loading={uploading}
-            style={{ marginTop: 16 }}>
+            style={{ marginTop: 16 }}
+          >
             {uploading ? "Uploading" : "Start Upload"}
           </Button>
         )}

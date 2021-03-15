@@ -23,6 +23,7 @@ function PurchasedPlaylist(props) {
   }, []);
 
   const play = (video) => {
+    console.log(`video-play`, video);
     history.push(`/watch/${video.id}`);
     // history.go(0);
   };
@@ -32,6 +33,7 @@ function PurchasedPlaylist(props) {
   const renderVideos = () => {
     if (purchasedVideos && purchasedVideos.length) {
       return purchasedVideos.map((video) => {
+        console.log(`video`, video);
         return (
           <div
             key={video.id}
