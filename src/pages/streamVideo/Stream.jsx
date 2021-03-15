@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import videoService from "../../_services/video.service";
 import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
 import SideNav from "../../partials/sideNav/SideNav";
+import ThumbnailStream from "../../components/stream/Thumbnail-stream";
 
 const Stream = (props) => {
   const [property, setProperty] = useState(props.location.state?.data);
@@ -195,7 +196,10 @@ const Stream = (props) => {
                       video. A good thumbnail stands out and draws viewers'
                       attention.
                     </h3>
-                    {/* <Thumbnail video={video.id} thumbnails={video.thumbnial} /> */}
+                    <ThumbnailStream
+                      stream_key={property?.stream_key}
+                      thumbnails={property?.thumbnail}
+                    />
                   </div>
                 </div>
               </div>
