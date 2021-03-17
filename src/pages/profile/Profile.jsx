@@ -239,12 +239,14 @@ const Profile = (props) => {
                         className="text-lg w-full ml-2  text-gray-600"
                         rules={[
                           {
+                            pattern: /(\(\d{3}\))(\s)\d{3}(-)\d{4}/,
                             required: true,
-                            message: "Please input your Phone Number!",
+                            message: "Please input valid Phone Number!",
                           },
                         ]}
                       >
                         <Input
+                          prefix="+1"
                           className="rounded-xl  text-gray-700 text-md p-2"
                           placeholder="Phone Number*"
                         />
