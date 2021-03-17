@@ -59,7 +59,7 @@ function PaymentInfos(props) {
       {!paymentInfos?.length ? (
         <div className={`flex-col items-center justify-center w-full p-2 cursor-pointer`}>
           <p className="text-gray-600 text-md py-4 w-full text-center">
-            You don't have a payment information. Add one to deposit and access videos.
+            You don't have payment information. Add one to deposit and access videos.
           </p>
           <div className="w-full flex justify-center">
             <Button onClick={() => props.changePaymentModalVisible(false)} type="primary">

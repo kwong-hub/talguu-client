@@ -42,14 +42,12 @@ const WatchVideo = () => {
     if (vidId) {
       dispatch({ type: GET_PAID_VIDEO_URL_ASYNC, payload: vidId });
       dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q: "" } });
-
       window.scrollTo(0, 0);
     }
     return () => {};
   }, [vidId]);
 
   useEffect(() => {
-    // console.log(video_link);
     if (video_link) {
       paymentModalVisibleFunc(false);
       play(tempVideo);
@@ -73,7 +71,7 @@ const WatchVideo = () => {
 
   const play = (video) => {
     history.push(`/watch/${video.id}`);
-    // history.go(0);
+    history.go(0);
   };
 
   const paymentModalVisibleFunc = (value, video, event) => {
@@ -165,11 +163,15 @@ const WatchVideo = () => {
       .addComment({ message: newComment, videoId: video.id })
       .then((res) => {
         if (res) {
+          if (res.data && res.data.success) {
+            dispatch({ type: GET_PAID_VIDEO_URL_ASYNC, payload: vidId });
+          }
           notification.info({
             message: "Message submitted",
             placement: "bottomRight",
             duration: 3.3,
           });
+          setSubmitting(false);
           setComment("");
         } else {
           notification.error({

@@ -14,7 +14,7 @@ import visa from "../../assets/images/visa.png";
 import ShowBalance from "../../components/balanceModal/ShowBalance";
 import PaymentInfos from "../../components/paymentInfos/PaymentInfos";
 import SideNav from "../../partials/sideNav/SideNav";
-import { ADD_PAYMENT_INFO_ASYNC } from "../../redux/types";
+import { ADD_PAYMENT_INFO_ASYNC, RESET_PAYMENT_INFO } from "../../redux/types";
 
 // const Context = React.createContext({ name: "Default" });
 
@@ -25,6 +25,7 @@ const Settings = (props) => {
   const [form] = Form.useForm();
   const [viewerErrMessages, setViewerErrMessages] = useState("");
   const [loading, setLoading] = useState(false);
+  // const [renderPaymentModal, setRenderPaymentModal] = useState(props.renderPaymentModal || false);
   const [formValues, setFormValues] = useState({
     cardType: "MASTER_CARD",
     username: userService.getLocalUser().username,
@@ -37,13 +38,12 @@ const Settings = (props) => {
   const [paymentMethod, setPaymentMethod] = useState("MASTER_CARD");
   const dispatch = useDispatch();
   const paymentInfo = useSelector((state) => state.payment.paymentInfo);
-  const addPaymentInfoStatus = useSelector(
-    (state) => state.payment.addPaymentInfoStatus
-  );
+  const addPaymentInfoStatus = useSelector((state) => state.payment.addPaymentInfoStatus);
   const username = userService.getLocalUser().username;
 
   useEffect(() => {
     if (addPaymentInfoStatus === "SUCCESS") {
+      console.log("payment info success");
       setLoading(false);
       setPaymentModalVisible(false);
       form.resetFields();
@@ -51,8 +51,10 @@ const Settings = (props) => {
         message: "Payment Information Created!!",
         icon: <FaCheck className="text-sm text-green-600" />,
       });
+      dispatch({ type: RESET_PAYMENT_INFO });
     } else if (addPaymentInfoStatus === "ERROR") {
       setViewerErrMessages("Can not create payment information.");
+      setLoading(false);
     }
     return () => {};
   }, [paymentInfo]);
@@ -61,9 +63,7 @@ const Settings = (props) => {
     // console.log(values);
     setViewerErrMessages("");
     let pattern =
-      values.cardType === "MASTER_CARD"
-        ? /^5[1-5][0-9]{14}$/
-        : /^4[0-9]{12}(?:[0-9]{3})?$/;
+      values.cardType === "MASTER_CARD" ? /^5[1-5][0-9]{14}$/ : /^4[0-9]{12}(?:[0-9]{3})?$/;
     let valid = pattern.test(values.cardNumber);
     if (!valid) {
       setViewerErrMessages("Please Enter Valid Information");
@@ -115,33 +115,26 @@ const Settings = (props) => {
         footer={null}
         visible={paymentModalVisible}
         onOk={() => changePaymentModalVisible(false)}
-        onCancel={() => changePaymentModalVisible(false)}
-      >
+        onCancel={() => changePaymentModalVisible(false)}>
         <div className="modal_form">
           <div className="flex justify-center flex-col items-center ">
             <img className="" src={logo} alt="Logo" width={50} />
             <p className="text-2xl text-gray-700 my-6">Payment Information</p>
           </div>
-          <div className="w-full text-red-500 text-md text-center mb-4">
-            {viewerErrMessages}
-          </div>
+          <div className="w-full text-red-500 text-md text-center mb-4">{viewerErrMessages}</div>
           <div className="w-full flex flex-col justify-center p-4 py-8  ">
             <Form
               form={form}
               layout="vertical"
               name="personal"
               onFinish={onPaymentFinish}
-              initialValues={formValues}
-            >
+              initialValues={formValues}>
               <div className="flex items-center justify-between">
                 <Form.Item
                   name="firstName"
                   label="First Name"
                   className="w-full p-1"
-                  rules={[
-                    { required: true, message: "Please input card first name" },
-                  ]}
-                >
+                  rules={[{ required: true, message: "Please input card first name" }]}>
                   <Input
                     className="rounded-2xl "
                     prefix={<FaUser className="site-form-item-icon" />}
@@ -153,10 +146,7 @@ const Settings = (props) => {
                   name="lastName"
                   label="Last Name"
                   className="w-full p-3"
-                  rules={[
-                    { required: true, message: "Please input card last name" },
-                  ]}
-                >
+                  rules={[{ required: true, message: "Please input card last name" }]}>
                   <Input
                     className="rounded-2xl "
                     prefix={<FaUser className="site-form-item-icon" />}
@@ -170,25 +160,15 @@ const Settings = (props) => {
                   name="zipCode"
                   label="Zip Code"
                   className="w-full p-1"
-                  rules={[{ required: true, message: "Please input zip code" }]}
-                >
-                  <Input
-                    className="rounded-2xl "
-                    type="text"
-                    placeholder="Zip Code"
-                  />
+                  rules={[{ required: true, message: "Please input zip code" }]}>
+                  <Input className="rounded-2xl " type="text" placeholder="Zip Code" />
                 </Form.Item>
                 <Form.Item
                   name="city"
                   label="City"
                   className="w-full p-3"
-                  rules={[{ required: true, message: "Please input city" }]}
-                >
-                  <Input
-                    className="rounded-2xl "
-                    type="text"
-                    placeholder="City"
-                  />
+                  rules={[{ required: true, message: "Please input city" }]}>
+                  <Input className="rounded-2xl " type="text" placeholder="City" />
                 </Form.Item>
               </div>
               <Form.Item name="cardType" label="Select Card Type">
@@ -196,20 +176,17 @@ const Settings = (props) => {
                   name="cardType"
                   onChange={paymentMethodChange}
                   value={paymentMethod}
-                  className="w-full flex my-2"
-                >
+                  className="w-full flex my-2">
                   <Radio
                     className="flex items-center justify-start w-full border-t-2 border-gray-100 p-3 text-gray-600 text-ls "
-                    value="MASTER_CARD"
-                  >
+                    value="MASTER_CARD">
                     <img src={mastercard} alt="" className="h-10 ml-1" />
                     <span className="ml-1">Mastercard</span>
                   </Radio>
 
                   <Radio
                     className="flex items-center justify-start w-full border-t-2 border-gray-100 p-3 text-gray-600 text-ls "
-                    value="VISA"
-                  >
+                    value="VISA">
                     <img src={visa} alt="" className="h-10 ml-1" />{" "}
                     <span className="ml-1">Visa</span>
                   </Radio>
@@ -227,21 +204,15 @@ const Settings = (props) => {
                     required: true,
                     message: "Please input valid card number",
                   },
-                ]}
-              >
-                <Input
-                  className="rounded-2xl"
-                  type="text"
-                  placeholder="Card Number"
-                />
+                ]}>
+                <Input className="rounded-2xl" type="text" placeholder="Card Number" />
               </Form.Item>
               <div className="flex items-center justify-between">
                 <Form.Item
                   className="w-1/2 pr-2"
                   name="expDate"
                   label="Expires on"
-                  rules={[{ required: true, message: "Please input exp date" }]}
-                >
+                  rules={[{ required: true, message: "Please input exp date" }]}>
                   <DatePicker
                     className="rounded-2xl"
                     onChange={onYearChange}
@@ -255,14 +226,13 @@ const Settings = (props) => {
                   name="cvc"
                   label="CVC"
                   rules={[
-                    { required: true, message: "Please input CVC number" },
-                  ]}
-                >
-                  <Input
-                    className="rounded-2xl"
-                    type="number"
-                    placeholder="CVC"
-                  />
+                    {
+                      required: true,
+                      pattern: /[0-9]{3}/,
+                      message: "Please input 3 digit number",
+                    },
+                  ]}>
+                  <Input className="rounded-2xl" type="number" placeholder="CVC" />
                 </Form.Item>
               </div>
               {/* <Form.Item
@@ -273,8 +243,8 @@ const Settings = (props) => {
               </Form.Item> */}
               <div>
                 <p className="text-gray-700 text-xs text-center w-full mb-2">
-                  Notice: Lorem ipsum dolor sit amet consectetur adipisicing
-                  elit. Ipsam illo quas, facilis
+                  Notice: Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam illo quas,
+                  facilis
                 </p>
               </div>
               <Form.Item>
@@ -283,8 +253,7 @@ const Settings = (props) => {
                   type="primary"
                   htmlType="submit"
                   shape="round"
-                  className="login-form-button w-full"
-                >
+                  className="login-form-button w-full">
                   Submit
                 </Button>
               </Form.Item>
@@ -302,42 +271,27 @@ const Settings = (props) => {
         {/* <h1 className="text-left ml-8 text-2xl">Settings</h1> */}
         <div className="flex p-4 rounded-sm  items-center justify-between  max-w-xl m-auto">
           <div>
-            <h1 className="text-gray-800 text-lg text-left">
-              Billing and Payment
-            </h1>
+            <h1 className="text-gray-800 text-lg text-left">Billing and Payment</h1>
             <h4 className="text-gray-700 text-md text-left font-light">
               Choose how you make payment
             </h4>
           </div>
           <div>
-            <Button
-              onClick={() => changePaymentInfosVisible(true)}
-              className="mx-2"
-            >
+            <Button onClick={() => changePaymentInfosVisible(true)} className="mx-2">
               View
             </Button>
-            <Button
-              onClick={() => changePaymentModalVisible(true)}
-              type="secondary"
-            >
+            <Button onClick={() => changePaymentModalVisible(true)} type="secondary">
               Add Payment Method
             </Button>
           </div>
         </div>
         <div className="flex p-4 rounded-sm  items-center justify-between  max-w-xl m-auto">
           <div>
-            <h1 className="text-gray-800 text-lg text-left">
-              Deposit and Payment
-            </h1>
-            <h4 className="text-gray-700 text-md text-left font-light">
-              Deposit to your account
-            </h4>
+            <h1 className="text-gray-800 text-lg text-left">Deposit and Payment</h1>
+            <h4 className="text-gray-700 text-md text-left font-light">Deposit to your account</h4>
           </div>
           <div>
-            <Button
-              onClick={() => changeBalanceInfosVisible(true)}
-              className="mx-2"
-            >
+            <Button onClick={() => changeBalanceInfosVisible(true)} className="mx-2">
               Balance
             </Button>
             <Button onClick={() => depositAccount(true)} type="secondary">
@@ -347,25 +301,17 @@ const Settings = (props) => {
         </div>
         <div className="flex p-4 rounded-sm  items-center justify-between  max-w-xl m-auto">
           <div>
-            <h1 className="text-gray-800 text-lg text-left">
-              Account Management
-            </h1>
-            <h4 className="text-gray-700 text-md text-left font-light">
-              Account Setting
-            </h4>
+            <h1 className="text-gray-800 text-lg text-left">Account Management</h1>
+            <h4 className="text-gray-700 text-md text-left font-light">Account Setting</h4>
           </div>
           <div>
-            <Link
-              to="/account"
-              type="secondary"
-              className="btn bg-white p-2 border"
-            >
+            <Link to="/account" type="secondary" className="btn bg-white p-2 border">
               Edit Account
             </Link>
           </div>
         </div>
       </div>
-      {renderPayment()}
+      {paymentModalVisible && renderPayment()}
       {showBalance && (
         <ShowBalance
           modalVisible={showBalance}
