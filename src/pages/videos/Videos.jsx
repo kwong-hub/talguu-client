@@ -25,7 +25,7 @@ const Videos = (props) => {
 
   const playVideo = (video) => {
     history.push(`/watch/${video.id}`);
-    // history.go(0);
+    history.go(0);
   };
 
   const onSearch = (value) => {
@@ -35,6 +35,7 @@ const Videos = (props) => {
   const paymentModalVisibleFunc = (value, video, event) => {
     if (event) event.stopPropagation();
     let user = JSON.parse(localStorage.getItem("user"));
+    console.log(`video-,value`, video, value);
     if (!user || user.role != "VIEWER")
       history.push({
         pathname: "/login",

@@ -1,14 +1,13 @@
 import { Button, message, notification, Progress } from "antd";
 import React, { Component } from "react";
 import { FaPlus } from "react-icons/fa";
-import { RiArrowRightCircleLine, RiVideoUploadFill } from "react-icons/ri";
+import { RiArrowRightCircleLine } from "react-icons/ri";
 import { AiOutlineInbox } from "react-icons/ai";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import videoService from "../../_services/video.service";
 import SideNav from "../../partials/sideNav/SideNav";
-import { VIDEO_READY } from "../../redux/types";
 import Dragger from "antd/lib/upload/Dragger";
 
 // const { Dragger } = Upload;
@@ -154,23 +153,32 @@ class UploadVideo extends Component {
         <SideNav></SideNav>
         <div className="flex flex-col mt-20 m-4 mx-auto w-full max-w-4xl justify-center ">
           <div className="flex justify-around mx-4 my-4 ">
-            <p className="text-2xl text-gray-600 m-2">One Step to Publish your video! </p>
+            <p className="text-2xl text-gray-600 m-2">
+              One Step to Publish your video!{" "}
+            </p>
           </div>
 
           {!this.state.progress > 0 && this.state.active == "" && (
             <div>
               <form
                 onSubmit={this.submit}
-                className="flex flex-col w-full items-center my-8 text-xl text-gray-500">
+                className="flex flex-col w-full items-center my-8 text-xl text-gray-500"
+              >
                 <div className="w-full">
                   {!this.state.fileSelected && (
-                    <Dragger className="max-w-lg mx-auto" {...this.state.uploadProps}>
+                    <Dragger
+                      className="max-w-lg mx-auto"
+                      {...this.state.uploadProps}
+                    >
                       <p className="flex w-full justify-center ant-upload-drag-icon">
                         <AiOutlineInbox className="text-4xl font-bold" />
                       </p>
-                      <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                      <p className="ant-upload-text">
+                        Click or drag file to this area to upload
+                      </p>
                       <p className="ant-upload-hint">
-                        Be sure to upload only video files like .mp4 .flv .mkv .mpeg .mov...
+                        Be sure to upload only video files like .mp4 .flv .mkv
+                        .mpeg .mov...
                       </p>
                     </Dragger>
                   )}
@@ -205,7 +213,8 @@ class UploadVideo extends Component {
                     value={this.state.describe}
                     onChange={(e) => {
                       this.setState({ describe: e.target.value });
-                    }}></textarea>
+                    }}
+                  ></textarea>
                 </label>
 
                 <Button
@@ -214,7 +223,8 @@ class UploadVideo extends Component {
                   shape="round"
                   icon={<RiArrowRightCircleLine />}
                   onClick={this.submit}
-                  className="w-64 my-4 py-5 flex justify-center items-center text-xl p-4 transform hover:scale-110 motion-reduce:transform-none">
+                  className="w-64 my-4 py-5 flex justify-center items-center text-xl p-4 transform hover:scale-110 motion-reduce:transform-none"
+                >
                   Next
                 </Button>
               </form>
@@ -225,7 +235,11 @@ class UploadVideo extends Component {
         {this.state.progress > 0 && this.state.active == "" && (
           <div className="flex-col justify-center mt-4 w-64 mx-auto">
             <p className="text-gray-500 font-thin text-base">Uploading file</p>
-            <Progress type="line" percent={this.state.progress} status="active" />
+            <Progress
+              type="line"
+              percent={this.state.progress}
+              status="active"
+            />
           </div>
         )}
       </>

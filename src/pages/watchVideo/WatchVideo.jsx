@@ -1,4 +1,13 @@
-import { Button, Space, Spin, Tooltip, Comment, Avatar, Form, List, notification } from "antd";
+import {
+  Button,
+  Space,
+  Spin,
+  Tooltip,
+  Comment,
+  Avatar,
+  Form,
+  notification,
+} from "antd";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { FaHeart, FaHeartBroken } from "react-icons/fa";
@@ -18,7 +27,6 @@ import {
 } from "../../redux/types";
 import videoService from "../../_services/video.service";
 import TextArea from "antd/lib/input/TextArea";
-import { BiEditAlt } from "react-icons/bi";
 
 const WatchVideo = () => {
   let history = useHistory();
@@ -47,13 +55,13 @@ const WatchVideo = () => {
     return () => {};
   }, [vidId]);
 
-  useEffect(() => {
-    if (video_link) {
-      paymentModalVisibleFunc(false);
-      play(tempVideo);
-    }
-    return () => {};
-  }, [video_link]);
+  // useEffect(() => {
+  //   if (video_link) {
+  //     paymentModalVisibleFunc(false);
+  //     play(tempVideo);
+  //   }
+  //   return () => {};
+  // }, [video_link]);
 
   useEffect(() => {
     setPlayVideo(true);
@@ -76,7 +84,7 @@ const WatchVideo = () => {
 
   const paymentModalVisibleFunc = (value, video, event) => {
     if (event) event.stopPropagation();
-
+    console.log(`value,video,event`, value, video);
     if (!user || user.role != "VIEWER")
       history.push({
         pathname: "/login",
@@ -85,7 +93,7 @@ const WatchVideo = () => {
     else {
       if (video && video.paid) {
         history.push(`/watch/${video.id}`);
-        // history.go(0);
+        history.go(0);
       } else {
         if (value) {
           setTempVideo(video);
@@ -98,14 +106,19 @@ const WatchVideo = () => {
   const renderComment = (video) => (
     <div className="flex">
       <Form.Item className="flex-1 mr-2">
-        <TextArea rows={1} onChange={(e) => setComment(e.target.value)} value={newComment} />
+        <TextArea
+          rows={1}
+          onChange={(e) => setComment(e.target.value)}
+          value={newComment}
+        />
       </Form.Item>
       <Form.Item>
         <Button
           htmlType="submit"
           loading={submitting}
           onClick={(e) => submitComment(e, video)}
-          type="text">
+          type="text"
+        >
           Add Comment
         </Button>
       </Form.Item>
@@ -147,7 +160,10 @@ const WatchVideo = () => {
       .likeDislikeVideo({ videoId: video.id, like: val })
       .then((res) => {
         if (res.data && res.data.success) {
-          dispatch({ type: GET_PAID_VIDEO_URL_SUCCESS, payload: res.data.video });
+          dispatch({
+            type: GET_PAID_VIDEO_URL_SUCCESS,
+            payload: res.data.video,
+          });
         }
       })
       .catch((err) => {
@@ -224,15 +240,20 @@ const WatchVideo = () => {
           </div>
           <div className="flex-col ml-2 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
             <div className="w-full flex justify-between">
-              <div className="text-gray-800 lg:text-2xl text-md  text-left">{video?.title}</div>
+              <div className="text-gray-800 lg:text-2xl text-md  text-left">
+                {video?.title}
+              </div>
               {video.paid || (user && user.role != "VIEWER") ? (
                 ""
               ) : (
                 <div className="py-0">
                   <Button
                     type="primary"
-                    onClick={(event) => paymentModalVisibleFunc(true, video, event)}
-                    className="mr-1 rounded-2xl text-xs px-2 py-0 opacity-80">
+                    onClick={(event) =>
+                      paymentModalVisibleFunc(true, video, event)
+                    }
+                    className="mr-1 rounded-2xl text-xs px-2 py-0 opacity-80"
+                  >
                     Watch Full Video
                   </Button>
                 </div>
@@ -240,7 +261,10 @@ const WatchVideo = () => {
             </div>
             <div className="flex justify-between text-gray-800 text-2xl w-full text-left">
               <div className="flex items-end">
-                <span className="text-gray-400 text-lg"> {video?.viewCount} views</span>
+                <span className="text-gray-400 text-lg">
+                  {" "}
+                  {video?.viewCount} views
+                </span>
                 <span className="text-gray-600 ml-4 text-base">
                   {moment(video?.premiered).format("MMM DD, YYYY")}
                 </span>
@@ -251,11 +275,13 @@ const WatchVideo = () => {
                     likeDislikeVideo(e, video, 1);
                   }}
                   placement="bottom"
-                  title="Like">
+                  title="Like"
+                >
                   <div
                     className={`flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ${
                       video.like == 1 ? "text-blue-400" : ""
-                    }`}>
+                    }`}
+                  >
                     {video?.likeCount} <FaHeart className="ml-1" />
                   </div>
                 </Tooltip>
@@ -264,11 +290,13 @@ const WatchVideo = () => {
                     likeDislikeVideo(e, video, 0);
                   }}
                   placement="bottom"
-                  title="Dislike">
+                  title="Dislike"
+                >
                   <span
                     className={`flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2 ${
                       video.like == 0 ? "text-blue-400" : ""
-                    }`}>
+                    }`}
+                  >
                     {video.dislikeCount} <FaHeartBroken className="ml-1" />
                   </span>
                 </Tooltip>
@@ -279,7 +307,8 @@ const WatchVideo = () => {
                 onClick={(e) => {
                   toggleMessages(e);
                 }}
-                className="flex items-center self-center text-md my-2">
+                className="flex items-center self-center text-md my-2"
+              >
                 {showMessages ? (
                   <>
                     Hide Messages <AiOutlineUpCircle className="ml-2" />
