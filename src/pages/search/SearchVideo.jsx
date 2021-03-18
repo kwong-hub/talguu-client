@@ -77,6 +77,7 @@ const SearchVideo = (props) => {
           srcset=""
         />
         <span className="my-4 p-4 "> No Result Found</span>
+        <p>Search again by </p>
         <p></p>
       </div>
     );
