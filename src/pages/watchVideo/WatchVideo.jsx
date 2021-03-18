@@ -55,13 +55,13 @@ const WatchVideo = () => {
     return () => {};
   }, [vidId]);
 
-  // useEffect(() => {
-  //   if (video_link) {
-  //     paymentModalVisibleFunc(false);
-  //     play(tempVideo);
-  //   }
-  //   return () => {};
-  // }, [video_link]);
+  useEffect(() => {
+    if (video_link) {
+      paymentModalVisibleFunc(false);
+      play(tempVideo);
+    }
+    return () => {};
+  }, [video_link]);
 
   useEffect(() => {
     setPlayVideo(true);

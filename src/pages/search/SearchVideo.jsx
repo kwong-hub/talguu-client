@@ -9,7 +9,7 @@ import RenderVideo from "../../components/renderVideo/RenderVideo";
 import SideNav from "../../partials/sideNav/SideNav";
 import { PURCHASE_VIDEO_ASYNC, VIEWER_VIDEOS_ASYNC } from "../../redux/types";
 import RenderSearchVideo from "../../components/renderSearchVideo/RenderSearchVideo";
-
+import empty from "../../assets/images/empty.svg";
 const SearchVideo = (props) => {
   let history = useHistory();
   let videoLink = useSelector((state) => state.video.video_link);
@@ -55,15 +55,31 @@ const SearchVideo = (props) => {
   };
 
   const renderVideos = () => {
-    return viewerVideos.map((video) => {
-      return (
-        <RenderSearchVideo
-          key={video.id}
-          video={video}
-          paymentModalVisible={paymentModalVisibleFunc}
+    // console.log(`viewerVide`, viewerVideos);
+    return viewerVideos.length > 0 ? (
+      viewerVideos.map((video) => {
+        return (
+          <RenderSearchVideo
+            key={video.id}
+            video={video}
+            paymentModalVisible={paymentModalVisibleFunc}
+          />
+        );
+      })
+    ) : (
+      <div className="m-4 flex flex-col items-center text-2xl text-gray-700">
+        <img
+          src={empty}
+          width={200}
+          height={200}
+          className="flex "
+          alt="No Result"
+          srcset=""
         />
-      );
-    });
+        <span className="my-4 p-4 "> No Result Found</span>
+        <p></p>
+      </div>
+    );
   };
 
   const renderPaymentModal = () => {
