@@ -1,6 +1,6 @@
 import { Button, Space, Spin, Tooltip, Comment, Avatar, Form, List, notification } from "antd";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaHeart, FaHeartBroken } from "react-icons/fa";
 import { AiOutlineDownCircle, AiOutlineUpCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,15 +17,15 @@ import {
   VIEWER_VIDEOS_ASYNC,
 } from "../../redux/types";
 import videoService from "../../_services/video.service";
-import TextArea from "antd/lib/input/TextArea";
-import { BiEditAlt } from "react-icons/bi";
+// import TextArea from "antd/lib/input/TextArea";
+// import { BiEditAlt } from "react-icons/bi";
 
 const WatchVideo = () => {
   let history = useHistory();
   let [playVideo, setPlayVideo] = useState(false);
   let [newComment, setComment] = useState("");
   const [showMessages, setShowMessages] = useState(false);
-  const [editComment, setEditComment] = useState(false);
+  // const [editComment, setEditComment] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   let [tempVideo, setTempVideo] = useState(null);
   let [paymentModalVisible, setPaymentModalVisible] = useState(false);
@@ -35,6 +35,7 @@ const WatchVideo = () => {
   let viewerVideos = useSelector((state) => state.video.viewerVideos);
   const video_link = useSelector((state) => state.video.video_link);
   const errorMessage = useSelector((state) => state.video.errMessages);
+  const commentRef = useRef();
 
   let user = JSON.parse(localStorage.getItem("user"));
 
@@ -49,7 +50,7 @@ const WatchVideo = () => {
 
   useEffect(() => {
     if (video_link) {
-      paymentModalVisibleFunc(false);
+      paymentModalVisibleFunc(false, currentVideo);
       play(tempVideo);
     }
     return () => {};
@@ -98,15 +99,29 @@ const WatchVideo = () => {
   const renderComment = (video) => (
     <div className="flex">
       <Form.Item className="flex-1 mr-2">
-        <TextArea rows={1} onChange={(e) => setComment(e.target.value)} value={newComment} />
+        <div
+          ref={commentRef}
+          onInput={() => {
+            setComment(commentRef.current.innerHTML);
+          }}
+          onBlur={() => {
+            setComment(commentRef.current.innerHTML);
+          }}
+          className="w-full text-left text-md px-2 py-1 rounded-lg comment_input"
+          contentEditable="true">
+          {currentVideo.hasComment || "Add a new comment"}
+        </div>
       </Form.Item>
       <Form.Item>
         <Button
           htmlType="submit"
           loading={submitting}
-          onClick={(e) => submitComment(e, video)}
-          type="text">
-          Add Comment
+          onClick={(e) => {
+            submitComment(e, video);
+            console.log(e.target);
+          }}
+          type="secondary">
+          {currentVideo.hasComment ? "Edit Comment" : "Add Comment"}
         </Button>
       </Form.Item>
     </div>
@@ -210,7 +225,7 @@ const WatchVideo = () => {
         {
           src: video ? (video.paid ? video.video_link : video.trailer) : "",
           type: video.video_type,
-          // src: "http://8mspbb.com/hls/1614928651645video.mp4.m3u8",
+          // src: "http://8mspbb.com/hls/1616052119942trailer.mp4.m3u8",
           // src: "https://talguu-vout1.s3.us-west-2.amazonaws.com/test8/master.m3u8",
           // type: "application/x-mpegURL",
         },

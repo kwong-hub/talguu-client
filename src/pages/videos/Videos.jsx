@@ -25,7 +25,7 @@ const Videos = (props) => {
 
   const playVideo = (video) => {
     history.push(`/watch/${video.id}`);
-    // history.go(0);
+    history.go(0);
   };
 
   const onSearch = (value) => {
@@ -59,11 +59,7 @@ const Videos = (props) => {
   const renderVideos = () => {
     return viewerVideos.map((video) => {
       return (
-        <RenderVideo
-          key={video.id}
-          video={video}
-          paymentModalVisible={paymentModalVisibleFunc}
-        />
+        <RenderVideo key={video.id} video={video} paymentModalVisible={paymentModalVisibleFunc} />
       );
     });
   };
