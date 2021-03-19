@@ -4,8 +4,6 @@ import { userService } from '../_services/user.service'
 
 function login(username, password) {
   return (dispatch) => {
-    // dispatch(request({ username }));
-
     userService.login(username, password).then(
       (user) => {
         dispatch(success(user))
@@ -13,7 +11,6 @@ function login(username, password) {
       },
       (error) => {
         dispatch(failure(error.toString()))
-        // dispatch(alertActions.error(error.toString()));
       }
     )
   }
@@ -85,5 +82,5 @@ export const userActions = {
   login,
   logout,
   register,
-  getAll
+  getAll,
 }
