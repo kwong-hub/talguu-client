@@ -2,7 +2,7 @@ import { environment } from "../config/config";
 import axios from "./axiosDefault";
 import { checkResponse } from "./errorHandler";
 
-export default {
+const videoService = {
   addPaymentInfo: async (payload) => {
     try {
       let res = await axios.post(`${environment}/payment/create`, payload);
@@ -45,3 +45,5 @@ export default {
     }
   },
 };
+
+export default videoService;
