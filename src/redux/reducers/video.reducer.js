@@ -15,7 +15,7 @@ import {
   VIEWER_LIVE_FAILURE,
   VIEWER_LIVE_SUCCESS,
   VIEWER_VIDEOS_FAILURE,
-  VIEWER_VIDEOS_SUCCESS
+  VIEWER_VIDEOS_SUCCESS,
 } from '../types'
 
 const INITIAL_STATE = {
@@ -28,7 +28,7 @@ const INITIAL_STATE = {
   video_link: null,
   purchasedVideos: [],
   savedVideos: [],
-  saveLaterStatus: null
+  saveLaterStatus: null,
 }
 
 const reducer = (state = INITIAL_STATE, action) => {
