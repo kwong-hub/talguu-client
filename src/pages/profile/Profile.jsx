@@ -1,50 +1,49 @@
-import React from "react";
-import { connect, useDispatch } from "react-redux";
-import { UserOutlined } from "@ant-design/icons";
-import { Form, TextArea, Avatar, Button, Input, message, Spin } from "antd";
-import SideNav from "../../partials/sideNav/SideNav";
-import { userActions } from "../../_actions";
-import { useState } from "react";
-import { useEffect } from "react";
-import { GET_USER_PROFILE_ASYNC } from "../../redux/types";
-import { userService } from "../../_services/user.service";
-import { FaBuilding, FaKey, FaLocationArrow } from "react-icons/fa";
-import { ImLocation2 } from "react-icons/im";
+import React, { useState, useEffect } from 'react'
+import { connect, useDispatch } from 'react-redux'
+import { UserOutlined } from '@ant-design/icons'
+import { Form, TextArea, Avatar, Button, Input, message, Spin } from 'antd'
+import SideNav from '../../partials/sideNav/SideNav'
+import { userActions } from '../../_actions'
+
+import { GET_USER_PROFILE_ASYNC } from '../../redux/types'
+import { userService } from '../../_services/user.service'
+import { FaBuilding, FaKey, FaLocationArrow } from 'react-icons/fa'
+import { ImLocation2 } from 'react-icons/im'
 const Profile = (props) => {
-  let dispatch = useDispatch();
-  const [user, setuser] = useState();
-  const [profile, setProfile] = useState();
+  const dispatch = useDispatch()
+  const [user, setuser] = useState()
+  const [profile, setProfile] = useState()
   const saveBasic = (values) => {
     userService
       .updateUserProfile(values)
       .then((data) => {
-        message.success("Successfully updated.");
-        setuser({ ...user, ...values });
+        message.success('Successfully updated.')
+        setuser({ ...user, ...values })
       })
-      .catch((err) => message.success("Failed to update."));
-  };
+      .catch((err) => message.success('Failed to update.'))
+  }
 
   const saveCompany = (values) => {
     userService
       .updateCompanyProfile(values)
       .then((data) => {
-        message.success("Successfully updated.");
-        setProfile(values);
+        message.success('Successfully updated.')
+        setProfile(values)
       })
-      .catch((err) => message.error("Failed to update."));
-  };
+      .catch((err) => message.error('Failed to update.'))
+  }
   const updatePassword = (values) => {
     userService
       .updatePassword(values)
       .then((data) => {
         if (data.success) {
-          message.success("Successfully Changed.");
+          message.success('Successfully Changed.')
         } else {
-          message.error(data.error ? data.error : "Failed to change");
+          message.error(data.error ? data.error : 'Failed to change')
         }
       })
-      .catch((err) => message.error("Failed to change."));
-  };
+      .catch((err) => message.error('Failed to change.'))
+  }
 
   useEffect(() => {
     // dispatch({ type: GET_USER_PROFILE_ASYNC });
@@ -52,24 +51,25 @@ const Profile = (props) => {
     userService.getUserProfile().then((data) => {
       // console.log("data", data);
       if (data.success) {
-        setProfile(data.producer ? data.producer : data.viewer);
-        setuser(data.user);
+        setProfile(data.producer ? data.producer : data.viewer)
+        setuser(data.user)
       }
-    });
-    return () => {};
-  }, []);
+    })
+    return () => {}
+  }, [])
   return (
     <div className="">
       <SideNav></SideNav>
-      {profile ? (
+      {profile
+        ? (
         <>
-          {" "}
+          {' '}
           <div className="flex flex-col mt-20 md:flex-row justify-center items-baseline">
             <div className="w-1/3 hidden md:inline-block ">
               <Avatar className="shadow-xl " size={80} icon={<UserOutlined />} />
               <div className="m-4">
                 <span className="text-2xl py-4 font-medium leading-tight">
-                  {user?.firstName + " " + user?.lastName}{" "}
+                  {user?.firstName + ' ' + user?.lastName}{' '}
                 </span>
                 <p className="font-light text-blue-500">{user?.email}</p>
               </div>
@@ -85,7 +85,7 @@ const Profile = (props) => {
                     name="normal_login"
                     className="flex flex-col items-baseline "
                     initialValues={{
-                      ...user,
+                      ...user
                     }}
                     onFinish={saveBasic}>
                     <div className="flex flex-col md:flex-row w-full ">
@@ -96,8 +96,8 @@ const Profile = (props) => {
                         rules={[
                           {
                             required: true,
-                            message: "Please input your firstName!",
-                          },
+                            message: 'Please input your firstName!'
+                          }
                         ]}>
                         <Input
                           className="rounded-xl text-gray-700 text-md p-2"
@@ -111,8 +111,8 @@ const Profile = (props) => {
                         rules={[
                           {
                             required: true,
-                            message: "Please input your lastName!",
-                          },
+                            message: 'Please input your lastName!'
+                          }
                         ]}>
                         <Input
                           className="rounded-xl text-gray-700 text-md p-2"
@@ -129,8 +129,8 @@ const Profile = (props) => {
                       rules={[
                         {
                           required: true,
-                          message: "Please input your Phone Number!",
-                        },
+                          message: 'Please input your Phone Number!'
+                        }
                       ]}>
                       <Input
                         className="rounded-xl text-gray-700 text-md p-2"
@@ -156,19 +156,21 @@ const Profile = (props) => {
             <div className="w-1/3 hidden md:inline-block">
               <FaBuilding className="flex text-4xl mx-auto" />
               <div className="m-4">
-                {profile.companyName ? (
+                {profile.companyName
+                  ? (
                   <>
                     <span className="text-2xl py-4 font-medium leading-tight">
                       {profile?.companyName}
                     </span>
                     <p className="font-light text-blue-500 flex items-center justify-center">
-                      <ImLocation2 /> {profile?.state + " ,"}
+                      <ImLocation2 /> {profile?.state + ' ,'}
                       {profile?.city}
                     </p>
                   </>
-                ) : (
+                    )
+                  : (
                   <p>No company Name</p>
-                )}
+                    )}
               </div>
             </div>
             <div className="px-6 w-full md:w-1/2">
@@ -184,7 +186,7 @@ const Profile = (props) => {
                     className="flex flex-col items-baseline"
                     initialValues={{
                       ...profile,
-                      companyName: profile?.companyName,
+                      companyName: profile?.companyName
                     }}
                     onFinish={saveCompany}>
                     <Form.Item
@@ -195,8 +197,8 @@ const Profile = (props) => {
                       rules={[
                         {
                           required: true,
-                          message: "Please input your company Name!",
-                        },
+                          message: 'Please input your company Name!'
+                        }
                       ]}>
                       <Input
                         className="rounded-xl text-gray-700 text-md p-2"
@@ -209,7 +211,7 @@ const Profile = (props) => {
                         name="companyAddress"
                         className="text-lg w-full text-gray-600"
                         help="Company detail address description."
-                        rules={[{ message: "Please input your address!" }]}>
+                        rules={[{ message: 'Please input your address!' }]}>
                         <Input
                           className="rounded-xl text-gray-700 text-md p-2"
                           placeholder="Company Address"
@@ -222,8 +224,8 @@ const Profile = (props) => {
                         rules={[
                           {
                             required: true,
-                            message: "Please input your Phone Number!",
-                          },
+                            message: 'Please input your Phone Number!'
+                          }
                         ]}>
                         <Input
                           className="rounded-xl  text-gray-700 text-md p-2"
@@ -240,8 +242,8 @@ const Profile = (props) => {
                         rules={[
                           {
                             required: true,
-                            message: "Please input your Phone Number!",
-                          },
+                            message: 'Please input your Phone Number!'
+                          }
                         ]}>
                         <Input
                           className="rounded-xl text-gray-700 text-md p-2"
@@ -255,8 +257,8 @@ const Profile = (props) => {
                         rules={[
                           {
                             required: true,
-                            message: "Please input your City!",
-                          },
+                            message: 'Please input your City!'
+                          }
                         ]}>
                         <Input
                           className="rounded-xl text-gray-700 text-md p-2"
@@ -270,8 +272,8 @@ const Profile = (props) => {
                         rules={[
                           {
                             required: true,
-                            message: "Please input your zipcode!",
-                          },
+                            message: 'Please input your zipcode!'
+                          }
                         ]}>
                         <Input
                           className="rounded-xl text-gray-700 text-md p-2"
@@ -319,8 +321,8 @@ const Profile = (props) => {
                     rules={[
                       {
                         required: true,
-                        message: "Please input your Old Password!",
-                      },
+                        message: 'Please input your Old Password!'
+                      }
                     ]}>
                     <Input
                       type="password"
@@ -333,7 +335,7 @@ const Profile = (props) => {
                     label="New Password"
                     name="newPassword"
                     className="text-lg flex w-full text-gray-600"
-                    rules={[{ required: true, message: "Please input your address!" }]}>
+                    rules={[{ required: true, message: 'Please input your address!' }]}>
                     <Input
                       type="password"
                       className="rounded-xl text-gray-700 text-md p-2"
@@ -348,8 +350,8 @@ const Profile = (props) => {
                     rules={[
                       {
                         required: true,
-                        message: "Please input your Confirm Password!",
-                      },
+                        message: 'Please input your Confirm Password!'
+                      }
                     ]}>
                     <Input
                       type="password"
@@ -368,18 +370,19 @@ const Profile = (props) => {
             </div>
           </div>
         </>
-      ) : (
+          )
+        : (
         <Spin size="large" className="flex items-center justify-center h-screen text-4xl" />
-      )}
+          )}
     </div>
-  );
-};
+  )
+}
 const mapStateToProps = (props) => {
   return {
-    ...props.account,
-  };
-};
+    ...props.account
+  }
+}
 const actionCreators = {
-  logout: userActions.logout,
-};
-export default connect(mapStateToProps, actionCreators)(Profile);
+  logout: userActions.logout
+}
+export default connect(mapStateToProps, actionCreators)(Profile)

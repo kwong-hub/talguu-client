@@ -1,21 +1,21 @@
-import { Button, Checkbox, Form, Input } from "antd";
-import React, { useState } from "react";
-import { FaFacebook, FaGoogle, FaLock, FaUser } from "react-icons/fa";
-import { connect } from "react-redux";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Button, Checkbox, Form, Input } from 'antd'
+import React, { useState } from 'react'
+import { FaFacebook, FaGoogle, FaLock, FaUser } from 'react-icons/fa'
+import { connect } from 'react-redux'
+import { Link, useHistory, useParams } from 'react-router-dom'
 
-import { userService } from "../../_services/user.service";
-import logo from "../../assets/images/streaming.png";
-import Header from "../../partials/header/Header";
+import { userService } from '../../_services/user.service'
+import logo from '../../assets/images/streaming.png'
+import Header from '../../partials/header/Header'
 
 const Login = (props) => {
-  const [error, setError] = useState();
-  var history = useHistory();
-  let param = useParams();
-  let user = localStorage.getItem("user");
+  const [error, setError] = useState()
+  const history = useHistory()
+  const param = useParams()
+  const user = localStorage.getItem('user')
   const forgotPassword = () => {
-    history.push("/forgot_password");
-  };
+    history.push('/forgot_password')
+  }
 
   const onFinish = (values) => {
     // console.log("Received values of form: ", values);
@@ -28,30 +28,30 @@ const Login = (props) => {
       .then((resp) => {
         // console.log("resp", resp);
         if (resp.success) {
-          props.dispatch({ type: "LOGIN_ASYNC", payload: resp });
+          props.dispatch({ type: 'LOGIN_ASYNC', payload: resp })
           if (param.return_url) {
-            history.push({ pathname: param.return_url });
+            history.push({ pathname: param.return_url })
           } else {
-            history.push("/");
+            history.push('/')
           }
           // window.location.reload(false);
         } else {
-          props.dispatch({ type: "LOGIN_FAIL" });
+          props.dispatch({ type: 'LOGIN_FAIL' })
           // console.log("resp", resp);
-          setError(resp.messages ? resp.messages[0] : "Can not login try again");
+          setError(resp.messages ? resp.messages[0] : 'Can not login try again')
         }
       })
       .catch((err) => {
-        props.dispatch({ type: "LOGIN_FAIL" });
+        props.dispatch({ type: 'LOGIN_FAIL' })
         // console.log(err);
-      });
-  };
+      })
+  }
 
   return (
     <div className="relative">
       <Header />
       <div className="absolute bottom-20 left-0 w-64 ">
-        <img src={require("../../assets/images/login-svg-2.svg").default} alt="Logo" />
+        <img src={require('../../assets/images/login-svg-2.svg').default} alt="Logo" />
       </div>
       {/* <div className="absolute top-1 right-0 w-32 ">
         <img
@@ -66,7 +66,7 @@ const Login = (props) => {
         />
       </div> */}
       <div className="absolute bottom-10 left-0 w-1/4 ">
-        <img src={require("../../assets/images/login-svg.svg").default} alt="Logo" />
+        <img src={require('../../assets/images/login-svg.svg').default} alt="Logo" />
       </div>
       <div className="flex justify-center items-center h-full pt-2 mt-14">
         <div className="w-full max-w-xs flex flex-col justify-center m-4 p-4 py-8 shadow-md rounded-2xl bg-white">
@@ -99,7 +99,7 @@ const Login = (props) => {
               onFinish={onFinish}>
               <Form.Item
                 name="email"
-                rules={[{ required: true, message: "Please input your email!" }]}>
+                rules={[{ required: true, message: 'Please input your email!' }]}>
                 <Input
                   className="rounded-2xl"
                   prefix={<FaUser className="site-form-item-icon" />}
@@ -108,7 +108,7 @@ const Login = (props) => {
               </Form.Item>
               <Form.Item
                 name="password"
-                rules={[{ required: true, message: "Please input your Password!" }]}>
+                rules={[{ required: true, message: 'Please input your Password!' }]}>
                 <Input
                   className="rounded-2xl "
                   prefix={<FaLock className="site-form-item-icon" />}
@@ -156,14 +156,14 @@ const Login = (props) => {
         </div>
       </div>
     </div>
-  );
-};
-
-function mapState(state) {
-  const { loggingIn } = state.authentication;
-  return { loggingIn };
+  )
 }
 
-const connectedLoginPage = connect(mapState, null)(Login);
-export { connectedLoginPage as Login };
+function mapState(state) {
+  const { loggingIn } = state.authentication
+  return { loggingIn }
+}
+
+const connectedLoginPage = connect(mapState, null)(Login)
+export { connectedLoginPage as Login }
 // export  Login;

@@ -1,17 +1,17 @@
-import "./LiveVideos.css";
+import './LiveVideos.css';
 
-import { Input, Modal, Radio, Tooltip } from "antd";
-import React, { Component } from "react";
-import { FaDollarSign, FaPlayCircle, FaSearch } from "react-icons/fa";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { Input, Modal, Radio, Tooltip } from 'antd';
+import React, { Component } from 'react';
+import { FaDollarSign, FaPlayCircle, FaSearch } from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-import mastercard from "../../assets/images/mastercard.png";
-import visa from "../../assets/images/visa.png";
-import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
-import SideNav from "../../partials/sideNav/SideNav";
-import { PURCHASE_VIDEO_ASYNC, VIEWER_LIVE_ASYNC } from "../../redux/types";
-import { liveVideoURL } from "../../config/config";
+import mastercard from '../../assets/images/mastercard.png';
+import visa from '../../assets/images/visa.png';
+import VideoPlayer from '../../components/videoPlayer/VideoPlayer';
+import SideNav from '../../partials/sideNav/SideNav';
+import { PURCHASE_VIDEO_ASYNC, VIEWER_LIVE_ASYNC } from '../../redux/types';
+import { liveVideoURL } from '../../config/config';
 
 const { Search } = Input;
 
@@ -22,14 +22,14 @@ export class LiveVideos extends Component {
     autoplay: false,
     paymentModalVisible: false,
     tempVideo: {},
-    paymentMethod: "mastercard",
+    paymentMethod: 'mastercard',
     currentLive: null,
   };
 
   constructor(props) {
     super(props);
     this.playerRef = React.createRef();
-    props.dispatch({ type: VIEWER_LIVE_ASYNC, payload: "" });
+    props.dispatch({ type: VIEWER_LIVE_ASYNC, payload: '' });
     // console.log(this.props.liveVideos);
   }
 
@@ -58,12 +58,11 @@ export class LiveVideos extends Component {
 
   paymentModalVisible = (value, video, event) => {
     if (event) event.stopPropagation();
-    if (!localStorage.getItem("user")) this.props.history.push("/login");
+    if (!localStorage.getItem('user')) this.props.history.push('/login');
     if (video && video.paid) {
       this.props.history.push(`/watch/${video.id}`);
     } else {
-      if (value)
-        this.setState({ paymentModalVisible: value, tempVideo: video });
+      if (value) this.setState({ paymentModalVisible: value, tempVideo: video });
       else this.setState({ paymentModalVisible: value });
     }
   };
@@ -81,36 +80,25 @@ export class LiveVideos extends Component {
     return this.props.liveVideos.length == 0 ? (
       <>
         <div
-          className={`flex justify-center w-full p-2 cursor-pointer video_thumbnail self-stretch`}
-        >
-          <p className="text-gray-600 text-md py-4 w-96">
-            Currently there is no live video.
-          </p>
+          className={`flex justify-center w-full p-2 cursor-pointer video_thumbnail self-stretch`}>
+          <p className="text-gray-600 text-md py-4 w-96">Currently there is no live video.</p>
         </div>
       </>
     ) : (
       this.props.liveVideos.map((video) => {
-        video["paid"] = true;
-        video["viewCount"] = 0;
+        video['paid'] = true;
+        video['viewCount'] = 0;
         return (
           <div
             key={video.stream_key}
             onClick={() => this.playVideo(video)}
             className={`flex-col w-full md:w-4/12 lg:w-3/12 ${
-              this.state.currentVideo ? "lg:w-full" : ""
-            } sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch`}
-          >
+              this.state.currentVideo ? 'lg:w-full' : ''
+            } sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch`}>
             <div className="relative">
-              <img
-                src={video.thumbnail}
-                alt=""
-                className="min-w-full min-h-full"
-              />
+              <img src={video.thumbnail} alt="" className="min-w-full min-h-full" />
               <div className="absolute thumbnail_button_container">
-                <Tooltip
-                  placement="bottom"
-                  title={video.paid ? "" : "Watch Trailer"}
-                >
+                <Tooltip placement="bottom" title={video.paid ? '' : 'Watch Trailer'}>
                   <FaPlayCircle className="text-gray-600 thumbnail_button" />
                 </Tooltip>
               </div>
@@ -146,9 +134,7 @@ export class LiveVideos extends Component {
             </div> */}
             </div>
             <div className="flex-col">
-              <h4 className="my-2 text-left text-md text-gray-600 video_title">
-                {video.title}
-              </h4>
+              <h4 className="my-2 text-left text-md text-gray-600 video_title">{video.title}</h4>
               <div className="flex">
                 <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2">
                   {video.viewCount} views
@@ -171,46 +157,37 @@ export class LiveVideos extends Component {
         footer={null}
         visible={this.state.paymentModalVisible}
         onOk={() => this.paymentModalVisible(false)}
-        onCancel={() => this.paymentModalVisible(false)}
-      >
+        onCancel={() => this.paymentModalVisible(false)}>
         <div className="absolute -left-8 top-1 w-16 h-16 rounded-full bg-blue-500 text-white flex items-center justify-center font-semibold">
           <FaDollarSign /> {0.23}
         </div>
-        <h3 className="text-gray-600 uppercase text-center w-full text-lg mb-3">
-          Payment
-        </h3>
+        <h3 className="text-gray-600 uppercase text-center w-full text-lg mb-3">Payment</h3>
         <div>
           <img src={this.state.tempVideo.thumbnial} alt="" />
         </div>
         <Radio.Group
           onChange={this.paymentMethodChange}
           value={this.state.paymentMethod}
-          className="w-full flex-col my-2"
-        >
+          className="w-full flex-col my-2">
           <Radio
             className="flex items-center justify-start w-full border-t-2 border-gray-100 p-3 text-gray-600 text-ls "
-            value="mastercard"
-          >
+            value="mastercard">
             <img src={mastercard} alt="" className="h-10 ml-1" />
             <span className="ml-1">Mastercard</span>
           </Radio>
 
           <Radio
             className="flex items-center justify-start w-full border-t-2 border-gray-100 p-3 text-gray-600 text-ls "
-            value="visa"
-          >
-            <img src={visa} alt="" className="h-10 ml-1" />{" "}
-            <span className="ml-1">Visa</span>
+            value="visa">
+            <img src={visa} alt="" className="h-10 ml-1" /> <span className="ml-1">Visa</span>
           </Radio>
         </Radio.Group>
         <p className="text-gray-700 text-xs text-center w-full mb-2">
-          Notice: Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam
-          illo quas, facilis
+          Notice: Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam illo quas, facilis
         </p>
         <div
           onClick={() => this.purchaseVideo(this.state.tempVideo.id)}
-          className="h-10 bg-blue-500 -mx-6 text-center text-white text-md flex items-center justify-center cursor-pointer font-semibold pay_button"
-        >
+          className="h-10 bg-blue-500 -mx-6 text-center text-white text-md flex items-center justify-center cursor-pointer font-semibold pay_button">
           Pay <FaDollarSign />
           {0.23}
         </div>
@@ -222,12 +199,12 @@ export class LiveVideos extends Component {
     const videoJsOptions = {
       autoplay: true,
       controls: true,
-      aspectRatio: "21:9",
+      aspectRatio: '21:9',
       responsive: true,
       sources: [
         {
           src: `${liveVideoURL}/hls/${this.state.currentLive?.stream_key}.m3u8`,
-          type: "application/x-mpegURL",
+          type: 'application/x-mpegURL',
         },
       ],
     };
@@ -236,9 +213,7 @@ export class LiveVideos extends Component {
       <div className="pt-4 ml-0 sm:ml-14" ref={this.playerRef}>
         <SideNav></SideNav>
         <div className="flex relative items-end px-4 py-4 mt-24 -mb-10 sm:mb-0">
-          <p className="absolute text-lg font-semibold text-blue-700">
-            Live Videos
-          </p>
+          <p className="absolute text-lg font-semibold text-blue-700">Live Videos</p>
         </div>
         {this.state.currentLive && (
           <div className="flex flex-col items-start ml-2 my-6 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios'
 
 // axios.defaults.baseURL = 'http://localhost:1010/'
 // if (localStorage.getItem("user")) {
@@ -10,16 +10,16 @@ import axios from "axios";
 
 axios.interceptors.request.use(
   (config) => {
-    let user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem('user'))
     if (user) {
-      config.headers["Authorization"] = "Bearer " + user.idToken;
+      config.headers.Authorization = 'Bearer ' + user.idToken
     }
     // config.headers['Content-Type'] = 'application/json';
-    return config;
+    return config
   },
   (error) => {
-    Promise.reject(error);
+    Promise.reject(error)
   }
-);
+)
 
-export default axios;
+export default axios

@@ -1,9 +1,9 @@
-import { all, call, put, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeLatest } from 'redux-saga/effects'
 
-import { userConstants } from "../../_constants";
-import paymentService from "../../_services/payment.service";
-import { userService } from "../../_services/user.service";
-import videoService from "../../_services/video.service";
+import { userConstants } from '../../_constants'
+import paymentService from '../../_services/payment.service'
+import { userService } from '../../_services/user.service'
+import videoService from '../../_services/video.service'
 import {
   ADD_PAYMENT_INFO_ASYNC,
   ADD_PAYMENT_INFO_FAILURE,
@@ -44,164 +44,164 @@ import {
   VIEWER_LIVE_SUCCESS,
   VIEWER_VIDEOS_ASYNC,
   VIEWER_VIDEOS_FAILURE,
-  VIEWER_VIDEOS_SUCCESS,
-} from "../types";
+  VIEWER_VIDEOS_SUCCESS
+} from '../types'
 
 // import userService from "../../services/user.service";
-function* createUserAsync(action) {
-  let user = yield call(userService.createProducer, action.payload);
+function * createUserAsync(action) {
+  const user = yield call(userService.createProducer, action.payload)
   if (user && user.success) {
-    yield put({ type: CREATE_PRODUCER_SUCCESS, payload: user.user });
+    yield put({ type: CREATE_PRODUCER_SUCCESS, payload: user.user })
   } else {
-    yield put({ type: CREATE_PRODUCER_FAILURE, payload: user.messages });
+    yield put({ type: CREATE_PRODUCER_FAILURE, payload: user.messages })
   }
 }
 
-function* createViewerAsync(action) {
-  let user = yield call(userService.createViewer, action.payload);
+function * createViewerAsync(action) {
+  const user = yield call(userService.createViewer, action.payload)
   if (user && user.success) {
-    yield put({ type: CREATE_VIEWER_SUCCESS, payload: user.user });
+    yield put({ type: CREATE_VIEWER_SUCCESS, payload: user.user })
   } else {
-    yield put({ type: CREATE_VIEWER_FAILURE, payload: user.messages });
+    yield put({ type: CREATE_VIEWER_FAILURE, payload: user.messages })
   }
 }
 
-function* loginSuccess(data) {
-  yield put({ type: userConstants.LOGIN_SUCCESS, payload: data.payload });
+function * loginSuccess(data) {
+  yield put({ type: userConstants.LOGIN_SUCCESS, payload: data.payload })
 }
 
-function* loginFail() {
-  yield put({ type: userConstants.LOGIN_FAILURE });
+function * loginFail() {
+  yield put({ type: userConstants.LOGIN_FAILURE })
 }
-function* logout() {
-  yield put({ type: userConstants.LOGOUT });
+function * logout() {
+  yield put({ type: userConstants.LOGOUT })
 }
 
-function* videoUpload(action) {
+function * videoUpload(action) {
   // console.log("action", action);
-  let video = yield call(videoService.addVideo, action.payload);
+  const video = yield call(videoService.addVideo, action.payload)
   // console.log(video);
   if (video && video.success) {
-    yield put({ type: VIDEO_SUCCESS, payload: video.data });
+    yield put({ type: VIDEO_SUCCESS, payload: video.data })
   } else {
-    yield put({ type: VIDEO_FAILURE, payload: video.messages });
+    yield put({ type: VIDEO_FAILURE, payload: video.messages })
   }
 }
 
-function* getViewerVideosAsync(action) {
+function * getViewerVideosAsync(action) {
   // console.log('action', action)
-  let res = yield call(videoService.getViewerVideos, action.payload);
+  const res = yield call(videoService.getViewerVideos, action.payload)
   if (res.success) {
-    yield put({ type: VIEWER_VIDEOS_SUCCESS, payload: res.data });
+    yield put({ type: VIEWER_VIDEOS_SUCCESS, payload: res.data })
   } else {
-    yield put({ type: VIEWER_VIDEOS_FAILURE, payload: "Server Error" });
+    yield put({ type: VIEWER_VIDEOS_FAILURE, payload: 'Server Error' })
   }
 }
 
-function* getViewerLiveVideos(action) {
-  let res = yield call(videoService.getViewerLiveVideos);
+function * getViewerLiveVideos(action) {
+  const res = yield call(videoService.getViewerLiveVideos)
   if (res.success) {
-    yield put({ type: VIEWER_LIVE_SUCCESS, payload: res.data });
+    yield put({ type: VIEWER_LIVE_SUCCESS, payload: res.data })
   } else {
-    yield put({ type: VIEWER_LIVE_FAILURE, payload: "Server Error" });
+    yield put({ type: VIEWER_LIVE_FAILURE, payload: 'Server Error' })
   }
 }
 
-function* getPaidVideoUrlAsync(action) {
+function * getPaidVideoUrlAsync(action) {
   // console.log(action);
-  let video = yield call(videoService.getPaidVideoUrl, action.payload);
+  const video = yield call(videoService.getPaidVideoUrl, action.payload)
 
   if (video && video) {
-    yield put({ type: GET_PAID_VIDEO_URL_SUCCESS, payload: video });
+    yield put({ type: GET_PAID_VIDEO_URL_SUCCESS, payload: video })
   } else {
-    yield put({ type: GET_PAID_VIDEO_URL_FAILURE, payload: video });
+    yield put({ type: GET_PAID_VIDEO_URL_FAILURE, payload: video })
   }
 }
 
-function* purchaseVideoAsync(action) {
-  let res = yield call(videoService.purchaseVideo, action.payload);
+function * purchaseVideoAsync(action) {
+  const res = yield call(videoService.purchaseVideo, action.payload)
 
   // console.log("from saga", res);
   if (res && res.video_link) {
-    yield put({ type: PURCHASE_VIDEO_SUCCESS, payload: res });
+    yield put({ type: PURCHASE_VIDEO_SUCCESS, payload: res })
   } else {
-    yield put({ type: PURCHASE_VIDEO_FAILURE, payload: res.message });
+    yield put({ type: PURCHASE_VIDEO_FAILURE, payload: res.message })
   }
 }
 
-function* saveLaterVideoAsync(action) {
-  let res = yield call(videoService.saveVideoLater, action.payload);
+function * saveLaterVideoAsync(action) {
+  const res = yield call(videoService.saveVideoLater, action.payload)
 
   if (res && res.success) {
-    yield put({ type: SAVE_LATER_SUCCESS, payload: res.video });
+    yield put({ type: SAVE_LATER_SUCCESS, payload: res.video })
   } else {
-    yield put({ type: SAVE_LATER_FAILURE, payload: res.video });
+    yield put({ type: SAVE_LATER_FAILURE, payload: res.video })
   }
 }
 
-function* getPaidUserVideosAsync(action) {
-  let res = yield call(videoService.getPaidUserVideos);
+function * getPaidUserVideosAsync(action) {
+  const res = yield call(videoService.getPaidUserVideos)
   if (res.success) {
-    yield put({ type: PAID_VIEWER_VIDEOS_SUCCESS, payload: res.data });
+    yield put({ type: PAID_VIEWER_VIDEOS_SUCCESS, payload: res.data })
   } else {
-    yield put({ type: PAID_VIEWER_VIDEOS_FAILURE, payload: "Server error" });
+    yield put({ type: PAID_VIEWER_VIDEOS_FAILURE, payload: 'Server error' })
   }
 }
 
-function* getSavedVideosAsync(action) {
-  let res = yield call(videoService.getSavedUserVideos);
+function * getSavedVideosAsync(action) {
+  const res = yield call(videoService.getSavedUserVideos)
   if (res.success) {
-    yield put({ type: GET_SAVED_VIDEOS_SUCCESS, payload: res.data });
+    yield put({ type: GET_SAVED_VIDEOS_SUCCESS, payload: res.data })
   } else {
-    yield put({ type: GET_SAVED_VIDEOS_FAILURE, payload: "Server error" });
+    yield put({ type: GET_SAVED_VIDEOS_FAILURE, payload: 'Server error' })
   }
 }
 
-function* addPaymentInfoAsync(action) {
-  let res = yield call(paymentService.addPaymentInfo, action.payload);
+function * addPaymentInfoAsync(action) {
+  const res = yield call(paymentService.addPaymentInfo, action.payload)
 
   if (res.success) {
-    yield put({ type: ADD_PAYMENT_INFO_SUCCESS, payload: res.payment_info });
+    yield put({ type: ADD_PAYMENT_INFO_SUCCESS, payload: res.payment_info })
   } else {
     yield put({
       type: ADD_PAYMENT_INFO_FAILURE,
-      payload: "Can not create payment information. Try again.",
-    });
+      payload: 'Can not create payment information. Try again.'
+    })
   }
 }
 
-function* getPaymentInfoAsync(action) {
-  let res = yield call(paymentService.getUserPaymentInfos, action.payload);
+function * getPaymentInfoAsync(action) {
+  const res = yield call(paymentService.getUserPaymentInfos, action.payload)
 
   if (res.success) {
-    yield put({ type: GET_USER_PAYMENT_INFOS_SUCCESS, payload: res.payment_infos });
+    yield put({ type: GET_USER_PAYMENT_INFOS_SUCCESS, payload: res.payment_infos })
   } else {
-    yield put({ type: GET_USER_PAYMENT_INFOS_FAILURE, payload: "Server error" });
+    yield put({ type: GET_USER_PAYMENT_INFOS_FAILURE, payload: 'Server error' })
   }
 }
 
-function* getUserProfileInfo(action) {
-  let res = yield call(userService.getUserProfile, action.payload);
+function * getUserProfileInfo(action) {
+  const res = yield call(userService.getUserProfile, action.payload)
   // console.log("res", res);
   if (res.success) {
     yield put({
       type: GET_USER_PROFILE,
-      payload: { company: res.producer ? res.producer : res.viewer, user: res.user },
-    });
+      payload: { company: res.producer ? res.producer : res.viewer, user: res.user }
+    })
   } else {
   }
 }
 
-function* videoOnReady(action) {
-  yield put({ type: VIDEO_READY, payload: action.payload });
+function * videoOnReady(action) {
+  yield put({ type: VIDEO_READY, payload: action.payload })
 }
 
-function* watchAll() {
+function * watchAll() {
   yield all([
     takeLatest(CREATE_PRODUCER_ASYNC, createUserAsync),
     takeLatest(CREATE_VIEWER_ASYNC, createViewerAsync),
-    takeLatest("LOGIN_ASYNC", loginSuccess),
-    takeLatest("LOGIN_FAIL", loginFail),
+    takeLatest('LOGIN_ASYNC', loginSuccess),
+    takeLatest('LOGIN_FAIL', loginFail),
     takeLatest(userConstants.LOGOUT_ASYNC, logout),
     takeLatest(UPLOAD_ASYNC, videoUpload),
     takeLatest(VIDEO_READY_ASYNC, videoOnReady),
@@ -214,8 +214,8 @@ function* watchAll() {
     takeLatest(PAID_VIEWER_VIDEOS_ASYNC, getPaidUserVideosAsync),
     takeLatest(ADD_PAYMENT_INFO_ASYNC, addPaymentInfoAsync),
     takeLatest(GET_USER_PAYMENT_INFOS_ASYNC, getPaymentInfoAsync),
-    takeLatest(GET_USER_PROFILE_ASYNC, getUserProfileInfo),
-  ]);
+    takeLatest(GET_USER_PROFILE_ASYNC, getUserProfileInfo)
+  ])
 }
 
-export default watchAll;
+export default watchAll

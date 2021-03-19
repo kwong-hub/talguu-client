@@ -1,14 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-import svg_not from "../assets/images/not_found.svg";
+import svgNot from '../assets/images/not_found.svg'
 
 const NotFound = () => {
   return (
     <div className="flex flex-col items-center justify-center w-3/4 mx-auto text-xl text-gray-700">
-      <img className="w-2/3 m-4" src={svg_not} alt="" />
+      <img className="w-2/3 m-4" src={svgNot} alt="" />
       <h1> 404 Error.</h1>
-      <p> We can't find the page you're looking for.</p>
+      <p> We can&apos;t find the page you&apos;re looking for.</p>
       <Link
         as={Link}
         to="/"
@@ -17,7 +17,7 @@ const NotFound = () => {
         Back to home
       </Link>
     </div>
-  );
-};
+  )
+}
 
-export default NotFound;
+export default NotFound

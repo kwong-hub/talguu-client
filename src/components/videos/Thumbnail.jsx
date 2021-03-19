@@ -1,19 +1,19 @@
-import { Button, message, Modal, Upload } from "antd";
-import ImgCrop from "antd-img-crop";
-import React, { Component } from "react";
-import { FaPlus } from "react-icons/fa";
+import { Button, message, Modal, Upload } from 'antd';
+import ImgCrop from 'antd-img-crop';
+import React, { Component } from 'react';
+import { FaPlus } from 'react-icons/fa';
 
-import videoService from "../../_services/video.service";
+import videoService from '../../_services/video.service';
 
 const intialState = {
-  formatError: "",
+  formatError: '',
   uploading: false,
   uploaded: false,
   previewVisible: false,
-  previewImage: "",
-  previewTitle: "",
+  previewImage: '',
+  previewTitle: '',
   previousImage: false,
-  previousImageUrl: "",
+  previousImageUrl: '',
 
   fileList: [
     // {
@@ -37,15 +37,15 @@ export class Thumbnail extends Component {
   beforeCrop = (file) => {
     this.setState(intialState);
     if (file.size > 1000000) {
-      this.setState({ formatError: "Max file size is 1MB." });
+      this.setState({ formatError: 'Max file size is 1MB.' });
       return false;
     } else if (
-      file.type !== "image/png" &&
-      file.type !== "image/jpeg" &&
-      file.type !== "images/jpg"
+      file.type !== 'image/png' &&
+      file.type !== 'image/jpeg' &&
+      file.type !== 'images/jpg'
     ) {
       this.setState({
-        formatError: "Unsupported file type! File type should be .png .jpeg, .jpg",
+        formatError: 'Unsupported file type! File type should be .png .jpeg, .jpg',
       });
       return false;
     }
@@ -71,7 +71,7 @@ export class Thumbnail extends Component {
     this.setState({
       previewImage: file.url || file.preview,
       previewVisible: true,
-      previewTitle: file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
+      previewTitle: file.name || file.url.substring(file.url.lastIndexOf('/') + 1),
     });
   };
 
@@ -80,12 +80,12 @@ export class Thumbnail extends Component {
     this.setState({ fileList });
   };
   successMessage = () => {
-    message.success("Successfully Uploaded");
+    message.success('Successfully Uploaded');
   };
 
   onUpload = () => {
     this.setState({ uploaded: true });
-    let fileName = Date.now() + "image" + "." + this.state.fileList[0].name.split(".")[1];
+    let fileName = Date.now() + 'image' + '.' + this.state.fileList[0].name.split('.')[1];
     let callBack = (res) => {
       // console.log(res);
     };
@@ -100,8 +100,8 @@ export class Thumbnail extends Component {
         Object.keys(options).map((key) => {
           formData.append(key, options[key]);
         });
-        formData.append("file", this.state.fileList[0].originFileObj);
-        thumbnial = res.signedRequest.url + "/" + fileName;
+        formData.append('file', this.state.fileList[0].originFileObj);
+        thumbnial = res.signedRequest.url + '/' + fileName;
         return videoService.uploadVideoToS3(res.signedRequest.url, formData, {
           ...res.config,
           onUploadProgress: callBack,
@@ -147,7 +147,7 @@ export class Thumbnail extends Component {
           title={previewTitle}
           footer={null}
           onCancel={this.handleCancel}>
-          <img alt="example" style={{ width: "100%" }} src={previewImage} />
+          <img alt="example" style={{ width: '100%' }} src={previewImage} />
         </Modal>
         <p className="bg-gray-100 text-red-600 text-sm">{this.state.formatError}</p>
         {this.state.uploading && (
@@ -157,7 +157,7 @@ export class Thumbnail extends Component {
             onClick={this.onUpload}
             loading={this.state.uploaded}
             style={{ marginTop: 16 }}>
-            {this.state.uploaded ? "Uploading" : "Start Upload"}
+            {this.state.uploaded ? 'Uploading' : 'Start Upload'}
           </Button>
         )}
       </>

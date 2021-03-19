@@ -1,14 +1,14 @@
-import Modal from "antd/lib/modal/Modal";
-import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
-import { FaDollarSign } from "react-icons/fa";
-import { useHistory } from "react-router-dom";
+import Modal from 'antd/lib/modal/Modal'
+import PropTypes from 'prop-types'
+import React, { useEffect, useState } from 'react'
+import { FaDollarSign } from 'react-icons/fa'
+import { useHistory } from 'react-router-dom'
 
-import paymentService from "../../_services/payment.service";
+import paymentService from '../../_services/payment.service'
 
 function PaymentModal(props) {
-  const [balance, setBalance] = useState(null);
-  const history = useHistory();
+  const [balance, setBalance] = useState(null)
+  const history = useHistory()
 
   useEffect(() => {
     // console.log("getting balance");
@@ -17,17 +17,17 @@ function PaymentModal(props) {
       .then((res) => {
         if (res.success) {
           if (!isNaN(res.balance)) {
-            setBalance(res?.balance);
+            setBalance(res?.balance)
           }
         }
       })
-      .catch((err) => console.log(err));
-    return () => {};
-  }, []);
+      .catch((err) => console.log(err))
+    return () => {}
+  }, [])
 
   const routeToDeposit = () => {
-    history.push("/deposit");
-  };
+    history.push('/deposit')
+  }
 
   return (
     <Modal
@@ -73,7 +73,7 @@ function PaymentModal(props) {
         </div>
       )}
     </Modal>
-  );
+  )
 }
 
 PaymentModal.propTypes = {
@@ -81,9 +81,9 @@ PaymentModal.propTypes = {
   paymentModalVisibleFunc: PropTypes.func,
   video: PropTypes.shape({
     id: PropTypes.string,
-    thumbnial: PropTypes.string,
+    thumbnial: PropTypes.string
   }),
-  paymentModalVisible: PropTypes.bool,
-};
+  paymentModalVisible: PropTypes.bool
+}
 
-export default PaymentModal;
+export default PaymentModal

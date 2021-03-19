@@ -1,68 +1,69 @@
-import "./Videos.css";
+import './Videos.css'
 
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, useParams } from 'react-router-dom'
 
-import PaymentModal from "../../components/paymentModal/PaymentModal";
-import RenderVideo from "../../components/renderVideo/RenderVideo";
-import SideNav from "../../partials/sideNav/SideNav";
-import { PURCHASE_VIDEO_ASYNC, VIEWER_VIDEOS_ASYNC } from "../../redux/types";
+import PaymentModal from '../../components/paymentModal/PaymentModal'
+import RenderVideo from '../../components/renderVideo/RenderVideo'
+import SideNav from '../../partials/sideNav/SideNav'
+import { PURCHASE_VIDEO_ASYNC, VIEWER_VIDEOS_ASYNC } from '../../redux/types'
 
 const Videos = (props) => {
-  let history = useHistory();
-  let videoLink = useSelector((state) => state.video.video_link);
-  let [tempVideo, setTempVideo] = useState(null);
-  let [paymentModalVisible, setPaymentModalVisible] = useState(false);
-  let { q } = useParams();
-  let dispatch = useDispatch();
-  let viewerVideos = useSelector((state) => state.video.viewerVideos);
+  const history = useHistory()
+  const videoLink = useSelector((state) => state.video.video_link)
+  const [tempVideo, setTempVideo] = useState(null)
+  const [paymentModalVisible, setPaymentModalVisible] = useState(false)
+  const { q } = useParams()
+  const dispatch = useDispatch()
+  const viewerVideos = useSelector((state) => state.video.viewerVideos)
 
   useEffect(() => {
     // console.log("fetching videos...");
-    dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q } });
-  }, []);
+    dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q } })
+  }, [])
 
   const playVideo = (video) => {
-    history.push(`/watch/${video.id}`);
-    history.go(0);
-  };
+    history.push(`/watch/${video.id}`)
+    history.go(0)
+  }
 
   const onSearch = (value) => {
-    dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q: value } });
-  };
+    dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q: value } })
+  }
 
   const paymentModalVisibleFunc = (value, video, event) => {
-    if (event) event.stopPropagation();
-    let user = JSON.parse(localStorage.getItem("user"));
-    if (!user || user.role != "VIEWER")
+    if (event) event.stopPropagation()
+    const user = JSON.parse(localStorage.getItem('user'))
+    if (!user || user.role != 'VIEWER') {
       history.push({
-        pathname: "/login",
-        search: `?return_url=/watch/${video.id}`,
-      });
+        pathname: '/login',
+        search: `?return_url=/watch/${video.id}`
+      })
+    }
     if (video && video.paid) {
-      history.push(`/watch/${video.id}`);
+      history.push(`/watch/${video.id}`)
     } else {
       if (value) {
-        setPaymentModalVisible(value);
-        setTempVideo(video);
-      } else setPaymentModalVisible(value);
+        setPaymentModalVisible(value)
+        setTempVideo(video)
+      } else setPaymentModalVisible(value)
     }
-  };
+  }
 
   const purchaseVideo = (id) => {
-    dispatch({ type: PURCHASE_VIDEO_ASYNC, payload: id });
-    playVideo({ ...tempVideo, video_link: videoLink });
-    paymentModalVisibleFunc(false);
-  };
+    dispatch({ type: PURCHASE_VIDEO_ASYNC, payload: id })
+    playVideo({ ...tempVideo, video_link: videoLink })
+    paymentModalVisibleFunc(false)
+  }
 
   const renderVideos = () => {
     return viewerVideos.map((video) => {
       return (
         <RenderVideo key={video.id} video={video} paymentModalVisible={paymentModalVisibleFunc} />
-      );
-    });
-  };
+      )
+    })
+  }
 
   const renderPaymentModal = () => {
     return (
@@ -72,8 +73,8 @@ const Videos = (props) => {
         video={tempVideo}
         purchaseVideo={purchaseVideo}
       />
-    );
-  };
+    )
+  }
 
   return (
     <div className="pt-2 sm:ml-14 mt-20">
@@ -83,7 +84,7 @@ const Videos = (props) => {
       </div>
       {paymentModalVisible && renderPaymentModal()}
     </div>
-  );
-};
+  )
+}
 
-export default Videos;
+export default Videos

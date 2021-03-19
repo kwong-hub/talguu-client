@@ -1,8 +1,8 @@
-import "./VideoPlayer.css";
+import './VideoPlayer.css'
 
-import React, { Component } from "react";
-import videojs from "video.js";
-import videoService from "../../_services/video.service";
+import React, { Component } from 'react'
+import videojs from 'video.js'
+import videoService from '../../_services/video.service'
 
 // import videojs_contrib_hls from "videojs-contrib-hls";
 export class VideoPlayer extends Component {
@@ -13,10 +13,10 @@ export class VideoPlayer extends Component {
       function onPlayerReady() {
         //   console.log("onPlayerReady", this);
       }
-    );
-    let user = localStorage.getItem("user");
+    )
+    const user = localStorage.getItem('user')
 
-    if (user && user.role == "VIEWER") {
+    if (user && user.role == 'VIEWER') {
       setTimeout(() => {
         if (this.player && this.player?.currentTime && this.player?.currentTime() >= 10) {
           videoService
@@ -26,9 +26,9 @@ export class VideoPlayer extends Component {
                 // console.log("OK");
               }
             })
-            .catch((err) => console.log(err));
+            .catch((err) => console.log(err))
         }
-      }, 15000);
+      }, 15000)
     }
   }
 
@@ -38,16 +38,16 @@ export class VideoPlayer extends Component {
       (this.props.sources[0].src && prevProps.sources[0].src !== this.props.sources[0].src) ||
       prevProps.autoplay !== this.props.autoplay
     ) {
-      this.updatePlayer();
+      this.updatePlayer()
     }
   }
 
   updatePlayer() {
     this.player.src({
       src: this.props.sources[0].src,
-      type: this.props.sources[0].type,
-    });
-    this.player.autoplay(this.props.autoplay);
+      type: this.props.sources[0].type
+    })
+    this.player.autoplay(this.props.autoplay)
   }
 
   render() {
@@ -56,14 +56,14 @@ export class VideoPlayer extends Component {
       <div data-vjs-player>
         <video ref={(node) => (this.videoNode = node)} className="video-js"></video>
       </div>
-    );
+    )
   }
 
   componentWillUnmount() {
     if (this.player) {
-      this.player.dispose();
+      this.player.dispose()
     }
   }
 }
 
-export default VideoPlayer;
+export default VideoPlayer

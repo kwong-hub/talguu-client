@@ -3,31 +3,31 @@ import {
   ADD_PAYMENT_INFO_SUCCESS,
   GET_USER_PAYMENT_INFOS_FAILURE,
   GET_USER_PAYMENT_INFOS_SUCCESS,
-  RESET_PAYMENT_INFO,
-} from "../types";
+  RESET_PAYMENT_INFO
+} from '../types'
 
 const INITIAL_STATE = {
   paymentInfos: [],
   paymentInfo: null,
   addPaymentInfoStatus: null,
-  getPaymentInfosStatus: null,
-};
+  getPaymentInfosStatus: null
+}
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ADD_PAYMENT_INFO_SUCCESS:
-      return { ...state, addPaymentInfoStatus: "SUCCESS", paymentInfo: action.payload };
+      return { ...state, addPaymentInfoStatus: 'SUCCESS', paymentInfo: action.payload }
     case ADD_PAYMENT_INFO_FAILURE:
-      return { ...state, addPaymentInfoStatus: "ERROR" };
+      return { ...state, addPaymentInfoStatus: 'ERROR' }
     case GET_USER_PAYMENT_INFOS_SUCCESS:
-      return { ...state, getPaymentInfosStatus: "SUCCESS", paymentInfos: action.payload };
+      return { ...state, getPaymentInfosStatus: 'SUCCESS', paymentInfos: action.payload }
     case GET_USER_PAYMENT_INFOS_FAILURE:
-      return { ...state, getPaymentInfosStatus: "FAILURE" };
+      return { ...state, getPaymentInfosStatus: 'FAILURE' }
     case RESET_PAYMENT_INFO:
-      return { ...state, addPaymentInfoStatus: null };
+      return { ...state, addPaymentInfoStatus: null }
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default reducer;
+export default reducer

@@ -1,23 +1,23 @@
-import "./PaymentInfos.css";
+import './PaymentInfos.css'
 
-import { Button } from "antd";
-import Modal from "antd/lib/modal/Modal";
-import moment from "moment";
-import PropTypes from "prop-types";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Button } from 'antd'
+import Modal from 'antd/lib/modal/Modal'
+import moment from 'moment'
+import PropTypes from 'prop-types'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { GET_USER_PAYMENT_INFOS_ASYNC } from "../../redux/types";
+import { GET_USER_PAYMENT_INFOS_ASYNC } from '../../redux/types'
 
 // import { prototype } from "react-copy-to-clipboard";
 function PaymentInfos(props) {
-  const paymentInfos = useSelector((state) => state.payment.paymentInfos);
-  const dispatch = useDispatch();
+  const paymentInfos = useSelector((state) => state.payment.paymentInfos)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch({ type: GET_USER_PAYMENT_INFOS_ASYNC, payload: props.username });
-    return () => {};
-  }, []);
+    dispatch({ type: GET_USER_PAYMENT_INFOS_ASYNC, payload: props.username })
+    return () => {}
+  }, [])
 
   return (
     <Modal
@@ -31,7 +31,7 @@ function PaymentInfos(props) {
       onCancel={() => props.changePaymentModalVisible(false)}>
       {paymentInfos?.length
         ? paymentInfos.map((paymentInfo) => {
-            return (
+          return (
               <div
                 key={paymentInfo.id}
                 className="text-white flex-col justify-center items-center py-6 px-3 rounded-lg m-1 payment_info mb-6">
@@ -44,20 +44,21 @@ function PaymentInfos(props) {
                       Owner
                     </span>
                     <span className="mr-2">
-                      {paymentInfo.firstName + " " + paymentInfo.lastName}
+                      {paymentInfo.firstName + ' ' + paymentInfo.lastName}
                     </span>
                   </div>
                   <div className="flex-col">
                     <div className="">{paymentInfo.cardType}</div>
-                    <div>Created: {moment(paymentInfo.createAt).format("YYYY-M-D")}</div>
+                    <div>Created: {moment(paymentInfo.createAt).format('YYYY-M-D')}</div>
                   </div>
                 </div>
               </div>
-            );
-          })
-        : ""}
-      {!paymentInfos?.length ? (
-        <div className={`flex-col items-center justify-center w-full p-2 cursor-pointer`}>
+          )
+        })
+        : ''}
+      {!paymentInfos?.length
+        ? (
+        <div className={'flex-col items-center justify-center w-full p-2 cursor-pointer'}>
           <p className="text-gray-600 text-md py-4 w-full text-center">
             You don't have payment information. Add one to deposit and access videos.
           </p>
@@ -67,17 +68,18 @@ function PaymentInfos(props) {
             </Button>
           </div>
         </div>
-      ) : (
-        ""
-      )}
+          )
+        : (
+            ''
+          )}
     </Modal>
-  );
+  )
 }
 
 PaymentInfos.propTypes = {
   username: PropTypes.string,
   changePaymentModalVisible: PropTypes.func,
-  modalVisible: PropTypes.bool,
-};
+  modalVisible: PropTypes.bool
+}
 
-export default PaymentInfos;
+export default PaymentInfos

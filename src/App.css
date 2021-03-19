@@ -1,5 +1,5 @@
-@import "~antd/dist/antd.css";
-@import url("https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=Pacifico&display=swap");
+@import '~antd/dist/antd.css';
+@import url('https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=Pacifico&display=swap');
 
 @tailwind base;
 @tailwind components;

@@ -1,24 +1,24 @@
-import { Button, Form, Input, PageHeader } from "antd";
-import TextArea from "antd/lib/input/TextArea";
-import React, { useState } from "react";
-import { FaDollarSign, FaInfo } from "react-icons/fa";
-import { useHistory } from "react-router-dom";
+import { Button, Form, Input, PageHeader } from 'antd'
+import TextArea from 'antd/lib/input/TextArea'
+import React, { useState } from 'react'
+import { FaDollarSign, FaInfo } from 'react-icons/fa'
+import { useHistory } from 'react-router-dom'
 
-import videoService from "../../_services/video.service";
-import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
-import Thumbnail from "../../components/videos/Thumbnail";
-import Trailer from "../../components/videos/Trailer";
-import SideNav from "../../partials/sideNav/SideNav";
+import videoService from '../../_services/video.service'
+import VideoPlayer from '../../components/videoPlayer/VideoPlayer'
+import Thumbnail from '../../components/videos/Thumbnail'
+import Trailer from '../../components/videos/Trailer'
+import SideNav from '../../partials/sideNav/SideNav'
 
 const EditUploadVideos = (props) => {
-  var history = useHistory();
-  const [video, setVideo] = useState(props.location.state);
-  const [title, setTitle] = useState(video?.title);
-  const [describe, setDescribe] = useState(video?.describe);
-  const [price, setPrice] = useState(0.23);
+  const history = useHistory()
+  const [video, setVideo] = useState(props.location.state)
+  const [title, setTitle] = useState(video?.title)
+  const [describe, setDescribe] = useState(video?.describe)
+  const [price, setPrice] = useState(0.23)
 
   if (!title) {
-    history.goBack();
+    history.goBack()
   }
 
   const publishVideo = () => {
@@ -26,25 +26,25 @@ const EditUploadVideos = (props) => {
       .updateVideo({ id: video.id, title: title, describe: describe, video_price: price })
       .then((data) => {
         if (data[0]) {
-          history.push("/your_video");
+          history.push('/your_video')
         }
       })
       .catch((err) => {
         // console.log("err", err);
-      });
-  };
+      })
+  }
   const videoJsOptions = {
     autoplay: false,
     controls: true,
-    aspectRatio: "16:9",
+    aspectRatio: '16:9',
     responsive: true,
     sources: [
       {
         src: video.video_link,
-        type: video.video_type,
-      },
-    ],
-  };
+        type: video.video_type
+      }
+    ]
+  }
   return (
     <div className="ml-16 mt-20 relative">
       <SideNav />
@@ -66,14 +66,14 @@ const EditUploadVideos = (props) => {
             initialValues={{
               remember: true,
               title: video.title,
-              description: video.describe,
+              description: video.describe
             }}
             onFinish={publishVideo}>
             <Form.Item
               label="Title"
               name="title"
               className="text-lg text-gray-600"
-              rules={[{ required: true, message: "Please input your Title!" }]}>
+              rules={[{ required: true, message: 'Please input your Title!' }]}>
               <Input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -84,7 +84,7 @@ const EditUploadVideos = (props) => {
             <Form.Item
               label="Description"
               name="description"
-              rules={[{ required: false, message: "Please input your Description!" }]}>
+              rules={[{ required: false, message: 'Please input your Description!' }]}>
               <TextArea
                 value={describe}
                 onChange={(e) => setDescribe(e.target.value)}
@@ -98,7 +98,7 @@ const EditUploadVideos = (props) => {
               name="price"
               className="w-full items-start"
               help="Add this videos cost, make sure your price value this video."
-              rules={[{ required: false, message: "Please input your price!" }]}>
+              rules={[{ required: false, message: 'Please input your price!' }]}>
               <Input
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
@@ -134,7 +134,7 @@ const EditUploadVideos = (props) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default EditUploadVideos;
+export default EditUploadVideos

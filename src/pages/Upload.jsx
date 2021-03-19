@@ -1,15 +1,15 @@
-import { Button, Progress } from "antd";
-import React, { Component } from "react";
-import { RiUploadCloud2Line, RiVideoUploadFill } from "react-icons/ri";
+import { Button, Progress } from 'antd';
+import React, { Component } from 'react';
+import { RiUploadCloud2Line, RiVideoUploadFill } from 'react-icons/ri';
 
-import videoService from "../_services/video.service";
+import videoService from '../_services/video.service';
 
 class Upload extends Component {
   state = {
     drag: false,
     upload: false,
-    title: "Title of the video",
-    description: "",
+    title: 'Title of the video',
+    description: '',
     files: {},
     progress: 0,
   };
@@ -76,10 +76,10 @@ class Upload extends Component {
     e.preventDefault();
 
     var formData = new FormData();
-    formData.append("title", this.state.title);
-    formData.append("description", this.state.description);
+    formData.append('title', this.state.title);
+    formData.append('description', this.state.description);
     // console.log(this.state);
-    formData.append("video", this.state.files, this.state.files.name);
+    formData.append('video', this.state.files, this.state.files.name);
 
     const config = {
       onUploadProgress: (progressEvent) => {
@@ -97,19 +97,19 @@ class Upload extends Component {
 
   componentDidMount = () => {
     let div = this.dropRef.current;
-    div.addEventListener("dragenter", this.handleDragIn);
-    div.addEventListener("dragleave", this.handleDragOut);
-    div.addEventListener("dragover", this.handleDrag);
-    div.addEventListener("drop", this.handleDrop);
-    div.addEventListener("click", this.handleOnclick);
+    div.addEventListener('dragenter', this.handleDragIn);
+    div.addEventListener('dragleave', this.handleDragOut);
+    div.addEventListener('dragover', this.handleDrag);
+    div.addEventListener('drop', this.handleDrop);
+    div.addEventListener('click', this.handleOnclick);
   };
 
   componentWillUnmount = () => {
     let div = this.dropRef.current;
-    div.removeEventListener("dragenter", this.handleDragIn);
-    div.removeEventListener("dragleave", this.handleDragOut);
-    div.removeEventListener("dragover", this.handleDrag);
-    div.removeEventListener("drop", this.handleDrop);
+    div.removeEventListener('dragenter', this.handleDragIn);
+    div.removeEventListener('dragleave', this.handleDragOut);
+    div.removeEventListener('dragover', this.handleDrag);
+    div.removeEventListener('drop', this.handleDrop);
   };
 
   render() {

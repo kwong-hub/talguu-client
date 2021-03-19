@@ -1,15 +1,15 @@
-import { Button, message, notification, Progress } from "antd";
-import React, { Component } from "react";
-import { FaPlus } from "react-icons/fa";
-import { RiArrowRightCircleLine, RiVideoUploadFill } from "react-icons/ri";
-import { AiOutlineInbox } from "react-icons/ai";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { Button, message, notification, Progress } from 'antd';
+import React, { Component } from 'react';
+import { FaPlus } from 'react-icons/fa';
+import { RiArrowRightCircleLine, RiVideoUploadFill } from 'react-icons/ri';
+import { AiOutlineInbox } from 'react-icons/ai';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-import videoService from "../../_services/video.service";
-import SideNav from "../../partials/sideNav/SideNav";
-import { VIDEO_READY } from "../../redux/types";
-import Dragger from "antd/lib/upload/Dragger";
+import videoService from '../../_services/video.service';
+import SideNav from '../../partials/sideNav/SideNav';
+import { VIDEO_READY } from '../../redux/types';
+import Dragger from 'antd/lib/upload/Dragger';
 
 // const { Dragger } = Upload;
 const initialState = {
@@ -17,11 +17,11 @@ const initialState = {
   fileSelected: false,
   drag: false,
   upload: false,
-  title: "Title of the video",
-  describe: "",
+  title: 'Title of the video',
+  describe: '',
   files: {},
   progress: 0,
-  active: "",
+  active: '',
 };
 
 class UploadVideo extends Component {
@@ -31,16 +31,16 @@ class UploadVideo extends Component {
     fileSelected: false,
     drag: false,
     upload: false,
-    title: "Title of the video",
-    describe: "",
+    title: 'Title of the video',
+    describe: '',
     files: {},
     progress: 0,
-    active: "",
+    active: '',
     uploadProps: {
-      accept: ".mp4",
-      name: "file",
+      accept: '.mp4',
+      name: 'file',
       multiple: false,
-      action: "",
+      action: '',
       showUploadList: true,
       customRequest: (data) => {
         return this.fileSelected(data.file);
@@ -53,9 +53,9 @@ class UploadVideo extends Component {
   };
 
   uploadFileS3 = () => {
-    let arr = this.state.file.name.split(".");
+    let arr = this.state.file.name.split('.');
     let fileType = arr[arr.length - 1];
-    let fileName = Date.now() + "video" + "." + fileType;
+    let fileName = Date.now() + 'video' + '.' + fileType;
     const callBack = (res) => {
       this.setState({ progress: Math.ceil((res.loaded / res.total) * 100) });
     };
@@ -67,7 +67,7 @@ class UploadVideo extends Component {
         Object.keys(options).map((key) => {
           formData.append(key, options[key]);
         });
-        formData.append("file", this.state.file);
+        formData.append('file', this.state.file);
         return videoService.uploadVideoToS3(res.signedRequest.url, formData, {
           ...res.config,
           onUploadProgress: callBack,
@@ -75,7 +75,7 @@ class UploadVideo extends Component {
       })
       .then((res) => {
         // console.log(res);
-        let video_link = res.config.url + "/" + fileName;
+        let video_link = res.config.url + '/' + fileName;
         let { title, describe } = this.state;
         let { size, type } = this.state.file;
         let videoObj = {
@@ -88,7 +88,7 @@ class UploadVideo extends Component {
         return videoService.addVideo(videoObj);
       })
       .then((res) => {
-        this.props.history.push("/finish-upload", { ...res.data.video });
+        this.props.history.push('/finish-upload', { ...res.data.video });
       })
       .catch((err) => console.log(err));
   };
@@ -112,15 +112,15 @@ class UploadVideo extends Component {
   checkFile = () => {
     if (this.state.file.size > 1200000000) {
       notification.info({
-        message: "File size should be less than 1.5GB.",
-        placement: "bottomRight",
+        message: 'File size should be less than 1.5GB.',
+        placement: 'bottomRight',
         duration: 3.3,
       });
       return false;
-    } else if (!this.state.file.type.toString().startsWith("video")) {
+    } else if (!this.state.file.type.toString().startsWith('video')) {
       notification.info({
-        message: "Unsupported file type! File type should be video",
-        placement: "bottomRight",
+        message: 'Unsupported file type! File type should be video',
+        placement: 'bottomRight',
         duration: 3.3,
       });
       return false;
@@ -130,7 +130,7 @@ class UploadVideo extends Component {
   submit = (e) => {
     e.preventDefault();
     if (!this.state.title || !this.state.describe || !this.state.file) {
-      this.errorMessage("Please fill required filled first");
+      this.errorMessage('Please fill required filled first');
       return;
     }
     if (!this.checkFile()) return;
@@ -139,7 +139,7 @@ class UploadVideo extends Component {
 
   nextClick = (to) => {
     this.setState({ active: to });
-    this.props.history.push("/finish-upload");
+    this.props.history.push('/finish-upload');
   };
   uploadButton = () => (
     <div>
@@ -157,7 +157,7 @@ class UploadVideo extends Component {
             <p className="text-2xl text-gray-600 m-2">One Step to Publish your video! </p>
           </div>
 
-          {!this.state.progress > 0 && this.state.active == "" && (
+          {!this.state.progress > 0 && this.state.active == '' && (
             <div>
               <form
                 onSubmit={this.submit}
@@ -222,7 +222,7 @@ class UploadVideo extends Component {
           )}
         </div>
 
-        {this.state.progress > 0 && this.state.active == "" && (
+        {this.state.progress > 0 && this.state.active == '' && (
           <div className="flex-col justify-center mt-4 w-64 mx-auto">
             <p className="text-gray-500 font-thin text-base">Uploading file</p>
             <Progress type="line" percent={this.state.progress} status="active" />
