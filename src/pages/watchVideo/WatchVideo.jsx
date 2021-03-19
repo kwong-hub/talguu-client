@@ -79,7 +79,7 @@ const WatchVideo = () => {
 
   const play = (video) => {
     history.push(`/watch/${video.id}`);
-    history.go(0);
+    // history.go(0);
   };
 
   const paymentModalVisibleFunc = (value, video, event) => {
