@@ -1,11 +1,12 @@
-import { Button, Space, Spin, Tooltip, Comment, Avatar, Form, notification } from 'antd'
+import { Avatar, Button, Comment, Form, notification, Space, Spin, Tooltip } from 'antd'
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
-import { FaHeart, FaHeartBroken } from 'react-icons/fa'
 import { AiOutlineDownCircle, AiOutlineUpCircle } from 'react-icons/ai'
+import { FaHeart, FaHeartBroken } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 
+import videoService from '../../_services/video.service'
 import PaymentModal from '../../components/paymentModal/PaymentModal'
 import RenderVideo from '../../components/renderVideo/RenderVideo'
 import VideoPlayer from '../../components/videoPlayer/VideoPlayer'
@@ -16,16 +17,12 @@ import {
   PURCHASE_VIDEO_ASYNC,
   VIEWER_VIDEOS_ASYNC
 } from '../../redux/types'
-import videoService from '../../_services/video.service'
-// import TextArea from "antd/lib/input/TextArea";
-// import { BiEditAlt } from "react-icons/bi";
 
 const WatchVideo = () => {
   const history = useHistory()
   const [playVideo, setPlayVideo] = useState(false)
   const [newComment, setComment] = useState('')
   const [showMessages, setShowMessages] = useState(false)
-  // const [editComment, setEditComment] = useState(false);
   const [submitting, setSubmitting] = useState(false)
   const [tempVideo, setTempVideo] = useState(null)
   const [paymentModalVisible, setPaymentModalVisible] = useState(false)
