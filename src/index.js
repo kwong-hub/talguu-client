@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker'
 import { applyMiddleware, createStore, compose } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
-import watchAll from './redux/sagas/saga'
+import watchAll from './redux/sagas'
 // import {
 //   watchIncrement,
 //   watchLogin,
@@ -22,7 +22,7 @@ const composeSetup =
   typeof window === 'object' &&
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    : compose;
+    : compose
 /* eslint-enable */
 
 const store = createStore(rootReducer, composeSetup(applyMiddleware(sagaMiddleware)))
