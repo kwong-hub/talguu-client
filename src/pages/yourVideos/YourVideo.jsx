@@ -10,7 +10,7 @@ import SideNav from '../../partials/sideNav/SideNav'
 const YourVideo = () => {
   const history = useHistory()
   const [videos, setvideos] = useState([])
-  const [loading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [pagination, setpagination] = useState({
     current: 1,
     pageSize: 5
@@ -29,8 +29,8 @@ const YourVideo = () => {
       width: 150,
       fixed: 'left',
       render: (text) => (
-        <div className='hover:bg-blue-200 cursor-pointer'>
-          <img src={text} className='w-32' alt='thumbnail' />
+        <div className="hover:bg-blue-200 cursor-pointer">
+          <img src={text} className="w-32" alt="thumbnail" />
         </div>
       )
     },
@@ -48,9 +48,9 @@ const YourVideo = () => {
       key: 'createdAt',
       width: 150,
       render: (text) => (
-        <div className='flex flex-col'>
+        <div className="flex flex-col">
           <span>{moment(text).format('LL')}</span>
-          <span className='font-extralight text-sm'>Published</span>
+          <span className="font-extralight text-sm">Published</span>
         </div>
       )
     },
@@ -89,14 +89,15 @@ const YourVideo = () => {
       key: 'action',
       width: 150,
       render: (text, record) => (
-        <Space size='middle'>
+        <Space size="middle">
           <Button onClick={(e) => editVideo(record)}>Edit</Button>
           <Popconfirm
-            title='Are you sure to delete this video?'
+            title="Are you sure to delete this video?"
             onConfirm={(e) => deleteVideo(record)}
             onCancel={cancel}
-            okText='Yes'
-            cancelText='No'>
+            okText="Yes"
+            cancelText="No"
+          >
             <Button>Delete</Button>
           </Popconfirm>
         </Space>
@@ -130,29 +131,32 @@ const YourVideo = () => {
   }
 
   const getVideos = (query) => {
-    setloading(true);
+    setLoading(true)
     videoService
       .getVideos(query)
       .then((data) => {
-        setloading(false);
-
-        setvideos(data.rows);
-        setpagination({ ...query, total: data.count });
+        setLoading(false)
+        setvideos(data.rows)
+        setpagination({ ...query, total: data.count })
       })
-      .catch((err) => {
-        setloading(false);
-      });
-  };
+      .catch(() => {
+        setLoading(false)
+      })
+  }
   const handleTableChange = (pagination, filters, sorter) => {
     getVideos(pagination)
   }
   return (
     <div>
       <SideNav />
-      <div className='ml-20 mt-20 m-4'>
-        <div className='flex flex-col items-start m-4'>
-          <h2 className='text-xl text-gray-700 font-medium'>Your Video Content </h2>
-          <p className='font-normal text-gray-500'>Analyse,Manage,Edit,Delete</p>
+      <div className="ml-20 mt-20 m-4">
+        <div className="flex flex-col items-start m-4">
+          <h2 className="text-xl text-gray-700 font-medium">
+            Your Video Content{' '}
+          </h2>
+          <p className="font-normal text-gray-500">
+            Analyse,Manage,Edit,Delete
+          </p>
         </div>
         <Table
           scroll={{ x: 720 }}
