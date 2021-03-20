@@ -15,7 +15,6 @@ const Stream = (props) => {
   // console.log("property", property);
   const [title, setTitle] = useState(property?.title);
   const [describe, setDescribe] = useState(property?.description);
-  const [streamKey, setStreamKey] = useState(property?.stream_key);
   const [streamURL, setStreamURL] = useState("rtmp://8mspbb.com/show");
   var history = useHistory();
   useEffect(() => {
@@ -39,7 +38,7 @@ const Stream = (props) => {
   };
   const endStream = () => {
     videoService
-      .endStream(streamKey)
+      .endStream(property?.stream_key)
       .then((data) => history.push("/live_video"))
       .catch((err) => console.log("err", err));
   };
@@ -64,7 +63,7 @@ const Stream = (props) => {
     responsive: true,
     sources: [
       {
-        src: `http://8mspbb.com/hls/${streamKey}.m3u8`,
+        src: `${liveVideoURL}/hls/${property?.stream_key}.m3u8`,
         type: "application/x-mpegURL",
       },
     ],
