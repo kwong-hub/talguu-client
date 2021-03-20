@@ -9,6 +9,7 @@ import videoService from "../../_services/video.service";
 import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
 import SideNav from "../../partials/sideNav/SideNav";
 import ThumbnailStream from "../../components/stream/Thumbnail-stream";
+import { liveVideoURL } from "../../config/config";
 
 const Stream = (props) => {
   const [property, setProperty] = useState(props.location.state?.data);
