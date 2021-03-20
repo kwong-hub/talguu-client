@@ -130,14 +130,17 @@ const YourVideo = () => {
   };
 
   const getVideos = (query) => {
+    setloading(true);
     videoService
       .getVideos(query)
       .then((data) => {
-        // console.log("data", data);
+        setloading(false);
+
         setvideos(data.rows);
         setpagination({ ...query, total: data.count });
       })
       .catch((err) => {
+        setloading(false);
         // console.log("err", err);
       });
   };
