@@ -3,20 +3,18 @@ import './VideoPlayer.css'
 import React, { Component } from 'react'
 import videojs from 'video.js'
 import videoService from '../../_services/video.service'
+import PropTypes from 'prop-types'
 
-// import videojs_contrib_hls from "videojs-contrib-hls";
 export class VideoPlayer extends Component {
   componentDidMount() {
     this.player = videojs(
       this.videoNode,
       { ...this.props, withCredentials: true },
-      function onPlayerReady() {
-        //   console.log("onPlayerReady", this);
-      }
+      function onPlayerReady() {}
     )
     const user = localStorage.getItem('user')
 
-    if (user && user.role == 'VIEWER') {
+    if (user && user.role === 'VIEWER') {
       setTimeout(() => {
         if (this.player && this.player?.currentTime && this.player?.currentTime() >= 10) {
           videoService
@@ -54,7 +52,7 @@ export class VideoPlayer extends Component {
     // console.log(this.props.sources[0]);
     return (
       <div data-vjs-player>
-        <video ref={(node) => (this.videoNode = node)} className="video-js"></video>
+        <video ref={(node) => (this.videoNode = node)} className='video-js'></video>
       </div>
     )
   }
@@ -64,6 +62,12 @@ export class VideoPlayer extends Component {
       this.player.dispose()
     }
   }
+}
+
+VideoPlayer.propTypes = {
+  sources: PropTypes.any,
+  videoId: PropTypes.any,
+  autoplay: PropTypes.bool
 }
 
 export default VideoPlayer

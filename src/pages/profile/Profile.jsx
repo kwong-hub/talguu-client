@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { connect, useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { UserOutlined } from '@ant-design/icons'
-import { Form, TextArea, Avatar, Button, Input, message, Spin } from 'antd'
+import { Form, Avatar, Button, Input, message, Spin } from 'antd'
 import SideNav from '../../partials/sideNav/SideNav'
 import { userActions } from '../../_actions'
 
-import { GET_USER_PROFILE_ASYNC } from '../../redux/types'
 import { userService } from '../../_services/user.service'
-import { FaBuilding, FaKey, FaLocationArrow } from 'react-icons/fa'
+import { FaBuilding, FaKey } from 'react-icons/fa'
 import { ImLocation2 } from 'react-icons/im'
 const Profile = (props) => {
-  const dispatch = useDispatch()
   const [user, setuser] = useState()
   const [profile, setProfile] = useState()
   const saveBasic = (values) => {
@@ -20,7 +18,10 @@ const Profile = (props) => {
         message.success('Successfully updated.')
         setuser({ ...user, ...values })
       })
-      .catch((err) => message.success('Failed to update.'))
+      .catch((err) => {
+        message.success('Failed to update.')
+        console.log(err)
+      })
   }
 
   const saveCompany = (values) => {
@@ -30,7 +31,10 @@ const Profile = (props) => {
         message.success('Successfully updated.')
         setProfile(values)
       })
-      .catch((err) => message.error('Failed to update.'))
+      .catch((err) => {
+        message.error('Failed to update.')
+        console.log(err)
+      })
   }
   const updatePassword = (values) => {
     userService
@@ -42,7 +46,10 @@ const Profile = (props) => {
           message.error(data.error ? data.error : 'Failed to change')
         }
       })
-      .catch((err) => message.error('Failed to change.'))
+      .catch((err) => {
+        message.error('Failed to change.')
+        console.log(err)
+      })
   }
 
   useEffect(() => {
@@ -60,8 +67,7 @@ const Profile = (props) => {
   return (
     <div className="">
       <SideNav></SideNav>
-      {profile
-        ? (
+      {profile ? (
         <>
           {' '}
           <div className="flex flex-col mt-20 md:flex-row justify-center items-baseline">
@@ -156,8 +162,7 @@ const Profile = (props) => {
             <div className="w-1/3 hidden md:inline-block">
               <FaBuilding className="flex text-4xl mx-auto" />
               <div className="m-4">
-                {profile.companyName
-                  ? (
+                {profile.companyName ? (
                   <>
                     <span className="text-2xl py-4 font-medium leading-tight">
                       {profile?.companyName}
@@ -167,10 +172,9 @@ const Profile = (props) => {
                       {profile?.city}
                     </p>
                   </>
-                    )
-                  : (
+                ) : (
                   <p>No company Name</p>
-                    )}
+                )}
               </div>
             </div>
             <div className="px-6 w-full md:w-1/2">
@@ -370,10 +374,9 @@ const Profile = (props) => {
             </div>
           </div>
         </>
-          )
-        : (
+      ) : (
         <Spin size="large" className="flex items-center justify-center h-screen text-4xl" />
-          )}
+      )}
     </div>
   )
 }

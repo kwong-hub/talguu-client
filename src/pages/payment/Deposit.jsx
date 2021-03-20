@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { FaDollarSign } from 'react-icons/fa'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import paymentService from '../../_services/payment.service'
 import mastercard from '../../assets/images/mastercard.svg'
@@ -11,7 +12,7 @@ import SideNav from '../../partials/sideNav/SideNav'
 
 const Deposit = (props) => {
   const history = useHistory()
-  const [user, setUser] = useState(props?.user?.user)
+  const [user] = useState(props?.user?.user)
   const [payments, setPayments] = useState([])
   const [balance, setBalance] = useState(0)
   const [loading, setloading] = useState(false)
@@ -94,8 +95,7 @@ const Deposit = (props) => {
           </div>
 
           <div className="text-gray-700 text-md pb-2">
-            {payments.length > 0
-              ? (
+            {payments.length > 0 ? (
               <Form
                 name="normal_login"
                 className="login-form px-4 w-full md:px-8"
@@ -109,7 +109,7 @@ const Deposit = (props) => {
                   rules={[{ required: true, message: 'Please select your card!' }]}>
                   <Select className="rounded-xl" defaultValue={<h2>Select Your card.</h2>}>
                     {payments.map((item) => (
-                      <option value={item.id}>
+                      <option key={item.id} value={item.id}>
                         <div>
                           <div className="">
                             <div className="w-full font-semibold text-md flex  relative ">
@@ -171,10 +171,9 @@ const Deposit = (props) => {
                   </Button>
                 </Form.Item>
               </Form>
-                )
-              : (
+            ) : (
               <div>
-                <span>"No payment information added yet."</span>
+                <span>No payment information added yet.</span>
                 <Button
                   onClick={(e) => addPaymentInfo()}
                   type="primary"
@@ -182,7 +181,7 @@ const Deposit = (props) => {
                   Add Payment Information
                 </Button>
               </div>
-                )}
+            )}
           </div>
         </section>
       </div>
@@ -193,6 +192,13 @@ const mapStateToProps = (props) => {
   return {
     user: props.authentication
   }
+}
+
+Deposit.propTypes = {
+  user: PropTypes.shape({
+    user: PropTypes.any
+  }),
+  iterator: PropTypes.any
 }
 
 export default connect(mapStateToProps, null)(Deposit)

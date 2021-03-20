@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { FaCheck, FaUser } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import { userService } from '../../_services/user.service'
 import logo from '../../assets/images/logo.svg'
@@ -26,7 +27,7 @@ const Settings = (props) => {
   const [viewerErrMessages, setViewerErrMessages] = useState('')
   const [loading, setLoading] = useState(false)
   // const [renderPaymentModal, setRenderPaymentModal] = useState(props.renderPaymentModal || false);
-  const [formValues, setFormValues] = useState({
+  const [formValues] = useState({
     cardType: 'MASTER_CARD',
     username: userService.getLocalUser().username,
     state: 'NY',
@@ -318,19 +319,25 @@ const Settings = (props) => {
           changePaymentModalVisible={changeBalanceInfosVisible}
         />
       )}
-      {showPaymentInfos
-        ? (
+      {showPaymentInfos ? (
         <PaymentInfos
           username={username}
           changePaymentModalVisible={changePaymentInfosVisible}
           modalVisible={showPaymentInfos}
         />
-          )
-        : (
-            ''
-          )}
+      ) : (
+        ''
+      )}
     </div>
   )
+}
+
+Settings.propTypes = {
+  location: PropTypes.shape({
+    state: PropTypes.shape({
+      paymentModalVisible: PropTypes.any
+    })
+  })
 }
 
 export default Settings

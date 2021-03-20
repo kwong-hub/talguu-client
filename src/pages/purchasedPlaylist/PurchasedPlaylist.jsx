@@ -1,16 +1,14 @@
 import './PurchasedPlaylist.css'
 
-import { Input, Tooltip } from 'antd'
+import { Tooltip } from 'antd'
 import moment from 'moment'
 import React, { useEffect } from 'react'
-import { FaClock, FaPlayCircle, FaSearch } from 'react-icons/fa'
+import { FaPlayCircle } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
 import SideNav from '../../partials/sideNav/SideNav'
 import { PAID_VIEWER_VIDEOS_ASYNC } from '../../redux/types'
-
-const { Search } = Input
 
 function PurchasedPlaylist(props) {
   const purchasedVideos = useSelector((state) => state.video.purchasedVideos)
@@ -28,8 +26,6 @@ function PurchasedPlaylist(props) {
     // history.go(0);
   }
 
-  const onSearch = (value) => {}
-
   const renderVideos = () => {
     if (purchasedVideos && purchasedVideos.length) {
       return purchasedVideos.map((video) => {
@@ -38,7 +34,9 @@ function PurchasedPlaylist(props) {
           <div
             key={video.id}
             onClick={() => play(video)}
-            className={'flex-col w-full md:w-4/12 lg:w-3/12 sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch'}>
+            className={
+              'flex-col w-full md:w-4/12 lg:w-3/12 sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch'
+            }>
             <div className="relative">
               <img src={video.thumbnial} alt="" className="min-w-full min-h-full video_image" />
               <div className="absolute thumbnail_button_container">
@@ -74,8 +72,8 @@ function PurchasedPlaylist(props) {
         <div
           className={'flex justify-center w-full p-2 cursor-pointer video_thumbnail self-stretch'}>
           <p className="text-gray-600 text-md py-4 w-96">
-            You haven't purchased any videos. Once you purchased a video, you can easily access it
-            from here.
+            You haven&apos;t purchased any videos. Once you purchased a video, you can easily access
+            it from here.
           </p>
         </div>
       )

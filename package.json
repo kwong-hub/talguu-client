@@ -34,7 +34,9 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "lint": "eslint src/**/*.js src/**/*.jsx"
+    "lint": "eslint src/**/*.js src/**/*.jsx",
+    "precommit": "lint-staged",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
@@ -58,6 +60,7 @@
     ]
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.22.0",
     "eslint-config-airbnb": "^18.2.1",

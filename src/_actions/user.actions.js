@@ -82,5 +82,5 @@ export const userActions = {
   login,
   logout,
   register,
-  getAll,
+  getAll
 }

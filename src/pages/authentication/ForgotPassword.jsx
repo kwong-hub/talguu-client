@@ -7,10 +7,9 @@ import { userService } from '../../_services/user.service'
 import { Link } from 'react-router-dom'
 
 const ForgotPassword = () => {
-  const [error, setError] = useState()
+  const [error] = useState()
   const [success, setSuccess] = useState(false)
   const onFinish = (values) => {
-    // console.log("values", values);
     userService
       .forgotPassword(values)
       .then((data) => {
@@ -20,59 +19,57 @@ const ForgotPassword = () => {
           message.error('Unable to send-email.')
         }
       })
-      .catch((err) => message.err('Failed to send.Try again later.'))
+      .catch(() => message.err('Failed to send.Try again later.'))
   }
 
   return (
-    <div className="relative">
+    <div className='relative'>
       <Header />
 
-      <div className="flex flex-col items-center justify-center h-screen">
-        <img className="" src={logo} alt="Logo" width={50} />
-        <p className="text-gray-800 text-xl py-4">Forgot Password</p>
+      <div className='flex flex-col items-center justify-center h-screen'>
+        <img className='' src={logo} alt='Logo' width={50} />
+        <p className='text-gray-800 text-xl py-4'>Forgot Password</p>
 
-        {success
-          ? (
+        {success ? (
           <div>
             <p>Reset Link is sent to you email. Check your email address.</p>
-            <Link to="/login">
-              <Button type="primary"> Back to Login</Button>
+            <Link to='/login'>
+              <Button type='primary'> Back to Login</Button>
             </Link>
           </div>
-            )
-          : (
-          <div className="bg-white p-4 shadow-sm border rounded-xl max-w-md">
-            <p className="">
+        ) : (
+          <div className='bg-white p-4 shadow-sm border rounded-xl max-w-md'>
+            <p className=''>
               Enter your verifed email address and we will send you a password reset link.
             </p>
-            <p className="text-center bg-gray-200 text-red-800 mb-4 ">{error}</p>
+            <p className='text-center bg-gray-200 text-red-800 mb-4 '>{error}</p>
             <Form
-              name="normal_login"
-              className="login-form md:px-4"
+              name='normal_login'
+              className='login-form md:px-4'
               initialValues={{ remember: true }}
               onFinish={onFinish}>
               <Form.Item
-                name="email"
+                name='email'
                 rules={[{ required: true, message: 'Please input your email!' }]}>
                 <Input
-                  className="rounded-2xl"
-                  prefix={<FaUser className="site-form-item-icon" />}
-                  placeholder="E-mail Address"
+                  className='rounded-2xl'
+                  prefix={<FaUser className='site-form-item-icon' />}
+                  placeholder='E-mail Address'
                 />
               </Form.Item>
 
               <Form.Item>
                 <Button
-                  type="primary"
-                  htmlType="submit"
-                  shape="round"
-                  className="login-form-button w-full">
+                  type='primary'
+                  htmlType='submit'
+                  shape='round'
+                  className='login-form-button w-full'>
                   Send Email
                 </Button>
               </Form.Item>
             </Form>
           </div>
-            )}
+        )}
       </div>
     </div>
   )

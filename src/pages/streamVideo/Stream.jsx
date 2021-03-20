@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { FaCopy, FaInfo } from 'react-icons/fa'
 import { useHistory } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import videoService from '../../_services/video.service'
 import VideoPlayer from '../../components/videoPlayer/VideoPlayer'
@@ -13,10 +14,8 @@ import ThumbnailStream from '../../components/stream/Thumbnail-stream'
 const Stream = (props) => {
   const [property, setProperty] = useState(props.location.state?.data)
   // console.log("property", property);
-  const [title, setTitle] = useState(property?.title)
-  const [describe, setDescribe] = useState(property?.description)
-  const [streamKey, setStreamKey] = useState(property?.stream_key)
-  const [streamURL, setStreamURL] = useState('rtmp://8mspbb.com/show')
+  const [streamKey] = useState(property?.stream_key)
+  const [streamURL] = useState('rtmp://8mspbb.com/show')
   const history = useHistory()
   useEffect(() => {
     getStreamed()
@@ -54,6 +53,7 @@ const Stream = (props) => {
         }
       })
       .catch((err) => {
+        console.log(err)
         history.push('/stream_video')
       })
   }
@@ -74,8 +74,7 @@ const Stream = (props) => {
       <div className="ml-12 my-20 relative">
         <SideNav />
         {/* <Header /> */}
-        {property
-          ? (
+        {property ? (
           <>
             <PageHeader
               className="site-page-header"
@@ -175,8 +174,8 @@ const Stream = (props) => {
                   <div className="flex flex-col items-start justify-start">
                     <h2 className="text-lg">Thumbnail</h2>
                     <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                      Select or upload a picture that shows what's in your video. A good thumbnail
-                      stands out and draws viewers' attention.
+                      Select or upload a picture that shows what&apos;s in your video. A good
+                      thumbnail stands out and draws viewers&apos; attention.
                     </h3>
                     <ThumbnailStream
                       stream_key={property?.stream_key}
@@ -201,13 +200,20 @@ const Stream = (props) => {
               </div>
             </div>
           </>
-            )
-          : (
+        ) : (
           <Spin size="large" className="flex items-center justify-center h-screen text-4xl" />
-            )}
+        )}
       </div>
     </div>
   )
+}
+
+Stream.propTypes = {
+  location: PropTypes.shape({
+    state: PropTypes.shape({
+      data: PropTypes.any
+    })
+  })
 }
 
 export default Stream

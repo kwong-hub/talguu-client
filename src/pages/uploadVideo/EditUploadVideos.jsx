@@ -3,6 +3,7 @@ import TextArea from 'antd/lib/input/TextArea'
 import React, { useState } from 'react'
 import { FaDollarSign, FaInfo } from 'react-icons/fa'
 import { useHistory } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import videoService from '../../_services/video.service'
 import VideoPlayer from '../../components/videoPlayer/VideoPlayer'
@@ -12,7 +13,7 @@ import SideNav from '../../partials/sideNav/SideNav'
 
 const EditUploadVideos = (props) => {
   const history = useHistory()
-  const [video, setVideo] = useState(props.location.state)
+  const [video] = useState(props.location.state)
   const [title, setTitle] = useState(video?.title)
   const [describe, setDescribe] = useState(video?.describe)
   const [price, setPrice] = useState(0.23)
@@ -30,7 +31,7 @@ const EditUploadVideos = (props) => {
         }
       })
       .catch((err) => {
-        // console.log("err", err);
+        console.log('err', err)
       })
   }
   const videoJsOptions = {
@@ -112,16 +113,16 @@ const EditUploadVideos = (props) => {
             <div className="flex flex-col items-start justify-start">
               <h2 className="text-lg">Thumbnail</h2>
               <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                Select or upload a picture that shows what's in your video. A good thumbnail stands
-                out and draws viewers' attention.
+                Select or upload a picture that shows what&apos;s in your video. A good thumbnail
+                stands out and draws viewers&apos; attention.
               </h3>
               <Thumbnail videoId={video.id} thumbnails={video.thumbnial} />
             </div>
             <div className="flex flex-col items-start justify-start">
               <h2 className="text-lg">Trailer</h2>
               <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                Select or upload a trailer that shows what's in your video in a minute. A good
-                trailer draws viewers' attention.
+                Select or upload a trailer that shows what&apos;s in your video in a minute. A good
+                trailer draws viewers&apos; attention.
               </h3>
               <Trailer videoId={video.id} />
             </div>
@@ -135,6 +136,12 @@ const EditUploadVideos = (props) => {
       </div>
     </div>
   )
+}
+
+EditUploadVideos.propTypes = {
+  location: PropTypes.shape({
+    state: PropTypes.func
+  })
 }
 
 export default EditUploadVideos

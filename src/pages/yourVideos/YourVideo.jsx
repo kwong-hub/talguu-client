@@ -10,7 +10,7 @@ import SideNav from '../../partials/sideNav/SideNav'
 const YourVideo = () => {
   const history = useHistory()
   const [videos, setvideos] = useState([])
-  const [loading, setloading] = useState(false)
+  const [loading] = useState(false)
   const [pagination, setpagination] = useState({
     current: 1,
     pageSize: 5
@@ -123,7 +123,10 @@ const YourVideo = () => {
           getVideos(pagination)
         }
       })
-      .catch((err) => message.error('Failed to deleted!.'))
+      .catch((err) => {
+        message.error('Failed to delete!.')
+        console.log(err)
+      })
   }
 
   const getVideos = (query) => {
@@ -135,7 +138,7 @@ const YourVideo = () => {
         setpagination({ ...query, total: data.count })
       })
       .catch((err) => {
-        // console.log("err", err);
+        console.log('err', err)
       })
   }
   const handleTableChange = (pagination, filters, sorter) => {

@@ -1,4 +1,4 @@
-import { Button, Space, Spin, Tooltip, Comment, Avatar, Form, List, notification } from 'antd'
+import { Button, Space, Spin, Tooltip, Comment, Avatar, Form, notification } from 'antd'
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
 import { FaHeart, FaHeartBroken } from 'react-icons/fa'
@@ -33,7 +33,7 @@ const WatchVideo = () => {
   const dispatch = useDispatch()
   const currentVideo = useSelector((state) => state.video.currentVideo)
   const viewerVideos = useSelector((state) => state.video.viewerVideos)
-  const video_link = useSelector((state) => state.video.video_link)
+  const videoLink = useSelector((state) => state.video.video_link)
   const errorMessage = useSelector((state) => state.video.errMessages)
   const commentRef = useRef()
 
@@ -49,12 +49,12 @@ const WatchVideo = () => {
   }, [vidId])
 
   useEffect(() => {
-    if (video_link) {
+    if (videoLink) {
       paymentModalVisibleFunc(false, currentVideo)
       play(tempVideo)
     }
     return () => {}
-  }, [video_link])
+  }, [videoLink])
 
   useEffect(() => {
     setPlayVideo(true)
@@ -78,7 +78,7 @@ const WatchVideo = () => {
   const paymentModalVisibleFunc = (value, video, event) => {
     if (event) event.stopPropagation()
 
-    if (!user || user.role != 'VIEWER') {
+    if (!user || user.role !== 'VIEWER') {
       history.push({
         pathname: '/login',
         search: `?return_url=/watch/${video.id}`
@@ -157,7 +157,7 @@ const WatchVideo = () => {
 
   const likeDislikeVideo = (e, video, val) => {
     e.stopPropagation()
-    val = video.val == val ? 2 : val
+    val = video.val === val ? 2 : val
     videoService
       .likeDislikeVideo({ videoId: video.id, like: val })
       .then((res) => {
@@ -166,7 +166,7 @@ const WatchVideo = () => {
         }
       })
       .catch((err) => {
-        // console.log(err);
+        console.log(err)
       })
   }
 
@@ -197,7 +197,10 @@ const WatchVideo = () => {
           setSubmitting(false)
         }
       })
-      .catch((err) => setSubmitting(false))
+      .catch((err) => {
+        console.log(err)
+        setSubmitting(false)
+      })
   }
 
   const renderPaymentModal = () => {
@@ -240,11 +243,9 @@ const WatchVideo = () => {
           <div className="flex-col ml-2 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
             <div className="w-full flex justify-between">
               <div className="text-gray-800 lg:text-2xl text-md  text-left">{video?.title}</div>
-              {video.paid || (user && user.role != 'VIEWER')
-                ? (
-                    ''
-                  )
-                : (
+              {video.paid || (user && user.role !== 'VIEWER') ? (
+                ''
+              ) : (
                 <div className="py-0">
                   <Button
                     type="primary"
@@ -253,7 +254,7 @@ const WatchVideo = () => {
                     Watch Full Video
                   </Button>
                 </div>
-                  )}
+              )}
             </div>
             <div className="flex justify-between text-gray-800 text-2xl w-full text-left">
               <div className="flex items-end">
@@ -271,7 +272,7 @@ const WatchVideo = () => {
                   title="Like">
                   <div
                     className={`flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ${
-                      video.like == 1 ? 'text-blue-400' : ''
+                      video.like === 1 ? 'text-blue-400' : ''
                     }`}>
                     {video?.likeCount} <FaHeart className="ml-1" />
                   </div>
@@ -284,7 +285,7 @@ const WatchVideo = () => {
                   title="Dislike">
                   <span
                     className={`flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2 ${
-                      video.like == 0 ? 'text-blue-400' : ''
+                      video.like === 0 ? 'text-blue-400' : ''
                     }`}>
                     {video.dislikeCount} <FaHeartBroken className="ml-1" />
                   </span>
@@ -297,17 +298,15 @@ const WatchVideo = () => {
                   toggleMessages(e)
                 }}
                 className="flex items-center self-center text-md my-2">
-                {showMessages
-                  ? (
+                {showMessages ? (
                   <>
                     Hide Messages <AiOutlineUpCircle className="ml-2" />
                   </>
-                    )
-                  : (
+                ) : (
                   <>
                     Show Messages <AiOutlineDownCircle className=" ml-2" />
                   </>
-                    )}
+                )}
               </span>
               {showMessages && renderComments(video.comments)}
               <div className="w-full flex justify-between items-end">
@@ -354,17 +353,15 @@ const WatchVideo = () => {
       <SideNav onSearch={onSearch}></SideNav>
       <div>
         <div className="pt-2 ml-14 mt-20">
-          {playVideo && currentVideo
-            ? (
-                renderPlayer(currentVideo)
-              )
-            : (
+          {playVideo && currentVideo ? (
+            renderPlayer(currentVideo)
+          ) : (
             <div className="w-screen h-screen flex justify-center items-center -mt-20 -ml-12 lg:-mt-24 lg:-ml-48  xl:-mt-20 xl:-ml-52">
               <Space size="middle">
                 <Spin size="large" />
               </Space>
             </div>
-              )}
+          )}
           <div className="flex relative lg:absolute right-0  bottom-0 border-2 mt-20 lg:top-0 lg:flex-col lg:ml-0 flex-wrap lg:flex-nowrap xl:w-1/4 lg:w-1/5 lg:min-h-full border-white">
             {renderVideos()}
           </div>

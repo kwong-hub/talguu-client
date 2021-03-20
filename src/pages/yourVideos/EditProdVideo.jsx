@@ -1,7 +1,7 @@
 import { Button, Input, PageHeader } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import React, { useState, useEffect } from 'react'
-
+import PropTypes from 'prop-types'
 import { FaDollarSign, FaInfo } from 'react-icons/fa'
 import { useHistory, useParams } from 'react-router-dom'
 
@@ -122,16 +122,16 @@ const EditProdVideo = (props) => {
             <div className="flex flex-col items-start justify-start">
               <h2 className="text-lg">Change Thumbnail</h2>
               <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                Select or upload a picture that shows what's in your video. A good thumbnail stands
-                out and draws viewers' attention.
+                Select or upload a picture that shows what&apos;s in your video. A good thumbnail
+                stands out and draws viewers&apos; attention.
               </h3>
               <Thumbnail videoId={video?.id} thumbnails={video?.thumbnial} />
             </div>
             <div className="flex flex-col items-start justify-start">
               <h2 className="text-lg">Change Trailer</h2>
               <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                Select or upload a trailer that shows what's in your video in a minute. A good
-                trailer draws viewers' attention.
+                Select or upload a trailer that shows what&apos;s in your video in a minute. A good
+                trailer draws viewers&apos; attention.
               </h3>
               <Trailer videoId={video?.id} />
               {video?.trailer && (
@@ -155,6 +155,12 @@ const EditProdVideo = (props) => {
       </div>
     </div>
   )
+}
+
+EditProdVideo.propTypes = {
+  location: PropTypes.shape({
+    state: PropTypes.string
+  })
 }
 
 export default EditProdVideo

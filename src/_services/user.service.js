@@ -19,8 +19,6 @@ function login({ email, password }) {
 }
 
 function logout(redirectUrl = '') {
-  // localStorage.removeItem("user");
-  // console.log(history.location);
   if (redirectUrl) {
     history.push({ pathname: '/login', search: `?redirectUrl=${redirectUrl}` })
   } else {
@@ -37,21 +35,19 @@ async function getUser() {
     return checkResponse(error)
   }
 }
+
 async function getUserProfile() {
   try {
     const user = await axios.get(`${environment}/account/profile`)
     return user.data
   } catch (error) {
-    throw error
+    return checkResponse(error)
   }
 }
+
 async function updateUserProfile(body) {
-  try {
-    const user = await axios.put(`${environment}/account/profile`, body)
-    return user.data
-  } catch (error) {
-    throw error
-  }
+  const user = await axios.put(`${environment}/account/profile`, body)
+  return user.data
 }
 
 async function updateCompanyProfile(body) {
@@ -59,15 +55,16 @@ async function updateCompanyProfile(body) {
     const user = await axios.put(`${environment}/account/profile/company`, body)
     return user.data
   } catch (error) {
-    throw error
+    return checkResponse(error)
   }
 }
+
 async function forgotPassword(body) {
   try {
     const user = await axios.post(`${environment}/account/change_password_request`, body)
     return user.data
   } catch (error) {
-    throw error
+    return checkResponse(error)
   }
 }
 
@@ -76,7 +73,7 @@ async function updatePassword(body) {
     const user = await axios.put(`${environment}/account/update_password`, body)
     return user.data
   } catch (error) {
-    throw error
+    return checkResponse(error)
   }
 }
 
@@ -130,5 +127,5 @@ export const userService = {
   updateUserProfile,
   updateCompanyProfile,
   updatePassword,
-  forgotPassword,
+  forgotPassword
 }

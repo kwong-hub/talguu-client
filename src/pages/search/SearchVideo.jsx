@@ -1,11 +1,10 @@
 import './SearchVideo.css'
 
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import PaymentModal from '../../components/paymentModal/PaymentModal'
-import RenderVideo from '../../components/renderVideo/RenderVideo'
 import SideNav from '../../partials/sideNav/SideNav'
 import { PURCHASE_VIDEO_ASYNC, VIEWER_VIDEOS_ASYNC } from '../../redux/types'
 import RenderSearchVideo from '../../components/renderSearchVideo/RenderSearchVideo'
@@ -33,7 +32,7 @@ const SearchVideo = (props) => {
   const paymentModalVisibleFunc = (value, video, event) => {
     if (event) event.stopPropagation()
     const user = JSON.parse(localStorage.getItem('user'))
-    if (!user || user.role != 'VIEWER') {
+    if (!user || user.role !== 'VIEWER') {
       history.push({
         pathname: '/login',
         search: `?return_url=/watch/${video.id}`

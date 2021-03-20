@@ -1,15 +1,15 @@
-import { Button, message, notification, Progress } from 'antd';
-import React, { Component } from 'react';
-import { FaPlus } from 'react-icons/fa';
-import { RiArrowRightCircleLine, RiVideoUploadFill } from 'react-icons/ri';
-import { AiOutlineInbox } from 'react-icons/ai';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Button, message, notification, Progress } from 'antd'
+import React, { Component } from 'react'
+import { FaPlus } from 'react-icons/fa'
+import { RiArrowRightCircleLine } from 'react-icons/ri'
+import { AiOutlineInbox } from 'react-icons/ai'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-import videoService from '../../_services/video.service';
-import SideNav from '../../partials/sideNav/SideNav';
-import { VIDEO_READY } from '../../redux/types';
-import Dragger from 'antd/lib/upload/Dragger';
+import videoService from '../../_services/video.service'
+import SideNav from '../../partials/sideNav/SideNav'
+import Dragger from 'antd/lib/upload/Dragger'
 
 // const { Dragger } = Upload;
 const initialState = {
@@ -21,11 +21,11 @@ const initialState = {
   describe: '',
   files: {},
   progress: 0,
-  active: '',
-};
+  active: ''
+}
 
 class UploadVideo extends Component {
-  fileList = [];
+  fileList = []
   state = {
     file: null,
     fileSelected: false,
@@ -43,70 +43,71 @@ class UploadVideo extends Component {
       action: '',
       showUploadList: true,
       customRequest: (data) => {
-        return this.fileSelected(data.file);
-      },
-    },
-  };
+        return this.fileSelected(data.file)
+      }
+    }
+  }
 
   cancelUpload = () => {
-    this.setState(initialState);
-  };
+    this.setState(initialState)
+  }
 
   uploadFileS3 = () => {
-    let arr = this.state.file.name.split('.');
-    let fileType = arr[arr.length - 1];
-    let fileName = Date.now() + 'video' + '.' + fileType;
+    const arr = this.state.file.name.split('.')
+    const fileType = arr[arr.length - 1]
+    const fileName = Date.now() + 'video' + '.' + fileType
     const callBack = (res) => {
-      this.setState({ progress: Math.ceil((res.loaded / res.total) * 100) });
-    };
+      this.setState({ progress: Math.ceil((res.loaded / res.total) * 100) })
+    }
     videoService
       .getUploadUrl({ fileName })
       .then((res) => {
-        let options = { ...res.signedRequest.fields };
-        let formData = new FormData();
+        const options = { ...res.signedRequest.fields }
+        const formData = new FormData()
         Object.keys(options).map((key) => {
-          formData.append(key, options[key]);
-        });
-        formData.append('file', this.state.file);
+          formData.append(key, options[key])
+          return key
+        })
+        formData.append('file', this.state.file)
         return videoService.uploadVideoToS3(res.signedRequest.url, formData, {
           ...res.config,
-          onUploadProgress: callBack,
-        });
+          onUploadProgress: callBack
+        })
       })
       .then((res) => {
         // console.log(res);
-        let video_link = res.config.url + '/' + fileName;
-        let { title, describe } = this.state;
-        let { size, type } = this.state.file;
-        let videoObj = {
-          video_link,
+        const videoLink = res.config.url + '/' + fileName
+        const { title, describe } = this.state
+        const { size, type } = this.state.file
+        const videoObj = {
+          video_link: videoLink,
           title,
           describe,
           video_size: size,
-          video_type: type,
-        };
-        return videoService.addVideo(videoObj);
+          video_type: type
+        }
+        return videoService.addVideo(videoObj)
       })
       .then((res) => {
-        this.props.history.push('/finish-upload', { ...res.data.video });
+        this.props.history.push('/finish-upload', { ...res.data.video })
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(err))
+  }
 
   fileSelected = (file) => {
-    this.setState({ file, fileSelected: true });
-  };
+    this.setState({ file, fileSelected: true })
+  }
 
   errorMessage = (msg) => {
-    message.error(msg);
-  };
+    message.error(msg)
+  }
 
   handleOnclick = (e) => {
-    this.fileInput.current.click();
-  };
+    this.fileInput.current.click()
+  }
 
   resetState() {
-    this.setState(initialState);
+    this.setState(initialState)
   }
 
   checkFile = () => {
@@ -114,39 +115,41 @@ class UploadVideo extends Component {
       notification.info({
         message: 'File size should be less than 1.5GB.',
         placement: 'bottomRight',
-        duration: 3.3,
-      });
-      return false;
+        duration: 3.3
+      })
+      return false
     } else if (!this.state.file.type.toString().startsWith('video')) {
       notification.info({
         message: 'Unsupported file type! File type should be video',
         placement: 'bottomRight',
-        duration: 3.3,
-      });
-      return false;
+        duration: 3.3
+      })
+      return false
     }
-    return true;
-  };
+    return true
+  }
+
   submit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (!this.state.title || !this.state.describe || !this.state.file) {
-      this.errorMessage('Please fill required filled first');
-      return;
+      this.errorMessage('Please fill required filled first')
+      return
     }
-    if (!this.checkFile()) return;
-    this.uploadFileS3();
-  };
+    if (!this.checkFile()) return
+    this.uploadFileS3()
+  }
 
   nextClick = (to) => {
-    this.setState({ active: to });
-    this.props.history.push('/finish-upload');
-  };
+    this.setState({ active: to })
+    this.props.history.push('/finish-upload')
+  }
+
   uploadButton = () => (
     <div>
       <FaPlus />
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
-  );
+  )
 
   render() {
     return (
@@ -157,7 +160,7 @@ class UploadVideo extends Component {
             <p className="text-2xl text-gray-600 m-2">One Step to Publish your video! </p>
           </div>
 
-          {!this.state.progress > 0 && this.state.active == '' && (
+          {!this.state.progress > 0 && this.state.active === '' && (
             <div>
               <form
                 onSubmit={this.submit}
@@ -192,7 +195,7 @@ class UploadVideo extends Component {
                     type="text"
                     value={this.state.title}
                     onChange={(e) => {
-                      this.setState({ title: e.target.value });
+                      this.setState({ title: e.target.value })
                     }}
                   />
                 </label>
@@ -204,7 +207,7 @@ class UploadVideo extends Component {
                     type="text"
                     value={this.state.describe}
                     onChange={(e) => {
-                      this.setState({ describe: e.target.value });
+                      this.setState({ describe: e.target.value })
                     }}></textarea>
                 </label>
 
@@ -222,22 +225,28 @@ class UploadVideo extends Component {
           )}
         </div>
 
-        {this.state.progress > 0 && this.state.active == '' && (
+        {this.state.progress > 0 && this.state.active === '' && (
           <div className="flex-col justify-center mt-4 w-64 mx-auto">
             <p className="text-gray-500 font-thin text-base">Uploading file</p>
             <Progress type="line" percent={this.state.progress} status="active" />
           </div>
         )}
       </>
-    );
+    )
   }
 }
 
 const mapStateToProps = (props) => {
   // console.log(props);
   return {
-    ...props.video,
-  };
-};
+    ...props.video
+  }
+}
 
-export default withRouter(connect(mapStateToProps, null)(UploadVideo));
+UploadVideo.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func
+  })
+}
+
+export default withRouter(connect(mapStateToProps, null)(UploadVideo))

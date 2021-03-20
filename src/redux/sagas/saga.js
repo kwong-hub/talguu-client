@@ -48,7 +48,7 @@ import {
 } from '../types'
 
 // import userService from "../../services/user.service";
-function * createUserAsync(action) {
+function* createUserAsync(action) {
   const user = yield call(userService.createProducer, action.payload)
   if (user && user.success) {
     yield put({ type: CREATE_PRODUCER_SUCCESS, payload: user.user })
@@ -57,7 +57,7 @@ function * createUserAsync(action) {
   }
 }
 
-function * createViewerAsync(action) {
+function* createViewerAsync(action) {
   const user = yield call(userService.createViewer, action.payload)
   if (user && user.success) {
     yield put({ type: CREATE_VIEWER_SUCCESS, payload: user.user })
@@ -66,18 +66,18 @@ function * createViewerAsync(action) {
   }
 }
 
-function * loginSuccess(data) {
+function* loginSuccess(data) {
   yield put({ type: userConstants.LOGIN_SUCCESS, payload: data.payload })
 }
 
-function * loginFail() {
+function* loginFail() {
   yield put({ type: userConstants.LOGIN_FAILURE })
 }
-function * logout() {
+function* logout() {
   yield put({ type: userConstants.LOGOUT })
 }
 
-function * videoUpload(action) {
+function* videoUpload(action) {
   // console.log("action", action);
   const video = yield call(videoService.addVideo, action.payload)
   // console.log(video);
@@ -88,7 +88,7 @@ function * videoUpload(action) {
   }
 }
 
-function * getViewerVideosAsync(action) {
+function* getViewerVideosAsync(action) {
   // console.log('action', action)
   const res = yield call(videoService.getViewerVideos, action.payload)
   if (res.success) {
@@ -98,7 +98,7 @@ function * getViewerVideosAsync(action) {
   }
 }
 
-function * getViewerLiveVideos(action) {
+function* getViewerLiveVideos(action) {
   const res = yield call(videoService.getViewerLiveVideos)
   if (res.success) {
     yield put({ type: VIEWER_LIVE_SUCCESS, payload: res.data })
@@ -107,7 +107,7 @@ function * getViewerLiveVideos(action) {
   }
 }
 
-function * getPaidVideoUrlAsync(action) {
+function* getPaidVideoUrlAsync(action) {
   // console.log(action);
   const video = yield call(videoService.getPaidVideoUrl, action.payload)
 
@@ -118,7 +118,7 @@ function * getPaidVideoUrlAsync(action) {
   }
 }
 
-function * purchaseVideoAsync(action) {
+function* purchaseVideoAsync(action) {
   const res = yield call(videoService.purchaseVideo, action.payload)
 
   // console.log("from saga", res);
@@ -129,7 +129,7 @@ function * purchaseVideoAsync(action) {
   }
 }
 
-function * saveLaterVideoAsync(action) {
+function* saveLaterVideoAsync(action) {
   const res = yield call(videoService.saveVideoLater, action.payload)
 
   if (res && res.success) {
@@ -139,7 +139,7 @@ function * saveLaterVideoAsync(action) {
   }
 }
 
-function * getPaidUserVideosAsync(action) {
+function* getPaidUserVideosAsync(action) {
   const res = yield call(videoService.getPaidUserVideos)
   if (res.success) {
     yield put({ type: PAID_VIEWER_VIDEOS_SUCCESS, payload: res.data })
@@ -148,7 +148,7 @@ function * getPaidUserVideosAsync(action) {
   }
 }
 
-function * getSavedVideosAsync(action) {
+function* getSavedVideosAsync(action) {
   const res = yield call(videoService.getSavedUserVideos)
   if (res.success) {
     yield put({ type: GET_SAVED_VIDEOS_SUCCESS, payload: res.data })
@@ -157,7 +157,7 @@ function * getSavedVideosAsync(action) {
   }
 }
 
-function * addPaymentInfoAsync(action) {
+function* addPaymentInfoAsync(action) {
   const res = yield call(paymentService.addPaymentInfo, action.payload)
 
   if (res.success) {
@@ -170,7 +170,7 @@ function * addPaymentInfoAsync(action) {
   }
 }
 
-function * getPaymentInfoAsync(action) {
+function* getPaymentInfoAsync(action) {
   const res = yield call(paymentService.getUserPaymentInfos, action.payload)
 
   if (res.success) {
@@ -180,7 +180,7 @@ function * getPaymentInfoAsync(action) {
   }
 }
 
-function * getUserProfileInfo(action) {
+function* getUserProfileInfo(action) {
   const res = yield call(userService.getUserProfile, action.payload)
   // console.log("res", res);
   if (res.success) {
@@ -188,15 +188,14 @@ function * getUserProfileInfo(action) {
       type: GET_USER_PROFILE,
       payload: { company: res.producer ? res.producer : res.viewer, user: res.user }
     })
-  } else {
   }
 }
 
-function * videoOnReady(action) {
+function* videoOnReady(action) {
   yield put({ type: VIDEO_READY, payload: action.payload })
 }
 
-function * watchAll() {
+function* watchAll() {
   yield all([
     takeLatest(CREATE_PRODUCER_ASYNC, createUserAsync),
     takeLatest(CREATE_VIEWER_ASYNC, createViewerAsync),

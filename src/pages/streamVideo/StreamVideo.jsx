@@ -1,14 +1,11 @@
 import { Menu, Modal } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { RiCamera2Fill, RiLiveFill } from 'react-icons/ri'
-import { useHistory } from 'react-router'
 
 import SideNav from '../../partials/sideNav/SideNav'
-import videoService from '../../_services/video.service'
 import StreamForm from './StreamForm'
 
 const StreamVideo = () => {
-  const history = useHistory()
   const [modalVisible, setmodalVisible] = useState(true)
   const [formVisible, setFormVisible] = useState(false)
   const handleClick = (e) => {}
@@ -20,11 +17,11 @@ const StreamVideo = () => {
     // getStreamed();
     return () => {}
   }, [])
-  const getStreamed = () => {
-    videoService.getStreamed().then((data) => {
-      history.push('/live_stream', { data })
-    })
-  }
+  // const getStreamed = () => {
+  //   videoService.getStreamed().then((data) => {
+  //     history.push('/live_stream', { data })
+  //   })
+  // }
   return (
     <div>
       <div>
