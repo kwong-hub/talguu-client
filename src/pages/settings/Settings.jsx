@@ -1,109 +1,110 @@
-import "./Settings.css";
+import './Settings.css'
 
-import { Button, DatePicker, Form, Input, notification, Radio } from "antd";
-import Modal from "antd/lib/modal/Modal";
-import React, { useEffect, useState } from "react";
-import { FaCheck, FaUser } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Button, DatePicker, Form, Input, notification, Radio } from 'antd'
+import Modal from 'antd/lib/modal/Modal'
+import React, { useEffect, useState } from 'react'
+import { FaCheck, FaUser } from 'react-icons/fa'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useHistory } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-import { userService } from "../../_services/user.service";
-import logo from "../../assets/images/logo.svg";
-import mastercard from "../../assets/images/mastercard.png";
-import visa from "../../assets/images/visa.png";
-import ShowBalance from "../../components/balanceModal/ShowBalance";
-import PaymentInfos from "../../components/paymentInfos/PaymentInfos";
-import SideNav from "../../partials/sideNav/SideNav";
-import { ADD_PAYMENT_INFO_ASYNC, RESET_PAYMENT_INFO } from "../../redux/types";
+import { userService } from '../../_services/user.service'
+import logo from '../../assets/images/logo.svg'
+import mastercard from '../../assets/images/mastercard.png'
+import visa from '../../assets/images/visa.png'
+import ShowBalance from '../../components/balanceModal/ShowBalance'
+import PaymentInfos from '../../components/paymentInfos/PaymentInfos'
+import SideNav from '../../partials/sideNav/SideNav'
+import { ADD_PAYMENT_INFO_ASYNC, RESET_PAYMENT_INFO } from '../../redux/types'
 
 // const Context = React.createContext({ name: "Default" });
 
 const Settings = (props) => {
-  const history = useHistory();
-  const [showPaymentInfos, setShowPaymentInfos] = useState(false);
-  const [showBalance, setshowBalance] = useState(false);
-  const [form] = Form.useForm();
-  const [viewerErrMessages, setViewerErrMessages] = useState("");
-  const [loading, setLoading] = useState(false);
+  const history = useHistory()
+  const [showPaymentInfos, setShowPaymentInfos] = useState(false)
+  const [showBalance, setshowBalance] = useState(false)
+  const [form] = Form.useForm()
+  const [viewerErrMessages, setViewerErrMessages] = useState('')
+  const [loading, setLoading] = useState(false)
   // const [renderPaymentModal, setRenderPaymentModal] = useState(props.renderPaymentModal || false);
-  const [formValues, setFormValues] = useState({
-    cardType: "MASTER_CARD",
+  const [formValues] = useState({
+    cardType: 'MASTER_CARD',
     username: userService.getLocalUser().username,
-    state: "NY",
-    address: "Address",
-  });
+    state: 'NY',
+    address: 'Address'
+  })
   const [paymentModalVisible, setPaymentModalVisible] = useState(
-    props.location.state?.paymentModalVisible ? true : false
-  );
-  const [paymentMethod, setPaymentMethod] = useState("MASTER_CARD");
-  const dispatch = useDispatch();
-  const paymentInfo = useSelector((state) => state.payment.paymentInfo);
-  const addPaymentInfoStatus = useSelector((state) => state.payment.addPaymentInfoStatus);
-  const username = userService.getLocalUser().username;
+    !!props.location.state?.paymentModalVisible
+  )
+  const [paymentMethod, setPaymentMethod] = useState('MASTER_CARD')
+  const dispatch = useDispatch()
+  const paymentInfo = useSelector((state) => state.payment.paymentInfo)
+  const addPaymentInfoStatus = useSelector((state) => state.payment.addPaymentInfoStatus)
+  const username = userService.getLocalUser().username
 
   useEffect(() => {
-    if (addPaymentInfoStatus === "SUCCESS") {
-      console.log("payment info success");
-      setLoading(false);
-      setPaymentModalVisible(false);
-      form.resetFields();
+    if (addPaymentInfoStatus === 'SUCCESS') {
+      console.log('payment info success')
+      setLoading(false)
+      setPaymentModalVisible(false)
+      form.resetFields()
       notification.open({
-        message: "Payment Information Created!!",
-        icon: <FaCheck className="text-sm text-green-600" />,
-      });
-      dispatch({ type: RESET_PAYMENT_INFO });
-    } else if (addPaymentInfoStatus === "ERROR") {
-      setViewerErrMessages("Can not create payment information.");
-      setLoading(false);
+        message: 'Payment Information Created!!',
+        icon: <FaCheck className="text-sm text-green-600" />
+      })
+      dispatch({ type: RESET_PAYMENT_INFO })
+    } else if (addPaymentInfoStatus === 'ERROR') {
+      setViewerErrMessages('Can not create payment information.')
+      setLoading(false)
     }
-    return () => {};
-  }, [paymentInfo]);
+    return () => {}
+  }, [paymentInfo])
 
   const onPaymentFinish = (values) => {
     // console.log(values);
-    setViewerErrMessages("");
-    let pattern =
-      values.cardType === "MASTER_CARD" ? /^5[1-5][0-9]{14}$/ : /^4[0-9]{12}(?:[0-9]{3})?$/;
-    let valid = pattern.test(values.cardNumber);
+    setViewerErrMessages('')
+    const pattern =
+      values.cardType === 'MASTER_CARD' ? /^5[1-5][0-9]{14}$/ : /^4[0-9]{12}(?:[0-9]{3})?$/
+    const valid = pattern.test(values.cardNumber)
     if (!valid) {
-      setViewerErrMessages("Please Enter Valid Information");
-      return;
+      setViewerErrMessages('Please Enter Valid Information')
+      return
     }
     // console.log(moment(values.expDate).format("MM / YY"));
-    setLoading(true);
+    setLoading(true)
     dispatch({
       type: ADD_PAYMENT_INFO_ASYNC,
       payload: {
         ...values,
         securityCode: 1234,
         username,
-        state: "NY",
-        address: "Address",
-      },
-    });
-  };
+        state: 'NY',
+        address: 'Address'
+      }
+    })
+  }
 
   const paymentMethodChange = (value) => {
-    setPaymentMethod(value.target.value);
-  };
+    setPaymentMethod(value.target.value)
+  }
 
   const onYearChange = (value) => {
     // console.log(values);
-  };
+  }
 
   const changePaymentModalVisible = (value) => {
-    setPaymentModalVisible(value);
-  };
+    setPaymentModalVisible(value)
+  }
 
   const changePaymentInfosVisible = (value) => {
-    setShowPaymentInfos(value);
-  };
+    setShowPaymentInfos(value)
+  }
   const changeBalanceInfosVisible = (value) => {
-    setshowBalance(value);
-  };
+    setshowBalance(value)
+  }
   const depositAccount = (value) => {
-    history.push("/deposit");
-  };
+    history.push('/deposit')
+  }
 
   const renderPayment = () => {
     return (
@@ -134,7 +135,7 @@ const Settings = (props) => {
                   name="firstName"
                   label="First Name"
                   className="w-full p-1"
-                  rules={[{ required: true, message: "Please input card first name" }]}>
+                  rules={[{ required: true, message: 'Please input card first name' }]}>
                   <Input
                     className="rounded-2xl "
                     prefix={<FaUser className="site-form-item-icon" />}
@@ -146,7 +147,7 @@ const Settings = (props) => {
                   name="lastName"
                   label="Last Name"
                   className="w-full p-3"
-                  rules={[{ required: true, message: "Please input card last name" }]}>
+                  rules={[{ required: true, message: 'Please input card last name' }]}>
                   <Input
                     className="rounded-2xl "
                     prefix={<FaUser className="site-form-item-icon" />}
@@ -160,14 +161,14 @@ const Settings = (props) => {
                   name="zipCode"
                   label="Zip Code"
                   className="w-full p-1"
-                  rules={[{ required: true, message: "Please input zip code" }]}>
+                  rules={[{ required: true, message: 'Please input zip code' }]}>
                   <Input className="rounded-2xl " type="text" placeholder="Zip Code" />
                 </Form.Item>
                 <Form.Item
                   name="city"
                   label="City"
                   className="w-full p-3"
-                  rules={[{ required: true, message: "Please input city" }]}>
+                  rules={[{ required: true, message: 'Please input city' }]}>
                   <Input className="rounded-2xl " type="text" placeholder="City" />
                 </Form.Item>
               </div>
@@ -187,7 +188,7 @@ const Settings = (props) => {
                   <Radio
                     className="flex items-center justify-start w-full border-t-2 border-gray-100 p-3 text-gray-600 text-ls "
                     value="VISA">
-                    <img src={visa} alt="" className="h-10 ml-1" />{" "}
+                    <img src={visa} alt="" className="h-10 ml-1" />{' '}
                     <span className="ml-1">Visa</span>
                   </Radio>
                 </Radio.Group>
@@ -198,12 +199,12 @@ const Settings = (props) => {
                 rules={[
                   {
                     pattern:
-                      paymentMethod === "MASTER_CARD"
+                      paymentMethod === 'MASTER_CARD'
                         ? /^5[1-5][0-9]{14}$/
                         : /^4[0-9]{12}(?:[0-9]{3})?$/,
                     required: true,
-                    message: "Please input valid card number",
-                  },
+                    message: 'Please input valid card number'
+                  }
                 ]}>
                 <Input className="rounded-2xl" type="text" placeholder="Card Number" />
               </Form.Item>
@@ -212,7 +213,7 @@ const Settings = (props) => {
                   className="w-1/2 pr-2"
                   name="expDate"
                   label="Expires on"
-                  rules={[{ required: true, message: "Please input exp date" }]}>
+                  rules={[{ required: true, message: 'Please input exp date' }]}>
                   <DatePicker
                     className="rounded-2xl"
                     onChange={onYearChange}
@@ -229,8 +230,8 @@ const Settings = (props) => {
                     {
                       required: true,
                       pattern: /[0-9]{3}/,
-                      message: "Please input 3 digit number",
-                    },
+                      message: 'Please input 3 digit number'
+                    }
                   ]}>
                   <Input className="rounded-2xl" type="number" placeholder="CVC" />
                 </Form.Item>
@@ -261,8 +262,8 @@ const Settings = (props) => {
           </div>
         </div>
       </Modal>
-    );
-  };
+    )
+  }
 
   return (
     <div className="bg-gray-50 ml-0  sm:ml-14">
@@ -325,10 +326,18 @@ const Settings = (props) => {
           modalVisible={showPaymentInfos}
         />
       ) : (
-        ""
+        ''
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Settings;
+Settings.propTypes = {
+  location: PropTypes.shape({
+    state: PropTypes.shape({
+      paymentModalVisible: PropTypes.any
+    })
+  })
+}
+
+export default Settings

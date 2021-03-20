@@ -1,43 +1,43 @@
-import { Button, Input, PageHeader } from "antd";
-import TextArea from "antd/lib/input/TextArea";
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { FaDollarSign, FaInfo } from "react-icons/fa";
-import { useHistory, useParams } from "react-router-dom";
+import { Button, Input, PageHeader } from 'antd'
+import TextArea from 'antd/lib/input/TextArea'
+import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
+import { FaDollarSign, FaInfo } from 'react-icons/fa'
+import { useHistory, useParams } from 'react-router-dom'
 
-import videoService from "../../_services/video.service";
-import VideoPlayer from "../../components/videoPlayer/VideoPlayer";
-import Thumbnail from "../../components/videos/Thumbnail";
-import Trailer from "../../components/videos/Trailer";
-import SideNav from "../../partials/sideNav/SideNav";
+import videoService from '../../_services/video.service'
+import VideoPlayer from '../../components/videoPlayer/VideoPlayer'
+import Thumbnail from '../../components/videos/Thumbnail'
+import Trailer from '../../components/videos/Trailer'
+import SideNav from '../../partials/sideNav/SideNav'
 
 const EditProdVideo = (props) => {
-  var history = useHistory();
-  let { vidId } = useParams();
-  const [video, setVideo] = useState(props.location.state);
-  const [title, setTitle] = useState(video?.title);
-  const [describe, setDescribe] = useState(video?.describe);
-  const [price, setPrice] = useState(0.23);
+  const history = useHistory()
+  const { vidId } = useParams()
+  const [video, setVideo] = useState(props.location.state)
+  const [title, setTitle] = useState(video?.title)
+  const [describe, setDescribe] = useState(video?.describe)
+  const [price, setPrice] = useState(0.23)
   useEffect(() => {
     if (vidId) {
-      getVideoById(vidId);
-      window.scrollTo(0, 0);
+      getVideoById(vidId)
+      window.scrollTo(0, 0)
     }
-    return () => {};
-  }, []);
+    return () => {}
+  }, [])
 
   const getVideoById = (id) => {
     videoService
       .getProdVideoById(id)
       .then((data) => {
         // console.log(data);
-        setVideo(data);
-        setTitle(data.title);
-        setDescribe(data.describe);
-        setPrice(data.video_price);
+        setVideo(data)
+        setTitle(data.title)
+        setDescribe(data.describe)
+        setPrice(data.video_price)
       })
-      .catch((err) => console.log("err", err));
-  };
+      .catch((err) => console.log('err', err))
+  }
 
   const editVideo = () => {
     // console.log("title,describe", title, describe);
@@ -47,29 +47,29 @@ const EditProdVideo = (props) => {
         id: video.id,
         title: title,
         describe: describe,
-        video_price: price,
+        video_price: price
       })
       .then((data) => {
         if (data[0]) {
-          history.push("/your_video");
+          history.push('/your_video')
         }
       })
       .catch((err) => {
-        console.log("err", err);
-      });
-  };
+        console.log('err', err)
+      })
+  }
   const videoJsOptions = {
     autoplay: false,
     controls: true,
-    aspectRatio: "16:9",
+    aspectRatio: '16:9',
     responsive: true,
     sources: [
       {
         src: video?.video_link,
-        type: video?.video_type,
-      },
-    ],
-  };
+        type: video?.video_type
+      }
+    ]
+  }
   return (
     <div className="ml-16 mt-16 relative">
       <SideNav />
@@ -122,16 +122,16 @@ const EditProdVideo = (props) => {
             <div className="flex flex-col items-start justify-start">
               <h2 className="text-lg">Change Thumbnail</h2>
               <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                Select or upload a picture that shows what's in your video. A good thumbnail stands
-                out and draws viewers' attention.
+                Select or upload a picture that shows what&apos;s in your video. A good thumbnail
+                stands out and draws viewers&apos; attention.
               </h3>
               <Thumbnail videoId={video?.id} thumbnails={video?.thumbnial} />
             </div>
             <div className="flex flex-col items-start justify-start">
               <h2 className="text-lg">Change Trailer</h2>
               <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                Select or upload a trailer that shows what's in your video in a minute. A good
-                trailer draws viewers' attention.
+                Select or upload a trailer that shows what&apos;s in your video in a minute. A good
+                trailer draws viewers&apos; attention.
               </h3>
               <Trailer videoId={video?.id} />
               {video?.trailer && (
@@ -139,7 +139,7 @@ const EditProdVideo = (props) => {
                   <VideoPlayer
                     {...{
                       ...videoJsOptions,
-                      sources: [{ src: video?.trailer, type: video?.video_type }],
+                      sources: [{ src: video?.trailer, type: video?.video_type }]
                     }}
                   />
                 </div>
@@ -154,7 +154,13 @@ const EditProdVideo = (props) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default EditProdVideo;
+EditProdVideo.propTypes = {
+  location: PropTypes.shape({
+    state: PropTypes.string
+  })
+}
+
+export default EditProdVideo

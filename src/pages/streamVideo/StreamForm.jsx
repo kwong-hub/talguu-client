@@ -1,21 +1,21 @@
-import { Button, Form, Input } from "antd";
-import TextArea from "antd/lib/input/TextArea";
-import React from "react";
-import { FaInfo } from "react-icons/fa";
-import { useHistory } from "react-router-dom";
+import { Button, Form, Input } from 'antd'
+import TextArea from 'antd/lib/input/TextArea'
+import React from 'react'
+import { FaInfo } from 'react-icons/fa'
+import { useHistory } from 'react-router-dom'
 
-import videoService from "../../_services/video.service";
+import videoService from '../../_services/video.service'
 
 const StreamForm = () => {
-  var history = useHistory();
+  const history = useHistory()
   const goLive = (values) => {
     videoService
       .createStreamKey(values)
       .then((data) => {
-        history.push("/live_stream", { data });
+        history.push('/live_stream', { data })
       })
-      .catch((err) => console.log("err", err));
-  };
+      .catch((err) => console.log('err', err))
+  }
   return (
     <div>
       <div>
@@ -25,21 +25,16 @@ const StreamForm = () => {
           className="login-form"
           initialValues={{
             remember: true,
-            title: "",
-            description: "",
+            title: '',
+            description: ''
           }}
-          onFinish={goLive}
-        >
+          onFinish={goLive}>
           <Form.Item
             label="Title"
             name="title"
             className="text-lg text-gray-600"
-            rules={[{ required: true, message: "Please input your Title!" }]}
-          >
-            <Input
-              className="rounded-md text-gray-700 text-md p-2"
-              placeholder="Title*"
-            />
+            rules={[{ required: true, message: 'Please input your Title!' }]}>
+            <Input className="rounded-md text-gray-700 text-md p-2" placeholder="Title*" />
           </Form.Item>
           <Form.Item
             label="Description"
@@ -47,10 +42,9 @@ const StreamForm = () => {
             rules={[
               {
                 required: false,
-                message: "Please input your Description!",
-              },
-            ]}
-          >
+                message: 'Please input your Description!'
+              }
+            ]}>
             <TextArea
               className="rounded-md text-gray-700 text-md p-2"
               prefix={<FaInfo className="site-form-item-icon" />}
@@ -63,15 +57,14 @@ const StreamForm = () => {
               type="primary"
               htmlType="submit"
               shape="round"
-              className="login-form-button w-full"
-            >
+              className="login-form-button w-full">
               Start Stream
             </Button>
           </Form.Item>
         </Form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default StreamForm;
+export default StreamForm

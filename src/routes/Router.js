@@ -1,32 +1,32 @@
-import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import React from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-import { Login } from "../pages/authentication/Login";
-import Signup from "../pages/authentication/Signup";
-import SignupPrd from "../pages/authentication/SignupPrd";
-import SignupViewer from "../pages/authentication/SignupViewer";
-import Home from "../pages/home/Home";
-import Landing from "../pages/landing/Landing";
-import LiveVideos from "../pages/live/LiveVideos";
-import NotFound from "../pages/NotFound";
-import Deposit from "../pages/payment/Deposit";
-import Profile from "../pages/profile/Profile";
-import PurchasedPlaylist from "../pages/purchasedPlaylist/PurchasedPlaylist";
-import SavedPlayList from "../pages/savedPlaylist/SavedPlayList";
-import Settings from "../pages/settings/Settings";
-import Stream from "../pages/streamVideo/Stream";
-import StreamVideo from "../pages/streamVideo/StreamVideo";
-import UploadAnt from "../pages/UploadAnt";
-import EditUploadVideos from "../pages/uploadVideo/EditUploadVideos";
-import UploadVideo from "../pages/uploadVideo/UploadVideo";
-import Videos from "../pages/videos/Videos";
-import WatchVideo from "../pages/watchVideo/WatchVideo";
-import EditProdVideo from "../pages/yourVideos/EditProdVideo";
-import YourVideo from "../pages/yourVideos/YourVideo";
-import PrivateRoute from "./privateRoute";
-import history from "./history";
-import SearchVideo from "../pages/search/SearchVideo";
-import ForgotPassword from "../pages/authentication/ForgotPassword";
+import { Login } from '../pages/authentication/Login'
+import Signup from '../pages/authentication/Signup'
+import SignupPrd from '../pages/authentication/SignupPrd'
+import SignupViewer from '../pages/authentication/SignupViewer'
+import Home from '../pages/home/Home'
+import Landing from '../pages/landing/Landing'
+import LiveVideos from '../pages/live/LiveVideos'
+import NotFound from '../pages/NotFound'
+import Deposit from '../pages/payment/Deposit'
+import Profile from '../pages/profile/Profile'
+import PurchasedPlaylist from '../pages/purchasedPlaylist/PurchasedPlaylist'
+import SavedPlayList from '../pages/savedPlaylist/SavedPlayList'
+import Settings from '../pages/settings/Settings'
+import Stream from '../pages/streamVideo/Stream'
+import StreamVideo from '../pages/streamVideo/StreamVideo'
+import UploadAnt from '../pages/UploadAnt'
+import EditUploadVideos from '../pages/uploadVideo/EditUploadVideos'
+import UploadVideo from '../pages/uploadVideo/UploadVideo'
+import Videos from '../pages/videos/Videos'
+import WatchVideo from '../pages/watchVideo/WatchVideo'
+import EditProdVideo from '../pages/yourVideos/EditProdVideo'
+import YourVideo from '../pages/yourVideos/YourVideo'
+import PrivateRoute from './privateRoute'
+import history from './history'
+import SearchVideo from '../pages/search/SearchVideo'
+import ForgotPassword from '../pages/authentication/ForgotPassword'
 const Router = () => {
   return (
     <div>
@@ -61,7 +61,7 @@ const Router = () => {
         </Switch>
       </BrowserRouter>
     </div>
-  );
-};
+  )
+}
 
-export default Router;
+export default Router

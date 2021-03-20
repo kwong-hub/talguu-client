@@ -1,11 +1,11 @@
-import "./Header.css";
+import './Header.css'
 
-import { Button } from "antd";
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import logo from "../../assets/images/streaming.png";
+import { Button } from 'antd'
+import React from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import logo from '../../assets/images/streaming.png'
 const Header = () => {
-  let currentURL = useLocation().pathname;
+  const currentURL = useLocation().pathname
   return (
     <div className="w-full fixed top-0 left-0 right-0 h-14 shadow-sm bg-white z-10 flex justify-between items-center">
       <div className="text-2xl flex items-center justify-center header_title text-gray-500">
@@ -18,12 +18,9 @@ const Header = () => {
           <Button
             shape="round"
             className={
-              `flex items-center m-1 px-4` +
-              (currentURL !== "/login"
-                ? `border-transparent bg-transparent`
-                : ``)
-            }
-          >
+              'flex items-center m-1 px-4' +
+              (currentURL !== '/login' ? 'border-transparent bg-transparent' : '')
+            }>
             Login
           </Button>
         </Link>
@@ -31,18 +28,15 @@ const Header = () => {
           <Button
             shape="round"
             className={
-              `flex items-center m-1 px-4` +
-              (currentURL !== "/signup_viewer"
-                ? `border-transparent bg-transparent`
-                : ``)
-            }
-          >
+              'flex items-center m-1 px-4' +
+              (currentURL !== '/signup_viewer' ? 'border-transparent bg-transparent' : '')
+            }>
             Sign Up
           </Button>
         </Link>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

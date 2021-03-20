@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react'
 
-import SideNav from "../../partials/sideNav/SideNav";
+import SideNav from '../../partials/sideNav/SideNav'
 
 const Home = () => {
   return (
     <div>
       <SideNav></SideNav>
-      <div class="w-full container mx-auto p-6 ml-14">Home</div>
+      <div className="w-full container mx-auto p-6 ml-14">Home</div>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

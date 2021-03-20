@@ -69,7 +69,7 @@
 }
 
 .header_title {
-  font-family: "Pacifico", cursive;
+  font-family: 'Pacifico', cursive;
 }
 
 .video_image {
@@ -102,4 +102,13 @@
 .ant-message-custom-content {
   display: flex;
   align-items: center;
+}
+
+.comment_input:focus {
+  border: 1px solid #aaa;
+  outline: none;
+}
+
+.comment_input {
+  border: 1px solid #fff;
 }

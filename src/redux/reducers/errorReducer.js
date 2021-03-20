@@ -1,16 +1,16 @@
-import { ERROR_UNAUTHORIZED } from "../types";
+import { ERROR_UNAUTHORIZED } from '../types'
 
 const INITIAL_STATE = {
-  authorized: true,
-};
+  authorized: true
+}
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ERROR_UNAUTHORIZED:
-      return { ...state, authorized: false };
+      return { ...state, authorized: false }
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default reducer;
+export default reducer

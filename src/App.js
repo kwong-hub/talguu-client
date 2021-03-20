@@ -1,9 +1,9 @@
-import "./App.css";
-import "./styles/color.style.css";
+import './App.css'
+import './styles/color.style.css'
 
-import React from "react";
+import React from 'react'
 
-import Router from "./routes/Router";
+import Router from './routes/Router'
 
 function App() {
   // let history = useHistory();
@@ -19,7 +19,7 @@ function App() {
     <div className="App">
       <Router />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

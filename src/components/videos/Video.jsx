@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Video = (props) => {
   // console.log("props", props);
@@ -13,7 +13,7 @@ const Video = (props) => {
         {/* <p>{props.describe}</p> */}
       </div>
     </Link>
-  );
-};
+  )
+}
 
-export default Video;
+export default Video
