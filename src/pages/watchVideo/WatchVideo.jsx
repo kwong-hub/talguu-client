@@ -97,8 +97,8 @@ const WatchVideo = () => {
   }
 
   const renderComment = (video) => (
-    <div className="flex">
-      <Form.Item className="flex-1 mr-2">
+    <div className='flex'>
+      <Form.Item className='flex-1 mr-2'>
         <div
           ref={commentRef}
           onInput={() => {
@@ -107,20 +107,20 @@ const WatchVideo = () => {
           onBlur={() => {
             setComment(commentRef.current.innerHTML)
           }}
-          className="w-full text-left text-md px-2 py-1 rounded-lg comment_input"
-          contentEditable="true">
+          className='w-full text-left text-md px-2 py-1 rounded-lg comment_input'
+          contentEditable='true'>
           {currentVideo.hasComment || 'Add a new comment'}
         </div>
       </Form.Item>
       <Form.Item>
         <Button
-          htmlType="submit"
+          htmlType='submit'
           loading={submitting}
           onClick={(e) => {
             submitComment(e, video)
             console.log(e.target)
           }}
-          type="secondary">
+          type='secondary'>
           {currentVideo.hasComment ? 'Edit Comment' : 'Add Comment'}
         </Button>
       </Form.Item>
@@ -129,17 +129,17 @@ const WatchVideo = () => {
 
   const renderComments = (comments) => {
     return (
-      <div className="flex-col w-full justify-start">
+      <div className='flex-col w-full justify-start'>
         {comments?.map((cm) => {
           return (
             <Comment
               key={cm?.id}
-              className="w-full flex justify-start"
+              className='w-full flex justify-start'
               author={<a>Anonymous</a>}
               avatar={
                 <Avatar
-                  src="https://robohash.org/reminventoreveniam.png?size=50x50&set=set1"
-                  alt="Anonymous"
+                  src='https://robohash.org/reminventoreveniam.png?size=50x50&set=set1'
+                  alt='Anonymous'
                 />
               }
               content={<p>{cm.message}</p>}
@@ -236,86 +236,86 @@ const WatchVideo = () => {
     }
     if (video) {
       return (
-        <div className="">
-          <div className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl -z-10">
+        <div className=''>
+          <div className='flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl -z-10'>
             <VideoPlayer {...videoJsOptions}></VideoPlayer>
           </div>
-          <div className="flex-col ml-2 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
-            <div className="w-full flex justify-between">
-              <div className="text-gray-800 lg:text-2xl text-md  text-left">{video?.title}</div>
+          <div className='flex-col ml-2 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl'>
+            <div className='w-full flex justify-between'>
+              <div className='text-gray-800 lg:text-2xl text-md  text-left'>{video?.title}</div>
               {video.paid || (user && user.role !== 'VIEWER') ? (
                 ''
               ) : (
-                <div className="py-0">
+                <div className='py-0'>
                   <Button
-                    type="primary"
+                    type='primary'
                     onClick={(event) => paymentModalVisibleFunc(true, video, event)}
-                    className="mr-1 rounded-2xl text-xs px-2 py-0 opacity-80">
+                    className='mr-1 rounded-2xl text-xs px-2 py-0 opacity-80'>
                     Watch Full Video
                   </Button>
                 </div>
               )}
             </div>
-            <div className="flex justify-between text-gray-800 text-2xl w-full text-left">
-              <div className="flex items-end">
-                <span className="text-gray-400 text-lg"> {video?.viewCount} views</span>
-                <span className="text-gray-600 ml-4 text-base">
+            <div className='flex justify-between text-gray-800 text-2xl w-full text-left'>
+              <div className='flex items-end'>
+                <span className='text-gray-400 text-lg'> {video?.viewCount} views</span>
+                <span className='text-gray-600 ml-4 text-base'>
                   {moment(video?.premiered).format('MMM DD, YYYY')}
                 </span>
               </div>
-              <div className="flex">
+              <div className='flex'>
                 <Tooltip
                   onClick={(e) => {
                     likeDislikeVideo(e, video, 1)
                   }}
-                  placement="bottom"
-                  title="Like">
+                  placement='bottom'
+                  title='Like'>
                   <div
                     className={`flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ${
                       video.like === 1 ? 'text-blue-400' : ''
                     }`}>
-                    {video?.likeCount} <FaHeart className="ml-1" />
+                    {video?.likeCount} <FaHeart className='ml-1' />
                   </div>
                 </Tooltip>
                 <Tooltip
                   onClick={(e) => {
                     likeDislikeVideo(e, video, 0)
                   }}
-                  placement="bottom"
-                  title="Dislike">
+                  placement='bottom'
+                  title='Dislike'>
                   <span
                     className={`flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2 ${
                       video.like === 0 ? 'text-blue-400' : ''
                     }`}>
-                    {video.dislikeCount} <FaHeartBroken className="ml-1" />
+                    {video.dislikeCount} <FaHeartBroken className='ml-1' />
                   </span>
                 </Tooltip>
               </div>
             </div>
-            <div className="flex flex-col justify-center items-center cursor-pointer rounded-xl shadow-sm border-gray-100 border-2 p-1">
+            <div className='flex flex-col justify-center items-center cursor-pointer rounded-xl shadow-sm border-gray-100 border-2 p-1'>
               <span
                 onClick={(e) => {
                   toggleMessages(e)
                 }}
-                className="flex items-center self-center text-md my-2">
+                className='flex items-center self-center text-md my-2'>
                 {showMessages ? (
                   <>
-                    Hide Messages <AiOutlineUpCircle className="ml-2" />
+                    Hide Messages <AiOutlineUpCircle className='ml-2' />
                   </>
                 ) : (
                   <>
-                    Show Messages <AiOutlineDownCircle className=" ml-2" />
+                    Show Messages <AiOutlineDownCircle className=' ml-2' />
                   </>
                 )}
               </span>
               {showMessages && renderComments(video.comments)}
-              <div className="w-full flex justify-between items-end">
+              <div className='w-full flex justify-between items-end'>
                 <Comment
-                  className="w-full"
+                  className='w-full'
                   avatar={
                     <Avatar
-                      src="https://robohash.org/reminventoreveniam.png?size=50x50&set=set1"
-                      alt="Han Solo"
+                      src='https://robohash.org/reminventoreveniam.png?size=50x50&set=set1'
+                      alt='Han Solo'
                     />
                   }
                   content={renderComment(video)}
@@ -337,7 +337,7 @@ const WatchVideo = () => {
       return viewerVideos.map((video) => {
         return (
           <RenderVideo
-            for="watch_video"
+            for='watch_video'
             key={video.id}
             video={video}
             paymentModalVisible={paymentModalVisibleFunc}
@@ -352,17 +352,17 @@ const WatchVideo = () => {
     <>
       <SideNav onSearch={onSearch}></SideNav>
       <div>
-        <div className="pt-2 ml-14 mt-20">
+        <div className='pt-2 ml-14 mt-20'>
           {playVideo && currentVideo ? (
             renderPlayer(currentVideo)
           ) : (
-            <div className="w-screen h-screen flex justify-center items-center -mt-20 -ml-12 lg:-mt-24 lg:-ml-48  xl:-mt-20 xl:-ml-52">
-              <Space size="middle">
-                <Spin size="large" />
+            <div className='w-screen h-screen flex justify-center items-center -mt-20 -ml-12 lg:-mt-24 lg:-ml-48  xl:-mt-20 xl:-ml-52'>
+              <Space size='middle'>
+                <Spin size='large' />
               </Space>
             </div>
           )}
-          <div className="flex relative lg:absolute right-0  bottom-0 border-2 mt-20 lg:top-0 lg:flex-col lg:ml-0 flex-wrap lg:flex-nowrap xl:w-1/4 lg:w-1/5 lg:min-h-full border-white">
+          <div className='flex relative lg:absolute right-0  bottom-0 border-2 mt-20 lg:top-0 lg:flex-col lg:ml-0 flex-wrap lg:flex-nowrap xl:w-1/4 lg:w-1/5 lg:min-h-full border-white'>
             {renderVideos()}
           </div>
         </div>

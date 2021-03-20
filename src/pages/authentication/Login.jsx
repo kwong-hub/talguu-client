@@ -146,4 +146,3 @@ function mapState(state) {
 
 const connectedLoginPage = connect(mapState, null)(Login)
 export { connectedLoginPage as Login }
-// export  Login;

@@ -6,6 +6,7 @@ import { FaCopy, FaInfo } from 'react-icons/fa'
 import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
+import { liveVideoURL } from '../../config/config'
 import videoService from '../../_services/video.service'
 import VideoPlayer from '../../components/videoPlayer/VideoPlayer'
 import SideNav from '../../partials/sideNav/SideNav'
@@ -14,7 +15,9 @@ import ThumbnailStream from '../../components/stream/Thumbnail-stream'
 const Stream = (props) => {
   const [property, setProperty] = useState(props.location.state?.data)
   // console.log("property", property);
-  const [streamKey] = useState(property?.stream_key)
+  // const [streamKey] = useState(property?.stream_key)
+  // const [title, setTitle] = useState(property?.title)
+  // const [describe, setDescribe] = useState(property?.description)
   const [streamURL] = useState('rtmp://8mspbb.com/show')
   const history = useHistory()
   useEffect(() => {
@@ -38,8 +41,8 @@ const Stream = (props) => {
   }
   const endStream = () => {
     videoService
-      .endStream(streamKey)
-      .then((data) => history.push('/live_video'))
+      .endStream(property?.stream_key)
+      .then(() => history.push('/live_video'))
       .catch((err) => console.log('err', err))
   }
   const getStreamed = () => {
@@ -64,59 +67,59 @@ const Stream = (props) => {
     responsive: true,
     sources: [
       {
-        src: `http://8mspbb.com/hls/${streamKey}.m3u8`,
+        src: `${liveVideoURL}/hls/${property?.stream_key}.m3u8`,
         type: 'application/x-mpegURL'
       }
     ]
   }
   return (
     <div>
-      <div className="ml-12 my-20 relative">
+      <div className='ml-12 my-20 relative'>
         <SideNav />
         {/* <Header /> */}
         {property ? (
           <>
             <PageHeader
-              className="site-page-header"
+              className='site-page-header'
               onBack={() => history.push('/')}
-              title="Live"
-              subTitle="Add extra additional infromation"
+              title='Live'
+              subTitle='Add extra additional infromation'
             />
             <Button
-              className="absolute top-3 right-2"
+              className='absolute top-3 right-2'
               onClick={(e) => endStream()}
-              key="1"
-              type="danger">
+              key='1'
+              type='danger'>
               End Stream
             </Button>
-            <div className="flex mx-4">
-              <div className="w-2/5 p-4 ">
+            <div className='flex mx-4'>
+              <div className='w-2/5 p-4 '>
                 <VideoPlayer {...videoJsOptions} />
-                <p className="py-2">Start streaming your video from your software to go live.</p>
-                <div className="flex flex-col items-start my-4">
-                  <h2 className="text-lg font-semibold">Stream Setting</h2>
-                  <div className="flex flex-col items-start my-2">
+                <p className='py-2'>Start streaming your video from your software to go live.</p>
+                <div className='flex flex-col items-start my-4'>
+                  <h2 className='text-lg font-semibold'>Stream Setting</h2>
+                  <div className='flex flex-col items-start my-2'>
                     <span>Stream Key</span>
                     <Input
                       readOnly
                       value={property?.stream_key}
                       suffix={
                         <CopyToClipboard text={property?.stream_key} onCopy={() => copiedMessage()}>
-                          <span className="cursor-pointer">
+                          <span className='cursor-pointer'>
                             <FaCopy />
                           </span>
                         </CopyToClipboard>
                       }
                     />
                   </div>
-                  <div className="flex flex-col items-start my-2">
+                  <div className='flex flex-col items-start my-2'>
                     <span>Stream URL</span>
                     <Input
                       readOnly
                       value={streamURL}
                       suffix={
                         <CopyToClipboard text={streamURL} onCopy={() => copiedMessage()}>
-                          <span className="cursor-pointer">
+                          <span className='cursor-pointer'>
                             <FaCopy />
                           </span>
                         </CopyToClipboard>
@@ -125,26 +128,26 @@ const Stream = (props) => {
                   </div>
                 </div>
               </div>
-              <div className="w-3/5">
+              <div className='w-3/5'>
                 <Form
-                  layout="vertical"
-                  name="normal_login"
-                  className="login-form"
+                  layout='vertical'
+                  name='normal_login'
+                  className='login-form'
                   initialValues={{
                     title: property?.title,
                     description: property?.description
                   }}
                   onFinish={saveStreamInfo}>
                   <Form.Item
-                    label="Title"
-                    name="title"
-                    className="text-lg text-gray-600"
+                    label='Title'
+                    name='title'
+                    className='text-lg text-gray-600'
                     rules={[{ required: true, message: 'Please input your Title!' }]}>
-                    <Input className="rounded-lg text-gray-700 text-lg p-2" placeholder="Title*" />
+                    <Input className='rounded-lg text-gray-700 text-lg p-2' placeholder='Title*' />
                   </Form.Item>
                   <Form.Item
-                    label="Description"
-                    name="description"
+                    label='Description'
+                    name='description'
                     rules={[
                       {
                         required: false,
@@ -152,18 +155,18 @@ const Stream = (props) => {
                       }
                     ]}>
                     <TextArea
-                      className="rounded-lg text-gray-700 text-lg p-2"
-                      prefix={<FaInfo className="site-form-item-icon" />}
-                      placeholder="Description*"
+                      className='rounded-lg text-gray-700 text-lg p-2'
+                      prefix={<FaInfo className='site-form-item-icon' />}
+                      placeholder='Description*'
                     />
                   </Form.Item>
-                  <div className="flex justify-end">
+                  <div className='flex justify-end'>
                     <Form.Item>
                       <Button
-                        type="primary"
-                        htmlType="submit"
-                        shape="round"
-                        className="login-form-button ">
+                        type='primary'
+                        htmlType='submit'
+                        shape='round'
+                        className='login-form-button '>
                         Save Changes
                       </Button>
                     </Form.Item>
@@ -171,9 +174,9 @@ const Stream = (props) => {
                 </Form>
 
                 <div>
-                  <div className="flex flex-col items-start justify-start">
-                    <h2 className="text-lg">Thumbnail</h2>
-                    <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
+                  <div className='flex flex-col items-start justify-start'>
+                    <h2 className='text-lg'>Thumbnail</h2>
+                    <h3 className='text-md text-gray-600 items-start m-0 p-0 text-justify'>
                       Select or upload a picture that shows what&apos;s in your video. A good
                       thumbnail stands out and draws viewers&apos; attention.
                     </h3>
@@ -185,14 +188,14 @@ const Stream = (props) => {
                 </div>
               </div>
 
-              <div className="w-1/5 flex flex-col items-center">
-                <h2 className="font-semibold text-base">Stream Analytics</h2>
+              <div className='w-1/5 flex flex-col items-center'>
+                <h2 className='font-semibold text-base'>Stream Analytics</h2>
                 <div>
-                  <div className="rounded-lg w-32 p-4 m-2 shadow-lg bg-white ">
+                  <div className='rounded-lg w-32 p-4 m-2 shadow-lg bg-white '>
                     <b>0</b>
                     <p>Current Views </p>
                   </div>
-                  <div className="rounded-lg w-32 p-4 m-2 shadow-lg bg-white ">
+                  <div className='rounded-lg w-32 p-4 m-2 shadow-lg bg-white '>
                     <b>0</b>
                     <p>Current Likes </p>
                   </div>
@@ -201,7 +204,7 @@ const Stream = (props) => {
             </div>
           </>
         ) : (
-          <Spin size="large" className="flex items-center justify-center h-screen text-4xl" />
+          <Spin size='large' className='flex items-center justify-center h-screen text-4xl' />
         )}
       </div>
     </div>
