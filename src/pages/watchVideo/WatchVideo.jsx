@@ -35,6 +35,7 @@ const WatchVideo = () => {
   const [showMessages, setShowMessages] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [tempVideo, setTempVideo] = useState(null)
+  const [randomStr, setRandomStr] = useState('')
   const [paymentModalVisible, setPaymentModalVisible] = useState(false)
   const [localErrorMessage, setLocalErrorMessage] = useState('')
   const { vidId } = useParams()
@@ -70,6 +71,7 @@ const WatchVideo = () => {
   }
 
   const play = (video, fromPurchased = false, playPaid = true) => {
+    setRandomStr(new Date().getTime().toString())
     if (video.paid && playPaid) {
       playWithPaidUrl(video)
       return
@@ -289,7 +291,7 @@ const WatchVideo = () => {
           // type: "application/x-mpegURL",
         }
       ],
-      randomStr: new Date().getTime().toString()
+      randomStr
     }
     if (currentVideo) {
       return (
@@ -321,8 +323,8 @@ const WatchVideo = () => {
             <div className="flex justify-between text-gray-800 text-2xl w-full text-left">
               <div className="flex items-end">
                 <span className="text-gray-400 text-lg">
-                  {' '}
-                  {currentVideo?.viewCount} views
+                  {currentVideo?.viewCount}
+                  {currentVideo?.viewCount <= 1 ? ' view' : ' views'}
                 </span>
                 <span className="text-gray-600 ml-4 text-base">
                   {moment(currentVideo?.premiered).format('MMM DD, YYYY')}
