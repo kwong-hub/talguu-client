@@ -16,7 +16,11 @@ export class VideoPlayer extends Component {
 
     if (user && user.role === 'VIEWER') {
       setTimeout(() => {
-        if (this.player && this.player?.currentTime && this.player?.currentTime() >= 10) {
+        if (
+          this.player &&
+          this.player?.currentTime &&
+          this.player?.currentTime() >= 10
+        ) {
           videoService
             .incrementVideoView({ videoId: this.props.videoId })
             .then((res) => {
@@ -32,12 +36,15 @@ export class VideoPlayer extends Component {
 
   componentDidUpdate(prevProps) {
     // console.log(prevProps.sources, this.props.sources);
-    if (
-      (this.props.sources[0].src && prevProps.sources[0].src !== this.props.sources[0].src) ||
-      prevProps.autoplay !== this.props.autoplay
-    ) {
+    // console.log(this.props.randomStr)
+    if (this.props.randomStr !== prevProps.randomStr) {
       this.updatePlayer()
     }
+    //   (this.props.sources[0].src &&
+    //     prevProps.sources[0].src !== this.props.sources[0].src) ||
+    //   prevProps.autoplay !== this.props.autoplay
+    // ) {
+    // }
   }
 
   updatePlayer() {
@@ -52,7 +59,10 @@ export class VideoPlayer extends Component {
     // console.log(this.props.sources[0]);
     return (
       <div data-vjs-player>
-        <video ref={(node) => (this.videoNode = node)} className='video-js'></video>
+        <video
+          ref={(node) => (this.videoNode = node)}
+          className="video-js"
+        ></video>
       </div>
     )
   }
@@ -67,7 +77,8 @@ export class VideoPlayer extends Component {
 VideoPlayer.propTypes = {
   sources: PropTypes.any,
   videoId: PropTypes.any,
-  autoplay: PropTypes.bool
+  autoplay: PropTypes.bool,
+  randomStr: PropTypes.string
 }
 
 export default VideoPlayer

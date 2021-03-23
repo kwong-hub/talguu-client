@@ -9,6 +9,8 @@ import {
   PURCHASE_VIDEO_SUCCESS,
   SAVE_LATER_RESET,
   SAVE_LATER_SUCCESS,
+  UPDATE_CURRENT_VIDEO,
+  UPDATE_USER_VIDEOS,
   VIDEO_FAILURE,
   VIDEO_READY,
   VIDEO_SUCCESS,
@@ -53,7 +55,6 @@ const reducer = (state = INITIAL_STATE, action) => {
     case GET_PAID_VIDEO_URL_FAILURE:
       return { ...state, errMessages: action.payload }
     case PURCHASE_VIDEO_SUCCESS:
-      // console.log(action);
       return { ...state, video_link: action.payload.video_link }
     case PURCHASE_VIDEO_FAILURE:
       return { ...state, errMessages: action.payload }
@@ -66,11 +67,17 @@ const reducer = (state = INITIAL_STATE, action) => {
     case GET_SAVED_VIDEOS_FAILURE:
       return { ...state, errMessages: action.payload }
     case SAVE_LATER_SUCCESS:
-      if (action.payload.added) return { ...state, saveLaterStatus: 'SUCCESS_ADDED' }
-      else if (action.payload.removed) return { ...state, saveLaterStatus: 'SUCCESS_REMOVED' }
-      else return state
+      if (action.payload.added) {
+        return { ...state, saveLaterStatus: 'SUCCESS_ADDED' }
+      } else if (action.payload.removed) {
+        return { ...state, saveLaterStatus: 'SUCCESS_REMOVED' }
+      } else return state
     case SAVE_LATER_RESET:
       return { ...state, saveLaterStatus: null }
+    case UPDATE_CURRENT_VIDEO:
+      return { ...state, currentVideo: action.payload }
+    case UPDATE_USER_VIDEOS:
+      return { ...state, viewerVideos: action.payload }
     default:
       return state
   }
