@@ -14,10 +14,9 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
-    'space-before-function-paren': ['error', 'never'],
+    'space-before-function-paren': 0,
     'multiline-ternary': 0,
     'generator-star-spacing': 0,
-    'react/display-name': 0,
-    'space-before-function-paren': 0
+    'react/display-name': 0
   }
 }

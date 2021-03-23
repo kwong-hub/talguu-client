@@ -25,7 +25,7 @@ const Videos = (props) => {
 
   const playVideo = (video) => {
     history.push(`/watch/${video.id}`)
-    history.go(0)
+    // history.go(0)
   }
 
   const onSearch = (value) => {
@@ -60,7 +60,12 @@ const Videos = (props) => {
   const renderVideos = () => {
     return viewerVideos.map((video) => {
       return (
-        <RenderVideo key={video.id} video={video} paymentModalVisible={paymentModalVisibleFunc} />
+        <RenderVideo
+          playVideo={() => playVideo(video)}
+          key={video.id}
+          video={video}
+          paymentModalVisible={paymentModalVisibleFunc}
+        />
       )
     })
   }
@@ -77,9 +82,9 @@ const Videos = (props) => {
   }
 
   return (
-    <div className='pt-2 sm:ml-14 mt-20'>
+    <div className="pt-2 sm:ml-14 mt-20">
       <SideNav onSearch={onSearch}></SideNav>
-      <div className='flex relative mt-2 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white'>
+      <div className="flex relative mt-2 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
         {renderVideos()}
       </div>
       {paymentModalVisible && renderPaymentModal()}

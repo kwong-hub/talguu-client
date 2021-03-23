@@ -1,7 +1,7 @@
 import { Button, Input, PageHeader } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
-import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import React, { useEffect, useState } from 'react'
 import { FaDollarSign, FaInfo } from 'react-icons/fa'
 import { useHistory, useParams } from 'react-router-dom'
 
@@ -80,7 +80,12 @@ const EditProdVideo = (props) => {
         title="Edit Video"
         subTitle="Add extra additional infromation"
       />
-      <Button className="absolute top-3 right-2" onClick={editVideo} key="1" type="primary">
+      <Button
+        className="absolute top-3 right-2"
+        onClick={editVideo}
+        key="1"
+        type="primary"
+      >
         Save Changes
       </Button>
       <div className="flex mx-4">
@@ -122,16 +127,16 @@ const EditProdVideo = (props) => {
             <div className="flex flex-col items-start justify-start">
               <h2 className="text-lg">Change Thumbnail</h2>
               <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                Select or upload a picture that shows what&apos;s in your video. A good thumbnail
-                stands out and draws viewers&apos; attention.
+                Select or upload a picture that shows what&apos;s in your video.
+                A good thumbnail stands out and draws viewers&apos; attention.
               </h3>
               <Thumbnail videoId={video?.id} thumbnails={video?.thumbnial} />
             </div>
             <div className="flex flex-col items-start justify-start">
               <h2 className="text-lg">Change Trailer</h2>
               <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                Select or upload a trailer that shows what&apos;s in your video in a minute. A good
-                trailer draws viewers&apos; attention.
+                Select or upload a trailer that shows what&apos;s in your video
+                in a minute. A good trailer draws viewers&apos; attention.
               </h3>
               <Trailer videoId={video?.id} />
               {video?.trailer && (
@@ -139,7 +144,10 @@ const EditProdVideo = (props) => {
                   <VideoPlayer
                     {...{
                       ...videoJsOptions,
-                      sources: [{ src: video?.trailer, type: video?.video_type }]
+                      sources: [
+                        { src: video?.trailer, type: video?.video_type }
+                      ],
+                      randomStr: new Date().getTime().toString()
                     }}
                   />
                 </div>
