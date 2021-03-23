@@ -5,46 +5,51 @@ import videojs from 'video.js'
 import videoService from '../../_services/video.service'
 import PropTypes from 'prop-types'
 
+let incrementViewInterval
+
 export class VideoPlayer extends Component {
+  state = {
+    viewIncremented: false
+  }
+
   componentDidMount() {
     this.player = videojs(
       this.videoNode,
       { ...this.props, withCredentials: true },
       function onPlayerReady() {}
     )
-    const user = localStorage.getItem('user')
+    const user = JSON.parse(localStorage.getItem('user'))
 
     if (user && user.role === 'VIEWER') {
-      setTimeout(() => {
+      incrementViewInterval = setInterval(() => {
         if (
           this.player &&
           this.player?.currentTime &&
-          this.player?.currentTime() >= 10
+          this.player?.currentTime() >= 10 &&
+          !this.player?.paused() &&
+          !this.player.ended()
         ) {
+          if (this.state.viewIncremented) {
+            clearInterval(incrementViewInterval)
+          }
           videoService
             .incrementVideoView({ videoId: this.props.videoId })
             .then((res) => {
               if (res.success) {
-                // console.log("OK");
+                this.setState({ viewIncremented: true })
               }
             })
             .catch((err) => console.log(err))
         }
-      }, 15000)
+      }, 10000)
     }
   }
 
   componentDidUpdate(prevProps) {
-    // console.log(prevProps.sources, this.props.sources);
-    // console.log(this.props.randomStr)
     if (this.props.randomStr !== prevProps.randomStr) {
       this.updatePlayer()
+      this.setState({ viewIncremented: false })
     }
-    //   (this.props.sources[0].src &&
-    //     prevProps.sources[0].src !== this.props.sources[0].src) ||
-    //   prevProps.autoplay !== this.props.autoplay
-    // ) {
-    // }
   }
 
   updatePlayer() {
@@ -56,19 +61,21 @@ export class VideoPlayer extends Component {
   }
 
   render() {
-    // console.log(this.props.sources[0]);
     return (
-      <div data-vjs-player>
-        <video
-          ref={(node) => (this.videoNode = node)}
-          className="video-js"
-        ></video>
-      </div>
+      <>
+        <div data-vjs-player>
+          <video
+            ref={(node) => (this.videoNode = node)}
+            className="video-js"
+          ></video>
+        </div>
+      </>
     )
   }
 
   componentWillUnmount() {
     if (this.player) {
+      clearInterval(incrementViewInterval)
       this.player.dispose()
     }
   }
@@ -76,7 +83,7 @@ export class VideoPlayer extends Component {
 
 VideoPlayer.propTypes = {
   sources: PropTypes.any,
-  videoId: PropTypes.any,
+  videoId: PropTypes.string,
   autoplay: PropTypes.bool,
   randomStr: PropTypes.string
 }
