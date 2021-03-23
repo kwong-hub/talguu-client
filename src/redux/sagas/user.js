@@ -6,11 +6,13 @@ import {
   CREATE_PRODUCER_SUCCESS,
   CREATE_VIEWER_FAILURE,
   CREATE_VIEWER_SUCCESS,
-  GET_USER_PROFILE
+  GET_USER_PROFILE,
+  LOGOUT
 } from '../types'
 
-function* logout() {
-  yield put({ type: userConstants.LOGOUT })
+function* logout(action) {
+  yield call(userService.logout, action.payload)
+  yield put({ type: LOGOUT })
 }
 
 function* loginFail() {
