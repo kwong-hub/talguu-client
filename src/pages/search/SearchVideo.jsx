@@ -69,10 +69,19 @@ const SearchVideo = (props) => {
         )
       })
     ) : (
-      <div className='m-4 flex flex-col items-center text-2xl text-gray-700'>
-        <img src={empty} width={200} height={200} className='flex ' alt='No Result' srcSet='' />
-        <span className='my-4 p-4 '> No Result Found</span>
-        <p>Search again by </p>
+      <div className="m-4 flex flex-col items-center text-2xl text-gray-700">
+        <img
+          src={empty}
+          width={200}
+          height={200}
+          className="flex "
+          alt="No Result"
+          srcSet=""
+        />
+        <span className="mt-4 p-4 "> No Result Found</span>
+        <p className="text-base font-light">
+          Try different keywords or remove search filters and search again
+        </p>
         <p></p>
       </div>
     )
@@ -90,9 +99,9 @@ const SearchVideo = (props) => {
   }
 
   return (
-    <div className='pt-2 sm:ml-14 mt-20'>
+    <div className="pt-2 sm:ml-14 mt-20">
       <SideNav onSearch={onSearch}></SideNav>
-      <div className='flex flex-col relative mx-4  lg:ml-0 xl:w-3/12 min-h-full w-full lg:min-w-full lg:max-w-full'>
+      <div className="flex flex-col relative mx-4  lg:ml-0 xl:w-3/12 min-h-full w-full lg:min-w-full lg:max-w-full">
         {renderVideos()}
       </div>
       {paymentModalVisible && renderPaymentModal()}

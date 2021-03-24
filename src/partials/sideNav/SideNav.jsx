@@ -19,7 +19,9 @@ import { Link, useHistory, useLocation } from 'react-router-dom'
 
 import logo from '../../assets/images/streaming.png'
 import Avatar from 'antd/lib/avatar/avatar'
-import { userService } from '../../_services/user.service'
+// import { userService } from '../../_services/user.service'
+import { useDispatch } from 'react-redux'
+import { LOGOUT_ASYNC } from '../../redux/types'
 
 const { Search } = Input
 
@@ -27,6 +29,7 @@ const SideNav = (props) => {
   const [mobileMenuVisible, setMobileMenuVisible] = useState(false)
   const location = useLocation()
   const history = useHistory()
+  const dispatch = useDispatch()
   const user = JSON.parse(localStorage.getItem('user'))
   const handleVisibleChange = () => {
     setMobileMenuVisible(!mobileMenuVisible)
@@ -43,13 +46,17 @@ const SideNav = (props) => {
     })
   }
   const logout = () => {
-    userService.logout()
-    history.push('/login')
+    dispatch({ type: LOGOUT_ASYNC, payload: 'ssdfl' })
+    // history.push('/login')
   }
   const accountMenu = (
     <div className=" bg-white shadow-lg rounded-lg">
       <div className="flex flex-col py-4 px-8 items-center ">
-        <Avatar className="flex items-center justify-center" size={40} icon={<FaUser />} />
+        <Avatar
+          className="flex items-center justify-center"
+          size={40}
+          icon={<FaUser />}
+        />
         <span className="font-semibold pt-2 text-lg">{user?.name}</span>
         <span className="text-gray-600 text-sm ">{user?.email}</span>
       </div>
@@ -88,37 +95,42 @@ const SideNav = (props) => {
           </span>
         </Link>
       </Menu.Item>
-      {user
-        ? (
+      {user ? (
         <>
-          {user.role === 'VIEWER'
-            ? (
+          {user.role === 'VIEWER' ? (
             <Menu.Item key="3">
-              <Link to="/saved_later" className="flex items-center justify-center">
-                <FaSave className={'text-xl inline mr-2 -mt-2  text-gray-500'} />
+              <Link
+                to="/saved_later"
+                className="flex items-center justify-center"
+              >
+                <FaSave
+                  className={'text-xl inline mr-2 -mt-2  text-gray-500'}
+                />
                 <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
                   Saved Videos
                 </span>
               </Link>
             </Menu.Item>
-              )
-            : (
-                ''
-              )}
-          {user.role === 'VIEWER'
-            ? (
+          ) : (
+            ''
+          )}
+          {user.role === 'VIEWER' ? (
             <Menu.Item key="4">
-              <Link to="/purchased_playlist" className="flex items-center justify-center">
-                <FaFilm className={'text-xl inline mr-2 -mt-2  text-gray-500'} />
+              <Link
+                to="/purchased_playlist"
+                className="flex items-center justify-center"
+              >
+                <FaFilm
+                  className={'text-xl inline mr-2 -mt-2  text-gray-500'}
+                />
                 <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
                   Purchased Videos
                 </span>
               </Link>
             </Menu.Item>
-              )
-            : (
-                ''
-              )}
+          ) : (
+            ''
+          )}
           {user.role === 'VIEWER' && (
             <Menu.Item key="5">
               <Link to="/settings" className="flex items-center justify-center">
@@ -129,48 +141,57 @@ const SideNav = (props) => {
               </Link>
             </Menu.Item>
           )}
-          {user.role === 'PRODUCER'
-            ? (
+          {user.role === 'PRODUCER' ? (
             <Menu.Item key="6">
-              <Link to="/your_video" className="flex items-center justify-center">
-                <BiVideoRecording className={'text-xl inline mr-2 -mt-2  text-gray-500'} />
+              <Link
+                to="/your_video"
+                className="flex items-center justify-center"
+              >
+                <BiVideoRecording
+                  className={'text-xl inline mr-2 -mt-2  text-gray-500'}
+                />
                 <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
                   Your Videos
                 </span>
               </Link>
             </Menu.Item>
-              )
-            : (
-                ''
-              )}
-          {user.role === 'PRODUCER'
-            ? (
+          ) : (
+            ''
+          )}
+          {user.role === 'PRODUCER' ? (
             <Menu.Item key="6">
-              <Link to="/upload_video" className="flex items-center justify-center">
-                <FaCloudUploadAlt className={'text-xl inline mr-2 -mt-2  text-gray-500'} />
+              <Link
+                to="/upload_video"
+                className="flex items-center justify-center"
+              >
+                <FaCloudUploadAlt
+                  className={'text-xl inline mr-2 -mt-2  text-gray-500'}
+                />
                 <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
                   Upload Video
                 </span>
               </Link>
             </Menu.Item>
-              )
-            : (
-                ''
-              )}
-          {user.role === 'PRODUCER'
-            ? (
+          ) : (
+            ''
+          )}
+          {user.role === 'PRODUCER' ? (
             <Menu.Item key="6">
-              <Link to="/live_stream" className="flex items-center justify-center">
-                <FaStream className={'text-xl inline mr-2 -mt-2  text-gray-500'} />
+              <Link
+                to="/live_stream"
+                className="flex items-center justify-center"
+              >
+                <FaStream
+                  className={'text-xl inline mr-2 -mt-2  text-gray-500'}
+                />
                 <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
                   Stream Video
                 </span>
               </Link>
             </Menu.Item>
-              )
-            : (
-                ''
-              )}
+          ) : (
+            ''
+          )}
 
           <Menu.Item key="7">
             <Link to="/account" className="flex items-center justify-center">
@@ -181,10 +202,9 @@ const SideNav = (props) => {
             </Link>
           </Menu.Item>
         </>
-          )
-        : (
-            ''
-          )}
+      ) : (
+        ''
+      )}
     </Menu>
   )
 
@@ -200,16 +220,21 @@ const SideNav = (props) => {
             </Link>
           </div>
           <span
-            className={'text-gray-500 flex-col mr-8 cursor-pointer text-lg items-center hover:text-gray-700'}>
+            className={
+              'text-gray-500 flex-col mr-8 cursor-pointer text-lg items-center hover:text-gray-700'
+            }
+          >
             <Dropdown
               trigger="click"
               overlay={mobileMenu}
               onVisibleChange={handleVisibleChange}
               visible={mobileMenuVisible}
-              overlayClassName="w-screen h-48">
+              overlayClassName="w-screen h-48"
+            >
               <div
                 onClick={(event) => event.preventDefault()}
-                className={`menu_icon ${mobileMenuVisible ? 'active' : ''}`}></div>
+                className={`menu_icon ${mobileMenuVisible ? 'active' : ''}`}
+              ></div>
             </Dropdown>
           </span>
         </div>
@@ -248,10 +273,17 @@ const SideNav = (props) => {
         <li
           className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
             location.pathname === '/' ? 'bg-gray-400' : ''
-          }`}>
+          }`}
+        >
           <Link to="/">
-            <Tooltip className="list-tooltip" placement="rightTop" title="Videos">
-              <FaVideo className={'text-3xl inline text-gray-300 hover:text-white'} />
+            <Tooltip
+              className="list-tooltip"
+              placement="rightTop"
+              title="Videos"
+            >
+              <FaVideo
+                className={'text-3xl inline text-gray-300 hover:text-white'}
+              />
             </Tooltip>
           </Link>
         </li>
@@ -267,104 +299,129 @@ const SideNav = (props) => {
         </li> */}
         {user ? (
           <>
-            {user.role === 'VIEWER'
-              ? (
+            {user.role === 'VIEWER' ? (
               <>
                 <li
                   className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
                     location.pathname === '/live_video' ? 'bg-gray-400' : ''
-                  }`}>
+                  }`}
+                >
                   <Link to="/live_video">
                     <Tooltip placement="rightTop" title="Live Videos">
-                      <FaLifeRing className={'text-3xl inline text-gray-300 hover:text-white'} />
+                      <FaLifeRing
+                        className={
+                          'text-3xl inline text-gray-300 hover:text-white'
+                        }
+                      />
                     </Tooltip>
                   </Link>
                 </li>
                 <li
                   className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
                     location.pathname === '/saved_later' ? 'bg-gray-400' : ''
-                  }`}>
+                  }`}
+                >
                   <Link to="/saved_later">
                     <Tooltip placement="rightTop" title="Saved Videos">
-                      <FaSave className={'text-3xl inline text-gray-300 hover:text-white'} />
+                      <FaSave
+                        className={
+                          'text-3xl inline text-gray-300 hover:text-white'
+                        }
+                      />
                     </Tooltip>
                   </Link>
                 </li>
                 <li
                   className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                    location.pathname === '/purchased_playlist' ? 'bg-gray-400' : ''
-                  }`}>
+                    location.pathname === '/purchased_playlist'
+                      ? 'bg-gray-400'
+                      : ''
+                  }`}
+                >
                   <Link to="/purchased_playlist">
                     <Tooltip placement="rightTop" title="Purchased Videos">
-                      <FaFilm className={'text-3xl inline text-gray-300 hover:text-white'} />
+                      <FaFilm
+                        className={
+                          'text-3xl inline text-gray-300 hover:text-white'
+                        }
+                      />
                     </Tooltip>
                   </Link>
                 </li>
               </>
-                )
-              : (
-                  ''
-                )}
-            {user.role === 'PRODUCER'
-              ? (
+            ) : (
+              ''
+            )}
+            {user.role === 'PRODUCER' ? (
               <li
                 className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
                   location.pathname === '/your_video' ? 'bg-gray-400' : ''
-                }`}>
+                }`}
+              >
                 <Link to="/your_video">
                   <Tooltip placement="rightTop" title="List Video">
                     <BiVideoRecording
-                      className={'text-3xl inline text-gray-300 hover:text-white'}
+                      className={
+                        'text-3xl inline text-gray-300 hover:text-white'
+                      }
                     />
                   </Tooltip>
                 </Link>
               </li>
-                )
-              : (
-                  ''
-                )}
-            {user.role === 'PRODUCER'
-              ? (
+            ) : (
+              ''
+            )}
+            {user.role === 'PRODUCER' ? (
               <li
                 className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
                   location.pathname === '/upload_video' ? 'bg-gray-400' : ''
-                }`}>
+                }`}
+              >
                 <Link to="/upload_video">
                   <Tooltip placement="rightTop" title="Upload Video">
                     <FaCloudUploadAlt
-                      className={'text-3xl inline text-gray-300 hover:text-white'}
+                      className={
+                        'text-3xl inline text-gray-300 hover:text-white'
+                      }
                     />
                   </Tooltip>
                 </Link>
               </li>
-                )
-              : (
-                  ''
-                )}
-            {user.role === 'PRODUCER'
-              ? (
+            ) : (
+              ''
+            )}
+            {user.role === 'PRODUCER' ? (
               <li
                 className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
                   location.pathname === '/live_stream' ? 'bg-gray-400' : ''
-                }`}>
+                }`}
+              >
                 <Link to="/live_stream">
                   <Tooltip placement="rightTop" title="Stream Video">
-                    <FaStream className={'text-3xl inline text-gray-300 hover:text-white'} />
+                    <FaStream
+                      className={
+                        'text-3xl inline text-gray-300 hover:text-white'
+                      }
+                    />
                   </Tooltip>
                 </Link>
               </li>
-                )
-              : (
-                  ''
-                )}
+            ) : (
+              ''
+            )}
             {user.role === 'VIEWER' && (
               <li
                 className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
                   location.pathname === '/settings' ? 'bg-gray-400' : ''
-                }`}>
+                }`}
+              >
                 <Link to="/settings">
                   <Tooltip placement="rightTop" title="Settings">
-                    <FaCog className={'text-3xl inline text-gray-300 hover:text-white'} />
+                    <FaCog
+                      className={
+                        'text-3xl inline text-gray-300 hover:text-white'
+                      }
+                    />
                   </Tooltip>
                 </Link>
               </li>
@@ -385,10 +442,13 @@ const SideNav = (props) => {
           <li
             className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
               location.pathname === '/login' ? 'bg-gray-400' : ''
-            }`}>
+            }`}
+          >
             <Link to="/login">
               <Tooltip placement="rightTop" title="Login">
-                <FaSignInAlt className={'text-3xl inline text-gray-300 hover:text-white'} />
+                <FaSignInAlt
+                  className={'text-3xl inline text-gray-300 hover:text-white'}
+                />
               </Tooltip>
             </Link>
           </li>
