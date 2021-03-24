@@ -280,11 +280,12 @@ const WatchVideo = () => {
       responsive: true,
       sources: [
         {
-          src: currentVideo
-            ? currentVideo.paid
-              ? currentVideo.video_link
-              : currentVideo.trailer
-            : '',
+          src:
+            (currentVideo
+              ? currentVideo.paid
+                ? currentVideo.video_link
+                : currentVideo.trailer
+              : '') || '',
           type: currentVideo.video_type
           // src: "http://8mspbb.com/hls/1616052119942trailer.mp4.m3u8",
           // src: "https://talguu-vout1.s3.us-west-2.amazonaws.com/test8/master.m3u8",
@@ -296,7 +297,10 @@ const WatchVideo = () => {
     if (currentVideo) {
       return (
         <div className="">
-          <div className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl -z-10">
+          <div
+            key={randomStr}
+            className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl -z-10"
+          >
             <VideoPlayer {...videoJsOptions}></VideoPlayer>
           </div>
           <div className="flex-col ml-2 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">

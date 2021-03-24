@@ -45,31 +45,42 @@ export class VideoPlayer extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.randomStr !== prevProps.randomStr) {
-      this.updatePlayer()
-      this.setState({ viewIncremented: false })
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.randomStr !== prevProps.randomStr) {
+  //     this.player.pause()
+  //     this.updatePlayer()
+  //     this.setState({ viewIncremented: false })
+  //   }
+  // }
 
-  updatePlayer() {
-    this.player.src({
-      src: this.props.sources[0].src,
-      type: this.props.sources[0].type
-    })
-    this.player.autoplay(this.props.autoplay)
-  }
+  // updatePlayer() {
+  //   this.player.poster(this.props.thumbnial)
+  //   // if (this.player.error) {
+  //   //   this.player = videojs(
+  //   //     this.videoNode,
+  //   //     { ...this.props, withCredentials: true },
+  //   //     function onPlayerReady() {}
+  //   //   )
+  //   // }
+
+  //   this.player.src({
+  //     src: this.props.sources[0].src,
+  //     type: this.props.sources[0].type
+  //   })
+  //   this.player.id(this.videoNode)
+  //   this.player.controls(true)
+  //   this.player.autoplay(true)
+  //   this.player.reset()
+  // }
 
   render() {
     return (
-      <>
-        <div data-vjs-player>
-          <video
-            ref={(node) => (this.videoNode = node)}
-            className="video-js"
-          ></video>
-        </div>
-      </>
+      <div data-vjs-player>
+        <video
+          ref={(node) => (this.videoNode = node)}
+          className="video-js"
+        ></video>
+      </div>
     )
   }
 
@@ -85,7 +96,8 @@ VideoPlayer.propTypes = {
   sources: PropTypes.any,
   videoId: PropTypes.string,
   autoplay: PropTypes.bool,
-  randomStr: PropTypes.string
+  randomStr: PropTypes.string,
+  thumbnial: PropTypes.string
 }
 
 export default VideoPlayer

@@ -7,13 +7,20 @@ import { useHistory, useParams } from 'react-router-dom'
 import PaymentModal from '../../components/paymentModal/PaymentModal'
 import RenderVideo from '../../components/renderVideo/RenderVideo'
 import SideNav from '../../partials/sideNav/SideNav'
-import { PURCHASE_VIDEO_ASYNC, VIEWER_VIDEOS_ASYNC } from '../../redux/types'
+import {
+  PURCHASE_VIDEO_ASYNC,
+  UPDATE_CURRENT_VIDEO,
+  UPDATE_USER_VIDEOS,
+  VIEWER_VIDEOS_ASYNC
+} from '../../redux/types'
+import videoService from '../../_services/video.service'
 
 const Videos = (props) => {
   const history = useHistory()
   const videoLink = useSelector((state) => state.video.video_link)
   const [tempVideo, setTempVideo] = useState(null)
   const [paymentModalVisible, setPaymentModalVisible] = useState(false)
+  // const [localErrorMessage, setLocalErrorMessage] = useState('')
   const { q } = useParams()
   const dispatch = useDispatch()
   const viewerVideos = useSelector((state) => state.video.viewerVideos)
@@ -23,9 +30,43 @@ const Videos = (props) => {
     dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q } })
   }, [])
 
-  const playVideo = (video) => {
+  const play = (video, fromPurchased = false, playPaid = true) => {
+    if (video.paid && playPaid) {
+      playWithPaidUrl(video)
+      return
+    }
+    dispatch({
+      type: UPDATE_CURRENT_VIDEO,
+      payload: { ...video }
+    })
     history.push(`/watch/${video.id}`)
-    // history.go(0)
+    updateViewerVideos(video)
+    if (fromPurchased) setPaymentModalVisible(false)
+    window.scrollTo(0, 0)
+  }
+
+  const playWithPaidUrl = (video) => {
+    videoService
+      .getPaidVideoUrl(video.id)
+      .then((res) => {
+        if (res.video_link) {
+          play({ ...video, video_link: res.video_link }, false, false)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    window.scrollTo(0, 0)
+  }
+
+  const updateViewerVideos = (video) => {
+    const viewerVideosTemp = viewerVideos.map((v) => {
+      if (v.id === video.id) {
+        return video
+      }
+      return v
+    })
+    dispatch({ type: UPDATE_USER_VIDEOS, payload: viewerVideosTemp })
   }
 
   const onSearch = (value) => {
@@ -53,7 +94,7 @@ const Videos = (props) => {
 
   const purchaseVideo = (id) => {
     dispatch({ type: PURCHASE_VIDEO_ASYNC, payload: id })
-    playVideo({ ...tempVideo, video_link: videoLink })
+    play({ ...tempVideo, video_link: videoLink })
     paymentModalVisibleFunc(false)
   }
 
@@ -61,7 +102,7 @@ const Videos = (props) => {
     return viewerVideos.map((video) => {
       return (
         <RenderVideo
-          playVideo={() => playVideo(video)}
+          playVideo={() => play(video)}
           key={video.id}
           video={video}
           paymentModalVisible={paymentModalVisibleFunc}
