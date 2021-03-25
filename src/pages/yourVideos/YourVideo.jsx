@@ -101,14 +101,21 @@ const YourVideo = () => {
             <Button>Delete</Button>
           </Popconfirm>
           <Popconfirm
-            title="Are you sure to Publish this video?"
+            title={
+              record.published
+                ? 'Are you sure to unpublish this video?'
+                : 'Are you sure to publish this video?'
+            }
             onConfirm={(e) => publishVideo(record)}
             onCancel={cancel}
             okText="Yes"
             cancelText="No"
           >
-            <Button type="primary">
-              {record.published ? 'Un-Publish' : 'Publish'}
+            <Button
+              className="w-24"
+              type={record.published ? 'danger' : 'primary'}
+            >
+              {record.published ? 'Unpublish' : 'Publish'}
             </Button>
           </Popconfirm>
         </Space>
