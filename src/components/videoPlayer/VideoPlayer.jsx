@@ -18,6 +18,7 @@ export class VideoPlayer extends Component {
       { ...this.props, withCredentials: true },
       function onPlayerReady() {}
     )
+
     const user = JSON.parse(localStorage.getItem('user'))
 
     if (user && user.role === 'VIEWER') {
@@ -45,37 +46,30 @@ export class VideoPlayer extends Component {
     }
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.randomStr !== prevProps.randomStr) {
-  //     this.player.pause()
-  //     this.updatePlayer()
-  //     this.setState({ viewIncremented: false })
-  //   }
-  // }
-
-  // updatePlayer() {
-  //   this.player.poster(this.props.thumbnial)
-  //   // if (this.player.error) {
-  //   //   this.player = videojs(
-  //   //     this.videoNode,
-  //   //     { ...this.props, withCredentials: true },
-  //   //     function onPlayerReady() {}
-  //   //   )
-  //   // }
-
-  //   this.player.src({
-  //     src: this.props.sources[0].src,
-  //     type: this.props.sources[0].type
-  //   })
-  //   this.player.id(this.videoNode)
-  //   this.player.controls(true)
-  //   this.player.autoplay(true)
-  //   this.player.reset()
-  // }
+  handleHotKeys = (e) => {
+    e.preventDefault()
+    switch (e.key) {
+      case 'ArrowRight':
+        this.player.currentTime(Math.floor(this.player.currentTime()) + 5)
+        break
+      case 'ArrowLeft':
+        this.player.currentTime(Math.ceil(this.player.currentTime()) - 5)
+        break
+      case ' ':
+        this.player.paused() ? this.player.play() : this.player.pause()
+        break
+      default:
+        break
+    }
+  }
 
   render() {
     return (
-      <div data-vjs-player>
+      <div
+        onKeyUp={(e) => this.handleHotKeys(e)}
+        onKeyDown={(e) => e.preventDefault()}
+        data-vjs-player
+      >
         <video
           ref={(node) => (this.videoNode = node)}
           className="video-js"
@@ -96,7 +90,6 @@ VideoPlayer.propTypes = {
   sources: PropTypes.any,
   videoId: PropTypes.string,
   autoplay: PropTypes.bool,
-  randomStr: PropTypes.string,
   thumbnial: PropTypes.string
 }
 
