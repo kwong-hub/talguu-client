@@ -46,7 +46,7 @@ const YourVideo = () => {
       title: 'Date',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      width: 150,
+      width: 100,
       render: (text) => (
         <div className="flex flex-col">
           <span>{moment(text).format('LL')}</span>
@@ -58,7 +58,7 @@ const YourVideo = () => {
       title: 'Price',
       dataIndex: 'video_price',
       key: 'video_price',
-      width: 90,
+      width: 80,
       render: (text) => (
         <div>
           $ <span>{text}</span>
@@ -69,25 +69,25 @@ const YourVideo = () => {
       title: 'View',
       dataIndex: 'viewCount',
       key: 'viewCount',
-      width: 100
+      width: 70
     },
     {
       title: 'Likes',
       dataIndex: 'likeCount',
       key: 'likeCount',
-      width: 100
+      width: 70
     },
     {
       title: 'Comments',
       dataIndex: 'likeCount',
       key: 'likeCount',
-      width: 120
+      width: 70
     },
 
     {
       title: 'Action',
       key: 'action',
-      width: 150,
+      width: 240,
       render: (text, record) => (
         <Space size="middle">
           <Button onClick={(e) => editVideo(record)}>Edit</Button>
@@ -99,6 +99,17 @@ const YourVideo = () => {
             cancelText="No"
           >
             <Button>Delete</Button>
+          </Popconfirm>
+          <Popconfirm
+            title="Are you sure to Publish this video?"
+            onConfirm={(e) => publishVideo(record)}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button type="primary">
+              {record.published ? 'Un-Publish' : 'Publish'}
+            </Button>
           </Popconfirm>
         </Space>
       )
@@ -121,6 +132,20 @@ const YourVideo = () => {
       .then((data) => {
         if (data) {
           message.success('Videos deleted!.')
+          getVideos(pagination)
+        }
+      })
+      .catch((err) => {
+        message.error('Failed to delete!.')
+        console.log(err)
+      })
+  }
+  const publishVideo = (video) => {
+    videoService
+      .togglePublishVideo(video.id)
+      .then((data) => {
+        if (data) {
+          message.success('Video Published!.')
           getVideos(pagination)
         }
       })

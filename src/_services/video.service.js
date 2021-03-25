@@ -4,7 +4,7 @@ import axios from './axiosDefault'
 import { checkResponse } from './errorHandler'
 
 const videoService = {
-  addVideo: async function(body) {
+  addVideo: async function (body) {
     try {
       return await axios.post(`${environment}/video`, body)
       // return user.data;
@@ -12,7 +12,7 @@ const videoService = {
       return checkResponse(error)
     }
   },
-  getVideos: async function(pagination) {
+  getVideos: async function (pagination) {
     try {
       const video = await axios.get(
         `${environment}/video?current=${pagination.current}&pageSize=${pagination.pageSize}`
@@ -22,7 +22,7 @@ const videoService = {
       return checkResponse(error)
     }
   },
-  getProdVideoById: async function(id) {
+  getProdVideoById: async function (id) {
     try {
       const video = await axios.get(`${environment}/video/${id}`)
       return video.data
@@ -30,7 +30,7 @@ const videoService = {
       return checkResponse(error)
     }
   },
-  deleteVideo: async function(id) {
+  deleteVideo: async function (id) {
     try {
       const video = await axios.delete(`${environment}/video/${id}`)
       return video.data
@@ -38,7 +38,15 @@ const videoService = {
       return checkResponse(error)
     }
   },
-  updateVideo: async function(body) {
+  togglePublishVideo: async function (id) {
+    try {
+      const video = await axios.patch(`${environment}/video/publish/${id}`)
+      return video.data
+    } catch (error) {
+      return checkResponse(error)
+    }
+  },
+  updateVideo: async function (body) {
     try {
       const video = await axios.patch(`${environment}/video`, body)
       return video.data
@@ -47,7 +55,7 @@ const videoService = {
     }
   },
 
-  createStreamKey: async function(body) {
+  createStreamKey: async function (body) {
     try {
       const video = await axios.post(`${environment}/video/stream`, {
         ...body
@@ -57,7 +65,7 @@ const videoService = {
       return checkResponse(error)
     }
   },
-  endStream: async function(body) {
+  endStream: async function (body) {
     try {
       const video = await axios.patch(`${environment}/video/end/stream`, {
         stream_key: body
@@ -67,7 +75,7 @@ const videoService = {
       return checkResponse(error)
     }
   },
-  editStream: async function(body) {
+  editStream: async function (body) {
     try {
       const video = await axios.put(`${environment}/video/edit/stream`, body)
       return video.data
@@ -76,7 +84,7 @@ const videoService = {
     }
   },
 
-  getStreamed: async function() {
+  getStreamed: async function () {
     try {
       const video = await axios.get(`${environment}/video/stream`)
       return video.data
@@ -85,7 +93,7 @@ const videoService = {
     }
   },
 
-  addThumbnail: async function(body) {
+  addThumbnail: async function (body) {
     try {
       const thumb = await axios.post(`${environment}/video/thumbnail`, body)
       return thumb.data
@@ -93,7 +101,7 @@ const videoService = {
       return checkResponse(error)
     }
   },
-  addTrailer: async function(body) {
+  addTrailer: async function (body) {
     try {
       const thumb = await axios.post(`${environment}/video/trailer`, body)
       return thumb.data
@@ -102,7 +110,7 @@ const videoService = {
     }
   },
 
-  getViewerVideos: async function(query) {
+  getViewerVideos: async function (query) {
     try {
       const videos = await axios.get(
         `${environment}/video/user` + (query.q ? `?q=${query.q}` : '')
@@ -115,7 +123,7 @@ const videoService = {
     }
   },
 
-  getViewerLiveVideos: async function() {
+  getViewerLiveVideos: async function () {
     try {
       const videos = await axios.get(`${environment}/video/live/user`)
       return { data: videos.data, success: true }
@@ -124,7 +132,7 @@ const videoService = {
     }
   },
 
-  getPaidVideoUrl: async function(videoId) {
+  getPaidVideoUrl: async function (videoId) {
     try {
       const videos = await axios.get(`${environment}/video/purchase_video_url?videoId=${videoId}`)
       return videos.data
@@ -133,7 +141,7 @@ const videoService = {
     }
   },
 
-  purchaseVideo: async function(videoId) {
+  purchaseVideo: async function (videoId) {
     try {
       const res = await axios.post(`${environment}/video/purchase`, {
         videoId
@@ -144,7 +152,7 @@ const videoService = {
     }
   },
 
-  getPaidUserVideos: async function() {
+  getPaidUserVideos: async function () {
     try {
       const videos = await axios.get(`${environment}/video/purchased_videos`)
       return { data: videos.data, success: true }
@@ -153,7 +161,7 @@ const videoService = {
     }
   },
 
-  getSavedUserVideos: async function() {
+  getSavedUserVideos: async function () {
     try {
       const videos = await axios.get(`${environment}/video/saved_videos`)
       return { data: videos.data, success: true }
@@ -162,7 +170,7 @@ const videoService = {
     }
   },
 
-  saveVideoLater: async function(videoId) {
+  saveVideoLater: async function (videoId) {
     try {
       const res = await axios.post(`${environment}/video/save_later`, {
         videoId
@@ -173,7 +181,7 @@ const videoService = {
     }
   },
 
-  getUploadUrl: async function(body) {
+  getUploadUrl: async function (body) {
     try {
       const res = await axios.post(`${environment}/video/get_upload_url`, body)
       return res.data.data
@@ -182,7 +190,7 @@ const videoService = {
     }
   },
 
-  uploadVideoToS3: async function(url, formData, config) {
+  uploadVideoToS3: async function (url, formData, config) {
     const instance = axios.create()
     try {
       const res = await instance.post(url, formData, config)
@@ -192,7 +200,7 @@ const videoService = {
     }
   },
 
-  likeDislikeVideo: async function(likeObject) {
+  likeDislikeVideo: async function (likeObject) {
     try {
       const res = await axios.post(`${environment}/video/like_dislike`, likeObject)
       return res
@@ -201,7 +209,7 @@ const videoService = {
     }
   },
 
-  addComment: async function(commentObject) {
+  addComment: async function (commentObject) {
     try {
       const res = await axios.post(`${environment}/video/comments`, commentObject)
       return res
@@ -210,7 +218,7 @@ const videoService = {
     }
   },
 
-  commentVideo: async function(commentObject) {
+  commentVideo: async function (commentObject) {
     try {
       const res = await axios.post(`${environment}/video/like_dislike`, commentObject)
       return res
@@ -219,7 +227,7 @@ const videoService = {
     }
   },
 
-  incrementVideoView: async function(viewObject) {
+  incrementVideoView: async function (viewObject) {
     try {
       const res = await axios.post(`${environment}/video/view`, viewObject)
       return res
