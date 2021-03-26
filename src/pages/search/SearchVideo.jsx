@@ -99,9 +99,9 @@ const SearchVideo = (props) => {
   }
 
   return (
-    <div className="pt-2 sm:ml-14 mt-20">
+    <div className="pt-2 sm:ml-14 mt-20 w-full">
       <SideNav onSearch={onSearch}></SideNav>
-      <div className="flex flex-col relative mx-4  lg:ml-0 xl:w-3/12 min-h-full w-full lg:min-w-full lg:max-w-full">
+      <div className="flex md:flex-col flex-wrap relative md:mx-4  lg:ml-0 xl:w-3/12 min-h-full w-full lg:min-w-full lg:max-w-full">
         {renderVideos()}
       </div>
       {paymentModalVisible && renderPaymentModal()}

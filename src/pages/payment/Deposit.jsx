@@ -73,16 +73,18 @@ const Deposit = (props) => {
     <div>
       <SideNav />
       <PageHeader
-        className="ml-16 mt-16"
+        className="md:ml-16 mt-16"
         onBack={() => history.goBack()}
         title="Deposit"
         subTitle="deposit money for later use"
       />
       <div className="flex flex-col items-center justify-center  ">
-        <section className="max-w-lg min-w-max w-1/2 shadow-md rounded-lg bg-gray-50 p-4">
+        <section className="max-w-full min-w-max w-1/2 shadow-md rounded-lg bg-gray-50 p-4">
           <div className="m-4 py-2 px-2 border rounded-full border-gray-100 text-gray-700 text-lg">
             Balance
-            <span className="font-black px-2">{(Math.round(balance * 100) / 100).toFixed(2)}$</span>
+            <span className="font-black px-2">
+              {(Math.round(balance * 100) / 100).toFixed(2)}$
+            </span>
           </div>
           <h2 className="text-xl text-gray-800 font-semibold py-4">Payment</h2>
           <div className="flex justify-center pb-4">
@@ -101,13 +103,20 @@ const Deposit = (props) => {
                 className="login-form px-4 w-full md:px-8"
                 initialValues={{ amount: 10 }}
                 onFinish={onFinish}
-                layout="vertical">
+                layout="vertical"
+              >
                 <Form.Item
                   name="selectedCard"
                   label="Select Card"
                   className=""
-                  rules={[{ required: true, message: 'Please select your card!' }]}>
-                  <Select className="rounded-xl" defaultValue={<h2>Select Your card.</h2>}>
+                  rules={[
+                    { required: true, message: 'Please select your card!' }
+                  ]}
+                >
+                  <Select
+                    className="rounded-xl"
+                    defaultValue={<h2>Select Your card.</h2>}
+                  >
                     {payments.map((item) => (
                       <option key={item.id} value={item.id}>
                         <div>
@@ -118,7 +127,11 @@ const Deposit = (props) => {
                               <div className="absolute top-1 right-2">
                                 {item.cardType === 'MASTER_CARD' && (
                                   <div>
-                                    <img src={mastercard} alt="" className="h-7" />
+                                    <img
+                                      src={mastercard}
+                                      alt=""
+                                      className="h-7"
+                                    />
                                   </div>
                                 )}
                                 {item.cardType === 'VISA' && (
@@ -150,7 +163,8 @@ const Deposit = (props) => {
                       message: 'Please input your Amount!'
                     }
                   ]}
-                  help="Deposit amount should greater than 10$">
+                  help="Deposit amount should greater than 10$"
+                >
                   <Input
                     className="rounded-md "
                     prefix={<FaDollarSign className="site-form-item-icon" />}
@@ -166,7 +180,8 @@ const Deposit = (props) => {
                     htmlType="submit"
                     loading={loading}
                     shape="round"
-                    className="login-form-button w-full my-4 bg-blue-600 border-blue-600">
+                    className="login-form-button w-full my-4 bg-blue-600 border-blue-600"
+                  >
                     Deposit
                   </Button>
                 </Form.Item>
@@ -177,7 +192,8 @@ const Deposit = (props) => {
                 <Button
                   onClick={(e) => addPaymentInfo()}
                   type="primary"
-                  className="rounded-full mx-auto my-4 flex">
+                  className="rounded-full mx-auto my-4 flex"
+                >
                   Add Payment Information
                 </Button>
               </div>

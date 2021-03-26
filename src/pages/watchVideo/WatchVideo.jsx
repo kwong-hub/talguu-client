@@ -430,7 +430,7 @@ const WatchVideo = () => {
       <SideNav onSearch={onSearch}></SideNav>
       <div>
         {localErrorMessage && <div>{localErrorMessage}</div>}
-        <div className="pt-2 ml-14 mt-20">
+        <div className="pt-2 md:ml-14 mt-20">
           {playVideo && currentVideo ? (
             renderPlayer()
           ) : (
