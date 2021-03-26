@@ -58,6 +58,7 @@ const WatchVideo = () => {
 
   useEffect(() => {
     setPlayVideo(true)
+    setRandomStr(new Date().getTime().toString())
     return () => {}
   }, [currentVideo])
 
@@ -71,7 +72,7 @@ const WatchVideo = () => {
   }
 
   const play = (video, fromPurchased = false, playPaid = true) => {
-    setRandomStr(new Date().getTime().toString())
+    // setRandomStr(new Date().getTime().toString())
     if (video.paid && playPaid) {
       playWithPaidUrl(video)
       return
@@ -291,8 +292,7 @@ const WatchVideo = () => {
           // src: "https://talguu-vout1.s3.us-west-2.amazonaws.com/test8/master.m3u8",
           // type: "application/x-mpegURL",
         }
-      ],
-      randomStr
+      ]
     }
     if (currentVideo) {
       return (
