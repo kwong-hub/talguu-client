@@ -17,7 +17,7 @@ import {
 } from 'react-icons/fa'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 
-import logo from '../../assets/images/streaming.png'
+import logo from '../../assets/images/logo1.png'
 import Avatar from 'antd/lib/avatar/avatar'
 // import { userService } from '../../_services/user.service'
 import { useDispatch } from 'react-redux'
@@ -216,7 +216,7 @@ const SideNav = (props) => {
         <div className="flex justify-between sm:hidden pl-2 pt-2">
           <div className="text-2xl mr-4 flex items-center justify-center header_title text-gray-500">
             <Link to="/" className="flex items-center">
-              TALGUU
+              <img src={logo} alt="" className="rounded w-32" />
             </Link>
           </div>
           <span
@@ -241,7 +241,7 @@ const SideNav = (props) => {
         <div className="flex w-full justify-between items-center p-2 pr-6">
           <div className="hidden text-2xl mr-4 sm:flex items-center justify-center header_title text-gray-500">
             <Link to="/" className="flex items-center">
-              TALGUU
+              <img src={logo} alt="" className="rounded w-32" />
             </Link>
           </div>
           <Search
@@ -266,10 +266,10 @@ const SideNav = (props) => {
           )}
         </div>
       </div>
-      <ul className="list-disc space-y-5 p-1 border-r hidden sm:block">
-        <li className="cursor-pointer">
+      <ul className="list-disc space-y-5 p-1 border-r hidden sm:block w-24  mt-2">
+        {/* <li className="cursor-pointer">
           <img src={logo} alt="" className="rounded" />
-        </li>
+        </li> */}
         <li
           className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
             location.pathname === '/' ? 'bg-gray-400' : ''
