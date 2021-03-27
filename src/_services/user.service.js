@@ -8,7 +8,7 @@ function login({ email, password }) {
     .post(`${environment}/account/login`, { email, password })
     .then((user) => {
       // store user details and jwt token in local storage to keep user logged in between page refreshes
-      if (user.data.success) {
+      if (user?.data?.success) {
         localStorage.setItem('user', JSON.stringify(user.data))
       }
       return user.data
@@ -61,7 +61,10 @@ async function updateCompanyProfile(body) {
 
 async function forgotPassword(body) {
   try {
-    const user = await axios.post(`${environment}/account/change_password_request`, body)
+    const user = await axios.post(
+      `${environment}/account/change_password_request`,
+      body
+    )
     return user.data
   } catch (error) {
     return checkResponse(error)
@@ -100,7 +103,10 @@ function getLocalUser() {
 
 async function createProducer(data) {
   try {
-    const user = await axios.post(`${environment}/account/producer_sign_up`, data)
+    const user = await axios.post(
+      `${environment}/account/producer_sign_up`,
+      data
+    )
     return user.data
   } catch (error) {
     return checkResponse(error)

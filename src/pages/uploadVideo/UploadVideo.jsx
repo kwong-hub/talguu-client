@@ -155,32 +155,41 @@ class UploadVideo extends Component {
     return (
       <>
         <SideNav></SideNav>
-        <div className='flex flex-col mt-20 m-4 mx-auto w-full max-w-4xl justify-center '>
-          <div className='flex justify-around mx-4 my-4 '>
-            <p className='text-2xl text-gray-600 m-2'>One Step to Publish your video! </p>
+        <div className="flex flex-col mt-20 m-4 mx-auto w-full max-w-4xl justify-center ">
+          <div className="flex justify-around mx-4 my-4 ">
+            <p className="text-2xl text-gray-600 m-2">
+              One Step to Publish your video!{' '}
+            </p>
           </div>
 
           {!this.state.progress > 0 && this.state.active === '' && (
             <div>
               <form
                 onSubmit={this.submit}
-                className='flex flex-col w-full items-center my-8 text-xl text-gray-500'>
-                <div className='w-full'>
+                className="flex flex-col w-full items-center my-8 text-xl text-gray-500"
+              >
+                <div className="w-full p-2">
                   {!this.state.fileSelected && (
-                    <Dragger className='max-w-lg mx-auto' {...this.state.uploadProps}>
-                      <p className='flex w-full justify-center ant-upload-drag-icon'>
-                        <AiOutlineInbox className='text-4xl font-bold' />
+                    <Dragger
+                      className="max-w-lg mx-auto"
+                      {...this.state.uploadProps}
+                    >
+                      <p className="flex w-full justify-center ant-upload-drag-icon">
+                        <AiOutlineInbox className="text-4xl font-bold" />
                       </p>
-                      <p className='ant-upload-text'>Click or drag file to this area to upload</p>
-                      <p className='ant-upload-hint'>
-                        Be sure to upload only video files like .mp4 .flv .mkv .mpeg .mov...
+                      <p className="ant-upload-text">
+                        Click or drag file to this area to upload
+                      </p>
+                      <p className="ant-upload-hint">
+                        Be sure to upload only video files like .mp4 .flv .mkv
+                        .mpeg .mov...
                       </p>
                     </Dragger>
                   )}
                   {this.state.fileSelected && (
-                    <div className='mx-auto flex justify-center items-center border-2 border-gray-200 p-2 max-w-lg flex-wrap'>
+                    <div className="mx-auto flex justify-center items-center border-2 border-gray-200 p-2 max-w-lg flex-wrap">
                       {this.state.file.name}
-                      <div className='w-48 m-1'>
+                      <div className="w-48 m-1">
                         <Button onClick={this.cancelUpload} danger>
                           Select a new file
                         </Button>
@@ -188,11 +197,11 @@ class UploadVideo extends Component {
                     </div>
                   )}
                 </div>
-                <label className='flex items-baseline w-3/4'>
+                <label className="flex flex-col sm:flex-row items-baseline w-3/4">
                   Title
                   <input
-                    className='border p-2 m-2 w-full rounded-xl focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-transparent focus:border-blue-500'
-                    type='text'
+                    className="border p-2 m-2 w-full rounded-xl focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-transparent focus:border-blue-500"
+                    type="text"
                     value={this.state.title}
                     onChange={(e) => {
                       this.setState({ title: e.target.value })
@@ -200,24 +209,26 @@ class UploadVideo extends Component {
                   />
                 </label>
 
-                <label className='flex items-baseline w-3/4'>
+                <label className="flex flex-col sm:flex-row items-baseline w-3/4">
                   Description
                   <textarea
-                    className='border w-full p-1 m-4 rounded-lg focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-transparent focus:border-blue-500'
-                    type='text'
+                    className="border w-full p-1 m-4 rounded-lg focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-transparent focus:border-blue-500"
+                    type="text"
                     value={this.state.describe}
                     onChange={(e) => {
                       this.setState({ describe: e.target.value })
-                    }}></textarea>
+                    }}
+                  ></textarea>
                 </label>
 
                 <Button
                   size={60}
-                  type='primary'
-                  shape='round'
+                  type="primary"
+                  shape="round"
                   icon={<RiArrowRightCircleLine />}
                   onClick={this.submit}
-                  className='w-64 my-4 py-5 flex justify-center items-center text-xl p-4 transform hover:scale-110 motion-reduce:transform-none'>
+                  className="w-64 my-4 py-5 flex justify-center items-center text-xl p-4 transform hover:scale-110 motion-reduce:transform-none"
+                >
                   Next
                 </Button>
               </form>
@@ -226,9 +237,13 @@ class UploadVideo extends Component {
         </div>
 
         {this.state.progress > 0 && this.state.active === '' && (
-          <div className='flex-col justify-center mt-4 w-64 mx-auto'>
-            <p className='text-gray-500 font-thin text-base'>Uploading file</p>
-            <Progress type='line' percent={this.state.progress} status='active' />
+          <div className="flex-col justify-center mt-4 w-64 mx-auto">
+            <p className="text-gray-500 font-thin text-base">Uploading file</p>
+            <Progress
+              type="line"
+              percent={this.state.progress}
+              status="active"
+            />
           </div>
         )}
       </>

@@ -107,7 +107,7 @@ const Settings = (props) => {
   const renderPayment = () => {
     return (
       <Modal
-        className="py-10 px-5 opacity-95"
+        className="py-10 px-1 sm:px-5 opacity-95"
         centered
         closable={false}
         mask={false}
@@ -124,7 +124,7 @@ const Settings = (props) => {
           <div className="w-full text-red-500 text-md text-center mb-4">
             {viewerErrMessages}
           </div>
-          <div className="w-full flex flex-col justify-center p-4 py-8  ">
+          <div className="w-full flex flex-col justify-center sm:p-4 py-8  ">
             <Form
               form={form}
               layout="vertical"
@@ -132,7 +132,7 @@ const Settings = (props) => {
               onFinish={onPaymentFinish}
               initialValues={formValues}
             >
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row w-full items-center justify-between">
                 <Form.Item
                   name="firstName"
                   label="First Name"
@@ -151,7 +151,7 @@ const Settings = (props) => {
                 <Form.Item
                   name="lastName"
                   label="Last Name"
-                  className="w-full p-3"
+                  className="w-full sm:p-3"
                   rules={[
                     { required: true, message: 'Please input card last name' }
                   ]}
@@ -180,7 +180,7 @@ const Settings = (props) => {
                 <Form.Item
                   name="city"
                   label="City"
-                  className="w-full p-3"
+                  className="w-full sm:p-3"
                   rules={[{ required: true, message: 'Please input city' }]}
                 >
                   <Input
@@ -303,7 +303,7 @@ const Settings = (props) => {
       <SideNav></SideNav>
       <div className="flex-col mt-24 py-4 sm:mt-20">
         {/* <h1 className="text-left ml-8 text-2xl">Settings</h1> */}
-        <div className="flex p-4 rounded-sm  items-center justify-between  max-w-xl m-auto">
+        <div className="flex flex-col sm:flex-row p-4 rounded-sm items-start  sm:items-center justify-between  max-w-xl m-auto">
           <div>
             <h1 className="text-gray-800 text-lg text-left">
               Billing and Payment
@@ -312,7 +312,7 @@ const Settings = (props) => {
               Choose how you make payment
             </h4>
           </div>
-          <div>
+          <div className="mt-2 sm:mt-0 text-left">
             <Button
               onClick={() => changePaymentInfosVisible(true)}
               className="mx-2"
@@ -327,7 +327,7 @@ const Settings = (props) => {
             </Button>
           </div>
         </div>
-        <div className="flex p-4 rounded-sm  items-center justify-between  max-w-xl m-auto">
+        <div className="flex flex-col sm:flex-row p-4 rounded-sm items-start  sm:items-center justify-between  max-w-xl m-auto">
           <div>
             <h1 className="text-gray-800 text-lg text-left">
               Deposit and Payment
@@ -336,7 +336,7 @@ const Settings = (props) => {
               Deposit to your account
             </h4>
           </div>
-          <div>
+          <div className="mt-2 sm:mt-0 text-left">
             <Button
               onClick={() => changeBalanceInfosVisible(true)}
               className="mx-2"
@@ -348,7 +348,7 @@ const Settings = (props) => {
             </Button>
           </div>
         </div>
-        <div className="flex p-4 rounded-sm  items-center justify-between  max-w-xl m-auto">
+        <div className="flex flex-col sm:flex-row p-4 rounded-sm items-start  sm:items-center justify-between  max-w-xl m-auto">
           <div>
             <h1 className="text-gray-800 text-lg text-left">
               Account Management
@@ -357,11 +357,11 @@ const Settings = (props) => {
               Account Setting
             </h4>
           </div>
-          <div>
+          <div className="mt-2 sm:mt-0 text-left">
             <Link
               to="/account"
               type="secondary"
-              className="btn bg-white p-2 border"
+              className="btn bg-white p-2 border mx-2 sm:mx-0"
             >
               Edit Account
             </Link>

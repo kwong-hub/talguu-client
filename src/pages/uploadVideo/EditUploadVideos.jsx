@@ -24,7 +24,12 @@ const EditUploadVideos = (props) => {
 
   const publishVideo = () => {
     videoService
-      .updateVideo({ id: video.id, title: title, describe: describe, video_price: price })
+      .updateVideo({
+        id: video.id,
+        title: title,
+        describe: describe,
+        video_price: price
+      })
       .then((data) => {
         if (data[0]) {
           history.push('/your_video')
@@ -47,18 +52,23 @@ const EditUploadVideos = (props) => {
     ]
   }
   return (
-    <div className="ml-16 mt-20 relative">
+    <div className="mt-24 sm:ml-16 sm:mt-20 relative">
       <SideNav />
       <PageHeader
         className="site-page-header"
         onBack={() => history.goBack()}
         title="Edit Video"
-        subTitle="Add extra additional infromation"
+        subTitle="Add additional information"
       />
-      <Button className="absolute top-3 right-2" onClick={publishVideo} key="1" type="primary">
+      <Button
+        className="absolute top-12 sm:top-3 right-2"
+        onClick={publishVideo}
+        key="1"
+        type="primary"
+      >
         Publish Changes
       </Button>
-      <div className="flex mx-4">
+      <div className="flex sm:flex-row mx-4 flex-col-reverse">
         <div className="w-full">
           <Form
             layout="vertical"
@@ -69,12 +79,14 @@ const EditUploadVideos = (props) => {
               title: video.title,
               description: video.describe
             }}
-            onFinish={publishVideo}>
+            onFinish={publishVideo}
+          >
             <Form.Item
               label="Title"
               name="title"
               className="text-lg text-gray-600"
-              rules={[{ required: true, message: 'Please input your Title!' }]}>
+              rules={[{ required: true, message: 'Please input your Title!' }]}
+            >
               <Input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -85,7 +97,10 @@ const EditUploadVideos = (props) => {
             <Form.Item
               label="Description"
               name="description"
-              rules={[{ required: false, message: 'Please input your Description!' }]}>
+              rules={[
+                { required: false, message: 'Please input your Description!' }
+              ]}
+            >
               <TextArea
                 value={describe}
                 onChange={(e) => setDescribe(e.target.value)}
@@ -99,7 +114,8 @@ const EditUploadVideos = (props) => {
               name="price"
               className="w-full items-start"
               help="Add this videos cost, make sure your price value this video."
-              rules={[{ required: false, message: 'Please input your price!' }]}>
+              rules={[{ required: false, message: 'Please input your price!' }]}
+            >
               <Input
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
@@ -113,16 +129,16 @@ const EditUploadVideos = (props) => {
             <div className="flex flex-col items-start justify-start">
               <h2 className="text-lg">Thumbnail</h2>
               <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                Select or upload a picture that shows what&apos;s in your video. A good thumbnail
-                stands out and draws viewers&apos; attention.
+                Select or upload a picture that shows what&apos;s in your video.
+                A good thumbnail stands out and draws viewers&apos; attention.
               </h3>
               <Thumbnail videoId={video.id} thumbnails={video.thumbnial} />
             </div>
             <div className="flex flex-col items-start justify-start">
               <h2 className="text-lg">Trailer</h2>
               <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                Select or upload a trailer that shows what&apos;s in your video in a minute. A good
-                trailer draws viewers&apos; attention.
+                Select or upload a trailer that shows what&apos;s in your video
+                in a minute. A good trailer draws viewers&apos; attention.
               </h3>
               <Trailer videoId={video.id} />
             </div>

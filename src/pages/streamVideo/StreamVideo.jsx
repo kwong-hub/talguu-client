@@ -26,24 +26,27 @@ const StreamVideo = () => {
     <div>
       <div>
         <SideNav></SideNav>
-        <div className="mx-8 ml-14 mt-20">
+        <div className="mx-8 ml-0 sm:ml-14 mt-28 sm:mt-20">
           <Menu
             onClick={handleClick}
             style={{ width: 256 }}
             defaultSelectedKeys={['1']}
             defaultOpenKeys={['sub1']}
-            mode="inline">
+            mode="inline"
+          >
             <Menu.Item
               className="flex items-center justify-start text-lg"
               onClick={() => setmodalVisible(true)}
               key="1"
-              icon={<RiCamera2Fill />}>
+              icon={<RiCamera2Fill />}
+            >
               Stream
             </Menu.Item>
             <Menu.Item
               className="flex items-center justify-start text-lg"
               key="2"
-              icon={<RiLiveFill />}>
+              icon={<RiLiveFill />}
+            >
               Webcam live
             </Menu.Item>
           </Menu>
@@ -54,13 +57,14 @@ const StreamVideo = () => {
             okText="Start Stream"
             visible={modalVisible}
             onOk={() => startStream()}
-            onCancel={() => setmodalVisible(false)}>
+            onCancel={() => setmodalVisible(false)}
+          >
             <div className="bg-white p-4 ">
               <div className="">
                 <h2 className="text-xl py-2 font-bold">Stream form Software</h2>
                 <p>
-                  By sending us your video from your streaming software you will go live. start
-                  streamng now.
+                  By sending us your video from your streaming software you will
+                  go live. start streamng now.
                 </p>
               </div>
             </div>
@@ -74,7 +78,8 @@ const StreamVideo = () => {
             visible={formVisible}
             okText="back"
             onOk={() => setFormVisible(false)}
-            onCancel={() => setFormVisible(false)}>
+            onCancel={() => setFormVisible(false)}
+          >
             <div className="bg-white p-4 ">
               <StreamForm />
             </div>

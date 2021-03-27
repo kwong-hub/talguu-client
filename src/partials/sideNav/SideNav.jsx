@@ -81,7 +81,7 @@ const SideNav = (props) => {
       <Menu.Item key="1">
         <Link to="/" className="flex items-center justify-center">
           <FaVideo className={'text-xl inline mr-2 -mt-2  text-gray-500'} />
-          <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
+          <span className="text-left pl-6 text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
             Videos
           </span>
         </Link>
@@ -90,7 +90,7 @@ const SideNav = (props) => {
       <Menu.Item key="2">
         <Link to="/live_video" className="flex items-center justify-center">
           <FaLifeRing className={'text-xl inline mr-2 -mt-2  text-gray-500'} />
-          <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
+          <span className="text-left pl-6 text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
             Live Videos
           </span>
         </Link>
@@ -106,7 +106,7 @@ const SideNav = (props) => {
                 <FaSave
                   className={'text-xl inline mr-2 -mt-2  text-gray-500'}
                 />
-                <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
+                <span className="text-left pl-6 text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
                   Saved Videos
                 </span>
               </Link>
@@ -123,7 +123,7 @@ const SideNav = (props) => {
                 <FaFilm
                   className={'text-xl inline mr-2 -mt-2  text-gray-500'}
                 />
-                <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
+                <span className="text-left pl-6 text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
                   Purchased Videos
                 </span>
               </Link>
@@ -135,7 +135,7 @@ const SideNav = (props) => {
             <Menu.Item key="5">
               <Link to="/settings" className="flex items-center justify-center">
                 <FaCog className={'text-xl inline mr-2 -mt-2  text-gray-500'} />
-                <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
+                <span className="text-left pl-6 text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
                   Setting
                 </span>
               </Link>
@@ -150,7 +150,7 @@ const SideNav = (props) => {
                 <BiVideoRecording
                   className={'text-xl inline mr-2 -mt-2  text-gray-500'}
                 />
-                <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
+                <span className="text-left pl-6 text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
                   Your Videos
                 </span>
               </Link>
@@ -167,7 +167,7 @@ const SideNav = (props) => {
                 <FaCloudUploadAlt
                   className={'text-xl inline mr-2 -mt-2  text-gray-500'}
                 />
-                <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
+                <span className="text-left pl-6 text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
                   Upload Video
                 </span>
               </Link>
@@ -184,7 +184,7 @@ const SideNav = (props) => {
                 <FaStream
                   className={'text-xl inline mr-2 -mt-2  text-gray-500'}
                 />
-                <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
+                <span className="text-left pl-6 text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
                   Stream Video
                 </span>
               </Link>
@@ -196,7 +196,7 @@ const SideNav = (props) => {
           <Menu.Item key="7">
             <Link to="/account" className="flex items-center justify-center">
               <FaUser className={'text-xl inline mr-2 -mt-2  text-gray-500'} />
-              <span className="text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
+              <span className="text-left pl-6 text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
                 Account
               </span>
             </Link>
@@ -221,7 +221,7 @@ const SideNav = (props) => {
           </div>
           <span
             className={
-              'text-gray-500 flex-col mr-8 cursor-pointer text-lg items-center hover:text-gray-700'
+              'mt-2 text-gray-500 flex-col mr-8 cursor-pointer text-lg items-center hover:text-gray-700'
             }
           >
             <Dropdown
@@ -238,20 +238,21 @@ const SideNav = (props) => {
             </Dropdown>
           </span>
         </div>
-        <div className="flex w-full justify-between items-center p-2 pr-6">
-          <div className="hidden text-2xl mr-4 sm:flex items-center justify-center header_title text-gray-500">
+        <div className="block sm:flex w-full justify-between items-center p-2 sm:pr-6">
+          <div className="hidden sm:flex text-2xl mr-4 items-center justify-center header_title text-gray-500">
             <Link to="/" className="flex items-center">
               <img src={logo} alt="" className="rounded w-32" />
             </Link>
           </div>
-          <Search
-            placeholder="Search videos here..."
-            enterButton="Search"
-            size="large"
-            suffix={suffix}
-            onSearch={onSearch}
-            className="w-1/2"
-          />
+          <div className="w-full lg:w-1/2">
+            <Search
+              placeholder="Search videos here..."
+              enterButton="Search"
+              size="large"
+              suffix={suffix}
+              onSearch={onSearch}
+            />
+          </div>
           {user ? (
             <span className="text-gray-500 hidden sm:flex mr-16 ml-6 cursor-pointer text-lg items-center hover:text-gray-700 md:ml-20">
               {/* <Link to="/account"> */}
@@ -287,16 +288,6 @@ const SideNav = (props) => {
             </Tooltip>
           </Link>
         </li>
-        {/* <li
-          className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-            location.pathname === "/watch" ? "bg-gray-400" : ""
-          }`}>
-          <Link to="/watch">
-            <Tooltip className="list-tooltip" placement="rightTop" title="Watch">
-              <FaBinoculars className={`text-3xl inline text-gray-300 hover:text-white`} />
-            </Tooltip>
-          </Link>
-        </li> */}
         {user ? (
           <>
             {user.role === 'VIEWER' ? (

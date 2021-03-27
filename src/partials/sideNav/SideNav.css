@@ -40,11 +40,11 @@
   transform: translateX(-0.3rem);
 }
 
-.menu_icon:hover::before {
+.active:hover::before {
   transform: translateX(0.3rem);
 }
 
-.menu_icon:hover::after {
+.active:hover::after {
   transform: translateX(-0.3rem);
 }
 

@@ -75,7 +75,7 @@ const Stream = (props) => {
   }
   return (
     <div>
-      <div className="ml-12 my-20 relative">
+      <div className="ml-0 mt-24 sm:mt-20 sm:ml-12 relative">
         <SideNav />
         {/* <Header /> */}
         {property ? (
@@ -87,15 +87,15 @@ const Stream = (props) => {
               subTitle="Add extra additional infromation"
             />
             <Button
-              className="absolute top-3 right-2"
+              className="absolute top-12 md:top-3 right-2"
               onClick={(e) => endStream()}
               key="1"
               type="danger"
             >
               End Stream
             </Button>
-            <div className="flex mx-4">
-              <div className="w-2/5 p-4 ">
+            <div className="flex flex-col md:flex-row mx-4">
+              <div className="w-full md:w-2/5 p-4 ">
                 <VideoPlayer {...videoJsOptions} />
                 <p className="py-2">
                   Start streaming your video from your software to go live.
@@ -138,7 +138,7 @@ const Stream = (props) => {
                   </div>
                 </div>
               </div>
-              <div className="w-3/5">
+              <div className="w-full md:w-3/5">
                 <Form
                   layout="vertical"
                   name="normal_login"
@@ -208,7 +208,7 @@ const Stream = (props) => {
                 </div>
               </div>
 
-              <div className="w-1/5 flex flex-col items-center">
+              <div className="w-full md:w-1/5 flex flex-col items-center">
                 <h2 className="font-semibold text-base">Stream Analytics</h2>
                 <div>
                   <div className="rounded-lg w-32 p-4 m-2 shadow-lg bg-white ">

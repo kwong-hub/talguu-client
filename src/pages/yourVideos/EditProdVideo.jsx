@@ -71,7 +71,7 @@ const EditProdVideo = (props) => {
     ]
   }
   return (
-    <div className="ml-16 mt-16 relative">
+    <div className="ml-0 sm:ml-16 mt-24 sm:mt-16 relative">
       <SideNav />
       {/* <Header /> */}
       <PageHeader
@@ -81,14 +81,14 @@ const EditProdVideo = (props) => {
         subTitle="Add extra additional infromation"
       />
       <Button
-        className="absolute top-3 right-2"
+        className="absolute top-12 sm:top-3 right-2"
         onClick={editVideo}
         key="1"
         type="primary"
       >
         Save Changes
       </Button>
-      <div className="flex mx-4">
+      <div className="flex flex-col-reverse sm:flex-row mx-4">
         <div className="w-full">
           <div className="my-4">
             <span className="flex text-lg text-gray-600">Title</span>

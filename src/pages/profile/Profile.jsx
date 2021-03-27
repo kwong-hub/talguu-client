@@ -70,7 +70,7 @@ const Profile = (props) => {
       {profile ? (
         <>
           {' '}
-          <div className="flex flex-col mt-20 md:flex-row justify-center items-baseline">
+          <div className="mx-auto sm:w-10/12 flex flex-col mt-20 md:flex-row justify-center items-baseline">
             <div className="w-1/3 hidden md:inline-block ">
               <Avatar
                 className="shadow-xl "
@@ -84,7 +84,7 @@ const Profile = (props) => {
                 <p className="font-light text-blue-500">{user?.email}</p>
               </div>
             </div>
-            <div className="flex px-6 flex-col w-full md:w-1/2">
+            <div className="flex px-6 flex-col  md:w-1/2">
               <div className="bg-white p-8 border rounded-xl">
                 <div className="">
                   <p className="text-xl font-semibold flex pb-4">
@@ -121,7 +121,7 @@ const Profile = (props) => {
                       <Form.Item
                         label="Last Name"
                         name="lastName"
-                        className="text-lg ml-2 w-full"
+                        className="text-lg md:ml-2 w-full"
                         rules={[
                           {
                             required: true,
@@ -169,7 +169,7 @@ const Profile = (props) => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col mt-8 md:flex-row justify-center items-baseline">
+          <div className="flex mx-auto sm:w-10/12 flex-col mt-8 md:flex-row justify-center items-baseline">
             <div className="w-1/3 hidden md:inline-block">
               <FaBuilding className="flex text-4xl mx-auto" />
               <div className="m-4">
@@ -242,7 +242,7 @@ const Profile = (props) => {
                       <Form.Item
                         label="Company Contact Number"
                         name="phoneNumber"
-                        className="text-lg w-full ml-2  text-gray-600"
+                        className="text-lg w-full md:ml-2  text-gray-600"
                         rules={[
                           {
                             pattern: /(\(\d{3}\))(\s)\d{3}(-)\d{4}/,
@@ -295,7 +295,7 @@ const Profile = (props) => {
                       <Form.Item
                         label="zipcode"
                         name="zipCode"
-                        className="text-lg ml-2 w-full  text-gray-600"
+                        className="text-lg md:ml-2 w-full  text-gray-600"
                         rules={[
                           {
                             required: true,
@@ -324,7 +324,7 @@ const Profile = (props) => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col mt-8 md:flex-row justify-center items-baseline">
+          <div className="flex mx-auto sm:w-10/12 flex-col mt-8 md:flex-row justify-center items-baseline">
             <div className="w-1/3 hidden md:inline-block">
               <FaKey className="flex text-4xl  mx-auto" />
               <div className="m-4">
@@ -383,7 +383,7 @@ const Profile = (props) => {
                   <Form.Item
                     label="Confirm Password"
                     name="confrimPassword"
-                    className="text-lg w-full ml-2  text-gray-600"
+                    className="text-lg w-full md:ml-2  text-gray-600"
                     help="It's recommended to use strong password. that you're not using elsewhere"
                     rules={[
                       {

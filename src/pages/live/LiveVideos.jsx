@@ -235,7 +235,7 @@ export class LiveVideos extends Component {
     return (
       <div className="pt-4 ml-0 sm:ml-14" ref={this.playerRef}>
         <SideNav></SideNav>
-        <div className="flex relative items-end px-4 py-4 mt-24 -mb-10 sm:mb-0">
+        <div className="flex relative items-end px-4 py-4 mt-28 sm:mt-24 -mb-10 sm:mb-0">
           <p className="absolute text-lg font-semibold text-blue-700">
             Live Videos
           </p>
