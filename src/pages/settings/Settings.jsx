@@ -315,7 +315,7 @@ const Settings = (props) => {
           <div className="mt-2 sm:mt-0 text-left">
             <Button
               onClick={() => changePaymentInfosVisible(true)}
-              className="mx-2"
+              className="m-2"
             >
               View
             </Button>
@@ -339,7 +339,7 @@ const Settings = (props) => {
           <div className="mt-2 sm:mt-0 text-left">
             <Button
               onClick={() => changeBalanceInfosVisible(true)}
-              className="mx-2"
+              className="m-2"
             >
               Balance
             </Button>

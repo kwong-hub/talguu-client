@@ -150,7 +150,7 @@ const Profile = (props) => {
                     >
                       <Input
                         className="rounded-xl text-gray-700 text-md p-2"
-                        placeholder="Title*"
+                        placeholder="phoneNumber*"
                       />
                     </Form.Item>
 
