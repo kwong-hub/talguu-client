@@ -115,7 +115,6 @@ const videoService = {
       const videos = await axios.get(
         `${environment}/video/user` + (query.q ? `?q=${query.q}` : '')
       )
-      // console.log(videos.data);
       return { data: videos.data, success: true }
     } catch (error) {
       return checkResponse(error)
@@ -134,7 +133,9 @@ const videoService = {
 
   getPaidVideoUrl: async function (videoId) {
     try {
-      const videos = await axios.get(`${environment}/video/purchase_video_url?videoId=${videoId}`)
+      const videos = await axios.get(
+        `${environment}/video/purchase_video_url?videoId=${videoId}`
+      )
       return videos.data
     } catch (error) {
       return checkResponse(error)
@@ -202,7 +203,10 @@ const videoService = {
 
   likeDislikeVideo: async function (likeObject) {
     try {
-      const res = await axios.post(`${environment}/video/like_dislike`, likeObject)
+      const res = await axios.post(
+        `${environment}/video/like_dislike`,
+        likeObject
+      )
       return res
     } catch (error) {
       return checkResponse(error)
@@ -211,7 +215,10 @@ const videoService = {
 
   addComment: async function (commentObject) {
     try {
-      const res = await axios.post(`${environment}/video/comments`, commentObject)
+      const res = await axios.post(
+        `${environment}/video/comments`,
+        commentObject
+      )
       return res
     } catch (error) {
       return checkResponse(error)
@@ -220,7 +227,10 @@ const videoService = {
 
   commentVideo: async function (commentObject) {
     try {
-      const res = await axios.post(`${environment}/video/like_dislike`, commentObject)
+      const res = await axios.post(
+        `${environment}/video/like_dislike`,
+        commentObject
+      )
       return res
     } catch (error) {
       return checkResponse(error)

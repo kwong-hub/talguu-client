@@ -25,6 +25,7 @@ function logout(redirectUrl = '') {
     history.replace({ pathname: '/login' })
   }
   localStorage.removeItem('user')
+  history.go(0)
 }
 
 async function getUser() {
