@@ -42,6 +42,10 @@ function RenderVideo(props) {
     dispatch({ type: SAVE_LATER_ASYNC, payload: props.video.id })
   }
 
+  const duration =
+    (props.video?.paid
+      ? props.video?.video_duration
+      : props.video?.trailer_duration) || '00:00:00'
   return (
     <div
       onClick={(event) => props.playVideo(props.video)}
@@ -110,10 +114,9 @@ function RenderVideo(props) {
           ''
         )}
         <div className="flex items-center bg-white text-gray-700 rounded-sm absolute bottom-1 right-1 py-0 px-4">
-          {moment(props.video?.video_duration?.split('.')[0], [
-            moment.ISO_8601,
-            'HH:mm:ss'
-          ]).format('H:m:ss')}
+          {moment(duration.split('.')[0], [moment.ISO_8601, 'HH:mm:ss']).format(
+            'H:m:ss'
+          )}
         </div>
       </div>
       <div className="flex-col">
@@ -140,7 +143,10 @@ RenderVideo.propTypes = {
     title: PropTypes.string,
     currentVideo: PropTypes.bool,
     saveLater: PropTypes.any,
-    video_price: PropTypes.any
+    video_price: PropTypes.any,
+    trailer_gif: PropTypes.any,
+    main_gif: PropTypes.any,
+    trailer_duration: PropTypes.any
   }),
   paymentModalVisible: PropTypes.func,
   for: PropTypes.any,

@@ -2,7 +2,7 @@ import { Button, Form, Input } from 'antd'
 import React, { useState } from 'react'
 import { FaFacebook, FaGoogle, FaLock, FaUser } from 'react-icons/fa'
 import { connect, useDispatch } from 'react-redux'
-import { Link, useHistory, useParams } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 
 import { userService } from '../../_services/user.service'
 import logo from '../../assets/images/logo1.png'
@@ -12,7 +12,7 @@ const Login = (props) => {
   const [error, setError] = useState()
   const history = useHistory()
   const dispatch = useDispatch()
-  const param = useParams()
+  const location = useLocation()
   const forgotPassword = () => {
     history.push('/forgot_password')
   }
@@ -23,8 +23,10 @@ const Login = (props) => {
       .then((resp) => {
         if (resp.success) {
           dispatch({ type: 'LOGIN_ASYNC', payload: resp })
-          if (param.return_url) {
-            history.push({ pathname: param.return_url })
+          if (location.search) {
+            history.push({
+              pathname: location.search.replace('?return_url=', '')
+            })
           } else {
             history.push('/')
           }

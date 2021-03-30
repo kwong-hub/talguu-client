@@ -38,7 +38,6 @@ const SideNav = (props) => {
   const handleMenuClick = () => {}
 
   const onSearch = (values) => {
-    // console.log("values", values);
     history.push({
       pathname: '/search',
       search: '?query=' + values,
@@ -46,8 +45,7 @@ const SideNav = (props) => {
     })
   }
   const logout = () => {
-    dispatch({ type: LOGOUT_ASYNC, payload: 'ssdfl' })
-    // history.push('/login')
+    dispatch({ type: LOGOUT_ASYNC })
   }
   const accountMenu = (
     <div className=" bg-white shadow-lg rounded-lg">
@@ -64,9 +62,6 @@ const SideNav = (props) => {
         <Menu.Item className="hover:bg-gray-300">
           <Link to="/account">Account</Link>
         </Menu.Item>
-        {/* <Menu.Item className="hover:bg-gray-300">
-          <Link to="/settings">Settings</Link>
-        </Menu.Item> */}
         <Menu.Item className="hover:bg-gray-300">
           <Link to="" onClick={(e) => logout()}>
             Sign Out
