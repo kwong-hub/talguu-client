@@ -147,6 +147,13 @@ const YourVideo = () => {
       })
   }
   const publishVideo = (video) => {
+    console.log(video)
+    if (!video.trailer || !video.thumbnial) {
+      message.info(
+        'Video should have trailer and thumbnail before publish, edit add thumbnail and trailer.'
+      )
+      return
+    }
     videoService
       .togglePublishVideo(video.id)
       .then((data) => {
