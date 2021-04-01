@@ -64,8 +64,8 @@ function RenderVideo(props) {
         <img
           src={
             props.video.paid
-              ? props.video.main_gif | ''
-              : props.video.trailer_gif | ''
+              ? props.video.main_gif || ''
+              : props.video.trailer_gif || ''
           }
           className="max-h-full hidden h-96 sm:h-48 video_gif mx-auto"
         />

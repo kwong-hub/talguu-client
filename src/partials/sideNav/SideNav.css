@@ -62,3 +62,7 @@
   left: 0;
   transition: all 0.1s;
 }
+
+.video-js .vjs-tech {
+  z-index: 11;
+}
