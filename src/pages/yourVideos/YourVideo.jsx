@@ -157,9 +157,11 @@ const YourVideo = () => {
     videoService
       .togglePublishVideo(video.id)
       .then((data) => {
-        if (data) {
+        if (data.success) {
           message.success('Video changed successfull!.')
           getVideos(pagination)
+        } else {
+          message.success('Video Failed to changed!.')
         }
       })
       .catch((err) => {
