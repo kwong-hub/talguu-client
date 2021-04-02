@@ -138,7 +138,7 @@ const YourVideo = () => {
       .deleteVideo(video.id)
       .then((data) => {
         if (data) {
-          message.success('Videos deleted!.')
+          message.success('Video is deleted Successfull!.')
           getVideos(pagination)
         }
       })
@@ -158,12 +158,12 @@ const YourVideo = () => {
       .togglePublishVideo(video.id)
       .then((data) => {
         if (data) {
-          message.success('Video Published!.')
+          message.success('Video changed successfull!.')
           getVideos(pagination)
         }
       })
       .catch((err) => {
-        message.error('Failed to delete!.')
+        message.error('Failed to change!.')
         console.log(err)
       })
   }
