@@ -3,7 +3,10 @@
   border-bottom-left-radius: 1.2rem;
 }
 
-.ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button {
+.ant-input-search
+  > .ant-input-group
+  > .ant-input-group-addon:last-child
+  .ant-input-search-button {
   border-top-right-radius: 1.2rem;
   border-bottom-right-radius: 1.2rem;
 }
@@ -36,6 +39,14 @@
 .video_thumbnail:hover > div > .watch_later,
 .video_thumbnail:hover > div > .watch_video_buttons {
   visibility: visible;
+}
+
+.video_thumbnail:hover > div > .video_gif {
+  display: block;
+}
+
+.video_thumbnail:hover > div > .video_image {
+  display: none;
 }
 
 .video_thumbnail:hover > div > .video_title {

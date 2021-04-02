@@ -51,15 +51,23 @@ function RenderVideo(props) {
       onClick={(event) => props.playVideo(props.video)}
       className={
         props.for
-          ? 'flex-col w-full md:w-4/12 lg:w-full sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch'
-          : 'flex-col w-full md:w-4/12 lg:w-3/12 sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch'
+          ? 'flex-col w-full md:w-4/12 lg:w-full sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch overflow-h'
+          : 'flex-col w-full md:w-4/12 lg:w-3/12 sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch overflow-h'
       }
     >
-      <div className="relative">
+      <div className="relative max-h-full">
         <img
           src={props.video.thumbnial}
           alt=""
-          className="min-w-full min-h-full video_image"
+          className="max-h-full block video_image"
+        />
+        <img
+          src={
+            props.video.paid
+              ? props.video.main_gif | ''
+              : props.video.trailer_gif | ''
+          }
+          className="max-h-full hidden h-96 sm:h-48 video_gif mx-auto"
         />
         <div className="absolute thumbnail_button_container">
           <Tooltip
