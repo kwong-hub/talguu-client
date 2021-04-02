@@ -9,7 +9,7 @@ import { Link, useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { userService } from '../../_services/user.service'
-import logo from '../../assets/images/logo.svg'
+import logo from '../../assets/images/logo1.png'
 import mastercard from '../../assets/images/mastercard.png'
 import visa from '../../assets/images/visa.png'
 import ShowBalance from '../../components/balanceModal/ShowBalance'
@@ -118,7 +118,7 @@ const Settings = (props) => {
       >
         <div className="modal_form">
           <div className="flex justify-center flex-col items-center ">
-            <img className="" src={logo} alt="Logo" width={50} />
+            <img className="" src={logo} alt="Logo" width={100} />
             <p className="text-2xl text-gray-700 my-6">Payment Information</p>
           </div>
           <div className="w-full text-red-500 text-md text-center mb-4">
