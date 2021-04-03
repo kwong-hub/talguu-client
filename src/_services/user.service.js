@@ -1,4 +1,4 @@
-import { environment } from '../config/config'
+import { environment } from '../environment/config'
 import axios from './axiosDefault'
 import history from './../routes/history'
 import { checkResponse } from './errorHandler'

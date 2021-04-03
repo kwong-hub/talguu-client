@@ -434,7 +434,7 @@ const WatchVideo = () => {
           {playVideo && currentVideo ? (
             renderPlayer()
           ) : (
-            <div className="w-screen h-screen flex justify-center items-center -mt-20 -ml-12 lg:-mt-24 lg:-ml-48  xl:-mt-20 xl:-ml-52">
+            <div className="w-screen mx-auto mt-40">
               <Space size="middle">
                 <Spin size="large" />
               </Space>

@@ -1,9 +1,9 @@
-import { environment } from '../config/config'
+import { environment } from '../environment/config'
 import axios from './axiosDefault'
 import { checkResponse } from './errorHandler'
 
 const videoService = {
-  addPaymentInfo: async(payload) => {
+  addPaymentInfo: async (payload) => {
     try {
       const res = await axios.post(`${environment}/payment/create`, payload)
       return res.data
@@ -11,7 +11,7 @@ const videoService = {
       return checkResponse(error)
     }
   },
-  getUserPaymentInfos: async(payload) => {
+  getUserPaymentInfos: async (payload) => {
     try {
       const res = await axios.get(`${environment}/payment/list/${payload}`)
       return res.data
@@ -19,7 +19,7 @@ const videoService = {
       return checkResponse(error)
     }
   },
-  getPaymentInfos: async(username) => {
+  getPaymentInfos: async (username) => {
     try {
       const payment = await axios.get(`${environment}/payment/list/${username}`)
       return payment.data
@@ -27,7 +27,7 @@ const videoService = {
       return checkResponse(error)
     }
   },
-  getBalance: async() => {
+  getBalance: async () => {
     try {
       const payment = await axios.get(`${environment}/payment/balance`)
       return payment.data
@@ -36,7 +36,7 @@ const videoService = {
       // throw error;
     }
   },
-  addDeposit: async(data) => {
+  addDeposit: async (data) => {
     try {
       const payment = await axios.post(`${environment}/payment/deposit`, data)
       return payment.data
