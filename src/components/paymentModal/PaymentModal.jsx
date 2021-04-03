@@ -19,6 +19,8 @@ function PaymentModal(props) {
         if (res.success) {
           if (!isNaN(res.balance)) {
             setBalance(res?.balance)
+          } else {
+            setBalance('0')
           }
         }
       })

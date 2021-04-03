@@ -77,12 +77,11 @@ const YourVideo = () => {
       width: 70
     },
     {
-      title: 'Comments',
-      dataIndex: 'likeCount',
-      key: 'likeCount',
-      width: 70
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      width: 100
     },
-
     {
       title: 'Action',
       key: 'action',
@@ -99,24 +98,26 @@ const YourVideo = () => {
           >
             <Button>Delete</Button>
           </Popconfirm>
-          <Popconfirm
-            title={
-              record.published
-                ? 'Are you sure to unpublish this video?'
-                : 'Are you sure to publish this video?'
-            }
-            onConfirm={(e) => publishVideo(record)}
-            onCancel={cancel}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button
-              className="w-24"
-              type={record.published ? 'danger' : 'primary'}
+          {record.status !== 'PENDING' && record.status !== 'FAILED' && (
+            <Popconfirm
+              title={
+                record.status === 'PUBLISHED'
+                  ? 'Are you sure to unpublish this video?'
+                  : 'Are you sure to publish this video?'
+              }
+              onConfirm={(e) => publishVideo(record)}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
             >
-              {record.published ? 'Unpublish' : 'Publish'}
-            </Button>
-          </Popconfirm>
+              <Button
+                className="w-24"
+                type={record.published ? 'danger' : 'primary'}
+              >
+                {record.status === 'PUBLISHED' ? 'Unpublish' : 'Publish'}
+              </Button>
+            </Popconfirm>
+          )}
         </Space>
       )
     }
@@ -137,7 +138,7 @@ const YourVideo = () => {
       .deleteVideo(video.id)
       .then((data) => {
         if (data) {
-          message.success('Videos deleted!.')
+          message.success('Video is deleted Successfull!.')
           getVideos(pagination)
         }
       })
@@ -147,7 +148,6 @@ const YourVideo = () => {
       })
   }
   const publishVideo = (video) => {
-    console.log(video)
     if (!video.trailer || !video.thumbnial) {
       message.info(
         'Video should have trailer and thumbnail before publish, edit add thumbnail and trailer.'
@@ -157,13 +157,15 @@ const YourVideo = () => {
     videoService
       .togglePublishVideo(video.id)
       .then((data) => {
-        if (data) {
-          message.success('Video Published!.')
+        if (data.success) {
+          message.success('Video changed successfull!.')
           getVideos(pagination)
+        } else {
+          message.success('Video Failed to changed!.')
         }
       })
       .catch((err) => {
-        message.error('Failed to delete!.')
+        message.error('Failed to change!.')
         console.log(err)
       })
   }
