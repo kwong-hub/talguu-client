@@ -296,14 +296,14 @@ const WatchVideo = () => {
     }
     if (currentVideo) {
       return (
-        <div className="">
+        <div className="mt-10 sm:mt-0">
           <div
             key={randomStr}
-            className="flex ml-2 sm:max-w-full lg:max-w-3xl xl:max-w-4xl -z-10"
+            className="flex mx-1 sm:max-w-full lg:max-w-3xl xl:max-w-4xl -z-10"
           >
             <VideoPlayer {...videoJsOptions}></VideoPlayer>
           </div>
-          <div className="flex-col ml-2 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
+          <div className="flex-col mx-1 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
             <div className="w-full flex justify-between">
               <div className="text-gray-800 lg:text-2xl text-md  text-left">
                 {currentVideo?.title}

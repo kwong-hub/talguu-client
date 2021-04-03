@@ -77,7 +77,7 @@ const SideNav = (props) => {
         <Link to="/" className="flex items-center justify-center">
           <FaVideo className={'text-xl inline mr-2 -mt-2  text-gray-500'} />
           <span className="text-left pl-6 text-xl w-48 h-full inline-block  text-gray-500 hover:text-gray-900">
-            Videos
+            All Videos
           </span>
         </Link>
       </Menu.Item>
@@ -205,10 +205,9 @@ const SideNav = (props) => {
 
   const suffix = <FaSearch className="text-xl text-gray-300" />
   return (
-    <div className="container z-10 sm:flex w-14 min-h-full fixed left-0 top-0 bottom-0 bg-transparent  sm:bg-white">
-      <div className="absolute w-screen right-0 left-0 sm:left-14 top-0 bg-white shadow-sm">
-        {/* <div className="h-10 w-auto flex justify-end mr-4"></div> */}
-        <div className="flex justify-between sm:hidden pl-2 pt-2">
+    <div className="container bottom-0 bg-transparent  sm:bg-white">
+      <div className="fixed z-10 right-0 left-0 sm:left-14 top-0 bg-white shadow-sm">
+        <div className="flex justify-between sm:hidden pt-2">
           <div className="text-2xl mr-4 flex items-center justify-center header_title text-gray-500">
             <Link to="/" className="flex items-center">
               <img src={logo} alt="" className="rounded w-32" />
@@ -216,7 +215,7 @@ const SideNav = (props) => {
           </div>
           <span
             className={
-              'mt-2 text-gray-500 flex-col mr-8 cursor-pointer text-lg items-center hover:text-gray-700'
+              'mt-2 text-gray-500 flex-col mr-4 cursor-pointer text-lg items-center hover:text-gray-700'
             }
           >
             <Dropdown
@@ -233,7 +232,7 @@ const SideNav = (props) => {
             </Dropdown>
           </span>
         </div>
-        <div className="block sm:flex w-full justify-between items-center p-2 sm:pr-6">
+        <div className="block sm:flex p-2 justify-between items-center">
           <div className="hidden sm:flex text-2xl mr-4 items-center justify-center header_title text-gray-500">
             <Link to="/" className="flex items-center">
               <img src={logo} alt="" className="rounded w-32" />
@@ -249,7 +248,7 @@ const SideNav = (props) => {
             />
           </div>
           {user ? (
-            <span className="text-gray-500 hidden sm:flex mr-16 ml-6 cursor-pointer text-lg items-center hover:text-gray-700 md:ml-20">
+            <span className="text-gray-500 hidden sm:flex ml-6 cursor-pointer text-lg items-center hover:text-gray-700 md:ml-20">
               {/* <Link to="/account"> */}
               <Dropdown overlay={accountMenu} placement="bottomRight" arrow>
                 <FaUser className={'text-3xl inline text-gray-300'} />
@@ -262,7 +261,7 @@ const SideNav = (props) => {
           )}
         </div>
       </div>
-      <ul className="list-disc space-y-5 p-1 border-r hidden sm:block w-24  mt-2">
+      <ul className="w-14 min-h-full fixed left-0 top-0 list-disc space-y-5 p-1 border-r hidden sm:block  mt-2">
         {/* <li className="cursor-pointer">
           <img src={logo} alt="" className="rounded" />
         </li> */}
@@ -275,7 +274,7 @@ const SideNav = (props) => {
             <Tooltip
               className="list-tooltip"
               placement="rightTop"
-              title="Videos"
+              title="All Videos"
             >
               <FaVideo
                 className={'text-3xl inline text-gray-300 hover:text-white'}

@@ -8,3 +8,9 @@
 .video-js {
   max-height: 100%;
 }
+
+/* .video-js.vjs-fluid,
+.video-js.vjs-16-9,
+.video-js.vjs-4-3 {
+  z-index: 11;
+} */
