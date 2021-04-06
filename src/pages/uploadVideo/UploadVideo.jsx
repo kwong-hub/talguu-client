@@ -37,7 +37,7 @@ class UploadVideo extends Component {
     progress: 0,
     active: '',
     uploadProps: {
-      accept: '.mp4',
+      accept: '.mp4, .flv, .mkv, .mpeg, .mov',
       name: 'file',
       multiple: false,
       action: '',

@@ -3,7 +3,10 @@
   border-bottom-left-radius: 1.2rem;
 }
 
-.ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button {
+.ant-input-search
+  > .ant-input-group
+  > .ant-input-group-addon:last-child
+  .ant-input-search-button {
   border-top-right-radius: 1.2rem;
   border-bottom-right-radius: 1.2rem;
 }

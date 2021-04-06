@@ -30,9 +30,6 @@ export class VideoPlayer extends Component {
           !this.player?.paused() &&
           !this.player.ended()
         ) {
-          if (this.state.viewIncremented) {
-            clearInterval(incrementViewInterval)
-          }
           videoService
             .incrementVideoView({ videoId: this.props.videoId })
             .then((res) => {
@@ -64,6 +61,9 @@ export class VideoPlayer extends Component {
   }
 
   render() {
+    if (this.state.viewIncremented) {
+      clearInterval(incrementViewInterval)
+    }
     return (
       <div
         onKeyUp={(e) => this.handleHotKeys(e)}
