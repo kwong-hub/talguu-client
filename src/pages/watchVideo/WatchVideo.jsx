@@ -281,16 +281,17 @@ const WatchVideo = () => {
       responsive: true,
       sources: [
         {
-          src:
-            (currentVideo
-              ? currentVideo.paid
-                ? currentVideo.video_link
-                : currentVideo.trailer
-              : '') || '',
-          type: currentVideo.video_type
+          // src:
+          //   (currentVideo
+          //     ? currentVideo.paid
+          //       ? currentVideo.video_link
+          //       : currentVideo.trailer
+          //     : '') || '',
+          // type: currentVideo.video_type
           // src: "http://8mspbb.com/hls/1616052119942trailer.mp4.m3u8",
-          // src: "https://talguu-vout1.s3.us-west-2.amazonaws.com/test8/master.m3u8",
-          // type: "application/x-mpegURL",
+          src:
+            'http://8mspbb.com/video/hls_play/jRINOk9irRpyXyKBinZPQg/1617696629/1617376114435video/playlist',
+          type: 'application/x-mpegURL'
         }
       ]
     }

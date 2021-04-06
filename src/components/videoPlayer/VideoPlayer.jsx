@@ -2,6 +2,8 @@ import './VideoPlayer.css'
 
 import React, { Component } from 'react'
 import videojs from 'video.js'
+import 'videojs-contrib-quality-levels'
+import 'videojs-hls-quality-selector'
 import videoService from '../../_services/video.service'
 import PropTypes from 'prop-types'
 
@@ -18,6 +20,11 @@ export class VideoPlayer extends Component {
       { ...this.props, withCredentials: true },
       function onPlayerReady() {}
     )
+    console.log(this.player)
+
+    this.player.hlsQualitySelector({
+      displayCurrentQuality: true
+    })
 
     const user = JSON.parse(localStorage.getItem('user'))
 
