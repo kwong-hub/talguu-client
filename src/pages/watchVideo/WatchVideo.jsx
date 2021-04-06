@@ -281,26 +281,25 @@ const WatchVideo = () => {
       responsive: true,
       sources: [
         {
-          // src:
-          //   (currentVideo
-          //     ? currentVideo.paid
-          //       ? currentVideo.video_link
-          //       : currentVideo.trailer
-          //     : '') || '',
-          // type: currentVideo.video_type
-          // src: "http://8mspbb.com/hls/1616052119942trailer.mp4.m3u8",
           src:
-            'http://8mspbb.com/video/hls_play/jRINOk9irRpyXyKBinZPQg/1617696629/1617376114435video/playlist',
-          type: 'application/x-mpegURL'
+            (currentVideo
+              ? currentVideo.paid
+                ? currentVideo.video_link
+                : currentVideo.trailer
+              : '') || '',
+          type: currentVideo.video_type
+          // src:
+          //   'http://8mspbb.com/video/hls_play/jRINOk9irRpyXyKBinZPQg/1617696629/1617376114435video/playlist',
+          // type: 'application/x-mpegURL'
         }
       ]
     }
     if (currentVideo) {
       return (
-        <div className="mt-10 sm:mt-0">
+        <div className=" bg-white mt-10 sm:mt-0">
           <div
             key={randomStr}
-            className="flex mx-1 sm:max-w-full lg:max-w-3xl xl:max-w-4xl -z-10"
+            className="bg-white flex fixed top-28 z-20 left-0 right-0 sm:relative mx-1 sm:max-w-full lg:max-w-3xl xl:max-w-4xl -z-10"
           >
             <VideoPlayer {...videoJsOptions}></VideoPlayer>
           </div>
