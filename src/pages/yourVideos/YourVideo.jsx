@@ -118,7 +118,9 @@ const YourVideo = () => {
               </Button>
             </Popconfirm>
           )}
-          {record.status === 'PENDING' && <Button>Processing...</Button>}
+          {record.status === 'PENDING' && (
+            <Button type="primary">Processing</Button>
+          )}
         </Space>
       )
     }
