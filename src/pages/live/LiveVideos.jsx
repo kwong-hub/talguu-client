@@ -12,7 +12,6 @@ import visa from '../../assets/images/visa.png'
 import VideoPlayer from '../../components/videoPlayer/VideoPlayer'
 import SideNav from '../../partials/sideNav/SideNav'
 import { PURCHASE_VIDEO_ASYNC, VIEWER_LIVE_ASYNC } from '../../redux/types'
-import { liveVideoURL } from '../../config/config'
 
 export class LiveVideos extends Component {
   state = {
@@ -226,7 +225,7 @@ export class LiveVideos extends Component {
       responsive: true,
       sources: [
         {
-          src: `${liveVideoURL}/hls/${this.state.currentLive?.stream_key}.m3u8`,
+          src: `${this.state.currentLive?.stream_link}`,
           type: 'application/x-mpegURL'
         }
       ],

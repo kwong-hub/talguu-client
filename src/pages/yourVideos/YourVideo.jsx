@@ -112,11 +112,14 @@ const YourVideo = () => {
             >
               <Button
                 className="w-24"
-                type={record.published ? 'danger' : 'primary'}
+                type={record.status === 'PUBLISHED' ? 'danger' : 'primary'}
               >
                 {record.status === 'PUBLISHED' ? 'Unpublish' : 'Publish'}
               </Button>
             </Popconfirm>
+          )}
+          {record.status === 'PENDING' && (
+            <Button type="primary">Processing</Button>
           )}
         </Space>
       )
