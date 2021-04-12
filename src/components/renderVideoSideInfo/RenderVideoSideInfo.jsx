@@ -1,6 +1,6 @@
-import './RenderVideo.css'
+import './RenderVideoSideInfo.css'
 
-import { Button, message, Tooltip } from 'antd'
+import { message, Tooltip } from 'antd'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -14,12 +14,12 @@ import {
   VIEWER_VIDEOS_ASYNC
 } from '../../redux/types'
 
-function RenderVideo(props) {
+function RenderVideoSideInfo(props) {
   const history = useHistory()
   const dispatch = useDispatch()
   const saveLaterStatus = useSelector((state) => state.video.saveLaterStatus)
 
-  const user = JSON.parse(localStorage.getItem('user'))
+  // const user = JSON.parse(localStorage.getItem('user'))
 
   if (saveLaterStatus === 'SUCCESS_ADDED') {
     dispatch({ type: SAVE_LATER_RESET })
@@ -37,8 +37,6 @@ function RenderVideo(props) {
     dispatch({ type: SAVE_LATER_ASYNC, payload: props.video.id })
   }
 
-  const varClassNames = props.fromWatch ? 'block lg:hidden' : ''
-
   const duration =
     (props.video?.paid
       ? props.video?.video_duration
@@ -47,18 +45,14 @@ function RenderVideo(props) {
     <div
       onClick={(event) => props.playVideo(props.video)}
       className={
-        props.for
-          ? 'flex-col w-full md:w-4/12 lg:w-full sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch overflow-h' +
-            varClassNames
-          : 'flex-col w-full md:w-4/12 lg:w-3/12 sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch overflow-h' +
-            varClassNames
+        'hidden lg:flex w-full p-2 h-32 cursor-pointer self-stretch overflow-h overflow-hidden video_thumbnail'
       }
     >
-      <div className="relative max-h-full flex justify-center">
+      <div className="relative max-h-full w-5/12 flex justify-center">
         <img
           src={props.video.thumbnial}
           alt=""
-          className="block w-full h-48 video_image"
+          className="block w-full h-28 video_image"
         />
         <img
           src={
@@ -66,7 +60,7 @@ function RenderVideo(props) {
               ? props.video.main_gif || ''
               : props.video.trailer_gif || ''
           }
-          className="hidden h-48 video_gif mx-auto"
+          className="hidden h-28 video_gif mx-auto"
         />
         <div className="absolute thumbnail_button_container">
           <Tooltip
@@ -98,20 +92,21 @@ function RenderVideo(props) {
           </div>
         }
         <div className="bg-gray-600 rounded-sm absolute bottom-1 right-1 py-0 px-4 bg-opacity-40"></div>
-        {props.video.paid
+        {/* {props.video.paid
           ? ''
           : (!user || user.role === 'VIEWER') && (
-              <div className="absolute bottom-1 left-1 py-0 invisible watch_video_buttons">
+              <div className="absolute bottom-1 -right-32 py-0 z-20">
                 <Button
                   onClick={(event) =>
                     props.paymentModalVisible(true, props.video, event)
                   }
+                  type="primary"
                   className="mr-1 rounded-2xl text-xs px-2 py-0 opacity-80"
                 >
                   Watch Full Video
                 </Button>
               </div>
-            )}
+            )} */}
         {!props.video.paid ? (
           <div className="flex items-center bg-white text-gray-700 rounded-sm absolute top-1 left-1 py-0 px-4">
             <FaDollarSign className="text-gray-700 text-xs" />{' '}
@@ -126,13 +121,16 @@ function RenderVideo(props) {
           )}
         </div>
       </div>
-      <div className="flex-col">
-        <h4 className="my-2 text-left text-md text-gray-600 video_title">
+      <div className="flex flex-col w-6/12 ml-2">
+        <h4 className="mb-2 text-left text-md text-gray-600 video_title">
           {props.video.title}
         </h4>
         <div className="flex">
-          <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2">
+          <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-md">
             {props.video.viewCount} views
+          </span>
+          <span className="hover:text-blue-400 text-md ml-2 self-end">
+            {moment(props.video?.premiered).format('MMM DD, YYYY')}
           </span>
         </div>
       </div>
@@ -140,7 +138,7 @@ function RenderVideo(props) {
   )
 }
 
-RenderVideo.propTypes = {
+RenderVideoSideInfo.propTypes = {
   video: PropTypes.shape({
     id: PropTypes.string,
     thumbnial: PropTypes.string,
@@ -153,7 +151,8 @@ RenderVideo.propTypes = {
     video_price: PropTypes.any,
     trailer_gif: PropTypes.any,
     main_gif: PropTypes.any,
-    trailer_duration: PropTypes.any
+    trailer_duration: PropTypes.any,
+    premiered: PropTypes.any
   }),
   paymentModalVisible: PropTypes.func,
   for: PropTypes.any,
@@ -161,4 +160,4 @@ RenderVideo.propTypes = {
   fromWatch: PropTypes.bool
 }
 
-export default RenderVideo
+export default RenderVideoSideInfo

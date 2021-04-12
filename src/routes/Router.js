@@ -27,6 +27,7 @@ import PrivateRoute from './privateRoute'
 import history from './history'
 import SearchVideo from '../pages/search/SearchVideo'
 import ForgotPassword from '../pages/authentication/ForgotPassword'
+import AddPaymentInfo from '../pages/payment/AddPaymentInfo'
 const Router = () => {
   return (
     <div>
@@ -37,7 +38,10 @@ const Router = () => {
           <Route exact path="/search" component={SearchVideo} />
           <Route path="/watch/:vidId" component={WatchVideo} />
           <PrivateRoute path="/live_video" component={LiveVideos} />
-          <PrivateRoute path="/purchased_playlist" component={PurchasedPlaylist} />
+          <PrivateRoute
+            path="/purchased_playlist"
+            component={PurchasedPlaylist}
+          />
           <PrivateRoute path="/saved_later" component={SavedPlayList} />
           <PrivateRoute path="/upload_video" component={UploadVideo} />
           <PrivateRoute path="/upload_2" component={UploadAnt} />
@@ -53,10 +57,15 @@ const Router = () => {
           <PrivateRoute exact path="/profile" component={Profile} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
-          <PrivateRoute exact path="/finish-upload" component={EditUploadVideos} />
+          <PrivateRoute
+            exact
+            path="/finish-upload"
+            component={EditUploadVideos}
+          />
           <PrivateRoute exact path="/live_stream" component={Stream} />
           <Route exact path="/forgot_password" component={ForgotPassword} />
           <PrivateRoute exact path="/deposit" component={Deposit} />
+          <PrivateRoute exact path="/payment_info" component={AddPaymentInfo} />
           <Route component={NotFound} />
         </Switch>
       </BrowserRouter>

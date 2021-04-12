@@ -27,10 +27,10 @@ const EditProdVideo = (props) => {
   }, [])
 
   const getVideoById = (id) => {
+    console.log(id, 'from get video by id')
     videoService
       .getProdVideoById(id)
       .then((data) => {
-        // console.log(data);
         setVideo(data)
         setTitle(data.title)
         setDescribe(data.describe)
@@ -40,8 +40,6 @@ const EditProdVideo = (props) => {
   }
 
   const editVideo = () => {
-    // console.log("title,describe", title, describe);
-
     videoService
       .updateVideo({
         id: video.id,

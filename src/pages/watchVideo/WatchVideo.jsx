@@ -27,6 +27,8 @@ import {
   UPDATE_USER_VIDEOS,
   VIEWER_VIDEOS_ASYNC
 } from '../../redux/types'
+import RenderVideoSideInfo from '../../components/renderVideoSideInfo/RenderVideoSideInfo'
+import './WatchVideo.css'
 
 const WatchVideo = () => {
   const history = useHistory()
@@ -270,11 +272,9 @@ const WatchVideo = () => {
   }
 
   const renderPlayer = () => {
-    // console.log(video);
-
     const videoJsOptions = {
       videoId: currentVideo.id,
-      autoplay: true,
+      // autoplay: true,
       controls: true,
       poster: currentVideo?.thumbnial,
       aspectRatio: '16:9',
@@ -289,21 +289,21 @@ const WatchVideo = () => {
               : '') || '',
           type: currentVideo.video_type
           // src:
-          //   'http://8mspbb.com/video/hls_play/jRINOk9irRpyXyKBinZPQg/1617696629/1617376114435video/playlist',
+          //   'http://8mspbb.com/video/hls_play/OZyDOutTBuHBzyaqZTw9Ng/1618218448/1617373019142video/playlist',
           // type: 'application/x-mpegURL'
         }
       ]
     }
     if (currentVideo) {
       return (
-        <div className=" bg-white mt-10 sm:mt-0">
+        <div className="relative sm:static player_container bg-white mt-10 sm:mt-0">
           <div
             key={randomStr}
-            className="bg-white flex fixed top-28 z-20 left-0 right-0 sm:relative mx-1 sm:max-w-full lg:max-w-3xl xl:max-w-4xl -z-10"
+            className="pt-2 sm:pt-0 fixed left-0 right-0 top-12 sm:top-0 sm:static bg-white flex sm:mx-1 z-10 sm:-z-10"
           >
             <VideoPlayer {...videoJsOptions}></VideoPlayer>
           </div>
-          <div className="flex-col mx-1 mt-4 sm:max-w-full lg:max-w-3xl xl:max-w-4xl">
+          <div className="flex-col mx-1 mt-44 sm:mt-4">
             <div className="w-full flex justify-between">
               <div className="text-gray-800 lg:text-2xl text-md  text-left">
                 {currentVideo?.title}
@@ -413,13 +413,23 @@ const WatchVideo = () => {
     if (viewerVideos) {
       return viewerVideos.map((video) => {
         return (
-          <RenderVideo
-            playVideo={play}
-            for="watch_video"
-            key={video.id}
-            video={video}
-            paymentModalVisible={paymentModalVisibleFunc}
-          />
+          <>
+            <RenderVideo
+              playVideo={play}
+              for="watch_video"
+              key={video.id}
+              video={video}
+              paymentModalVisible={paymentModalVisibleFunc}
+              fromWatch={true}
+            />
+            <RenderVideoSideInfo
+              playVideo={play}
+              for="watch_video"
+              key={video.id}
+              video={video}
+              paymentModalVisible={paymentModalVisibleFunc}
+            />
+          </>
         )
       })
     }
@@ -440,7 +450,7 @@ const WatchVideo = () => {
               </Space>
             </div>
           )}
-          <div className="flex relative lg:absolute right-0  bottom-0 border-2 mt-20 lg:top-0 lg:flex-col lg:ml-0 flex-wrap lg:flex-nowrap xl:w-1/4 lg:w-1/5 lg:min-h-full border-white">
+          <div className="flex relative lg:absolute right-0  bottom-0 border-2 mt-4 lg:top-0 lg:flex-col lg:ml-0 flex-wrap lg:flex-nowrap videos_container border-white">
             {renderVideos()}
           </div>
         </div>
