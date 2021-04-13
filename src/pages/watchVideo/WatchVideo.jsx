@@ -331,7 +331,8 @@ const WatchVideo = () => {
                   {currentVideo?.viewCount <= 1 ? ' view' : ' views'}
                 </span>
                 <span className="text-gray-600 ml-4 text-base">
-                  {moment(currentVideo?.premiered).format('MMM DD, YYYY')}
+                  {currentVideo?.streamed ? 'Streamed ' : ''}
+                  {moment(currentVideo?.premiered).fromNow()}
                 </span>
               </div>
               <div className="flex">
