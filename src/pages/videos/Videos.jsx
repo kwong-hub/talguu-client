@@ -123,7 +123,7 @@ const Videos = (props) => {
   }
 
   return (
-    <div className="pt-2 sm:ml-14 mt-20">
+    <div className="pt-2 sm:ml-14 mt-12">
       <SideNav onSearch={onSearch}></SideNav>
       <div className="flex relative mt-2 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
         {renderVideos()}

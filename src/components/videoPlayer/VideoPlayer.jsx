@@ -20,10 +20,16 @@ export class VideoPlayer extends Component {
       { ...this.props, withCredentials: true },
       function onPlayerReady() {}
     )
-    console.log(this.player)
+
+    // console.log(this.player)
+    this.qualityLevels = this.player.qualityLevels()
 
     this.player.hlsQualitySelector({
-      displayCurrentQuality: true
+      displayCurrentQuality: true,
+      vjsIconClass: 'cof',
+      getCurrentQuality: (val) => {
+        return 'hi'
+      }
     })
 
     const user = JSON.parse(localStorage.getItem('user'))
@@ -68,6 +74,7 @@ export class VideoPlayer extends Component {
   }
 
   render() {
+    console.log(this.qualityLevels)
     if (this.state.viewIncremented) {
       clearInterval(incrementViewInterval)
     }
