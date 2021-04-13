@@ -15,6 +15,16 @@ const videoService = {
   getVideos: async function (pagination) {
     try {
       const video = await axios.get(
+        `${environment}/video?current=${pagination.current}&pageSize=${pagination.pageSize}&streamed=${pagination.streamed}`
+      )
+      return video.data
+    } catch (error) {
+      return checkResponse(error)
+    }
+  },
+  getLiveRecVideos: async function (pagination) {
+    try {
+      const video = await axios.get(
         `${environment}/video?current=${pagination.current}&pageSize=${pagination.pageSize}`
       )
       return video.data

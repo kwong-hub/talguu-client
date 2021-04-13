@@ -1,4 +1,4 @@
-import { Button, message, Popconfirm, Space, Table } from 'antd'
+import { Button, message, Popconfirm, Space, Table, Tabs } from 'antd'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 
@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom'
 
 import videoService from '../../_services/video.service'
 import SideNav from '../../partials/sideNav/SideNav'
-
+const { TabPane } = Tabs
 const YourVideo = () => {
   const history = useHistory()
   const [videos, setvideos] = useState([])
@@ -15,11 +15,13 @@ const YourVideo = () => {
     current: 1,
     pageSize: 5
   })
+  const [key, setkey] = useState(0)
 
   useEffect(() => {
-    getVideos(pagination)
+    console.log(key)
+    getVideos({ ...pagination, streamed: key })
     return () => {}
-  }, [])
+  }, [key])
 
   const columns = [
     {
@@ -142,7 +144,7 @@ const YourVideo = () => {
       .then((data) => {
         if (data) {
           message.success('Video is deleted Successfull!.')
-          getVideos(pagination)
+          getVideos({ ...pagination, streamed: key })
         }
       })
       .catch((err) => {
@@ -162,7 +164,7 @@ const YourVideo = () => {
       .then((data) => {
         if (data.success) {
           message.success('Video changed successfull!.')
-          getVideos(pagination)
+          getVideos({ ...pagination, streamed: key })
         } else {
           message.success('Video Failed to changed!.')
         }
@@ -186,14 +188,19 @@ const YourVideo = () => {
         setLoading(false)
       })
   }
+
   const handleTableChange = (pagination, filters, sorter) => {
-    getVideos(pagination)
+    getVideos({ ...pagination, streamed: false })
+  }
+  const currentKey = (skey) => {
+    setkey(parseInt(skey))
+    // getVideos({ ...pagination, streamed: key })
   }
   return (
     <div>
       <SideNav />
       <div className="sm:ml-16 mt-20 m-4">
-        <div className="flex flex-col items-start m-4">
+        <div className="flex flex-col items-start m-2">
           <h2 className="text-xl text-gray-700 font-medium">
             Your Video Content{' '}
           </h2>
@@ -201,15 +208,30 @@ const YourVideo = () => {
             Analyse,Manage,Edit,Delete
           </p>
         </div>
-        <Table
-          scroll={{ x: 720 }}
-          pagination={pagination}
-          loading={loading}
-          columns={columns}
-          onChange={handleTableChange}
-          rowKey={(record) => record.id}
-          dataSource={videos}
-        />
+        <Tabs className="m-2" defaultActiveKey="0" onChange={currentKey}>
+          <TabPane tab="Uploaded" key="0">
+            <Table
+              scroll={{ x: 720 }}
+              pagination={pagination}
+              loading={loading}
+              columns={columns}
+              onChange={handleTableChange}
+              rowKey={(record) => record.id}
+              dataSource={videos}
+            />
+          </TabPane>
+          <TabPane tab="Live" key="1">
+            <Table
+              scroll={{ x: 720 }}
+              pagination={pagination}
+              loading={loading}
+              columns={columns}
+              onChange={handleTableChange}
+              rowKey={(record) => record.id}
+              dataSource={videos}
+            />
+          </TabPane>
+        </Tabs>
       </div>
     </div>
   )
