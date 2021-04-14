@@ -190,7 +190,7 @@ const YourVideo = () => {
   }
 
   const handleTableChange = (pagination, filters, sorter) => {
-    getVideos({ ...pagination, streamed: false })
+    getVideos({ ...pagination, streamed: 0 })
   }
   const currentKey = (skey) => {
     setkey(parseInt(skey))
