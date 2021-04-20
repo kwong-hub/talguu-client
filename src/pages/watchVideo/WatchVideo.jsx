@@ -451,7 +451,7 @@ const WatchVideo = () => {
               </Space>
             </div>
           )}
-          <div className="flex relative lg:absolute right-0  bottom-0 border-2 mt-4 lg:top-0 lg:flex-col lg:ml-0 flex-wrap lg:flex-nowrap videos_container border-white">
+          <div className="flex relative lg:absolute right-0  bottom-0 border-2 mt-4 lg:top-10 lg:flex-col lg:ml-0 flex-wrap lg:flex-nowrap videos_container border-white">
             {renderVideos()}
           </div>
         </div>
