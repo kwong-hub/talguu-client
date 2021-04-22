@@ -45,7 +45,7 @@ function RenderVideoSideInfo(props) {
     <div
       onClick={(event) => props.playVideo(props.video)}
       className={
-        'hidden lg:flex w-full p-2 h-32 cursor-pointer self-stretch overflow-h overflow-hidden video_thumbnail'
+        'hidden lg:flex w-full p-2 cursor-pointer self-stretch overflow-h overflow-hidden video_thumbnail'
       }
     >
       <div className="relative max-h-full w-5/12 flex justify-center">

@@ -80,6 +80,10 @@
   width: 100%;
 }
 
+.videos_container {
+  height: fit-content;
+}
+
 @media (min-width: 1024px) {
   .player_container {
     width: 65%;
