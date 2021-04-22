@@ -30,6 +30,8 @@ import ForgotPassword from '../pages/authentication/ForgotPassword'
 import AddPaymentInfo from '../pages/payment/AddPaymentInfo'
 // import WebcamLive from '../pages/live/WebcamLive'
 import Publishnew from '../pages/live/Publishnew'
+import Playernew from '../pages/live/Playernew'
+import Playernewauto from '../pages/live/Playernewauto'
 const Router = () => {
   return (
     <div>
@@ -67,6 +69,8 @@ const Router = () => {
           <PrivateRoute exact path="/live_stream" component={Stream} />
           <Route exact path="/forgot_password" component={ForgotPassword} />
           <Route exact path="/webcam" component={Publishnew} />
+          <Route exact path="/play" component={Playernew} />
+          <Route exact path="/player" component={Playernewauto} />
           <PrivateRoute exact path="/deposit" component={Deposit} />
           <PrivateRoute exact path="/payment_info" component={AddPaymentInfo} />
           <Route component={NotFound} />
