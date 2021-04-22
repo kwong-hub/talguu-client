@@ -1,6 +1,7 @@
 import React from 'react'
 import './Player.css'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
+import { wssURL } from '../../environment/config'
 
 class Playernewauto extends React.Component {
   webRTCAdaptor = null
@@ -23,7 +24,7 @@ class Playernewauto extends React.Component {
       OfferToReceiveAudio: true,
       OfferToReceiveVideo: true
     },
-    websocketURL: 'wss://8mspaa.com:5443/talguu/websocket',
+    websocketURL: wssURL,
     isShow: false
   }
 
