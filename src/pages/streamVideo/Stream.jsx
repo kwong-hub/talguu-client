@@ -6,7 +6,7 @@ import { FaCopy, FaInfo } from 'react-icons/fa'
 import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-import { liveVideoURL } from '../../config/config'
+import { liveVideoURL } from '../../environment/config'
 import videoService from '../../_services/video.service'
 import VideoPlayer from '../../components/videoPlayer/VideoPlayer'
 import SideNav from '../../partials/sideNav/SideNav'

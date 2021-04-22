@@ -1,14 +1,17 @@
 import { Menu, Modal } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { RiCamera2Fill, RiLiveFill } from 'react-icons/ri'
+import { useHistory } from 'react-router'
 
 import SideNav from '../../partials/sideNav/SideNav'
 import StreamForm from './StreamForm'
 
 const StreamVideo = () => {
-  const [modalVisible, setmodalVisible] = useState(true)
+  const [modalVisible, setmodalVisible] = useState(false)
   const [formVisible, setFormVisible] = useState(false)
+  const history = useHistory()
   const handleClick = (e) => {}
+
   const startStream = () => {
     setmodalVisible(false)
     setFormVisible(true)
@@ -22,6 +25,9 @@ const StreamVideo = () => {
   //     history.push('/live_stream', { data })
   //   })
   // }
+  const webcamStream = () => {
+    history.push('/webcam')
+  }
   return (
     <div>
       <div>
@@ -45,6 +51,7 @@ const StreamVideo = () => {
             <Menu.Item
               className="flex items-center justify-start text-lg"
               key="2"
+              onClick={() => webcamStream(true)}
               icon={<RiLiveFill />}
             >
               Webcam live
