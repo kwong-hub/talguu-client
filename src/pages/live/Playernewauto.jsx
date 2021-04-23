@@ -2,6 +2,7 @@ import React from 'react'
 import './Player.css'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import { wssURL } from '../../environment/config'
+import SideNav from '../../partials/sideNav/SideNav'
 
 class Playernewauto extends React.Component {
   webRTCAdaptor = null
@@ -122,6 +123,7 @@ class Playernewauto extends React.Component {
 
     return (
       <>
+        <SideNav></SideNav>
         <div className="Player">
           YOU ARE IN AUTO PLAY PAGE <br />
           <video id="remoteVideo" autoPlay controls playsInline></video>

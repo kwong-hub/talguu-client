@@ -2,6 +2,7 @@ import React from 'react'
 import './Player.css'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import { wssURL } from '../../environment/config'
+import SideNav from '../../partials/sideNav/SideNav'
 
 class Publishnew extends React.Component {
   webRTCAdaptor = null
@@ -138,6 +139,7 @@ class Publishnew extends React.Component {
 
     return (
       <>
+        <SideNav></SideNav>
         <div className="Publish">
           YOU ARE IN PUBLISH PAGE <br />
           <video id="localVideo" autoPlay muted controls playsInline></video>
