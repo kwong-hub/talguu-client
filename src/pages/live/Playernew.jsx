@@ -118,8 +118,8 @@ class Playernew extends React.Component {
 
     return (
       <>
-        <div className="Player">
-          <SideNav></SideNav>
+        <SideNav></SideNav>
+        <div className="pt-4 ml-0 sm:ml-14 flex flex-col">
           YOU ARE IN PLAY PAGE <br />
           <video id="remoteVideo" autoPlay controls playsInline></video>
           <br />

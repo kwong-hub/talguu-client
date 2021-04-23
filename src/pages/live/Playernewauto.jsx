@@ -124,7 +124,7 @@ class Playernewauto extends React.Component {
     return (
       <>
         <SideNav></SideNav>
-        <div className="Player">
+        <div className="pt-4 ml-0 sm:ml-14 flex flex-col">
           YOU ARE IN AUTO PLAY PAGE <br />
           <video id="remoteVideo" autoPlay controls playsInline></video>
           <br />

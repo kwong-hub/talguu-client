@@ -140,7 +140,7 @@ class Publishnew extends React.Component {
     return (
       <>
         <SideNav></SideNav>
-        <div className="Publish">
+        <div className="pt-4 ml-0 sm:ml-14 flex flex-col">
           YOU ARE IN PUBLISH PAGE <br />
           <video id="localVideo" autoPlay muted controls playsInline></video>
           <br />
