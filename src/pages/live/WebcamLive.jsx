@@ -1,4 +1,4 @@
-import { message } from 'antd'
+import { notification } from 'antd'
 import React, { useEffect } from 'react'
 
 const WebcamLive = () => {
@@ -12,7 +12,7 @@ const WebcamLive = () => {
       })
       .catch((error) => {
         console.log('error', error)
-        message.info(error.toString().split(':')[1])
+        notification.info(error.toString().split(':')[1])
       })
     return () => {}
   }, [])

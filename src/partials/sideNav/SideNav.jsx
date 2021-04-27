@@ -22,6 +22,7 @@ import Avatar from 'antd/lib/avatar/avatar'
 // import { userService } from '../../_services/user.service'
 import { useDispatch } from 'react-redux'
 import { LOGOUT_ASYNC } from '../../redux/types'
+import { RiLiveFill } from 'react-icons/ri'
 
 const { Search } = Input
 
@@ -148,6 +149,18 @@ const SideNav = (props) => {
                 <div className="flex flex-col items-center justify-center">
                   <FaCloudUploadAlt className={menuIconStyle} />
                   <span className={menuTextStyle}>Upload Video</span>
+                </div>
+              </Link>
+            </Menu.Item>
+          ) : (
+            ''
+          )}
+          {user.role === 'PRODUCER' ? (
+            <Menu.Item key="6">
+              <Link to="/live_stream">
+                <div className="flex flex-col items-center justify-center">
+                  <FaStream className={menuIconStyle} />
+                  <span className={menuTextStyle}>Stream Video</span>
                 </div>
               </Link>
             </Menu.Item>
@@ -377,6 +390,25 @@ const SideNav = (props) => {
                 <Link to="/live_stream">
                   <Tooltip placement="rightTop" title="Stream Video">
                     <FaStream
+                      className={
+                        'text-3xl inline text-gray-300 hover:text-white'
+                      }
+                    />
+                  </Tooltip>
+                </Link>
+              </li>
+            ) : (
+              ''
+            )}
+            {user.role === 'PRODUCER' ? (
+              <li
+                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
+                  location.pathname === '/webcam' ? 'bg-gray-400' : ''
+                }`}
+              >
+                <Link to="/webcam">
+                  <Tooltip placement="rightTop" title="Go Live">
+                    <RiLiveFill
                       className={
                         'text-3xl inline text-gray-300 hover:text-white'
                       }

@@ -3,6 +3,7 @@ import './Player.css'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import { wssURL } from '../../environment/config'
 import SideNav from '../../partials/sideNav/SideNav'
+import { Button, Input, notification } from 'antd'
 
 class Publishnew extends React.Component {
   webRTCAdaptor = null
@@ -73,7 +74,7 @@ class Publishnew extends React.Component {
         } else if (info === 'publish_started') {
           // stream is being published
           console.log('publish started')
-          alert('publish started')
+          notification.success('publish started')
           thiz.setState({
             isShow: false
           })
@@ -129,7 +130,10 @@ class Publishnew extends React.Component {
         // some of the possible errors, NotFoundError, SecurityError,PermissionDeniedError
 
         console.log('error callback: ' + JSON.stringify(error))
-        alert(JSON.stringify(error))
+        notification.open({
+          message: 'Camera is not found',
+          description: JSON.stringify(error)
+        })
       }
     })
   }
@@ -140,20 +144,28 @@ class Publishnew extends React.Component {
     return (
       <>
         <SideNav></SideNav>
-        <div className="pt-4 ml-0 sm:ml-14 flex flex-col">
-          YOU ARE IN PUBLISH PAGE <br />
+        <div className="mt-4 pt-8 ml-0  flex flex-col w-full items-center">
+          <span className="py-4 text-xl font-medium">Go live from Webcam</span>
           <video id="localVideo" autoPlay muted controls playsInline></video>
           <br />
-          <input type="text" onChange={this.streamChangeHandler} />
+          <div className="flex flex-col items-start my-2">
+            <span>Stream Key</span>
+            <Input
+              type="text"
+              className="text-xl border rounded-md"
+              onChange={this.streamChangeHandler}
+            />
+          </div>
           {isShow ? (
-            <button
+            <Button
               onClick={this.onStartPublishing.bind(this, streamName)}
               className="btn btn-primary"
               id="start_play_button"
+              type="primary"
             >
               {' '}
               Start Publish
-            </button>
+            </Button>
           ) : null}
         </div>
       </>
