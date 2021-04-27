@@ -3,7 +3,7 @@ import './Player.css'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import { wssURL } from '../../environment/config'
 import SideNav from '../../partials/sideNav/SideNav'
-import { Button, Input } from 'antd'
+import { Button, Input, notification } from 'antd'
 
 class Playernew extends React.Component {
   webRTCAdaptor = null
@@ -113,7 +113,7 @@ class Playernew extends React.Component {
         // some of the possible errors, NotFoundError, SecurityError,PermissionDeniedError
 
         console.log('error callback: ' + JSON.stringify(error))
-        alert(JSON.stringify(error))
+        notification.info({ message: JSON.stringify(error) })
       }
     })
   }
