@@ -1,8 +1,10 @@
 import React from 'react'
 import './Player.css'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
-import wssURL from '../../environment/config'
+import { wssURL } from '../../environment/config'
 import SideNav from '../../partials/sideNav/SideNav'
+import { Button, Input } from 'antd'
+
 class Playernew extends React.Component {
   webRTCAdaptor = null
 
@@ -45,6 +47,7 @@ class Playernew extends React.Component {
   }
 
   initiateWebrtc() {
+    const thiz = this
     return new WebRTCAdaptor({
       websocket_url: this.state.websocketURL,
       mediaConstraints: this.state.mediaConstraints,
@@ -57,6 +60,7 @@ class Playernew extends React.Component {
       callback: function (info, obj) {
         if (info === 'initialized') {
           console.log('initialized')
+          thiz.onStartPlaying('stream1')
         } else if (info === 'play_started') {
           // joined the stream
           console.log('play started')
@@ -105,8 +109,9 @@ class Playernew extends React.Component {
           console.log(info + ' notification received')
         }
       },
-      callbackError: (error) => {
+      callbackError: function (error) {
         // some of the possible errors, NotFoundError, SecurityError,PermissionDeniedError
+
         console.log('error callback: ' + JSON.stringify(error))
         alert(JSON.stringify(error))
       }
@@ -114,26 +119,34 @@ class Playernew extends React.Component {
   }
 
   render() {
+    // eslint-disable-next-line no-unused-vars
     const { streamName, isShow } = this.state
 
     return (
       <>
         <SideNav></SideNav>
-        <div className="pt-4 ml-0 sm:ml-14 flex flex-col">
-          YOU ARE IN PLAY PAGE <br />
+        <div className="mt-8 pt-8 ml-0  flex flex-col w-full items-center">
           <video id="remoteVideo" autoPlay controls playsInline></video>
-          <br />
-          <input type="text" onChange={this.streamChangeHandler} />
-          {isShow ? (
-            <button
-              onClick={this.onStartPlaying.bind(this, streamName)}
-              className="btn btn-primary"
-              id="start_play_button"
-            >
-              {' '}
-              Start Playing
-            </button>
-          ) : null}
+          <div className="flex flex-col items-start my-2">
+            {' '}
+            <Input
+              value={this.state.streamName}
+              type="text"
+              className="text-xl border rounded-md my-4"
+              onChange={this.streamChangeHandler}
+            />
+            {isShow ? (
+              <Button
+                onClick={this.onStartPlaying.bind(this, streamName)}
+                className="btn btn-primary"
+                id="start_play_button"
+                type="primary"
+              >
+                {' '}
+                Start playing
+              </Button>
+            ) : null}
+          </div>
         </div>
         <div />
       </>
