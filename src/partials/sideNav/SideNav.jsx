@@ -76,7 +76,7 @@ const SideNav = (props) => {
   const mobileMenu = (
     <Menu
       onClick={handleMenuClick}
-      className="fixed z-20 bottom-0 flex sm:hidden w-screen overflow-hidden p-2"
+      className="fixed z-20 bottom-0 flex sm:hidden w-screen overflow-hidden p-2 mt-10"
     >
       <Menu.Item key="1">
         <Link to="/">

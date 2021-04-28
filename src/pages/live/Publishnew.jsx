@@ -3,7 +3,10 @@ import './Player.css'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import { wssURL } from '../../environment/config'
 import SideNav from '../../partials/sideNav/SideNav'
-import { Button, Input, notification } from 'antd'
+import { Button, Input, message, notification } from 'antd'
+import videoService from '../../_services/video.service'
+import CopyToClipboard from 'react-copy-to-clipboard'
+import { FaCopy } from 'react-icons/fa'
 
 class Publishnew extends React.Component {
   webRTCAdaptor = null
@@ -31,6 +34,7 @@ class Publishnew extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props)
     const videox = document.querySelector('#localVideo')
 
     if (navigator.mediaDevices.getUserMedia) {
@@ -47,6 +51,24 @@ class Publishnew extends React.Component {
     this.setState({
       isShow: true
     })
+    this.getStreamed()
+  }
+
+  getStreamed = () => {
+    videoService
+      .getStreamed()
+      .then((data) => {
+        if (data.success) {
+          console.log(data)
+          this.setState({ streamName: data.stream_key })
+        } else {
+          history.push('/stream_video')
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        history.push('/stream_video')
+      })
   }
 
   streamChangeHandler = ({ target: { value } }) => {
@@ -56,6 +78,17 @@ class Publishnew extends React.Component {
 
   onStartPublishing = (name) => {
     this.webRTCAdaptor.publish(this.state.streamName, this.state.token)
+    this.publishLive()
+  }
+
+  publishLive = (streamKey) => {
+    videoService
+      .editStream({ key: this.state.streamName, status: 'LIVE' })
+      .then((data) => {
+        console.log(data)
+        // message.
+      })
+      .catch((err) => message.error(JSON.stringify(err)))
   }
 
   initiateWebrtc() {
@@ -138,33 +171,50 @@ class Publishnew extends React.Component {
     })
   }
 
+  copiedMessage = () => {
+    message.info('Copied!')
+  }
+
   render() {
     const { streamName, isShow } = this.state
 
     return (
       <>
         <SideNav></SideNav>
-        <div className="mt-4 pt-8 ml-0  flex flex-col w-full items-center">
+        <div className="my-4 pt-8 ml-0  flex flex-col w-full items-center">
           <span className="py-4 text-xl font-medium">Go live from Webcam</span>
           <video id="localVideo" autoPlay muted controls playsInline></video>
           <br />
           <div className="flex flex-col items-start my-2">
             <span>Stream Key</span>
-            <Input
+            {/* <Input
               type="text"
               className="text-xl border rounded-md"
               onChange={this.streamChangeHandler}
+            /> */}
+            <Input
+              readOnly
+              value={this.state?.streamName}
+              suffix={
+                <CopyToClipboard
+                  text={this.state?.streamName}
+                  onCopy={() => this.copiedMessage()}
+                >
+                  <span className="cursor-pointer">
+                    <FaCopy />
+                  </span>
+                </CopyToClipboard>
+              }
             />
           </div>
           {isShow ? (
             <Button
               onClick={this.onStartPublishing.bind(this, streamName)}
-              className="btn btn-primary"
+              className="mb-4 btn btn-primary"
               id="start_play_button"
               type="primary"
             >
-              {' '}
-              Start Publish
+              Go Live
             </Button>
           ) : null}
         </div>
