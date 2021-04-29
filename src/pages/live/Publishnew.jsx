@@ -128,7 +128,10 @@ class Publishnew extends React.Component {
         } else if (info === 'publish_started') {
           // stream is being published
           console.log('publish started')
-          notification.open({ message: 'publish started', type: 'success' })
+          notification.open({
+            message: 'Live Streaming started',
+            type: 'success'
+          })
           thiz.setState({
             isShow: false
           })
