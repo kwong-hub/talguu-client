@@ -3,6 +3,7 @@ import './Player.css'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import { wssURL } from '../../environment/config'
 import SideNav from '../../partials/sideNav/SideNav'
+import { notification } from 'antd'
 
 class Playernewauto extends React.Component {
   webRTCAdaptor = null
@@ -30,9 +31,12 @@ class Playernewauto extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props)
     this.webRTCAdaptor = this.initiateWebrtc()
     this.setState({
-      isShow: true
+      isShow: true,
+      // eslint-disable-next-line react/prop-types
+      streamName: this.props.location.state.stream
     })
   }
 
@@ -112,7 +116,7 @@ class Playernewauto extends React.Component {
         // some of the possible errors, NotFoundError, SecurityError,PermissionDeniedError
 
         console.log('error callback: ' + JSON.stringify(error))
-        alert(JSON.stringify(error))
+        notification.open({ message: JSON.stringify(error) })
       }
     })
   }
@@ -124,8 +128,8 @@ class Playernewauto extends React.Component {
     return (
       <>
         <SideNav></SideNav>
-        <div className="pt-4 ml-0 sm:ml-14 flex flex-col">
-          YOU ARE IN AUTO PLAY PAGE <br />
+        <div className="my-8 pt-8 ml-0  flex flex-col w-full items-center">
+          {/* YOU ARE IN AUTO PLAY PAGE <br /> */}
           <video id="remoteVideo" autoPlay controls playsInline></video>
           <br />
         </div>

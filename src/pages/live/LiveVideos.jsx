@@ -36,8 +36,17 @@ export class LiveVideos extends Component {
   }
 
   playVideo = (video) => {
-    // console.log("video", video);
-    this.setState({ currentLive: video })
+    console.log('video', video)
+    if (video.type === 'STREAM') {
+      // this.setState({ currentLive: video })
+      this.props.history.push({
+        pathname: '/player',
+        // search: '?query=abc',
+        state: { stream_key: video.stream_key }
+      })
+    } else {
+      this.setState({ currentLive: video })
+    }
   }
 
   playTrailer = (video) => {
