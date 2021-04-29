@@ -111,7 +111,7 @@ class Publishnew extends React.Component {
         } else if (info === 'publish_started') {
           // stream is being published
           console.log('publish started')
-          notification.success('publish started')
+          notification.open({ message: 'publish started', type: 'success' })
           thiz.setState({
             isShow: false
           })
@@ -221,7 +221,7 @@ class Publishnew extends React.Component {
               Go Live
             </Button>
           ) : null}
-          <div className="h-8 w-full"></div>
+          <div className="h-8 m-8 w-full"></div>
         </div>
       </>
     )
