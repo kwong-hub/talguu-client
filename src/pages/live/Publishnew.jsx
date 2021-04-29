@@ -31,10 +31,11 @@ class Publishnew extends React.Component {
     },
     websocketURL: wssURL,
     isShow: false
+    // published: false
   }
 
   componentDidMount() {
-    console.log(this.props)
+    // console.log(this.props)
     const videox = document.querySelector('#localVideo')
 
     if (navigator.mediaDevices.getUserMedia) {
@@ -81,6 +82,20 @@ class Publishnew extends React.Component {
     this.publishLive()
   }
 
+  onEndLive = () => {
+    videoService
+      .editStream({
+        key: this.state.streamName,
+        status: 'CLOSED',
+        type: 'WEBCAM'
+      })
+      .then((data) => {
+        console.log(data)
+        // this.setState({ published: true })
+      })
+      .catch((err) => message.error(JSON.stringify(err)))
+  }
+
   publishLive = (streamKey) => {
     videoService
       .editStream({
@@ -91,6 +106,7 @@ class Publishnew extends React.Component {
       .then((data) => {
         console.log(data)
         // message.
+        // this.setState({ published: true })
       })
       .catch((err) => message.error(JSON.stringify(err)))
   }
@@ -219,6 +235,17 @@ class Publishnew extends React.Component {
               type="primary"
             >
               Go Live
+            </Button>
+          ) : null}
+
+          {!isShow ? (
+            <Button
+              onClick={(e) => this.onEndLive()}
+              className="mb-4 btn btn-primary"
+              id="start_play_button"
+              type="danger"
+            >
+              End Live
             </Button>
           ) : null}
           <div className="h-8 m-8 w-full"></div>
