@@ -13,7 +13,8 @@ class Playernewauto extends React.Component {
       video: false,
       audio: false
     },
-    streamName: 'stream1',
+    // eslint-disable-next-line react/prop-types
+    streamName: this.props.location.state.stream,
     token: '',
     pc_config: {
       iceServers: [
