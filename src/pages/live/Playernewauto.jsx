@@ -131,7 +131,7 @@ class Playernewauto extends React.Component {
         <SideNav></SideNav>
         <div className="my-8 pt-8 ml-0  flex flex-col w-full items-center">
           {/* YOU ARE IN AUTO PLAY PAGE <br /> */}
-          <video id="remoteVideo" controls playsInline></video>
+          <video height="520" id="remoteVideo" controls playsInline></video>
           <br />
         </div>
         <div />
