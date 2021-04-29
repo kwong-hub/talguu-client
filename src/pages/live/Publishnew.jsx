@@ -91,6 +91,7 @@ class Publishnew extends React.Component {
       })
       .then((data) => {
         console.log(data)
+        this.webRTCAdaptor.stop(this.state.streamName, this.state.token)
         // this.setState({ published: true })
       })
       .catch((err) => message.error(JSON.stringify(err)))
