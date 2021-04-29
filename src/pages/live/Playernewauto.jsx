@@ -64,7 +64,7 @@ class Playernewauto extends React.Component {
       callback: function (info, obj) {
         if (info === 'initialized') {
           console.log('initialized')
-          thiz.onStartPlaying(this.state.streamName)
+          thiz.onStartPlaying('stream1')
         } else if (info === 'play_started') {
           // joined the stream
           console.log('play started')
