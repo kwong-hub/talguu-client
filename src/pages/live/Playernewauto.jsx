@@ -133,7 +133,7 @@ class Playernewauto extends React.Component {
           {/* YOU ARE IN AUTO PLAY PAGE <br /> */}
           <video
             className="w-full"
-            height="520"
+            width="380px"
             id="remoteVideo"
             controls
             playsInline
