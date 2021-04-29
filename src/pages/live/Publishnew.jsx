@@ -221,6 +221,7 @@ class Publishnew extends React.Component {
               Go Live
             </Button>
           ) : null}
+          <div className="h-8 w-full"></div>
         </div>
       </>
     )
