@@ -37,7 +37,7 @@ export class LiveVideos extends Component {
 
   playVideo = (video) => {
     console.log('video', video)
-    if (video.type === 'STREAM') {
+    if (video.type === 'WEBCAM') {
       // this.setState({ currentLive: video })
       this.props.history.push({
         pathname: '/player',

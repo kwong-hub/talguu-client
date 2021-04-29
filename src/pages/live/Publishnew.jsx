@@ -83,7 +83,11 @@ class Publishnew extends React.Component {
 
   publishLive = (streamKey) => {
     videoService
-      .editStream({ key: this.state.streamName, status: 'LIVE' })
+      .editStream({
+        key: this.state.streamName,
+        status: 'LIVE',
+        type: 'WEBCAM'
+      })
       .then((data) => {
         console.log(data)
         // message.
