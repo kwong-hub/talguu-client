@@ -14,7 +14,7 @@ class Playernewauto extends React.Component {
       audio: false
     },
     // eslint-disable-next-line react/prop-types
-    streamName: this.props.location.state.stream,
+    streamName: this.props.location?.state?.stream_key,
     token: '',
     pc_config: {
       iceServers: [
@@ -37,7 +37,7 @@ class Playernewauto extends React.Component {
     this.setState({
       isShow: true,
       // eslint-disable-next-line react/prop-types
-      streamName: this.props.location.state.stream
+      streamName: this.props.location?.state?.stream_key
     })
   }
 
