@@ -64,7 +64,7 @@ class Playernewauto extends React.Component {
       callback: function (info, obj) {
         if (info === 'initialized') {
           console.log('initialized')
-          thiz.onStartPlaying('stream1')
+          thiz.onStartPlaying(this.state.streamName)
         } else if (info === 'play_started') {
           // joined the stream
           console.log('play started')
@@ -131,7 +131,7 @@ class Playernewauto extends React.Component {
         <SideNav></SideNav>
         <div className="my-8 pt-8 ml-0  flex flex-col w-full items-center">
           {/* YOU ARE IN AUTO PLAY PAGE <br /> */}
-          <video id="remoteVideo" autoPlay controls playsInline></video>
+          <video id="remoteVideo" controls playsInline></video>
           <br />
         </div>
         <div />
