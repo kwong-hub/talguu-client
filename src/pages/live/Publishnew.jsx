@@ -3,10 +3,10 @@ import './Player.css'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import { wssURL } from '../../environment/config'
 import SideNav from '../../partials/sideNav/SideNav'
-import { Button, Input, message, notification } from 'antd'
+import { Button, message, notification } from 'antd'
 import videoService from '../../_services/video.service'
-import CopyToClipboard from 'react-copy-to-clipboard'
-import { FaCopy } from 'react-icons/fa'
+// import CopyToClipboard from 'react-copy-to-clipboard'
+// import { FaCopy } from 'react-icons/fa'
 
 class Publishnew extends React.Component {
   webRTCAdaptor = null
@@ -62,6 +62,9 @@ class Publishnew extends React.Component {
         if (data.success) {
           console.log(data)
           this.setState({ streamName: data.stream_key })
+          if (data.status === 'LIVE') {
+            this.setState({ isShow: false })
+          }
         } else {
           history.push('/stream_video')
         }
@@ -210,13 +213,13 @@ class Publishnew extends React.Component {
           <video id="localVideo" autoPlay muted controls playsInline></video>
           <br />
           <div className="flex flex-col items-start my-2">
-            <span>Stream Key</span>
+            {/* <span>Stream Key</span> */}
             {/* <Input
               type="text"
               className="text-xl border rounded-md"
               onChange={this.streamChangeHandler}
             /> */}
-            <Input
+            {/* <Input
               readOnly
               value={this.state?.streamName}
               suffix={
@@ -229,7 +232,7 @@ class Publishnew extends React.Component {
                   </span>
                 </CopyToClipboard>
               }
-            />
+            /> */}
           </div>
           {isShow ? (
             <Button

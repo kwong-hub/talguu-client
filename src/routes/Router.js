@@ -32,6 +32,7 @@ import AddPaymentInfo from '../pages/payment/AddPaymentInfo'
 import Publishnew from '../pages/live/Publishnew'
 import Playernew from '../pages/live/Playernew'
 import Playernewauto from '../pages/live/Playernewauto'
+import Conference from '../pages/live/Conference'
 const Router = () => {
   return (
     <div>
@@ -69,6 +70,7 @@ const Router = () => {
           <PrivateRoute exact path="/live_stream" component={Stream} />
           <Route exact path="/forgot_password" component={ForgotPassword} />
           <Route exact path="/webcam" component={Publishnew} />
+          <Route exact path="/conference" component={Conference} />
           <Route exact path="/play" component={Playernew} />
           <Route exact path="/player" component={Playernewauto} />
           <PrivateRoute exact path="/deposit" component={Deposit} />
