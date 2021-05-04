@@ -16,9 +16,9 @@ export class Conference extends Component {
   isCameraOff = false
   roomTimerId = -1
 
-  playOnly = false
-  token = 'token'
-  streamId = 'streamId'
+  playOnly = true
+  token = ''
+  streamId = 'stream1'
 
   state = {
     mediaConstraints: {
@@ -26,7 +26,7 @@ export class Conference extends Component {
       audio: false
     },
     // eslint-disable-next-line react/prop-types
-    streamName: this.props.location?.state?.stream_key,
+    streamName: 'stream1',
     token: '',
     pc_config: {
       iceServers: [
