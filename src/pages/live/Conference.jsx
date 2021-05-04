@@ -16,7 +16,7 @@ export class Conference extends Component {
   isCameraOff = false
   roomTimerId = -1
 
-  playOnly = true
+  playOnly = false
   token = ''
   streamId = 'stream1'
 
@@ -36,20 +36,20 @@ export class Conference extends Component {
       ]
     },
     sdpConstraints: {
-      OfferToReceiveAudio: true,
-      OfferToReceiveVideo: true
+      OfferToReceiveAudio: false,
+      OfferToReceiveVideo: false
     },
     websocketURL: wssURL,
     isShow: false,
     roomName: 'room1',
-    playOnly: true,
+    // playOnly: true,
     isCameraOff: true,
 
     // buttons
-    on_camera_disable: true,
-    off_camera_disable: false,
-    unmute_mic_disable: false,
-    mute_mic_disable: true,
+    on_camera_disable: false,
+    off_camera_disable: true,
+    unmute_mic_disable: true,
+    mute_mic_disable: false,
     join_disable: false,
     leaveRoom_disable: false
   }
@@ -57,18 +57,18 @@ export class Conference extends Component {
   componentDidMount() {
     console.log(this.props)
     this.webRTCAdaptor = this.intianteWebRTC()
-    const videox = document.querySelector('#localVideo')
+    // const videox = document.querySelector('#localVideo')
 
-    if (navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices
-        .getUserMedia({ video: true })
-        .then(function (stream) {
-          videox.srcObject = stream
-        })
-        .catch(function (err0r) {
-          console.log('Something went wrong!')
-        })
-    }
+    // if (navigator.mediaDevices.getUserMedia) {
+    //   navigator.mediaDevices
+    //     .getUserMedia({ video: true })
+    //     .then(function (stream) {
+    //       videox.srcObject = stream
+    //     })
+    //     .catch(function (err0r) {
+    //       console.log('Something went wrong!')
+    //     })
+    // }
   }
 
   turnOffLocalCamera = () => {
