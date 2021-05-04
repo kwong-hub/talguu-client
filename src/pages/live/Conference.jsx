@@ -41,7 +41,9 @@ export class Conference extends Component {
     },
     websocketURL: wssURL,
     isShow: false,
-    roomName: 'room1'
+    roomName: 'room1',
+    playOnly: true,
+    isCameraOff: true
   }
 
   componentDidMount() {
@@ -169,15 +171,15 @@ export class Conference extends Component {
       peerconnection_config: this.state.pc_config,
       sdp_constraints: this.state.sdpConstraints,
       localVideoId: 'localVideo',
-      isPlayMode: this.state.playOnly,
+      isPlayMode: true,
       debug: true,
       callback: (info, obj) => {
         if (info === 'initialized') {
           console.log('initialized')
-          thiz.state.join_publish_button.disabled = false
-          thiz.state.stop_publish_button.disabled = true
-          if (thiz.state.playOnly) {
-            thiz.state.isCameraOff = true
+          // thiz.state.join_publish_button.disabled = false
+          // thiz.state.stop_publish_button.disabled = true
+          if (thiz.playOnly) {
+            thiz.isCameraOff = true
             thiz.handleCameraButtons()
           }
         } else if (info === 'joinedTheRoom') {
