@@ -22,8 +22,8 @@ export class Conference extends Component {
 
   state = {
     mediaConstraints: {
-      video: false,
-      audio: false
+      video: true,
+      audio: true
     },
     // eslint-disable-next-line react/prop-types
     streamName: 'stream1',
@@ -49,7 +49,7 @@ export class Conference extends Component {
     on_camera_disable: true,
     off_camera_disable: false,
     unmute_mic_disable: false,
-    mute_mic_disable: false,
+    mute_mic_disable: true,
     join_disable: false,
     leaveRoom_disable: false
   }
@@ -57,11 +57,18 @@ export class Conference extends Component {
   componentDidMount() {
     console.log(this.props)
     this.webRTCAdaptor = this.intianteWebRTC()
-    // this.setState({
-    //   isShow: true,
-    //   // eslint-disable-next-line react/prop-types
-    //   streamName: this.props.location?.state?.stream_key
-    // })
+    const videox = document.querySelector('#localVideo')
+
+    if (navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then(function (stream) {
+          videox.srcObject = stream
+        })
+        .catch(function (err0r) {
+          console.log('Something went wrong!')
+        })
+    }
   }
 
   turnOffLocalCamera = () => {
@@ -233,8 +240,10 @@ export class Conference extends Component {
           thiz.publishStreamId = obj.streamId
 
           if (thiz.playOnly) {
-            // join_publish_button.disabled = true
-            // stop_publish_button.disabled = false
+            this.setState({
+              join_disable: true,
+              leaveRoom_disable: false
+            })
             thiz.isCameraOff = true
             thiz.handleCameraButtons()
           } else {
