@@ -43,7 +43,15 @@ export class Conference extends Component {
     isShow: false,
     roomName: 'room1',
     playOnly: true,
-    isCameraOff: true
+    isCameraOff: true,
+
+    // buttons
+    on_camera_disable: true,
+    off_camera_disable: false,
+    unmute_mic_disable: false,
+    mute_mic_disable: false,
+    join_disable: false,
+    leaveRoom_disable: false
   }
 
   componentDidMount() {
@@ -86,9 +94,15 @@ export class Conference extends Component {
 
   handleCameraButtons = () => {
     if (this.isCameraOff) {
-      //   turn_off_camera_button.disabled = true
-      //   turn_on_camera_button.disabled = false
+      this.setState({
+        off_camera_disable: true,
+        on_camera_disable: false
+      })
     } else {
+      this.setState({
+        off_camera_disable: false,
+        on_camera_disable: true
+      })
       //   turn_off_camera_button.disabled = false
       //   turn_on_camera_button.disabled = true
     }
@@ -96,9 +110,17 @@ export class Conference extends Component {
 
   handleMicButtons = () => {
     if (this.isMicMuted) {
+      this.setState({
+        mute_mic_disable: true,
+        unmute_mic_disable: false
+      })
       //   mute_mic_button.disabled = true
       //   unmute_mic_button.disabled = false
     } else {
+      this.setState({
+        mute_mic_disable: false,
+        unmute_mic_disable: true
+      })
       //   mute_mic_button.disabled = false
       //   unmute_mic_button.disabled = true
     }
@@ -163,6 +185,22 @@ export class Conference extends Component {
     this.webRTCAdaptor.stop(streamId)
   }
 
+  playVideo = (obj) => {
+    const room = this.roomOfStream[obj.streamId]
+    console.log(
+      'new stream available with id: ' + obj.streamId + 'on the room:' + room
+    )
+
+    let video = document.getElementById('remoteVideo' + obj.streamId)
+
+    if (video == null) {
+      this.createRemoteVideo(obj.streamId)
+      video = document.getElementById('remoteVideo' + obj.streamId)
+    }
+
+    video.srcObject = obj.stream
+  }
+
   intianteWebRTC = () => {
     const thiz = this
     return new WebRTCAdaptor({
@@ -176,6 +214,10 @@ export class Conference extends Component {
       callback: (info, obj) => {
         if (info === 'initialized') {
           console.log('initialized')
+          this.setState({
+            join_disable: false,
+            leaveRoom_disable: true
+          })
           // thiz.state.join_publish_button.disabled = false
           // thiz.state.stop_publish_button.disabled = true
           if (thiz.playOnly) {
@@ -185,8 +227,8 @@ export class Conference extends Component {
         } else if (info === 'joinedTheRoom') {
           const room = obj.ATTR_ROOM_NAME
           thiz.roomOfStream[obj.streamId] = room
-          //   console.log('joined the room: ' + roomOfStream[obj.streamId])
-          //   console.log(obj)
+          console.log('joined the room: ' + thiz.roomOfStream[obj.streamId])
+          console.log(obj)
 
           thiz.publishStreamId = obj.streamId
 
@@ -367,12 +409,13 @@ export class Conference extends Component {
               id="turn_off_camera_button"
               onClick={(e) => this.turnOffLocalCamera()}
               className="mx-2 btn-default"
+              disabled={this.state.off_camera_disable}
             >
               Turn off Camera
             </Button>
             <Button
               id="turn_on_camera_Button"
-              disabled
+              disabled={this.state.on_camera_disable}
               onClick={(e) => this.turnOnLocalCamera()}
               className="mx-2 btn-default"
             >
@@ -383,12 +426,13 @@ export class Conference extends Component {
               id="mute_mic_Button"
               onClick={(e) => this.muteLocalMic()}
               className="mx-2 btn-default"
+              disabled={this.state.mute_mic_disable}
             >
               Mute Local Mic
             </Button>
             <Button
               id="unmute_mic_Button"
-              disabled
+              disabled={this.state.unmute_mic_disable}
               onClick={(e) => this.unmuteLocalMic()}
               className="mx-2 btn-default"
             >
@@ -400,7 +444,7 @@ export class Conference extends Component {
             <Button
               className="mx-4"
               type="primary"
-              disabled
+              disabled={this.state.join_disable}
               onClick={(e) => this.joinRoom()}
               id="join_publish_Button"
             >
@@ -410,7 +454,7 @@ export class Conference extends Component {
               className=""
               type="primary"
               onClick={(e) => this.leaveRoom()}
-              disabled
+              disabled={this.state.leaveRoom_disable}
               id="stop_publish_Button"
             >
               Leave Room
