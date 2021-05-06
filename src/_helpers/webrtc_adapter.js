@@ -444,6 +444,7 @@ export default function WebRTCAdaptor(initialValues) {
   /*
    * Below lines are executed as well when this class is created
    */
+  console.log(this.localStream, this.localVideo)
   if (
     !this.isPlayMode &&
     typeof thiz.mediaConstraints !== 'undefined' &&
