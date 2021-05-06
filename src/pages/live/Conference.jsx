@@ -1,4 +1,4 @@
-import { Button } from 'antd'
+import { Button, notification } from 'antd'
 import React, { Component } from 'react'
 import { wssURL } from '../../environment/config'
 
@@ -151,6 +151,7 @@ export class Conference extends Component {
 
   joinRoom = () => {
     this.webRTCAdaptor.joinRoom(this.state.roomName, this.streamId)
+    notification.open({ message: 'Joined successfully' })
   }
 
   leaveRoom = () => {
@@ -248,8 +249,8 @@ export class Conference extends Component {
 
           if (thiz.playOnly) {
             this.setState({
-              join_disable: true,
-              leaveRoom_disable: false
+              join_disable: false,
+              leaveRoom_disable: true
             })
             thiz.isCameraOff = true
             thiz.handleCameraButtons()
@@ -401,7 +402,7 @@ export class Conference extends Component {
           errorMessage = 'You are not allowed to access screen share'
           //   screen_share_checkbox.checked = false
           //   camera_checkbox.checked = true
-          console.log(errorMessage)
+          notification.open({ message: errorMessage })
         }
       }
     })
