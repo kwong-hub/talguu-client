@@ -172,7 +172,7 @@ export class Conference extends Component {
     this.webRTCAdaptor.play(obj.streamId, this.token, this.state.roomName)
   }
 
-  createRemoteVideo = (streamId) => {
+  createRemoteVideoOld = (streamId) => {
     const player = document.createElement('div')
     player.className = 'col-sm-3'
     player.id = 'player' + streamId
@@ -182,6 +182,12 @@ export class Conference extends Component {
       '"controls autoplay playsinline></video>'
     document.getElementById('players').appendChild(player)
   }
+
+  remoteVideo = (streamId) => (
+    <div className="flex flex-col" id={'player' + streamId}>
+      <video id={'remoteVideo' + streamId} controls autoPlay></video>
+    </div>
+  )
 
   removeRemoteVideo = (streamId) => {
     const video = document.getElementById('remoteVideo' + streamId)
@@ -416,6 +422,7 @@ export class Conference extends Component {
               controls
               playsinline
             ></video>
+            {this.roomOfStream.map((streamId) => this.remoteVideo(streamId))}
           </div>
 
           <div className="px-4">
