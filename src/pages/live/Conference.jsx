@@ -46,8 +46,8 @@ export class Conference extends Component {
     isCameraOff: true,
 
     // buttons
-    on_camera_disable: false,
-    off_camera_disable: true,
+    on_camera_disable: true,
+    off_camera_disable: false,
     unmute_mic_disable: true,
     mute_mic_disable: false,
     join_disable: false,
@@ -100,6 +100,7 @@ export class Conference extends Component {
   }
 
   handleCameraButtons = () => {
+    console.log('this.iscamerOff', this.iscamerOff)
     if (this.isCameraOff) {
       this.setState({
         off_camera_disable: true,
