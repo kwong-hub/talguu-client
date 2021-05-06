@@ -271,8 +271,10 @@ export class Conference extends Component {
           console.debug(
             'publish started to room: ' + thiz.roomOfStream[obj.streamId]
           )
-          //   join_publish_button.disabled = true
-          //   stop_publish_button.disabled = false
+          this.setState({
+            join_disable: false,
+            leaveRoom_disable: true
+          })
           //   startAnimation()
         } else if (info === 'publish_finished') {
           // stream is being finished
@@ -292,8 +294,10 @@ export class Conference extends Component {
             clearInterval(thiz.roomTimerId)
           }
 
-          //   join_publish_button.disabled = false
-          //   stop_publish_button.disabled = true
+          this.setState({
+            join_disable: true,
+            leaveRoom_disable: false
+          })
 
           if (thiz.streamsList != null) {
             thiz.streamsList.forEach(function (item) {
@@ -399,7 +403,7 @@ export class Conference extends Component {
 
   render() {
     return (
-      <div>
+      <div className="mb-16">
         <SideNav></SideNav>
         <div className="my-20 flex flex-col w-full items-center">
           <h2 className="text-xl ">Conference</h2>
@@ -471,6 +475,7 @@ export class Conference extends Component {
             </Button>
           </div>
         </div>
+        <div className="h-20"></div>
       </div>
     )
   }
