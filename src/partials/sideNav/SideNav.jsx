@@ -419,6 +419,25 @@ const SideNav = (props) => {
             ) : (
               ''
             )}
+            {user.role === 'PRODUCER' ? (
+              <li
+                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
+                  location.pathname === '/conference' ? 'bg-gray-400' : ''
+                }`}
+              >
+                <Link to="/conference">
+                  <Tooltip placement="rightTop" title="Go Live">
+                    <RiLiveFill
+                      className={
+                        'text-3xl inline text-gray-300 hover:text-white'
+                      }
+                    />
+                  </Tooltip>
+                </Link>
+              </li>
+            ) : (
+              ''
+            )}
             {user.role === 'VIEWER' && (
               <li
                 className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
