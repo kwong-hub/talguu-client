@@ -247,7 +247,10 @@ export class Conference extends Component {
           console.log(obj)
 
           thiz.publishStreamId = obj.streamId
-
+          this.setState({
+            join_disable: false,
+            leaveRoom_disable: true
+          })
           if (thiz.playOnly) {
             this.setState({
               join_disable: false,
