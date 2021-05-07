@@ -247,10 +247,7 @@ export class Conference extends Component {
           console.log(obj)
 
           thiz.publishStreamId = obj.streamId
-          this.setState({
-            join_disable: true,
-            leaveRoom_disable: false
-          })
+
           if (thiz.playOnly) {
             this.setState({
               join_disable: false,
@@ -285,8 +282,8 @@ export class Conference extends Component {
             'publish started to room: ' + thiz.roomOfStream[obj.streamId]
           )
           this.setState({
-            join_disable: false,
-            leaveRoom_disable: true
+            join_disable: true,
+            leaveRoom_disable: false
           })
           //   startAnimation()
         } else if (info === 'publish_finished') {
