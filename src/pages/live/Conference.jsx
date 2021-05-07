@@ -202,6 +202,7 @@ export class Conference extends Component {
 
   playVideo = (obj) => {
     const room = this.roomOfStream[obj.streamId]
+    // this.roomOfStream[obj.streamId]
     console.log(
       'new stream available with id: ' + obj.streamId + 'on the room:' + room
     )
@@ -209,7 +210,7 @@ export class Conference extends Component {
     let video = document.getElementById('remoteVideo' + obj.streamId)
 
     if (video == null) {
-      this.createRemoteVideo(obj.streamId)
+      // this.createRemoteVideo(obj.streamId)
       video = document.getElementById('remoteVideo' + obj.streamId)
     }
 
@@ -426,7 +427,7 @@ export class Conference extends Component {
             ></video>
           </div>
           <div id="players">
-            {this.roomOfStream.map((streamId) => this.remoteVideo(streamId))}
+            {this.streamsList.map((streamId) => this.remoteVideo(streamId))}
           </div>
           <div className="px-4">
             <Button
