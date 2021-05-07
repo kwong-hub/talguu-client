@@ -424,9 +424,10 @@ export class Conference extends Component {
               controls
               playsinline
             ></video>
+          </div>
+          <div id="players">
             {this.roomOfStream.map((streamId) => this.remoteVideo(streamId))}
           </div>
-
           <div className="px-4">
             <Button
               id="turn_off_camera_button"
