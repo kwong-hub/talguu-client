@@ -184,14 +184,9 @@ export class Conference extends Component {
     document.getElementById('players').appendChild(player)
   }
 
-  remoteVideo = (obj) => (
-    <div className="flex flex-col" id={'player' + obj.streamId}>
-      <video
-        src={obj.stream}
-        id={'remoteVideo' + obj.streamId}
-        controls
-        autoPlay
-      ></video>
+  remoteVideo = (streamId) => (
+    <div className="flex flex-col" id={'player' + streamId}>
+      <video id={'remoteVideo' + streamId} controls autoPlay></video>
     </div>
   )
 
@@ -215,7 +210,7 @@ export class Conference extends Component {
     let video = document.getElementById('remoteVideo' + obj.streamId)
 
     if (video == null) {
-      // this.createRemoteVideo(obj.streamId)
+      this.streamsList.push(obj.streamId)
       video = document.getElementById('remoteVideo' + obj.streamId)
     }
 
@@ -279,8 +274,8 @@ export class Conference extends Component {
           }, 5000)
         } else if (info === 'newStreamAvailable') {
           console.log('noewStreamAVAILABLE')
-          // thiz.playVideo(obj)
-          thiz.streamCurrent.push(obj)
+          thiz.playVideo(obj)
+          // thiz.streamCurrent.push(obj)
         } else if (info === 'publish_started') {
           // stream is being published
           console.debug(
@@ -433,7 +428,7 @@ export class Conference extends Component {
             ></video>
           </div>
           <div id="players">
-            {this.streamCurrent.map((obj) => this.remoteVideo(obj))}
+            {this.streamCurrent.map((streamId) => this.remoteVideo(streamId))}
           </div>
           <div className="px-4">
             <Button
