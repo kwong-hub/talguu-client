@@ -4,6 +4,7 @@ import { wssURL } from '../../environment/config'
 
 import SideNav from '../../partials/sideNav/SideNav'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
+import videoService from '../../_services/video.service'
 
 export class Conference extends Component {
   webRTCAdaptor = null
@@ -55,8 +56,9 @@ export class Conference extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
+    // console.log(this.props)
     this.webRTCAdaptor = this.intianteWebRTC()
+    // this.getStreamed()
     // const videox = document.querySelector('#localVideo')
 
     // if (navigator.mediaDevices.getUserMedia) {
@@ -152,6 +154,41 @@ export class Conference extends Component {
   joinRoom = () => {
     this.webRTCAdaptor.joinRoom(this.state.roomName, this.streamId)
     notification.open({ message: 'Joined successfully' })
+  }
+
+  getStreamed = () => {
+    videoService
+      .getStreamed()
+      .then((data) => {
+        if (data.success) {
+          console.log(data)
+          this.setState({ streamName: data.stream_key })
+          if (data.status === 'LIVE') {
+            this.setState({ isShow: false })
+          }
+        } else {
+          history.push('/stream_video')
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        history.push('/stream_video')
+      })
+  }
+
+  publishLive = (streamKey) => {
+    videoService
+      .editStream({
+        key: this.state.streamName,
+        status: 'LIVE',
+        type: 'WEBCAM'
+      })
+      .then((data) => {
+        console.log(data)
+        // message.
+        // this.setState({ published: true })
+      })
+      .catch((err) => notification.error(JSON.stringify(err)))
   }
 
   leaveRoom = () => {
@@ -427,7 +464,7 @@ export class Conference extends Component {
               playsinline
             ></video>
           </div>
-          <div id="players">
+          <div id="players" className="my-4 py-2">
             {this.streamsList.map((streamId) => this.remoteVideo(streamId))}
           </div>
           <div className="px-4">
