@@ -18,7 +18,7 @@ export class Conference extends Component {
 
   playOnly = false
   token = ''
-  streamId = 'stream1'
+  streamId = null
 
   state = {
     mediaConstraints: {
@@ -272,6 +272,7 @@ export class Conference extends Component {
             )
           }, 5000)
         } else if (info === 'newStreamAvailable') {
+          console.log('noewStreamAVAILABLE')
           thiz.playVideo(obj)
         } else if (info === 'publish_started') {
           // stream is being published
