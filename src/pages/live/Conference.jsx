@@ -7,7 +7,7 @@ import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 
 export class Conference extends Component {
   webRTCAdaptor = null
-  roomOfStream = ['stream1']
+  roomOfStream = []
   streamsList = []
 
   publishStreamId
