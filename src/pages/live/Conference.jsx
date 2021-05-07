@@ -210,7 +210,7 @@ export class Conference extends Component {
     let video = document.getElementById('remoteVideo' + obj.streamId)
 
     if (video == null) {
-      this.streamsList.push(obj.streamId)
+      this.createRemoteVideoOld(obj.streamId)
       video = document.getElementById('remoteVideo' + obj.streamId)
     }
 
