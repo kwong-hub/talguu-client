@@ -100,7 +100,7 @@ export class Conference extends Component {
   }
 
   handleCameraButtons = () => {
-    console.log('this.iscamerOff', this.iscamerOff)
+    console.log('this.iscamerOff', this.isCameraOff)
     if (this.isCameraOff) {
       this.setState({
         off_camera_disable: true,
@@ -428,7 +428,7 @@ export class Conference extends Component {
             ></video>
           </div>
           <div id="players">
-            {this.streamCurrent.map((streamId) => this.remoteVideo(streamId))}
+            {this.streamsList.map((streamId) => this.remoteVideo(streamId))}
           </div>
           <div className="px-4">
             <Button
