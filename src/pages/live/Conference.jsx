@@ -4,6 +4,7 @@ import { wssURL } from '../../environment/config'
 
 import SideNav from '../../partials/sideNav/SideNav'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
+import merger from '../../_helpers/streaam_merger'
 import videoService from '../../_services/video.service'
 
 export class Conference extends Component {
@@ -20,7 +21,7 @@ export class Conference extends Component {
   playOnly = false
   token = ''
   streamId = null
-
+  oldId = null
   state = {
     mediaConstraints: {
       video: true,
@@ -52,7 +53,8 @@ export class Conference extends Component {
     unmute_mic_disable: true,
     mute_mic_disable: false,
     join_disable: false,
-    leaveRoom_disable: false
+    leaveRoom_disable: false,
+    noStream: true
   }
 
   componentDidMount() {
@@ -201,6 +203,26 @@ export class Conference extends Component {
     }
   }
 
+  mergeStreams = () => {
+    const delayInMilliseconds = 1500
+    const thiz = this
+    setTimeout(function () {
+      merger.start()
+      const result = merger.getResult()
+      WebRTCAdaptor.gotStream(result)
+      console.log('streamslist = ' + thiz.streamsList)
+      if (thiz.streamsList.length > 0) {
+        this.publish(thiz.publishStreamId)
+        thiz.setState({ noStream: false })
+      } else {
+        notification.open({
+          message: 'There is no stream available in the room'
+        })
+        thiz.setState({ noStream: false })
+      }
+    }, delayInMilliseconds)
+  }
+
   publish(streamName, token) {
     this.publishStreamId = streamName
     this.webRTCAdaptor.publish(streamName, token)
@@ -252,6 +274,11 @@ export class Conference extends Component {
     }
 
     video.srcObject = obj.stream
+  }
+
+  createCanvas = () => {
+    const canvas = document.createElement('canvas')
+    canvas.getContext('2d')
   }
 
   intianteWebRTC = () => {
@@ -312,6 +339,24 @@ export class Conference extends Component {
         } else if (info === 'newStreamAvailable') {
           console.log('noewStreamAVAILABLE')
           thiz.playVideo(obj)
+          if (thiz.noStream) {
+            thiz.mergeStreams()
+          }
+          thiz.noStream = false
+          if (thiz.oldId !== obj.streamId) {
+            merger.addStream(obj.stream, {
+              Xindex: thiz.xindex,
+              Yindex: thiz.yindex,
+              streamId: obj.streamId
+            })
+            if (thiz.xindex === 3) {
+              thiz.yindex++
+              thiz.xindex = 0
+            }
+            thiz.xindex++
+            console.debug('adding stream id = ' + obj.streamId)
+          }
+          thiz.oldId = obj.streamId
           // thiz.streamCurrent.push(obj)
         } else if (info === 'publish_started') {
           // stream is being published
