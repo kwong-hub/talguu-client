@@ -343,21 +343,21 @@ export class Conference extends Component {
           if (thiz.noStream) {
             // thiz.mergeStreams()
           }
-          thiz.noStream = false
-          if (thiz.oldId !== obj.streamId) {
-            thiz.merger.addStream(obj.stream, {
-              Xindex: thiz.xindex,
-              Yindex: thiz.yindex,
-              streamId: obj.streamId
-            })
-            if (thiz.xindex === 3) {
-              thiz.yindex++
-              thiz.xindex = 0
-            }
-            thiz.xindex++
-            console.debug('adding stream id = ' + obj.streamId)
-          }
-          thiz.oldId = obj.streamId
+          // thiz.noStream = false
+          // if (thiz.oldId !== obj.streamId) {
+          //   thiz.merger.addStream(obj.stream, {
+          //     Xindex: thiz.xindex,
+          //     Yindex: thiz.yindex,
+          //     streamId: obj.streamId
+          //   })
+          //   if (thiz.xindex === 3) {
+          //     thiz.yindex++
+          //     thiz.xindex = 0
+          //   }
+          //   thiz.xindex++
+          //   console.debug('adding stream id = ' + obj.streamId)
+          // }
+          // thiz.oldId = obj.streamId
           // thiz.streamCurrent.push(obj)
         } else if (info === 'publish_started') {
           // stream is being published
