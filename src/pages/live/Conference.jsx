@@ -4,7 +4,7 @@ import { wssURL } from '../../environment/config'
 
 import SideNav from '../../partials/sideNav/SideNav'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
-import merger from '../../_helpers/streaam_merger'
+import StreamMerger from '../../_helpers/streaam_merger'
 import videoService from '../../_services/video.service'
 
 export class Conference extends Component {
@@ -17,7 +17,7 @@ export class Conference extends Component {
   isMicMuted = false
   isCameraOff = false
   roomTimerId = -1
-
+  merger = new StreamMerger(640, 480, true)
   playOnly = false
   token = ''
   streamId = null
@@ -207,8 +207,8 @@ export class Conference extends Component {
     const delayInMilliseconds = 1500
     const thiz = this
     setTimeout(function () {
-      merger.start()
-      const result = merger.getResult()
+      this.merger.start()
+      const result = this.merger.getResult()
       WebRTCAdaptor.gotStream(result)
       console.log('streamslist = ' + thiz.streamsList)
       if (thiz.streamsList.length > 0) {
@@ -305,6 +305,7 @@ export class Conference extends Component {
             thiz.handleCameraButtons()
           }
         } else if (info === 'joinedTheRoom') {
+          thiz.mergeStreams()
           const room = obj.ATTR_ROOM_NAME
           thiz.roomOfStream[obj.streamId] = room
           console.log('joined the room: ' + thiz.roomOfStream[obj.streamId])
@@ -344,7 +345,7 @@ export class Conference extends Component {
           }
           thiz.noStream = false
           if (thiz.oldId !== obj.streamId) {
-            merger.addStream(obj.stream, {
+            thiz.merger.addStream(obj.stream, {
               Xindex: thiz.xindex,
               Yindex: thiz.yindex,
               streamId: obj.streamId
