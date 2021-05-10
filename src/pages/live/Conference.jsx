@@ -289,7 +289,7 @@ export class Conference extends Component {
       peerconnection_config: this.state.pc_config,
       sdp_constraints: this.state.sdpConstraints,
       localVideoId: 'localVideo',
-      isPlayMode: false,
+      isPlayMode: true,
       debug: true,
       callback: (info, obj) => {
         if (info === 'initialized') {
