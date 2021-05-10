@@ -23,6 +23,10 @@ export class Conference extends Component {
   token = ''
   streamId = null
   oldId = null
+  noStream = true
+  xindex = 0
+  yindex = 0
+  oldId = null
   state = {
     mediaConstraints: {
       video: true,
