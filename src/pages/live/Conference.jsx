@@ -13,6 +13,7 @@ export class Conference extends Component {
   streamsList = []
   streamCurrent = []
   publishStreamId
+  publishStreamId2
   isDataChannelOpen = false
   isMicMuted = false
   isCameraOff = false
@@ -212,7 +213,7 @@ export class Conference extends Component {
       thiz.webRTCAdaptor.gotStream(result)
       console.log('streamslist = ' + thiz.streamsList)
       if (thiz.streamsList.length > 0) {
-        thiz.publish(thiz.publishStreamId)
+        thiz.publish(thiz.publishStreamId2)
         thiz.setState({ noStream: false })
       } else {
         notification.open({
