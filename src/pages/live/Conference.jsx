@@ -209,7 +209,7 @@ export class Conference extends Component {
     setTimeout(function () {
       thiz.merger.start()
       const result = thiz.merger.getResult()
-      WebRTCAdaptor.gotStream(result)
+      thiz.webRTCAdaptor.gotStream(result)
       console.log('streamslist = ' + thiz.streamsList)
       if (thiz.streamsList.length > 0) {
         thiz.publish(thiz.publishStreamId)
