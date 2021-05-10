@@ -196,7 +196,7 @@ export class Conference extends Component {
 
   leaveRoom = () => {
     this.webRTCAdaptor.leaveFromRoom(this.state.roomName)
-
+    this.merger.stop()
     for (const node in document.getElementById('players').childNodes) {
       if (node.tagName === 'DIV' && node.id !== 'localVideo') {
         document.getElementById('players').removeChild(node)
@@ -299,8 +299,6 @@ export class Conference extends Component {
             join_disable: false,
             leaveRoom_disable: true
           })
-          // thiz.state.join_publish_button.disabled = false
-          // thiz.state.stop_publish_button.disabled = true
           if (thiz.playOnly) {
             thiz.isCameraOff = true
             thiz.handleCameraButtons()
@@ -501,7 +499,7 @@ export class Conference extends Component {
         <SideNav></SideNav>
         <div className="my-20 flex flex-col w-full items-center">
           <h2 className="text-xl ">Conference</h2>
-          <div>
+          <div className="flex">
             <video
               id="localVideo"
               className="w-full my-6"
@@ -510,10 +508,9 @@ export class Conference extends Component {
               controls
               playsinline
             ></video>
+            <div id="players" className="my-4 py-2"></div>
           </div>
-          <div id="players" className="my-4 py-2">
-            {this.streamsList.map((streamId) => this.remoteVideo(streamId))}
-          </div>
+
           <div className="px-4">
             <Button
               id="turn_off_camera_button"
