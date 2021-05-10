@@ -305,7 +305,7 @@ export class Conference extends Component {
             thiz.handleCameraButtons()
           }
         } else if (info === 'joinedTheRoom') {
-          thiz.mergeStreams()
+          // thiz.mergeStreams()
           const room = obj.ATTR_ROOM_NAME
           thiz.roomOfStream[obj.streamId] = room
           console.log('joined the room: ' + thiz.roomOfStream[obj.streamId])
