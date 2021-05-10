@@ -513,7 +513,7 @@ export class MergerConference extends Component {
           <h2 className="text-xl ">Conference</h2>
           <div className="flex">
             <video
-              id="localVideo"
+              id="mglocalVideo"
               className="w-full my-6"
               autoPlay
               muted
