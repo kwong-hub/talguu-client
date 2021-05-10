@@ -207,12 +207,12 @@ export class Conference extends Component {
     const delayInMilliseconds = 1500
     const thiz = this
     setTimeout(function () {
-      this.merger.start()
-      const result = this.merger.getResult()
+      thiz.merger.start()
+      const result = thiz.merger.getResult()
       WebRTCAdaptor.gotStream(result)
       console.log('streamslist = ' + thiz.streamsList)
       if (thiz.streamsList.length > 0) {
-        this.publish(thiz.publishStreamId)
+        thiz.publish(thiz.publishStreamId)
         thiz.setState({ noStream: false })
       } else {
         notification.open({
