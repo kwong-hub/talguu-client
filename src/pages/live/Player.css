@@ -1,4 +1,7 @@
 video {
   width: 100%;
-  max-width: 380px;
+  max-width: 300px;
+}
+#remoteVideo {
+  margin: 0 1rem;
 }
