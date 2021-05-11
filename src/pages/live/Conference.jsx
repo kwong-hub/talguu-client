@@ -291,7 +291,7 @@ export class Conference extends Component {
       peerconnection_config: this.state.pc_config,
       sdp_constraints: this.state.sdpConstraints,
       localVideoId: 'mglocalVideo',
-      isPlayMode: true,
+      isPlayMode: false,
       debug: false,
       callback: (info, obj) => {
         if (info === 'Merge initialized') {
