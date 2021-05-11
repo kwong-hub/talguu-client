@@ -70,7 +70,7 @@ export class Conference extends Component {
   componentDidMount() {
     console.log(this.state.prod)
     if (this.state.prod) {
-      this.mergeAdaptor = this.intianteMergeWebRTC()
+      this.webRTCAdaptor = this.intianteMergeWebRTC()
     } else {
       this.webRTCAdaptor = this.intianteWebRTC()
     }
