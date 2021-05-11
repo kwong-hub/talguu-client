@@ -146,6 +146,7 @@ export class MergerConference extends Component {
   }
 
   joinRoom = () => {
+    console.log('this.streamId', this.streamId)
     this.webRTCAdaptor.joinRoom(this.state.roomName, this.streamId)
     // notification.open({ message: 'Joined successfully' })
   }
