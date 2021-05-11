@@ -12,6 +12,7 @@ export class Conference extends Component {
   mergeAdaptor = null
   roomOfStream = []
   streamsList = []
+  mergeStreamList = []
   streamCurrent = []
   publishStreamId
   publishStreamId2
@@ -207,8 +208,8 @@ export class Conference extends Component {
       thiz.merger.start()
       const result = thiz.merger.getResult()
       thiz.webRTCAdaptor.gotStream(result)
-      console.log('streamslist = ' + thiz.streamsList)
-      if (thiz.streamsList.length > 0) {
+      console.log('streamslist = ' + thiz.mergeStreamList)
+      if (thiz.mergeStreamList.length > 0) {
         thiz.publish(thiz.publishStreamId2)
         thiz.setState({ noStream: false })
       } else {
@@ -302,7 +303,7 @@ export class Conference extends Component {
           console.log('joined the room: ' + thiz.roomOfStream[obj.streamId])
           console.log(obj)
 
-          thiz.publishStreamId = obj.streamId
+          thiz.publishStreamId2 = obj.streamId
           this.setState({
             join_disable: false,
             leaveRoom_disable: true
@@ -319,12 +320,12 @@ export class Conference extends Component {
               console.log('Stream joined with ID: ' + item)
               thiz.webRTCAdaptor.play(item, thiz.token, thiz.state.roomName)
             })
-            thiz.streamsList = obj.streams
+            thiz.mergeStreamList = obj.streams
           }
           thiz.roomTimerId = setInterval(() => {
             thiz.webRTCAdaptor.getRoomInfo(
               thiz.state.roomName,
-              thiz.publishStreamId
+              thiz.publishStreamId2
             )
           }, 5000)
         } else if (info === 'newStreamAvailable') {
@@ -364,13 +365,13 @@ export class Conference extends Component {
             leaveRoom_disable: true
           })
 
-          if (thiz.streamsList != null) {
-            thiz.streamsList.forEach(function (item) {
+          if (thiz.mergeStreamList != null) {
+            thiz.mergeStreamList.forEach(function (item) {
               thiz.removeRemoteVideo(item)
             })
           }
           // we need to reset streams list
-          thiz.streamsList = []
+          thiz.mergeStreamList = []
         } else if (info === 'screen_share_stopped') {
           console.log('screen share stopped')
         } else if (info === 'browser_screen_share_supported') {
