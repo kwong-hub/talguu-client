@@ -9,6 +9,7 @@ import videoService from '../../_services/video.service'
 
 export class Conference extends Component {
   webRTCAdaptor = null
+  mergeAdaptor = null
   roomOfStream = []
   streamsList = []
   streamCurrent = []
@@ -66,21 +67,9 @@ export class Conference extends Component {
   }
 
   componentDidMount() {
-    console.log(this.state.query)
+    console.log(this.state.prod)
     this.webRTCAdaptor = this.intianteWebRTC()
-    // this.getStreamed()
-    // const videox = document.querySelector('#localVideo')
-
-    // if (navigator.mediaDevices.getUserMedia) {
-    //   navigator.mediaDevices
-    //     .getUserMedia({ video: true })
-    //     .then(function (stream) {
-    //       videox.srcObject = stream
-    //     })
-    //     .catch(function (err0r) {
-    //       console.log('Something went wrong!')
-    //     })
-    // }
+    if (this.state.prod) this.mergeAdaptor = this.intianteMergeWebRTC()
   }
 
   turnOffLocalCamera = () => {
@@ -289,6 +278,226 @@ export class Conference extends Component {
     canvas.getContext('2d')
   }
 
+  intianteMergeWebRTC = () => {
+    const thiz = this
+    return new WebRTCAdaptor({
+      websocket_url: this.state.websocketURL,
+      mediaConstraints: this.state.mediaConstraints,
+      peerconnection_config: this.state.pc_config,
+      sdp_constraints: this.state.sdpConstraints,
+      localVideoId: 'mglocalVideo',
+      isPlayMode: true,
+      debug: false,
+      callback: (info, obj) => {
+        if (info === 'initialized') {
+          console.log('initialized')
+          this.setState({
+            join_disable: false,
+            leaveRoom_disable: true
+          })
+        } else if (info === 'joinedTheRoom') {
+          thiz.mergeStreams()
+          const room = obj.ATTR_ROOM_NAME
+          thiz.roomOfStream[obj.streamId] = room
+          console.log('joined the room: ' + thiz.roomOfStream[obj.streamId])
+          console.log(obj)
+
+          thiz.publishStreamId = obj.streamId
+          this.setState({
+            join_disable: false,
+            leaveRoom_disable: true
+          })
+          //   if (thiz.playOnly) {
+          //     thiz.isCameraOff = true
+          //     thiz.handleCameraButtons()
+          //   } else {
+          //     thiz.publish(obj.streamId, thiz.token)
+          //   }
+
+          if (obj.streams != null) {
+            obj.streams.forEach(function (item) {
+              console.log('Stream joined with ID: ' + item)
+              thiz.webRTCAdaptor.play(item, thiz.token, thiz.state.roomName)
+            })
+            thiz.streamsList = obj.streams
+          }
+          thiz.roomTimerId = setInterval(() => {
+            thiz.webRTCAdaptor.getRoomInfo(
+              thiz.state.roomName,
+              thiz.publishStreamId
+            )
+          }, 5000)
+        } else if (info === 'newStreamAvailable') {
+          //   thiz.playVideo(obj)
+          if (thiz.noStream) {
+            thiz.mergeStreams()
+          }
+          thiz.noStream = false
+          if (thiz.oldId !== obj.streamId) {
+            thiz.merger.addStream(obj.stream, {
+              Xindex: thiz.xindex,
+              Yindex: thiz.yindex,
+              streamId: obj.streamId
+            })
+            if (thiz.xindex === 3) {
+              thiz.yindex++
+              thiz.xindex = 0
+            }
+            thiz.xindex++
+            console.debug('adding stream id = ' + obj.streamId)
+          }
+          thiz.oldId = obj.streamId
+          // thiz.streamCurrent.push(obj)
+        } else if (info === 'publish_started') {
+          // stream is being published
+          console.debug(
+            'publish started to room: ' + thiz.roomOfStream[obj.streamId]
+          )
+          this.setState({
+            join_disable: true,
+            leaveRoom_disable: false
+          })
+          //   startAnimation()
+        } else if (info === 'publish_finished') {
+          this.setState({
+            join_disable: false,
+            leaveRoom_disable: true
+          })
+
+          if (thiz.streamsList != null) {
+            thiz.streamsList.forEach(function (item) {
+              thiz.removeRemoteVideo(item)
+            })
+          }
+          // we need to reset streams list
+          thiz.streamsList = []
+        } else if (info === 'screen_share_stopped') {
+          console.log('screen share stopped')
+        } else if (info === 'browser_screen_share_supported') {
+          //   screen_share_checkbox.disabled = false
+          //   camera_checkbox.disabled = false
+          //   screen_share_with_camera_checkbox.disabled = false
+          //   console.log('browser screen share supported')
+          //   browser_screen_share_doesnt_support.style.display = 'none'
+        } else if (info === 'leavedFromRoom') {
+          const room = obj.ATTR_ROOM_NAME
+          console.debug('leaved from the room:' + room)
+          if (thiz.roomTimerId != null) {
+            clearInterval(thiz.roomTimerId)
+          }
+
+          this.setState({
+            join_disable: true,
+            leaveRoom_disable: false
+          })
+
+          if (thiz.streamsList != null) {
+            thiz.streamsList.forEach(function (item) {
+              thiz.removeRemoteVideo(item)
+            })
+          }
+          // we need to reset streams list
+          thiz.streamsList = []
+        } else if (info === 'closed') {
+          // console.log("Connection closed");
+          if (typeof obj !== 'undefined') {
+            console.log('Connecton closed: ' + JSON.stringify(obj))
+          }
+        } else if (info === 'play_finished') {
+          console.log('play_finished')
+          const video = document.getElementById('remoteVideo' + obj.streamId)
+          if (video != null) {
+            video.srcObject = null
+          }
+          thiz.merger.removeStream(obj.streamId)
+          thiz.removeRemoteVideo(obj.streamId)
+        } else if (info === 'streamInformation') {
+          thiz.streamInformation(obj)
+        } else if (info === 'roomInformation') {
+          // Checks if any new stream has added, if yes, plays.
+          for (const str of obj.streams) {
+            if (!thiz.streamsList.includes(str)) {
+              thiz.webRTCAdaptor.play(str, thiz.token, thiz.state.roomName)
+            }
+          }
+          // Checks if any stream has been removed, if yes, removes the view and stops webrtc connection.
+          for (const str of thiz.streamsList) {
+            if (!obj.streams.includes(str)) {
+              thiz.removeRemoteVideo(str)
+            }
+          }
+          // Lastly updates the current streamlist with the fetched one.
+          thiz.streamsList = obj.streams
+        } else if (info === 'data_channel_opened') {
+          console.log('Data Channel open for stream id', obj)
+          thiz.isDataChannelOpen = true
+        } else if (info === 'data_channel_closed') {
+          console.log('Data Channel closed for stream id', obj)
+          thiz.isDataChannelOpen = false
+        } else if (info === 'data_received') {
+          thiz.handleNotificationEvent(obj)
+        }
+      },
+      callbackError: function (error, message) {
+        // some of the possible errors, NotFoundError, SecurityError,PermissionDeniedError
+
+        if (
+          error.indexOf('publishTimeoutError') !== -1 &&
+          thiz.roomTimerId != null
+        ) {
+          clearInterval(thiz.roomTimerId)
+        }
+
+        console.log('error callback: ' + JSON.stringify(error))
+        let errorMessage = JSON.stringify(error)
+        if (typeof message !== 'undefined') {
+          errorMessage = message
+        }
+
+        errorMessage = JSON.stringify(error)
+        if (error.indexOf('NotFoundError') !== -1) {
+          errorMessage =
+            'Camera or Mic are not found or not allowed in your device.'
+        } else if (
+          error.indexOf('NotReadableError') !== -1 ||
+          error.indexOf('TrackStartError') !== -1
+        ) {
+          errorMessage =
+            'Camera or Mic is being used by some other process that does not not allow these devices to be read.'
+        } else if (
+          error.indexOf('OverconstrainedError') !== -1 ||
+          error.indexOf('ConstraintNotSatisfiedError') !== -1
+        ) {
+          errorMessage =
+            'There is no device found that fits your video and audio constraints. You may change video and audio constraints.'
+        } else if (
+          error.indexOf('NotAllowedError') !== -1 ||
+          error.indexOf('PermissionDeniedError') !== -1
+        ) {
+          errorMessage = 'You are not allowed to access camera and mic.'
+          // screen_share_checkbox.checked = false
+          //   camera_checkbox.checked = false
+        } else if (error.indexOf('TypeError') !== -1) {
+          errorMessage = 'Video/Audio is required.'
+        } else if (error.indexOf('UnsecureContext') !== -1) {
+          errorMessage =
+            'Fatal Error: Browser cannot access camera and mic because of unsecure context. Please install SSL and access via https'
+        } else if (error.indexOf('WebSocketNotSupported') !== -1) {
+          errorMessage = 'Fatal Error: WebSocket not supported in this browser'
+        } else if (error.indexOf('no_stream_exist') !== -1) {
+          // TODO: removeRemoteVideo(error.streamId);
+        } else if (error.indexOf('data_channel_error') !== -1) {
+          errorMessage = 'There was a error during data channel communication'
+        } else if (error.indexOf('ScreenSharePermissionDenied') !== -1) {
+          errorMessage = 'You are not allowed to access screen share'
+          //   screen_share_checkbox.checked = false
+          //   camera_checkbox.checked = true
+          notification.open({ message: errorMessage })
+        }
+      }
+    })
+  }
+
   intianteWebRTC = () => {
     const thiz = this
     return new WebRTCAdaptor({
@@ -297,8 +506,8 @@ export class Conference extends Component {
       peerconnection_config: this.state.pc_config,
       sdp_constraints: this.state.sdpConstraints,
       localVideoId: 'localVideo',
-      isPlayMode: !this.state.prod,
-      debug: !this.state.prod,
+      isPlayMode: false,
+      debug: true,
       callback: (info, obj) => {
         if (info === 'initialized') {
           console.log('initialized')
@@ -306,12 +515,11 @@ export class Conference extends Component {
             join_disable: false,
             leaveRoom_disable: true
           })
-          if (thiz.playOnly && !thiz.state.prod) {
+          if (thiz.playOnly) {
             thiz.isCameraOff = true
             thiz.handleCameraButtons()
           }
         } else if (info === 'joinedTheRoom') {
-          if (thiz.state.prod) thiz.mergeStreams()
           const room = obj.ATTR_ROOM_NAME
           thiz.roomOfStream[obj.streamId] = room
           console.log('joined the room: ' + thiz.roomOfStream[obj.streamId])
@@ -346,27 +554,6 @@ export class Conference extends Component {
         } else if (info === 'newStreamAvailable') {
           console.log('noewStreamAVAILABLE')
           thiz.playVideo(obj)
-          if (thiz.state.prod) {
-            if (thiz.noStream) {
-              thiz.mergeStreams()
-            }
-            thiz.noStream = false
-            if (thiz.oldId !== obj.streamId) {
-              thiz.merger.addStream(obj.stream, {
-                Xindex: thiz.xindex,
-                Yindex: thiz.yindex,
-                streamId: obj.streamId
-              })
-              if (thiz.xindex === 3) {
-                thiz.yindex++
-                thiz.xindex = 0
-              }
-              thiz.xindex++
-              console.debug('adding stream id = ' + obj.streamId)
-            }
-            thiz.oldId = obj.streamId
-          }
-
           // thiz.streamCurrent.push(obj)
         } else if (info === 'publish_started') {
           // stream is being published
