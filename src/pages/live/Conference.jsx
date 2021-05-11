@@ -289,7 +289,7 @@ export class Conference extends Component {
       isPlayMode: true,
       debug: false,
       callback: (info, obj) => {
-        if (info === 'initialized') {
+        if (info === 'Merge initialized') {
           console.log('initialized')
           this.setState({
             join_disable: false,
@@ -711,6 +711,14 @@ export class Conference extends Component {
           <div className="flex">
             <video
               id="localVideo"
+              className="w-full my-6"
+              autoPlay
+              muted
+              controls
+              playsinline
+            ></video>
+            <video
+              id="mglocalVideo"
               className="w-full my-6"
               autoPlay
               muted
