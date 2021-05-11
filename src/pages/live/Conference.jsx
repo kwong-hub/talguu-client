@@ -280,6 +280,7 @@ export class Conference extends Component {
   }
 
   intianteMergeWebRTC = () => {
+    console.log('called')
     const thiz = this
     return new WebRTCAdaptor({
       websocket_url: this.state.websocketURL,
