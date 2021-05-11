@@ -18,7 +18,7 @@ export class MergerConference extends Component {
   isMicMuted = false
   isCameraOff = false
   roomTimerId = -1
-  merger = new StreamMerger(640, 480, true)
+  merger = new StreamMerger(820, 520, true)
   playOnly = false
   token = ''
   streamId = null
@@ -348,8 +348,8 @@ export class MergerConference extends Component {
             'publish started to room: ' + thiz.roomOfStream[obj.streamId]
           )
           this.setState({
-            join_disable: true,
-            leaveRoom_disable: false
+            join_disable: false,
+            leaveRoom_disable: true
           })
           //   startAnimation()
         } else if (info === 'publish_finished') {
