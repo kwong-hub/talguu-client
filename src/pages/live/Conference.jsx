@@ -28,7 +28,6 @@ export class Conference extends Component {
   noStream = true
   xindex = 0
   yindex = 0
-  oldId = null
 
   state = {
     // eslint-disable-next-line react/prop-types
@@ -312,13 +311,12 @@ export class Conference extends Component {
             join_disable: false,
             leaveRoom_disable: true
           })
-          //   if (thiz.playOnly) {
-          //     thiz.isCameraOff = true
-          //     thiz.handleCameraButtons()
-          //   } else {
-          //
-          //   }
-          thiz.publish(obj.streamId, thiz.token)
+          if (thiz.playOnly) {
+            thiz.isCameraOff = true
+            thiz.handleCameraButtons()
+          } else {
+            thiz.publish(obj.streamId, thiz.token)
+          }
           if (obj.streams != null) {
             obj.streams.forEach(function (item) {
               console.log('Stream joined with ID: ' + item)
@@ -338,19 +336,19 @@ export class Conference extends Component {
             thiz.mergeStreams()
           }
           thiz.noStream = false
-          if (thiz.oldId !== obj.streamId) {
-            thiz.merger.addStream(obj.stream, {
-              Xindex: thiz.xindex,
-              Yindex: thiz.yindex,
-              streamId: obj.streamId
-            })
-            if (thiz.xindex === 3) {
-              thiz.yindex++
-              thiz.xindex = 0
-            }
-            thiz.xindex++
-            console.debug('adding stream id = ' + obj.streamId)
+          // if (thiz.oldId !== obj.streamId) {
+          // }
+          thiz.merger.addStream(obj.stream, {
+            Xindex: thiz.xindex,
+            Yindex: thiz.yindex,
+            streamId: obj.streamId
+          })
+          if (thiz.xindex === 3) {
+            thiz.yindex++
+            thiz.xindex = 0
           }
+          thiz.xindex++
+          console.debug('adding stream id = ' + obj.streamId)
           thiz.oldId = obj.streamId
           // thiz.streamCurrent.push(obj)
         } else if (info === 'publish_started') {
