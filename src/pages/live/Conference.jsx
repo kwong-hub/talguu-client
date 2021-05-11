@@ -69,8 +69,11 @@ export class Conference extends Component {
 
   componentDidMount() {
     console.log(this.state.prod)
-    this.webRTCAdaptor = this.intianteWebRTC()
-    if (this.state.prod) this.mergeAdaptor = this.intianteMergeWebRTC()
+    if (this.state.prod) {
+      this.mergeAdaptor = this.intianteMergeWebRTC()
+    } else {
+      this.webRTCAdaptor = this.intianteWebRTC()
+    }
   }
 
   turnOffLocalCamera = () => {
