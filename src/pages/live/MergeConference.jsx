@@ -21,7 +21,7 @@ export class MergerConference extends Component {
   merger = new StreamMerger(820, 520, true)
   playOnly = false
   token = ''
-  streamId = null
+  streamId = 'streamMerger'
   oldId = null
   state = {
     mediaConstraints: {
@@ -147,7 +147,7 @@ export class MergerConference extends Component {
 
   joinRoom = () => {
     this.webRTCAdaptor.joinRoom(this.state.roomName, this.streamId)
-    notification.open({ message: 'Joined successfully' })
+    // notification.open({ message: 'Joined successfully' })
   }
 
   getStreamed = () => {
