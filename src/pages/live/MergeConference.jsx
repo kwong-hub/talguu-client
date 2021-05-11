@@ -64,6 +64,7 @@ export class MergerConference extends Component {
   componentDidMount() {
     // console.log(this.props)
     this.webRTCAdaptor = this.intianteWebRTC()
+    this.getStreamed()
   }
 
   turnOffLocalCamera = () => {
@@ -289,6 +290,7 @@ export class MergerConference extends Component {
             join_disable: false,
             leaveRoom_disable: true
           })
+          thiz.joinRoom()
         } else if (info === 'joinedTheRoom') {
           thiz.mergeStreams()
           const room = obj.ATTR_ROOM_NAME
@@ -515,10 +517,10 @@ export class MergerConference extends Component {
               className="mx-4"
               type="primary"
               disabled={this.state.join_disable}
-              onClick={(e) => this.joinRoom()}
+              onClick={(e) => this.publishLive()}
               id="join_publish_Button"
             >
-              Join Room
+              Publish Conference
             </Button>
             <Button
               className=""
@@ -527,7 +529,7 @@ export class MergerConference extends Component {
               disabled={this.state.leaveRoom_disable}
               id="stop_publish_Button"
             >
-              Leave Room
+              Stop Publishing
             </Button>
           </div>
         </div>
