@@ -292,7 +292,7 @@ export class Conference extends Component {
       sdp_constraints: this.state.sdpConstraints,
       localVideoId: 'mglocalVideo',
       isPlayMode: false,
-      debug: false,
+      debug: true,
       callback: (info, obj) => {
         if (info === 'Merge initialized') {
           console.log('initialized')
