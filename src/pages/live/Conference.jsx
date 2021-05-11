@@ -15,7 +15,7 @@ export class Conference extends Component {
   mergeStreamList = []
   streamCurrent = []
   publishStreamId
-  publishStreamId2
+  publishStreamId2 = 'mergerStream'
   isDataChannelOpen = false
   isMicMuted = false
   isCameraOff = false
@@ -307,7 +307,7 @@ export class Conference extends Component {
           console.log('joined the room: ' + thiz.roomOfStream[obj.streamId])
           console.log(obj)
 
-          thiz.publishStreamId2 = obj.streamId
+          thiz.publishStreamId = obj.streamId
           this.setState({
             join_disable: false,
             leaveRoom_disable: true
@@ -316,9 +316,9 @@ export class Conference extends Component {
           //     thiz.isCameraOff = true
           //     thiz.handleCameraButtons()
           //   } else {
-          //     thiz.publish(obj.streamId, thiz.token)
+          //
           //   }
-
+          thiz.publish(obj.streamId, thiz.token)
           if (obj.streams != null) {
             obj.streams.forEach(function (item) {
               console.log('Stream joined with ID: ' + item)
@@ -333,7 +333,7 @@ export class Conference extends Component {
             )
           }, 5000)
         } else if (info === 'newStreamAvailable') {
-          thiz.playVideo(obj)
+          // thiz.playVideo(obj)
           if (thiz.noStream) {
             thiz.mergeStreams()
           }
@@ -362,7 +362,7 @@ export class Conference extends Component {
             join_disable: true,
             leaveRoom_disable: false
           })
-          thiz.publish(obj.streamId, thiz.token)
+          // thiz.publish(obj.streamId, thiz.token)
           //   startAnimation()
         } else if (info === 'publish_finished') {
           this.setState({
