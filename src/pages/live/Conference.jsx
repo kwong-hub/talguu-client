@@ -27,7 +27,10 @@ export class Conference extends Component {
   xindex = 0
   yindex = 0
   oldId = null
+
   state = {
+    // eslint-disable-next-line react/prop-types
+    prod: new URLSearchParams(this.props.location.search).get('prod'),
     mediaConstraints: {
       video: true,
       audio: true
@@ -63,7 +66,7 @@ export class Conference extends Component {
   }
 
   componentDidMount() {
-    // console.log(this.props)
+    console.log(this.state.query)
     this.webRTCAdaptor = this.intianteWebRTC()
     // this.getStreamed()
     // const videox = document.querySelector('#localVideo')
@@ -294,8 +297,8 @@ export class Conference extends Component {
       peerconnection_config: this.state.pc_config,
       sdp_constraints: this.state.sdpConstraints,
       localVideoId: 'localVideo',
-      isPlayMode: false,
-      debug: true,
+      isPlayMode: !this.state.prod,
+      debug: !this.state.prod,
       callback: (info, obj) => {
         if (info === 'initialized') {
           console.log('initialized')
@@ -303,12 +306,12 @@ export class Conference extends Component {
             join_disable: false,
             leaveRoom_disable: true
           })
-          if (thiz.playOnly) {
+          if (thiz.playOnly && !thiz.state.prod) {
             thiz.isCameraOff = true
             thiz.handleCameraButtons()
           }
         } else if (info === 'joinedTheRoom') {
-          thiz.mergeStreams()
+          if (thiz.state.prod) thiz.mergeStreams()
           const room = obj.ATTR_ROOM_NAME
           thiz.roomOfStream[obj.streamId] = room
           console.log('joined the room: ' + thiz.roomOfStream[obj.streamId])
@@ -343,24 +346,27 @@ export class Conference extends Component {
         } else if (info === 'newStreamAvailable') {
           console.log('noewStreamAVAILABLE')
           thiz.playVideo(obj)
-          if (thiz.noStream) {
-            thiz.mergeStreams()
-          }
-          thiz.noStream = false
-          if (thiz.oldId !== obj.streamId) {
-            thiz.merger.addStream(obj.stream, {
-              Xindex: thiz.xindex,
-              Yindex: thiz.yindex,
-              streamId: obj.streamId
-            })
-            if (thiz.xindex === 3) {
-              thiz.yindex++
-              thiz.xindex = 0
+          if (thiz.state.prod) {
+            if (thiz.noStream) {
+              thiz.mergeStreams()
             }
-            thiz.xindex++
-            console.debug('adding stream id = ' + obj.streamId)
+            thiz.noStream = false
+            if (thiz.oldId !== obj.streamId) {
+              thiz.merger.addStream(obj.stream, {
+                Xindex: thiz.xindex,
+                Yindex: thiz.yindex,
+                streamId: obj.streamId
+              })
+              if (thiz.xindex === 3) {
+                thiz.yindex++
+                thiz.xindex = 0
+              }
+              thiz.xindex++
+              console.debug('adding stream id = ' + obj.streamId)
+            }
+            thiz.oldId = obj.streamId
           }
-          thiz.oldId = obj.streamId
+
           // thiz.streamCurrent.push(obj)
         } else if (info === 'publish_started') {
           // stream is being published
@@ -374,7 +380,18 @@ export class Conference extends Component {
           //   startAnimation()
         } else if (info === 'publish_finished') {
           // stream is being finished
-          console.debug('publish finished')
+          this.setState({
+            join_disable: false,
+            leaveRoom_disable: true
+          })
+
+          if (thiz.streamsList != null) {
+            thiz.streamsList.forEach(function (item) {
+              thiz.removeRemoteVideo(item)
+            })
+          }
+          // we need to reset streams list
+          thiz.streamsList = []
         } else if (info === 'screen_share_stopped') {
           console.log('screen share stopped')
         } else if (info === 'browser_screen_share_supported') {
@@ -410,6 +427,7 @@ export class Conference extends Component {
         } else if (info === 'play_finished') {
           console.log('play_finished')
           thiz.removeRemoteVideo(obj.streamId)
+          if (thiz.state.prod) thiz.merger.removeStream(obj.streamId)
         } else if (info === 'streamInformation') {
           thiz.streamInformation(obj)
         } else if (info === 'roomInformation') {

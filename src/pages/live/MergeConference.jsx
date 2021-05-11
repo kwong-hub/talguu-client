@@ -64,19 +64,6 @@ export class MergerConference extends Component {
   componentDidMount() {
     // console.log(this.props)
     this.webRTCAdaptor = this.intianteWebRTC()
-    // this.getStreamed()
-    // const videox = document.querySelector('#localVideo')
-
-    // if (navigator.mediaDevices.getUserMedia) {
-    //   navigator.mediaDevices
-    //     .getUserMedia({ video: true })
-    //     .then(function (stream) {
-    //       videox.srcObject = stream
-    //     })
-    //     .catch(function (err0r) {
-    //       console.log('Something went wrong!')
-    //     })
-    // }
   }
 
   turnOffLocalCamera = () => {
