@@ -362,6 +362,7 @@ export class Conference extends Component {
             join_disable: true,
             leaveRoom_disable: false
           })
+          thiz.publish(obj.streamId, thiz.token)
           //   startAnimation()
         } else if (info === 'publish_finished') {
           this.setState({
