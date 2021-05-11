@@ -63,8 +63,8 @@ export class MergerConference extends Component {
 
   componentDidMount() {
     // console.log(this.props)
-    this.webRTCAdaptor = this.intianteWebRTC()
     this.getStreamed()
+    this.webRTCAdaptor = this.intianteWebRTC()
   }
 
   turnOffLocalCamera = () => {
@@ -157,6 +157,7 @@ export class MergerConference extends Component {
         if (data.success) {
           console.log(data)
           this.setState({ streamName: data.stream_key })
+          this.streamId = data.stream_key
           if (data.status === 'LIVE') {
             this.setState({ isShow: false })
           }
@@ -290,7 +291,10 @@ export class MergerConference extends Component {
             join_disable: false,
             leaveRoom_disable: true
           })
-          thiz.joinRoom()
+
+          setTimeout(() => {
+            thiz.joinRoom()
+          }, 1000)
         } else if (info === 'joinedTheRoom') {
           thiz.mergeStreams()
           const room = obj.ATTR_ROOM_NAME
