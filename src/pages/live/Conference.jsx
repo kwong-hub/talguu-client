@@ -454,7 +454,7 @@ export class Conference extends Component {
         <SideNav></SideNav>
         <div className="my-20 flex flex-col w-full items-center">
           <h2 className="text-xl ">Conference</h2>
-          <div>
+          <div className="flex flex-wrap">
             <video
               id="localVideo"
               className="w-full my-6"
@@ -463,8 +463,8 @@ export class Conference extends Component {
               controls
               playsinline
             ></video>
+            <div id="players" className="my-4 py-2"></div>
           </div>
-          <div id="players" className="my-4 py-2"></div>
           <div className="px-4">
             <Button
               id="turn_off_camera_button"
