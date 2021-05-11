@@ -294,7 +294,6 @@ export class Conference extends Component {
             thiz.handleCameraButtons()
           } else {
             thiz.publish(obj.streamId, thiz.token)
-            thiz.publish('mergerStream', null)
           }
 
           if (obj.streams != null) {
