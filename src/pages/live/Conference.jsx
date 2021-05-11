@@ -333,7 +333,7 @@ export class Conference extends Component {
             )
           }, 5000)
         } else if (info === 'newStreamAvailable') {
-          //   thiz.playVideo(obj)
+          thiz.playVideo(obj)
           if (thiz.noStream) {
             thiz.mergeStreams()
           }
