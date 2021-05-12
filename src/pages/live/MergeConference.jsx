@@ -218,7 +218,7 @@ export class MergerConference extends Component {
   }
 
   publish(streamName, token) {
-    this.publishStreamId = streamName
+    this.publishStreamId = this.state.streamName
     this.webRTCAdaptor.publish(streamName, token)
   }
 
