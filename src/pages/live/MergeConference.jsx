@@ -294,7 +294,7 @@ export class MergerConference extends Component {
           })
 
           setTimeout(() => {
-            thiz.joinRoom()
+            // thiz.joinRoom()
           }, 1000)
         } else if (info === 'joinedTheRoom') {
           thiz.mergeStreams()
@@ -518,6 +518,15 @@ export class MergerConference extends Component {
           </div>
 
           <div className="my-4">
+            <Button
+              className="mx-4"
+              type="primary"
+              disabled={this.state.join_disable}
+              onClick={(e) => this.joinRoom()}
+              id="join_publish_Button"
+            >
+              join
+            </Button>
             <Button
               className="mx-4"
               type="primary"
