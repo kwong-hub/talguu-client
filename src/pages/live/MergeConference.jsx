@@ -135,7 +135,7 @@ export class MergerConference extends Component {
       const notEvent = { streamId: this.publishStreamId, eventType: eventType }
 
       this.webRTCAdaptor.sendData(
-        this.state.streamName,
+        this.publishStreamId,
         JSON.stringify(notEvent)
       )
     } else {
@@ -206,7 +206,7 @@ export class MergerConference extends Component {
       thiz.webRTCAdaptor.gotStream(result)
       console.log('streamslist = ' + thiz.streamsList)
       if (thiz.streamsList.length > 0) {
-        thiz.publish(thiz.state.streamName)
+        thiz.publish(thiz.publishStreamId)
         thiz.setState({ noStream: false })
       } else {
         notification.open({
@@ -325,7 +325,7 @@ export class MergerConference extends Component {
           thiz.roomTimerId = setInterval(() => {
             thiz.webRTCAdaptor.getRoomInfo(
               thiz.state.roomName,
-              thiz.state.streamName
+              thiz.publishStreamId
             )
           }, 5000)
         } else if (info === 'newStreamAvailable') {
