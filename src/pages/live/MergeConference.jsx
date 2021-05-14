@@ -21,7 +21,7 @@ export class MergerConference extends Component {
   merger = new StreamMerger(820, 520, true)
   playOnly = false
   token = ''
-  streamId = 'streamMerger'
+  streamId = null
   oldId = null
   xindex = 0
   yindex = 0
@@ -33,7 +33,7 @@ export class MergerConference extends Component {
       audio: true
     },
     // eslint-disable-next-line react/prop-types
-    streamName: 'stream1',
+    streamName: 'mergerStream',
     token: '',
     pc_config: {
       iceServers: [
