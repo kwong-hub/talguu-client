@@ -13,7 +13,6 @@ export class MergerConference extends Component {
   streamsList = []
   streamCurrent = []
   publishStreamId
-  publishStreamId2
   isDataChannelOpen = false
   isMicMuted = false
   isCameraOff = false
@@ -33,7 +32,7 @@ export class MergerConference extends Component {
       audio: true
     },
     // eslint-disable-next-line react/prop-types
-    streamName: 'mergerStream',
+    streamName: 'mergerStream21',
     token: '',
     pc_config: {
       iceServers: [
@@ -222,7 +221,7 @@ export class MergerConference extends Component {
   }
 
   publish(streamName, token) {
-    this.publishStreamId = 'mergerStream'
+    this.publishStreamId = this.streamId
     this.webRTCAdaptor.publish(streamName, token)
   }
 
