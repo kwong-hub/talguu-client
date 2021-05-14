@@ -17,7 +17,7 @@ export class MergerConference extends Component {
   isMicMuted = false
   isCameraOff = false
   roomTimerId = -1
-  merger = new StreamMerger(820, 520, true)
+  merger = new StreamMerger(1020, 720, true)
   playOnly = false
   token = ''
   streamId = null
