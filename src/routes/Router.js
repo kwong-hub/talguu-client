@@ -34,6 +34,7 @@ import Playernew from '../pages/live/Playernew'
 import Playernewauto from '../pages/live/Playernewauto'
 import Conference from '../pages/live/Conference'
 import MergerConference from '../pages/live/MergeConference'
+import JoinConference from '../pages/live/JoinConference'
 
 const Router = () => {
   return (
@@ -72,8 +73,9 @@ const Router = () => {
           <PrivateRoute exact path="/live_stream" component={Stream} />
           <Route exact path="/forgot_password" component={ForgotPassword} />
           <Route exact path="/webcam" component={Publishnew} />
-          <Route exact path="/conference" component={Conference} />
-          <Route exact path="/merger" component={MergerConference} />
+          <PrivateRoute exact path="/conference" component={Conference} />
+          <PrivateRoute exact path="/merger" component={MergerConference} />
+          <Route exact path="/join_conference" component={JoinConference} />
           <Route exact path="/play" component={Playernew} />
           <Route exact path="/player" component={Playernewauto} />
           <PrivateRoute exact path="/deposit" component={Deposit} />

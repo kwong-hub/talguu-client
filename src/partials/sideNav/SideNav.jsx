@@ -22,7 +22,7 @@ import Avatar from 'antd/lib/avatar/avatar'
 // import { userService } from '../../_services/user.service'
 import { useDispatch } from 'react-redux'
 import { LOGOUT_ASYNC } from '../../redux/types'
-import { RiLiveFill } from 'react-icons/ri'
+import { RiLiveFill, RiLiveLine } from 'react-icons/ri'
 
 const { Search } = Input
 
@@ -426,8 +426,8 @@ const SideNav = (props) => {
                 }`}
               >
                 <Link to="/conference">
-                  <Tooltip placement="rightTop" title="Go Live">
-                    <RiLiveFill
+                  <Tooltip placement="rightTop" title="Conference">
+                    <RiLiveLine
                       className={
                         'text-3xl inline text-gray-300 hover:text-white'
                       }

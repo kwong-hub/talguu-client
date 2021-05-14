@@ -254,6 +254,18 @@ const videoService = {
     } catch (error) {
       return checkResponse(error)
     }
+  },
+
+  generateInvitationLink: async function (body) {
+    try {
+      const res = await axios.post(
+        `${environment}/video/conference/invations`,
+        body
+      )
+      return res.data
+    } catch (error) {
+      return checkResponse(error)
+    }
   }
 }
 

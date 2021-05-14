@@ -1,4 +1,4 @@
-import { Button, notification, Popover } from 'antd'
+import { Button, notification } from 'antd'
 import React, { Component } from 'react'
 import { liveVideoURL, wssURL } from '../../environment/config'
 
@@ -6,9 +6,8 @@ import SideNav from '../../partials/sideNav/SideNav'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import videoService from '../../_services/video.service'
 import { nanoid } from 'nanoid'
-import { BiUserPlus } from 'react-icons/bi'
 
-export class Conference extends Component {
+export class JoinConference extends Component {
   webRTCAdaptor = null
   roomOfStream = []
   streamsList = []
@@ -517,7 +516,7 @@ export class Conference extends Component {
               onClick={(e) => this.joinRoom()}
               id="join_publish_Button"
             >
-              Create Room
+              Join Room
             </Button>
             <Button
               className=""
@@ -528,46 +527,6 @@ export class Conference extends Component {
             >
               Leave Room
             </Button>
-            {this.state.publish_button ? (
-              <Button
-                className="mx-4"
-                type="primary"
-                disabled={this.state.leaveRoom_disable}
-                onClick={(e) => this.publishToPublic()}
-                id="join_publish_Button"
-              >
-                Publish to public
-              </Button>
-            ) : (
-              <Button
-                className="mx-4"
-                type="primary"
-                onClick={(e) => this.unpublish()}
-                id="join_publish_Button"
-              >
-                Un-Publish
-              </Button>
-            )}
-          </div>
-          <div>
-            <Popover
-              content={
-                <div className="w-72 ">
-                  <span>{this.state.link} </span>{' '}
-                </div>
-              }
-              title="Invitation Link"
-              trigger="click"
-              visible={this.state.visible}
-              onVisibleChange={this.handleVisibleChange}
-            >
-              <BiUserPlus
-                onClick={(e) => this.generateInvitationLink()}
-                className="w-8 h-8 cursor-pointer"
-              >
-                Invite
-              </BiUserPlus>
-            </Popover>
           </div>
         </div>
         <div className="h-20"></div>
@@ -576,4 +535,4 @@ export class Conference extends Component {
   }
 }
 
-export default Conference
+export default JoinConference
