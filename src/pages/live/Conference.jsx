@@ -532,8 +532,8 @@ export class Conference extends Component {
             <Button
               className="mx-4"
               type="primary"
-              disabled={this.state.join_disable}
-              onClick={(e) => this.joinRoom()}
+              disabled={this.state.leaveRoom_disable}
+              onClick={(e) => this.publishToPublic()}
               id="join_publish_Button"
             >
               Publish to public
