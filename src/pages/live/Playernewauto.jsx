@@ -135,7 +135,7 @@ class Playernewauto extends React.Component {
             // eslint-disable-next-line react/no-unknown-property
             autoplay
             className="w-full"
-            width="380px"
+            width="720px"
             id="remoteVideo"
             controls
             playsInline
