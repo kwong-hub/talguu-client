@@ -59,7 +59,7 @@ export class Conference extends Component {
   componentDidMount() {
     // console.log(this.props)
     this.webRTCAdaptor = this.intianteWebRTC()
-    // this.getStreamed()
+    this.getStreamed()
     // const videox = document.querySelector('#localVideo')
 
     // if (navigator.mediaDevices.getUserMedia) {
@@ -180,9 +180,8 @@ export class Conference extends Component {
       .getStreamed()
       .then((data) => {
         if (data.success) {
-          console.log(data)
           this.setState({ streamName: data.stream_key })
-          this.streamId = data.stream_key
+          // this.streamId = data.stream_key
           if (data.status === 'LIVE') {
             this.setState({ isShow: false })
           }
@@ -194,21 +193,6 @@ export class Conference extends Component {
         console.log(err)
         history.push('/stream_video')
       })
-  }
-
-  publishLive = (streamKey) => {
-    videoService
-      .editStream({
-        key: this.state.streamName,
-        status: 'LIVE',
-        type: 'WEBCAM'
-      })
-      .then((data) => {
-        console.log(data)
-        // message.
-        // this.setState({ published: true })
-      })
-      .catch((err) => notification.error(JSON.stringify(err)))
   }
 
   leaveRoom = () => {

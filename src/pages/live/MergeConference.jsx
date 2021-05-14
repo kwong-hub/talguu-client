@@ -160,6 +160,7 @@ export class MergerConference extends Component {
         if (data.success) {
           console.log(data)
           this.setState({ streamName: data.stream_key })
+          console.log('streamName', this.state.streamName)
           this.streamId = data.stream_key
           if (data.status === 'LIVE') {
             this.setState({ isShow: false })
