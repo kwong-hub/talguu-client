@@ -342,8 +342,8 @@ export class Conference extends Component {
           }
 
           this.setState({
-            join_disable: true,
-            leaveRoom_disable: false
+            join_disable: false,
+            leaveRoom_disable: true
           })
 
           if (thiz.streamsList != null) {

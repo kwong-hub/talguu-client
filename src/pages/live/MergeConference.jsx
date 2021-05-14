@@ -148,7 +148,7 @@ export class MergerConference extends Component {
   joinRoom = () => {
     console.log('this.streamId', this.streamId)
     this.webRTCAdaptor.joinRoom(this.state.roomName, this.streamId)
-    // notification.open({ message: 'Joined successfully' })
+    this.publishLive()
   }
 
   getStreamed = () => {
@@ -181,6 +181,7 @@ export class MergerConference extends Component {
       })
       .then((data) => {
         console.log(data)
+        notification.open({ message: 'Published successfully' })
         // message.
         // this.setState({ published: true })
       })
@@ -292,10 +293,6 @@ export class MergerConference extends Component {
             join_disable: false,
             leaveRoom_disable: true
           })
-
-          setTimeout(() => {
-            // thiz.joinRoom()
-          }, 1000)
         } else if (info === 'joinedTheRoom') {
           thiz.mergeStreams()
           const room = obj.ATTR_ROOM_NAME
@@ -354,10 +351,10 @@ export class MergerConference extends Component {
           console.debug(
             'publish started to room: ' + thiz.roomOfStream[obj.streamId]
           )
-          this.setState({
-            join_disable: false,
-            leaveRoom_disable: true
-          })
+          // this.setState({
+          //   join_disable: false,
+          //   leaveRoom_disable: true
+          // })
           //   startAnimation()
         } else if (info === 'publish_finished') {
           this.setState({
@@ -388,8 +385,8 @@ export class MergerConference extends Component {
           }
 
           this.setState({
-            join_disable: true,
-            leaveRoom_disable: false
+            join_disable: false,
+            leaveRoom_disable: true
           })
 
           if (thiz.streamsList != null) {
@@ -523,15 +520,6 @@ export class MergerConference extends Component {
               type="primary"
               disabled={this.state.join_disable}
               onClick={(e) => this.joinRoom()}
-              id="join_publish_Button"
-            >
-              join
-            </Button>
-            <Button
-              className="mx-4"
-              type="primary"
-              disabled={this.state.join_disable}
-              onClick={(e) => this.publishLive()}
               id="join_publish_Button"
             >
               Publish Conference
