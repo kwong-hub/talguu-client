@@ -210,7 +210,7 @@ export class MergerConference extends Component {
       thiz.webRTCAdaptor.gotStream(result)
       console.log('streamslist = ' + thiz.streamsList)
       if (thiz.streamsList.length > 0) {
-        thiz.publish(thiz.publishStreamId)
+        thiz.publish(thiz.state.streamName)
         thiz.noStream = false
       } else {
         notification.open({
