@@ -171,7 +171,7 @@ export class Conference extends Component {
   unpublish = () => {
     videoService
       .endStream(this.state.streamName)
-      .then(() => history.push('/live_video'))
+      .then(() => this.setState({ publish_button: false }))
       .catch((err) => console.log('err', err))
   }
 
