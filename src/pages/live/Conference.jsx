@@ -160,7 +160,7 @@ export class Conference extends Component {
     window.open(
       'https://8mspbb.com/merger',
       '',
-      'width=600,height=400,left=200,top=200'
+      'width=920,height=580,left=200,top=200'
     )
   }
 

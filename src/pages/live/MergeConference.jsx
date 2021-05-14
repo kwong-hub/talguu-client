@@ -348,10 +348,10 @@ export class MergerConference extends Component {
           console.debug(
             'publish started to room: ' + thiz.roomOfStream[obj.streamId]
           )
-          // this.setState({
-          //   join_disable: false,
-          //   leaveRoom_disable: true
-          // })
+          this.setState({
+            join_disable: true,
+            leaveRoom_disable: false
+          })
           //   startAnimation()
         } else if (info === 'publish_finished') {
           this.setState({
@@ -536,7 +536,7 @@ export class MergerConference extends Component {
               onClick={(e) => this.joinRoom()}
               id="join_publish_Button"
             >
-              Publish Conference
+              Start
             </Button>
             <Button
               className=""
@@ -545,7 +545,7 @@ export class MergerConference extends Component {
               disabled={this.state.leaveRoom_disable}
               id="stop_publish_Button"
             >
-              Stop Publishing
+              Stop
             </Button>
           </div>
         </div>
