@@ -20,7 +20,7 @@ export class Conference extends Component {
   playOnly = false
   token = ''
   streamId = null
-
+  // externalWindow = null
   state = {
     mediaConstraints: {
       video: true,
@@ -156,6 +156,14 @@ export class Conference extends Component {
     notification.open({ message: 'Joined successfully' })
   }
 
+  publishToPublic = () => {
+    window.open(
+      'https://8mspbb.com/merger',
+      '',
+      'width=600,height=400,left=200,top=200'
+    )
+  }
+
   getStreamed = () => {
     videoService
       .getStreamed()
@@ -163,6 +171,7 @@ export class Conference extends Component {
         if (data.success) {
           console.log(data)
           this.setState({ streamName: data.stream_key })
+          this.streamId = data.stream_key
           if (data.status === 'LIVE') {
             this.setState({ isShow: false })
           }
@@ -519,6 +528,15 @@ export class Conference extends Component {
               id="stop_publish_Button"
             >
               Leave Room
+            </Button>
+            <Button
+              className="mx-4"
+              type="primary"
+              disabled={this.state.join_disable}
+              onClick={(e) => this.joinRoom()}
+              id="join_publish_Button"
+            >
+              Publish to public
             </Button>
           </div>
         </div>
