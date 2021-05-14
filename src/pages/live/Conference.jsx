@@ -52,7 +52,8 @@ export class Conference extends Component {
     unmute_mic_disable: true,
     mute_mic_disable: false,
     join_disable: false,
-    leaveRoom_disable: false
+    leaveRoom_disable: false,
+    publish_button: true
   }
 
   componentDidMount() {
@@ -162,6 +163,16 @@ export class Conference extends Component {
       '',
       'width=920,height=580,left=200,top=200'
     )
+    this.setState({
+      publish_button: false
+    })
+  }
+
+  unpublish = () => {
+    videoService
+      .endStream(this.state.streamName)
+      .then(() => history.push('/live_video'))
+      .catch((err) => console.log('err', err))
   }
 
   getStreamed = () => {
@@ -462,7 +473,7 @@ export class Conference extends Component {
       <div className="mb-16">
         <SideNav></SideNav>
         <div className="my-20 flex flex-col w-full items-center">
-          <h2 className="text-xl ">Conference</h2>
+          <h2 className="text-xl ">Publis the Conference to public</h2>
           <div className="flex flex-wrap">
             <video
               id="localVideo"
@@ -529,15 +540,26 @@ export class Conference extends Component {
             >
               Leave Room
             </Button>
-            <Button
-              className="mx-4"
-              type="primary"
-              disabled={this.state.leaveRoom_disable}
-              onClick={(e) => this.publishToPublic()}
-              id="join_publish_Button"
-            >
-              Publish to public
-            </Button>
+            {this.state.publish_button ? (
+              <Button
+                className="mx-4"
+                type="primary"
+                disabled={this.state.leaveRoom_disable}
+                onClick={(e) => this.publishToPublic()}
+                id="join_publish_Button"
+              >
+                Publish to public
+              </Button>
+            ) : (
+              <Button
+                className="mx-4"
+                type="primary"
+                onClick={(e) => this.unpublish()}
+                id="join_publish_Button"
+              >
+                Un-Publish
+              </Button>
+            )}
           </div>
         </div>
         <div className="h-20"></div>
