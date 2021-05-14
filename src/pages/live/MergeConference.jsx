@@ -515,7 +515,7 @@ export class MergerConference extends Component {
       <div className="mb-16">
         <SideNav></SideNav>
         <div className="my-20 flex flex-col w-full items-center">
-          <h2 className="text-xl ">Conference</h2>
+          <h2 className="text-xl ">Publish Conference to Public</h2>
           <div className="flex">
             <video
               id="mglocalVideo"

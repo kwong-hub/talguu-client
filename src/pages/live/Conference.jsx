@@ -473,7 +473,7 @@ export class Conference extends Component {
       <div className="mb-16">
         <SideNav></SideNav>
         <div className="my-20 flex flex-col w-full items-center">
-          <h2 className="text-xl ">Publis the Conference to public</h2>
+          <h2 className="text-xl ">Conference</h2>
           <div className="flex flex-wrap">
             <video
               id="localVideo"
