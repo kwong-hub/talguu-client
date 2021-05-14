@@ -23,6 +23,10 @@ export class MergerConference extends Component {
   token = ''
   streamId = 'streamMerger'
   oldId = null
+  xindex = 0
+  yindex = 0
+  noStream = false
+  streamCount = 0
   state = {
     mediaConstraints: {
       video: true,
@@ -55,7 +59,6 @@ export class MergerConference extends Component {
     mute_mic_disable: false,
     join_disable: false,
     leaveRoom_disable: false,
-    noStream: true,
     xindex: 0,
     yindex: 0,
     oldId: null
@@ -208,12 +211,12 @@ export class MergerConference extends Component {
       console.log('streamslist = ' + thiz.streamsList)
       if (thiz.streamsList.length > 0) {
         thiz.publish(thiz.publishStreamId)
-        thiz.setState({ noStream: false })
+        thiz.noStream = false
       } else {
         notification.open({
           message: 'There is no stream available in the room'
         })
-        thiz.setState({ noStream: false })
+        thiz.noStream = true
       }
     }, delayInMilliseconds)
   }
@@ -305,12 +308,6 @@ export class MergerConference extends Component {
             join_disable: false,
             leaveRoom_disable: true
           })
-          //   if (thiz.playOnly) {
-          //     thiz.isCameraOff = true
-          //     thiz.handleCameraButtons()
-          //   } else {
-          //     thiz.publish(obj.streamId, thiz.token)
-          //   }
 
           if (obj.streams != null) {
             obj.streams.forEach(function (item) {
@@ -412,20 +409,37 @@ export class MergerConference extends Component {
         } else if (info === 'streamInformation') {
           thiz.streamInformation(obj)
         } else if (info === 'roomInformation') {
-          // Checks if any new stream has added, if yes, plays.
-          for (const str of obj.streams) {
-            if (!thiz.streamsList.includes(str)) {
-              thiz.webRTCAdaptor.play(str, thiz.token, thiz.state.roomName)
+          const tempRoomStreamList = []
+          // Check stream is in room
+          // PS: Old room list mean streams doesn't have own stream ID
+          if (thiz.streamsList != null) {
+            for (let i = 0; i < thiz.streamsList.length; i++) {
+              const oldStreamListItem = thiz.streamsList[i]
+
+              // const oldRoomItemIndex = streamsList.indexOf(oldStreamListItem)
+              const newRoomItemIndex = obj.streams.indexOf(oldStreamListItem)
+
+              // If streams item is in obj.streams, it's
+              if (obj.streams.includes(oldStreamListItem)) {
+                if (newRoomItemIndex > -1) {
+                  obj.streams.splice(newRoomItemIndex, 1)
+                }
+                tempRoomStreamList.push(oldStreamListItem)
+              } else {
+                thiz.removeRemoteVideo(oldStreamListItem)
+              }
             }
           }
-          // Checks if any stream has been removed, if yes, removes the view and stops webrtc connection.
-          for (const str of thiz.streamsList) {
-            if (!obj.streams.includes(str)) {
-              thiz.removeRemoteVideo(str)
-            }
+
+          // Play new streams in list
+          if (obj.streams != null) {
+            obj.streams.forEach(function (item) {
+              tempRoomStreamList.push(item)
+              console.log('Stream joined with ID: ' + item)
+              thiz.webRTCAdaptor.play(item, thiz.token, thiz.state.streamName)
+            })
           }
-          // Lastly updates the current streamlist with the fetched one.
-          thiz.streamsList = obj.streams
+          thiz.streamsList = tempRoomStreamList
         } else if (info === 'data_channel_opened') {
           console.log('Data Channel open for stream id', obj)
           thiz.isDataChannelOpen = true
