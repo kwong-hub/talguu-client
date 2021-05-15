@@ -1,11 +1,10 @@
 import { Button, notification } from 'antd'
 import React, { Component } from 'react'
-import { liveVideoURL, wssURL } from '../../environment/config'
+import { wssURL } from '../../environment/config'
 
-import SideNav from '../../partials/sideNav/SideNav'
+// import SideNav from '../../partials/sideNav/SideNav'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import videoService from '../../_services/video.service'
-import { nanoid } from 'nanoid'
 
 export class JoinConference extends Component {
   webRTCAdaptor = null
@@ -43,7 +42,8 @@ export class JoinConference extends Component {
     },
     websocketURL: wssURL,
     isShow: false,
-    roomName: nanoid(10),
+    // eslint-disable-next-line react/prop-types
+    roomName: new URLSearchParams(this.props.location.search).get('roomId'),
     // playOnly: true,
     isCameraOff: true,
 
@@ -59,22 +59,23 @@ export class JoinConference extends Component {
   }
 
   componentDidMount() {
-    // console.log(this.props)
+    // eslint-disable-next-line react/prop-types
+    console.log(this.state.roomName)
     this.webRTCAdaptor = this.intianteWebRTC()
     this.getStreamed()
   }
 
-  generateInvitationLink = () => {
-    videoService
-      .generateInvitationLink({ roomId: this.state.roomName })
-      .then((data) => {
-        if (data) {
-          const link = `${liveVideoURL}/join_conference?token=${data.token}&expires=${data.expiresOn}&roomId=${data.roomId}`
-          this.setState({ link: link })
-        }
-      })
-      .catch((_err) => {})
-  }
+  //   generateInvitationLink = () => {
+  //     videoService
+  //       .generateInvitationLink({ roomId: this.state.roomName })
+  //       .then((data) => {
+  //         if (data) {
+  //           const link = `${liveVideoURL}/join_conference?token=${data.token}&expires=${data.expiresOn}&roomId=${data.roomId}`
+  //           this.setState({ link: link })
+  //         }
+  //       })
+  //       .catch((_err) => {})
+  //   }
 
   turnOffLocalCamera = () => {
     this.webRTCAdaptor.turnOffLocalCamera()
@@ -457,9 +458,9 @@ export class JoinConference extends Component {
   render() {
     return (
       <div className="mb-16">
-        <SideNav></SideNav>
+        {/* <SideNav></SideNav> */}
         <div className="my-20 flex flex-col w-full items-center">
-          <h2 className="text-xl ">Conference</h2>
+          {/* <h2 className="text-xl ">Conference</h2> */}
 
           <div className="flex flex-wrap">
             <video

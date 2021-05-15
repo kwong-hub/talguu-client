@@ -2,11 +2,13 @@ import { Button, notification, Popover } from 'antd'
 import React, { Component } from 'react'
 import { liveVideoURL, wssURL } from '../../environment/config'
 
-import SideNav from '../../partials/sideNav/SideNav'
+// import SideNav from '../../partials/sideNav/SideNav'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import videoService from '../../_services/video.service'
 import { nanoid } from 'nanoid'
-import { BiUserPlus } from 'react-icons/bi'
+import { BiGroup, BiUserPlus, BiVideo, BiVideoOff } from 'react-icons/bi'
+import { AiOutlineAudio, AiOutlineAudioMuted } from 'react-icons/ai'
+import HeaderHome from '../../partials/header/HeaderHome'
 
 export class Conference extends Component {
   webRTCAdaptor = null
@@ -75,6 +77,30 @@ export class Conference extends Component {
         }
       })
       .catch((_err) => {})
+  }
+
+  toggleLocalCamera = () => {
+    this.isCameraOff = !this.isCameraOff
+    if (this.isCameraOff) {
+      // this.webRTCAdaptor.turnOnLocalCamera()
+      this.sendNotificationEvent('CAM_TURNED_ON')
+    } else {
+      // this.webRTCAdaptor.turnOffLocalCamera()
+      this.sendNotificationEvent('CAM_TURNED_OFF')
+    }
+    this.handleCameraButtons()
+  }
+
+  toggleLocalMic = () => {
+    if (this.isMicMuted) {
+      // this.webRTCAdaptor.unmuteLocalMic()
+      this.sendNotificationEvent('MIC_UNMUTED')
+    } else {
+      // this.webRTCAdaptor.muteLocalMic()
+      this.sendNotificationEvent('MIC_MUTED')
+    }
+    this.isMicMuted = !this.isMicMuted
+    this.handleMicButtons()
   }
 
   turnOffLocalCamera = () => {
@@ -457,13 +483,65 @@ export class Conference extends Component {
 
   render() {
     return (
-      <div className="mb-16">
-        <SideNav></SideNav>
-        <div className="my-20 flex flex-col w-full items-center">
-          <h2 className="text-xl ">Conference</h2>
-
+      <div className="mb-8 bg-gray-800">
+        <HeaderHome></HeaderHome>
+        <div className="my-10 pt-4 flex flex-col  items-center">
+          {/* <h2 className="text-xl semibold">About the Conference</h2> */}
+          <div className="flex border-b-2 border-gray-500 p-4 w-4/5 justify-between text-white">
+            <div>
+              <Popover
+                content={
+                  <div className="w-72 ">
+                    <span>{this.state.link} </span>{' '}
+                  </div>
+                }
+                title="Invitation Link"
+                trigger="click"
+                className="flex items-end"
+                visible={this.state.visible}
+                onVisibleChange={this.handleVisibleChange}
+              >
+                <BiUserPlus
+                  onClick={(e) => this.generateInvitationLink()}
+                  className="w-8 h-8 cursor-pointer mx-2"
+                ></BiUserPlus>
+                Invite to the call.
+              </Popover>
+            </div>
+            <div className="flex items-center">
+              <div className="cursor-pointer flex items-center">
+                <BiGroup className="w-8 h-8 mx-1"></BiGroup> Participant
+                <span className="bg-gray-200 text-blue-800 px-3 mx-2 rounded-sm">
+                  4
+                </span>
+              </div>
+              <div>
+                {this.state.publish_button ? (
+                  <Button
+                    className="mx-4"
+                    type="primary"
+                    disabled={this.state.leaveRoom_disable}
+                    onClick={(e) => this.publishToPublic()}
+                    id="join_publish_Button"
+                  >
+                    Publish to public
+                  </Button>
+                ) : (
+                  <Button
+                    className="mx-4"
+                    type="primary"
+                    onClick={(e) => this.unpublish()}
+                    id="join_publish_Button"
+                  >
+                    Un-Publish
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
           <div className="flex flex-wrap">
             <video
+              src="https://assets.mixkit.co/videos/preview/mixkit-female-boxer-resting-after-her-training-40264-large.mp4"
               id="localVideo"
               className="w-full my-6"
               autoPlay
@@ -473,44 +551,37 @@ export class Conference extends Component {
             ></video>
             <div id="players" className="my-4 py-2"></div>
           </div>
-          <div className="px-4">
-            <Button
-              id="turn_off_camera_button"
-              onClick={(e) => this.turnOffLocalCamera()}
-              className="mx-2 btn-default"
-              disabled={this.state.off_camera_disable}
-            >
-              Turn off Camera
-            </Button>
-            <Button
-              id="turn_on_camera_Button"
-              disabled={this.state.on_camera_disable}
-              onClick={(e) => this.turnOnLocalCamera()}
-              className="mx-2 btn-default"
-            >
-              Turn on Camera
-            </Button>
 
-            <Button
-              id="mute_mic_Button"
-              onClick={(e) => this.muteLocalMic()}
-              className="mx-2 btn-default"
-              disabled={this.state.mute_mic_disable}
+          <div className="max-w-80 flex mb-4 justify-between text-gray-50">
+            <button className="mx-2">
+              {this.isCameraOff ? (
+                <BiVideoOff
+                  onClick={(e) => this.toggleLocalCamera()}
+                  className="w-12 h-12"
+                ></BiVideoOff>
+              ) : (
+                <BiVideo
+                  onClick={(e) => this.toggleLocalCamera()}
+                  className="w-12 h-12"
+                ></BiVideo>
+              )}
+            </button>
+            <button
+              onClick={(e) => this.leaveRoom()}
+              className="bg-red-700 font-semibold text-white px-2 mx-2 shadow-sm rounded-md hover:bg-red-900"
             >
-              Mute Local Mic
-            </Button>
-            <Button
-              id="unmute_mic_Button"
-              disabled={this.state.unmute_mic_disable}
-              onClick={(e) => this.unmuteLocalMic()}
-              className="mx-2 btn-default"
-            >
-              Unmute Local Mic
-            </Button>
+              End Call
+            </button>
+            <button className="mx-2" onClick={(e) => this.toggleLocalMic()}>
+              {this.isMicMuted ? (
+                <AiOutlineAudioMuted className="w-12 h-12"></AiOutlineAudioMuted>
+              ) : (
+                <AiOutlineAudio className="w-12 h-12"></AiOutlineAudio>
+              )}
+            </button>
           </div>
-
           <div className="my-4">
-            <Button
+            {/* <Button
               className="mx-4"
               type="primary"
               disabled={this.state.join_disable}
@@ -527,47 +598,7 @@ export class Conference extends Component {
               id="stop_publish_Button"
             >
               Leave Room
-            </Button>
-            {this.state.publish_button ? (
-              <Button
-                className="mx-4"
-                type="primary"
-                disabled={this.state.leaveRoom_disable}
-                onClick={(e) => this.publishToPublic()}
-                id="join_publish_Button"
-              >
-                Publish to public
-              </Button>
-            ) : (
-              <Button
-                className="mx-4"
-                type="primary"
-                onClick={(e) => this.unpublish()}
-                id="join_publish_Button"
-              >
-                Un-Publish
-              </Button>
-            )}
-          </div>
-          <div>
-            <Popover
-              content={
-                <div className="w-72 ">
-                  <span>{this.state.link} </span>{' '}
-                </div>
-              }
-              title="Invitation Link"
-              trigger="click"
-              visible={this.state.visible}
-              onVisibleChange={this.handleVisibleChange}
-            >
-              <BiUserPlus
-                onClick={(e) => this.generateInvitationLink()}
-                className="w-8 h-8 cursor-pointer"
-              >
-                Invite
-              </BiUserPlus>
-            </Popover>
+            </Button> */}
           </div>
         </div>
         <div className="h-20"></div>
