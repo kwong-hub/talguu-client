@@ -1,6 +1,7 @@
 import { Button, notification, Popover } from 'antd'
 import React, { Component } from 'react'
 import { liveVideoURL, wssURL } from '../../environment/config'
+import './Player.css'
 
 // import SideNav from '../../partials/sideNav/SideNav'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
@@ -65,6 +66,14 @@ export class Conference extends Component {
     // console.log(this.props)
     this.webRTCAdaptor = this.intianteWebRTC()
     this.getStreamed()
+    this.createRemoteVideoOld('sdfljuiq0123k')
+    // this.createRemoteVideoOld('s21dfljuiq0123k12')
+    // this.createRemoteVideoOld('sd1flj11uiq01123k')
+    // this.createRemoteVideoOld('sd1flj11uiq01123k')
+    this.createRemoteVideoOld('sd1flj11uiq01123k')
+    this.createRemoteVideoOld('sd1flj11uiq01123k')
+
+    this.createRemoteVideoOld('sd1flj11uiq01123k')
   }
 
   generateInvitationLink = () => {
@@ -101,34 +110,6 @@ export class Conference extends Component {
     }
     this.isMicMuted = !this.isMicMuted
     this.handleMicButtons()
-  }
-
-  turnOffLocalCamera = () => {
-    this.webRTCAdaptor.turnOffLocalCamera()
-    this.isCameraOff = true
-    this.handleCameraButtons()
-    this.sendNotificationEvent('CAM_TURNED_OFF')
-  }
-
-  turnOnLocalCamera = () => {
-    this.webRTCAdaptor.turnOnLocalCamera()
-    this.isCameraOff = false
-    this.handleCameraButtons()
-    this.sendNotificationEvent('CAM_TURNED_ON')
-  }
-
-  muteLocalMic = () => {
-    this.webRTCAdaptor.muteLocalMic()
-    this.isMicMuted = true
-    this.handleMicButtons()
-    this.sendNotificationEvent('MIC_MUTED')
-  }
-
-  unmuteLocalMic = () => {
-    this.webRTCAdaptor.unmuteLocalMic()
-    this.isMicMuted = false
-    this.handleMicButtons()
-    this.sendNotificationEvent('MIC_UNMUTED')
   }
 
   handleCameraButtons = () => {
@@ -245,10 +226,10 @@ export class Conference extends Component {
 
   createRemoteVideoOld = (streamId) => {
     const player = document.createElement('div')
-    player.className = 'col-sm-3'
+    player.className = 'flex-1 remote-video'
     player.id = 'player' + streamId
     player.innerHTML =
-      '<video id="remoteVideo' +
+      '<video src="https://assets.mixkit.co/videos/preview/mixkit-worried-and-sad-woman-outdoors-8739-large.mp4" id="remoteVideo' +
       streamId +
       '"controls autoplay playsinline></video>'
     document.getElementById('players').appendChild(player)
@@ -539,17 +520,20 @@ export class Conference extends Component {
               </div>
             </div>
           </div>
-          <div className="flex flex-wrap">
+          <div className="flex items-start ">
             <video
               src="https://assets.mixkit.co/videos/preview/mixkit-female-boxer-resting-after-her-training-40264-large.mp4"
               id="localVideo"
-              className="w-full my-6"
+              className="flex-1 my-6"
               autoPlay
               muted
               controls
               playsinline
             ></video>
-            <div id="players" className="my-4 py-2"></div>
+            <div
+              id="players"
+              className="my-4 py-2 flex flex-1 flex-wrap-reverse"
+            ></div>
           </div>
 
           <div className="max-w-80 flex mb-4 justify-between text-gray-50">

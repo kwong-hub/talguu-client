@@ -2,10 +2,10 @@ import { Button, notification } from 'antd'
 import React, { Component } from 'react'
 import { wssURL } from '../../environment/config'
 
-import SideNav from '../../partials/sideNav/SideNav'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import StreamMerger from '../../_helpers/streaam_merger'
 import videoService from '../../_services/video.service'
+import HeaderHome from '../../partials/header/HeaderHome'
 
 export class MergerConference extends Component {
   webRTCAdaptor = null
@@ -512,10 +512,10 @@ export class MergerConference extends Component {
 
   render() {
     return (
-      <div className="mb-16">
-        <SideNav></SideNav>
+      <div className="mb-16 bg-gray-900">
+        <HeaderHome></HeaderHome>
         <div className="my-20 flex flex-col w-full items-center">
-          <h2 className="text-xl ">Publish Conference to Public</h2>
+          {/* <h2 className="text-xl ">Publish Conference to Public</h2> */}
           <div className="flex">
             <video
               id="mglocalVideo"

@@ -1,7 +1,12 @@
 video {
   width: 100%;
-  max-width: 580px;
+  max-width: 680px;
 }
 #remoteVideo {
   margin: 0 1rem;
+}
+
+.remote-video {
+  flex: 1 1 33%;
+  /* min-width: 100px; */
 }
