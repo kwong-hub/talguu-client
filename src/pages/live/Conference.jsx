@@ -67,7 +67,7 @@ export class Conference extends Component {
   componentDidMount() {
     // console.log(this.props)
     this.webRTCAdaptor = this.intianteWebRTC()
-    // this.getStreamed()
+    this.getStreamed()
   }
 
   componentWillUnmount() {
