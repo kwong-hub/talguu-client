@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SideNav from '../../partials/sideNav/SideNav'
-import { Button } from 'antd'
+import { Button, Modal, DatePicker, TimePicker } from 'antd'
 import { useHistory } from 'react-router-dom'
 
 const CreateConference = () => {
   const history = useHistory()
-
+  const [modalVisible, setmodalVisible] = useState(false)
+  const ondatechange = (date, datestring) => {
+    console.log(date, datestring)
+  }
+  function ontimeChange(time, timeString) {
+    console.log(time, timeString)
+  }
   return (
     <div>
       <SideNav></SideNav>
@@ -27,8 +33,32 @@ const CreateConference = () => {
           >
             Start Meeting
           </Button>
+          <Button
+            onClick={(e) => setmodalVisible(true)}
+            className="my-4 mx-2"
+            type="primary"
+          >
+            Schedule Meeting
+          </Button>
         </div>
       </div>
+      <Modal
+        title="Schedule The meeting"
+        centered
+        okText="Schedule Meeting"
+        visible={modalVisible}
+        onOk={(e) => history.push('/conference_started')}
+        onCancel={() => setmodalVisible(false)}
+      >
+        <div className="bg-white px-4  py-2">
+          <div className="">
+            <h2 className="text-lg pb-2 font-semibold">Set time and date</h2>
+            <DatePicker onChange={(e) => ondatechange(e)} />
+            <TimePicker onChange={ontimeChange} />,
+          </div>
+          <div></div>
+        </div>
+      </Modal>
     </div>
   )
 }

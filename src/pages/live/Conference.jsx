@@ -1,4 +1,4 @@
-import { Button, notification, Popover } from 'antd'
+import { Button, notification, Popover, message, Input } from 'antd'
 import React, { Component } from 'react'
 import { liveVideoURL, wssURL } from '../../environment/config'
 import './Player.css'
@@ -10,6 +10,8 @@ import { nanoid } from 'nanoid'
 import { BiGroup, BiUserPlus, BiVideo, BiVideoOff } from 'react-icons/bi'
 import { AiOutlineAudio, AiOutlineAudioMuted } from 'react-icons/ai'
 import HeaderHome from '../../partials/header/HeaderHome'
+import { CopyToClipboard } from 'react-copy-to-clipboard/lib/Component'
+import { FaCopy } from 'react-icons/fa'
 
 export class Conference extends Component {
   webRTCAdaptor = null
@@ -65,12 +67,21 @@ export class Conference extends Component {
   componentDidMount() {
     // console.log(this.props)
     this.webRTCAdaptor = this.intianteWebRTC()
-    this.getStreamed()
+    // this.getStreamed()
+  }
+
+  componentWillUnmount() {
+    this.webRTCAdaptor.closeStream()
+    this.webRTCAdaptor.stop()
+    // this.webRTCAdaptor=null;
   }
 
   generateInvitationLink = () => {
     videoService
-      .generateInvitationLink({ roomId: this.state.roomName })
+      .generateInvitationLink({
+        roomId: this.state.roomName,
+        startTime: Date.now()
+      })
       .then((data) => {
         if (data) {
           const link = `${liveVideoURL}/join_conference?token=${data.token}&expires=${data.expiresOn}&roomId=${data.roomId}`
@@ -215,7 +226,7 @@ export class Conference extends Component {
     player.className = 'flex-1 remote-video'
     player.id = 'player' + streamId
     player.innerHTML =
-      '<video src="https://assets.mixkit.co/videos/preview/mixkit-worried-and-sad-woman-outdoors-8739-large.mp4" id="remoteVideo' +
+      '<video id="remoteVideo' +
       streamId +
       '"controls autoplay playsinline></video>'
     document.getElementById('players').appendChild(player)
@@ -449,6 +460,10 @@ export class Conference extends Component {
     })
   }
 
+  copiedMessage = () => {
+    message.info('Copied!')
+  }
+
   render() {
     return (
       <div className="mb-8 bg-gray-800">
@@ -459,8 +474,21 @@ export class Conference extends Component {
             <div>
               <Popover
                 content={
-                  <div className="w-72 ">
-                    <span>{this.state.link} </span>{' '}
+                  <div className="w-72 text-gray-600">
+                    <Input
+                      readOnly
+                      value={this.state.link}
+                      suffix={
+                        <CopyToClipboard
+                          text={this.state.link}
+                          onCopy={() => this.copiedMessage()}
+                        >
+                          <span className="cursor-pointer">
+                            <FaCopy />
+                          </span>
+                        </CopyToClipboard>
+                      }
+                    />
                   </div>
                 }
                 title="Invitation Link"
