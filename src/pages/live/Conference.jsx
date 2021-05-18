@@ -66,14 +66,6 @@ export class Conference extends Component {
     // console.log(this.props)
     this.webRTCAdaptor = this.intianteWebRTC()
     this.getStreamed()
-    this.createRemoteVideoOld('sdfljuiq0123k')
-    // this.createRemoteVideoOld('s21dfljuiq0123k12')
-    // this.createRemoteVideoOld('sd1flj11uiq01123k')
-    // this.createRemoteVideoOld('sd1flj11uiq01123k')
-    this.createRemoteVideoOld('sd1flj11uiq01123k')
-    this.createRemoteVideoOld('sd1flj11uiq01123k')
-
-    this.createRemoteVideoOld('sd1flj11uiq01123k')
   }
 
   generateInvitationLink = () => {
@@ -90,11 +82,11 @@ export class Conference extends Component {
 
   toggleLocalCamera = () => {
     this.isCameraOff = !this.isCameraOff
-    if (this.isCameraOff) {
-      // this.webRTCAdaptor.turnOnLocalCamera()
+    if (!this.isCameraOff) {
+      this.webRTCAdaptor.turnOnLocalCamera()
       this.sendNotificationEvent('CAM_TURNED_ON')
     } else {
-      // this.webRTCAdaptor.turnOffLocalCamera()
+      this.webRTCAdaptor.turnOffLocalCamera()
       this.sendNotificationEvent('CAM_TURNED_OFF')
     }
     this.handleCameraButtons()
@@ -102,10 +94,10 @@ export class Conference extends Component {
 
   toggleLocalMic = () => {
     if (this.isMicMuted) {
-      // this.webRTCAdaptor.unmuteLocalMic()
+      this.webRTCAdaptor.unmuteLocalMic()
       this.sendNotificationEvent('MIC_UNMUTED')
     } else {
-      // this.webRTCAdaptor.muteLocalMic()
+      this.webRTCAdaptor.muteLocalMic()
       this.sendNotificationEvent('MIC_MUTED')
     }
     this.isMicMuted = !this.isMicMuted
@@ -124,8 +116,6 @@ export class Conference extends Component {
         off_camera_disable: false,
         on_camera_disable: true
       })
-      //   turn_off_camera_button.disabled = false
-      //   turn_on_camera_button.disabled = true
     }
   }
 
@@ -135,15 +125,11 @@ export class Conference extends Component {
         mute_mic_disable: true,
         unmute_mic_disable: false
       })
-      //   mute_mic_button.disabled = true
-      //   unmute_mic_button.disabled = false
     } else {
       this.setState({
         mute_mic_disable: false,
         unmute_mic_disable: true
       })
-      //   mute_mic_button.disabled = false
-      //   unmute_mic_button.disabled = true
     }
   }
 
@@ -164,12 +150,12 @@ export class Conference extends Component {
 
   joinRoom = () => {
     this.webRTCAdaptor.joinRoom(this.state.roomName, this.streamId)
-    notification.open({ message: 'Joined successfully' })
+    // notification.open({ message: 'Joined successfully' })
   }
 
   publishToPublic = () => {
     window.open(
-      'https://8mspbb.com/merger',
+      `${liveVideoURL}/merger`,
       '',
       'width=920,height=580,left=200,top=200'
     )
@@ -291,11 +277,12 @@ export class Conference extends Component {
             thiz.isCameraOff = true
             thiz.handleCameraButtons()
           }
+          thiz.joinRoom()
         } else if (info === 'joinedTheRoom') {
           const room = obj.ATTR_ROOM_NAME
           thiz.roomOfStream[obj.streamId] = room
           console.log('joined the room: ' + thiz.roomOfStream[obj.streamId])
-          console.log(obj)
+          // console.log(obj)
 
           thiz.publishStreamId = obj.streamId
 

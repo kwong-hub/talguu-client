@@ -67,6 +67,9 @@ export class MergerConference extends Component {
     // console.log(this.props)
     this.getStreamed()
     this.webRTCAdaptor = this.intianteWebRTC()
+    // this.createRemoteVideoOld()
+    // this.createRemoteVideoOld()
+    // this.createRemoteVideoOld()
   }
 
   turnOffLocalCamera = () => {
@@ -512,20 +515,25 @@ export class MergerConference extends Component {
 
   render() {
     return (
-      <div className="mb-16 bg-gray-900">
+      <div className="pt-16 bg-gray-800 text-white ">
         <HeaderHome></HeaderHome>
-        <div className="my-20 flex flex-col w-full items-center">
-          {/* <h2 className="text-xl ">Publish Conference to Public</h2> */}
-          <div className="flex">
+        <div className="flex flex-col w-full items-center h-screen">
+          <h2 className="text-xl text-white py-4">
+            Publish Conference to Public
+          </h2>
+          <div className="flex items-start">
             <video
               id="mglocalVideo"
-              className="w-full my-6"
+              className="flex-1 my-6"
               autoPlay
               muted
               controls
               playsinline
             ></video>
-            <div id="players" className="my-4 py-2"></div>
+            <div
+              id="players"
+              className="my-4 py-2 flex flex-1 flex-wrap-reverse"
+            ></div>
           </div>
 
           <div className="my-4">
