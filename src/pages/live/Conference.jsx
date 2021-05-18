@@ -84,7 +84,7 @@ export class Conference extends Component {
       })
       .then((data) => {
         if (data) {
-          const link = `${liveVideoURL}/join_conference?token=${data.token}&expires=${data.expiresOn}&roomId=${data.roomId}`
+          const link = `${liveVideoURL}join_conference?token=${data.token}&expires=${data.expiresOn}&roomId=${data.roomId}`
           this.setState({ link: link })
         }
       })
@@ -166,7 +166,7 @@ export class Conference extends Component {
 
   publishToPublic = () => {
     window.open(
-      `${liveVideoURL}/merger`,
+      `${liveVideoURL}merger`,
       '',
       'width=920,height=580,left=200,top=200'
     )

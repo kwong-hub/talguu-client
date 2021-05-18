@@ -5,6 +5,7 @@ import { wssURL } from '../../environment/config'
 // import SideNav from '../../partials/sideNav/SideNav'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import videoService from '../../_services/video.service'
+import HeaderHome from '../../partials/header/HeaderHome'
 
 export class JoinConference extends Component {
   webRTCAdaptor = null
@@ -189,12 +190,12 @@ export class JoinConference extends Component {
             this.setState({ isShow: false })
           }
         } else {
-          history.push('/stream_video')
+          // this.props.history.push('/stream_video')
         }
       })
       .catch((err) => {
         console.log(err)
-        history.push('/stream_video')
+        // this.props.history.push('/stream_video')
       })
   }
 
@@ -457,8 +458,8 @@ export class JoinConference extends Component {
 
   render() {
     return (
-      <div className="mb-16">
-        {/* <SideNav></SideNav> */}
+      <div className="pb-16 bg-gray-100">
+        <HeaderHome></HeaderHome>
         <div className="my-20 flex flex-col w-full items-center">
           {/* <h2 className="text-xl ">Conference</h2> */}
 
