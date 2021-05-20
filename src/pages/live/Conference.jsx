@@ -61,7 +61,8 @@ export class Conference extends Component {
     join_disable: false,
     leaveRoom_disable: false,
     publish_button: true,
-    link: ''
+    link: '',
+    participant: 0
   }
 
   componentDidMount() {
@@ -166,7 +167,7 @@ export class Conference extends Component {
 
   publishToPublic = () => {
     window.open(
-      `${liveVideoURL}merger`,
+      `${liveVideoURL}merger?${this.state.roomName}`,
       '',
       'width=920,height=580,left=200,top=200'
     )
@@ -282,8 +283,6 @@ export class Conference extends Component {
             join_disable: false,
             leaveRoom_disable: true
           })
-          // thiz.state.join_publish_button.disabled = false
-          // thiz.state.stop_publish_button.disabled = true
           if (thiz.playOnly) {
             thiz.isCameraOff = true
             thiz.handleCameraButtons()
@@ -324,6 +323,9 @@ export class Conference extends Component {
         } else if (info === 'newStreamAvailable') {
           console.log('noewStreamAVAILABLE')
           thiz.playVideo(obj)
+          thiz.setState({
+            participant: this.state.participant + 1
+          })
           // thiz.streamCurrent.push(obj)
         } else if (info === 'publish_started') {
           // stream is being published
@@ -342,10 +344,6 @@ export class Conference extends Component {
           console.log('screen share stopped')
         } else if (info === 'browser_screen_share_supported') {
           //   screen_share_checkbox.disabled = false
-          //   camera_checkbox.disabled = false
-          //   screen_share_with_camera_checkbox.disabled = false
-          //   console.log('browser screen share supported')
-          //   browser_screen_share_doesnt_support.style.display = 'none'
         } else if (info === 'leavedFromRoom') {
           const room = obj.ATTR_ROOM_NAME
           console.debug('leaved from the room:' + room)
@@ -508,7 +506,7 @@ export class Conference extends Component {
               <div className="cursor-pointer flex items-center">
                 <BiGroup className="w-8 h-8 mx-1"></BiGroup> Participant
                 <span className="bg-gray-200 text-blue-800 px-3 mx-2 rounded-sm">
-                  4
+                  {this.state.participant}
                 </span>
               </div>
               <div>

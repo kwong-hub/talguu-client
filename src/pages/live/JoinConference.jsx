@@ -1,7 +1,8 @@
-import { Button, notification } from 'antd'
+import { notification } from 'antd'
 import React, { Component } from 'react'
 import { wssURL } from '../../environment/config'
-
+import { BiVideo, BiVideoOff } from 'react-icons/bi'
+import { AiOutlineAudio, AiOutlineAudioMuted } from 'react-icons/ai'
 // import SideNav from '../../partials/sideNav/SideNav'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import videoService from '../../_services/video.service'
@@ -95,7 +96,6 @@ export class JoinConference extends Component {
   }
 
   handleCameraButtons = () => {
-    console.log('this.iscamerOff', this.isCameraOff)
     if (this.isCameraOff) {
       this.setState({
         off_camera_disable: true,
@@ -106,9 +106,31 @@ export class JoinConference extends Component {
         off_camera_disable: false,
         on_camera_disable: true
       })
-      //   turn_off_camera_button.disabled = false
-      //   turn_on_camera_button.disabled = true
     }
+  }
+
+  toggleLocalCamera = () => {
+    this.isCameraOff = !this.isCameraOff
+    if (!this.isCameraOff) {
+      this.webRTCAdaptor.turnOnLocalCamera()
+      this.sendNotificationEvent('CAM_TURNED_ON')
+    } else {
+      this.webRTCAdaptor.turnOffLocalCamera()
+      this.sendNotificationEvent('CAM_TURNED_OFF')
+    }
+    this.handleCameraButtons()
+  }
+
+  toggleLocalMic = () => {
+    if (this.isMicMuted) {
+      this.webRTCAdaptor.unmuteLocalMic()
+      this.sendNotificationEvent('MIC_UNMUTED')
+    } else {
+      this.webRTCAdaptor.muteLocalMic()
+      this.sendNotificationEvent('MIC_MUTED')
+    }
+    this.isMicMuted = !this.isMicMuted
+    this.handleMicButtons()
   }
 
   handleMicButtons = () => {
@@ -117,15 +139,11 @@ export class JoinConference extends Component {
         mute_mic_disable: true,
         unmute_mic_disable: false
       })
-      //   mute_mic_button.disabled = true
-      //   unmute_mic_button.disabled = false
     } else {
       this.setState({
         mute_mic_disable: false,
         unmute_mic_disable: true
       })
-      //   mute_mic_button.disabled = false
-      //   unmute_mic_button.disabled = true
     }
   }
 
@@ -147,17 +165,6 @@ export class JoinConference extends Component {
   joinRoom = () => {
     this.webRTCAdaptor.joinRoom(this.state.roomName, this.streamId)
     notification.open({ message: 'Joined successfully' })
-  }
-
-  publishToPublic = () => {
-    window.open(
-      'https://8mspbb.com/merger',
-      '',
-      'width=920,height=580,left=200,top=200'
-    )
-    this.setState({
-      publish_button: false
-    })
   }
 
   unpublish = () => {
@@ -247,8 +254,6 @@ export class JoinConference extends Component {
             join_disable: false,
             leaveRoom_disable: true
           })
-          // thiz.state.join_publish_button.disabled = false
-          // thiz.state.stop_publish_button.disabled = true
           if (thiz.playOnly) {
             thiz.isCameraOff = true
             thiz.handleCameraButtons()
@@ -426,9 +431,9 @@ export class JoinConference extends Component {
 
   render() {
     return (
-      <div className="pb-16 bg-gray-100">
+      <div className="pt-20  bg-gray-800">
         <HeaderHome></HeaderHome>
-        <div className="my-20 flex flex-col w-full items-center">
+        <div className="flex flex-col w-full items-center">
           {/* <h2 className="text-xl ">Conference</h2> */}
 
           <div className="flex flex-wrap">
@@ -442,44 +447,47 @@ export class JoinConference extends Component {
             ></video>
             <div id="players" className="my-4 py-2"></div>
           </div>
-          <div className="px-4">
-            <Button
-              id="turn_off_camera_button"
-              onClick={(e) => this.turnOffLocalCamera()}
-              className="mx-2 btn-default"
-              disabled={this.state.off_camera_disable}
-            >
-              Turn off Camera
-            </Button>
-            <Button
-              id="turn_on_camera_Button"
-              disabled={this.state.on_camera_disable}
-              onClick={(e) => this.turnOnLocalCamera()}
-              className="mx-2 btn-default"
-            >
-              Turn on Camera
-            </Button>
+          <div className="max-w-80 flex mb-4 justify-between text-gray-50">
+            <button className="mx-2">
+              {this.isCameraOff ? (
+                <BiVideoOff
+                  onClick={(e) => this.toggleLocalCamera()}
+                  className="w-12 h-12"
+                ></BiVideoOff>
+              ) : (
+                <BiVideo
+                  onClick={(e) => this.toggleLocalCamera()}
+                  className="w-12 h-12"
+                ></BiVideo>
+              )}
+            </button>
+            {!this.state.join_disable ? (
+              <button
+                onClick={(e) => this.joinRoom()}
+                className="bg-blue-700 font-semibold text-white px-2 mx-2 shadow-sm rounded-md hover:bg-red-900"
+              >
+                Join Room
+              </button>
+            ) : (
+              <button
+                onClick={(e) => this.leaveRoom()}
+                className="bg-red-700 font-semibold text-white px-2 mx-2 shadow-sm rounded-md hover:bg-red-900"
+              >
+                End Call
+              </button>
+            )}
 
-            <Button
-              id="mute_mic_Button"
-              onClick={(e) => this.muteLocalMic()}
-              className="mx-2 btn-default"
-              disabled={this.state.mute_mic_disable}
-            >
-              Mute Local Mic
-            </Button>
-            <Button
-              id="unmute_mic_Button"
-              disabled={this.state.unmute_mic_disable}
-              onClick={(e) => this.unmuteLocalMic()}
-              className="mx-2 btn-default"
-            >
-              Unmute Local Mic
-            </Button>
+            <button className="mx-2" onClick={(e) => this.toggleLocalMic()}>
+              {this.isMicMuted ? (
+                <AiOutlineAudioMuted className="w-12 h-12"></AiOutlineAudioMuted>
+              ) : (
+                <AiOutlineAudio className="w-12 h-12"></AiOutlineAudio>
+              )}
+            </button>
           </div>
 
           <div className="my-4">
-            <Button
+            {/* <Button
               className="mx-4"
               type="primary"
               disabled={this.state.join_disable}
@@ -496,7 +504,7 @@ export class JoinConference extends Component {
               id="stop_publish_Button"
             >
               Leave Room
-            </Button>
+            </Button> */}
           </div>
         </div>
         <div className="h-20"></div>

@@ -47,7 +47,8 @@ export class MergerConference extends Component {
     },
     websocketURL: wssURL,
     isShow: false,
-    roomName: 'room1',
+    // eslint-disable-next-line react/prop-types
+    roomName: new URLSearchParams(this.props.location.search).get('roomId'),
     // playOnly: true,
     isCameraOff: true,
 
@@ -67,9 +68,6 @@ export class MergerConference extends Component {
     // console.log(this.props)
     this.getStreamed()
     this.webRTCAdaptor = this.intianteWebRTC()
-    // this.createRemoteVideoOld()
-    // this.createRemoteVideoOld()
-    // this.createRemoteVideoOld()
   }
 
   turnOffLocalCamera = () => {
@@ -112,8 +110,6 @@ export class MergerConference extends Component {
         off_camera_disable: false,
         on_camera_disable: true
       })
-      //   turn_off_camera_button.disabled = false
-      //   turn_on_camera_button.disabled = true
     }
   }
 
@@ -123,15 +119,11 @@ export class MergerConference extends Component {
         mute_mic_disable: true,
         unmute_mic_disable: false
       })
-      //   mute_mic_button.disabled = true
-      //   unmute_mic_button.disabled = false
     } else {
       this.setState({
         mute_mic_disable: false,
         unmute_mic_disable: true
       })
-      //   mute_mic_button.disabled = false
-      //   unmute_mic_button.disabled = true
     }
   }
 
@@ -188,8 +180,6 @@ export class MergerConference extends Component {
       .then((data) => {
         console.log(data)
         notification.open({ message: 'Published successfully' })
-        // message.
-        // this.setState({ published: true })
       })
       .catch((err) => notification.error(JSON.stringify(err)))
   }
