@@ -58,7 +58,7 @@ const CreateConference = () => {
   }
 
   const joinClick = () => {
-    if (searchRoom.startWith(`${liveVideoURL}`)) {
+    if (searchRoom.length === 12) {
       history.push(`/conference_started?roomId=${searchRoom}`)
     } else {
       message.error("Couldn't find the meeting that you're trying to join")
@@ -146,7 +146,7 @@ const CreateConference = () => {
       <Modal
         title="Schedule The meeting"
         centered
-        okText="Schedule Meeting"
+        okText="Okay"
         visible={confirmVisible}
         onOk={(e) => setConfrimVisible(false)}
         onCancel={() => setConfrimVisible(false)}
@@ -161,20 +161,11 @@ const CreateConference = () => {
 
             <div className="flex">
               <h1 className="mx-2">Room Id</h1>
-              <Input
-                readOnly
-                value={roomId}
-                suffix={
-                  <CopyToClipboard text={link} onCopy={() => copiedMessage()}>
-                    <span className="cursor-pointer">
-                      <FaCopy />
-                    </span>
-                  </CopyToClipboard>
-                }
-              />
+              <p className="font-bold text-xl">{" - "}{roomId}</p>
             </div>
 
             <Input
+             className="my-2"
               readOnly
               value={link}
               suffix={
