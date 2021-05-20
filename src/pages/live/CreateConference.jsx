@@ -58,7 +58,7 @@ const CreateConference = () => {
   }
 
   const joinClick = () => {
-    if (theLink.startWith(`${liveVideoURL}`)) {
+    if (searchRoom.startWith(`${liveVideoURL}`)) {
       history.push(`/conference_started?roomId=${searchRoom}`)
     } else {
       message.error("Couldn't find the meeting that you're trying to join")
@@ -113,12 +113,12 @@ const CreateConference = () => {
               <Button type="primary">New Meeting</Button>
             </Dropdown>
             <Input
-              value={theLink}
+              value={searchRoom}
               onChange={(e) => setSearchRoomsetTheLink(e.target.value)}
               className="mx-2 w-64"
               placeholder="Paste the link"
             />
-            {theLink && (
+            {searchRoom && (
               <Button type="link" onClick={joinClick}>
                 Join
               </Button>
