@@ -75,6 +75,7 @@ export class Conference extends Component {
   componentWillUnmount() {
     this.webRTCAdaptor.closeStream()
     this.webRTCAdaptor.stop()
+    this.setState({ roomName: null })
     // this.webRTCAdaptor=null;
   }
 

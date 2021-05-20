@@ -115,8 +115,8 @@ const CreateConference = () => {
             <Input
               value={searchRoom}
               onChange={(e) => setSearchRoomsetTheLink(e.target.value)}
-              className="mx-2 w-64"
-              placeholder="Paste the link"
+              className="mx-2 w-80"
+              placeholder="Paste the Room Id"
             />
             {searchRoom && (
               <Button type="link" onClick={joinClick}>
@@ -159,7 +159,7 @@ const CreateConference = () => {
               later. too
             </h2>
 
-            <div className="flex">
+            <div className="flex items-center">
               <h1 className="mx-2">Room Id</h1>
               <p className="font-bold text-xl">
                 {' - '}
