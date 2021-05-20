@@ -63,20 +63,8 @@ export class JoinConference extends Component {
     // eslint-disable-next-line react/prop-types
     console.log(this.state.roomName)
     this.webRTCAdaptor = this.intianteWebRTC()
-    this.getStreamed()
+    // this.getStreamed()
   }
-
-  //   generateInvitationLink = () => {
-  //     videoService
-  //       .generateInvitationLink({ roomId: this.state.roomName })
-  //       .then((data) => {
-  //         if (data) {
-  //           const link = `${liveVideoURL}/join_conference?token=${data.token}&expires=${data.expiresOn}&roomId=${data.roomId}`
-  //           this.setState({ link: link })
-  //         }
-  //       })
-  //       .catch((_err) => {})
-  //   }
 
   turnOffLocalCamera = () => {
     this.webRTCAdaptor.turnOffLocalCamera()
@@ -177,26 +165,6 @@ export class JoinConference extends Component {
       .endStream(this.state.streamName)
       .then(() => this.setState({ publish_button: false }))
       .catch((err) => console.log('err', err))
-  }
-
-  getStreamed = () => {
-    videoService
-      .getStreamed()
-      .then((data) => {
-        if (data.success) {
-          this.setState({ streamName: data.stream_key })
-          // this.streamId = data.stream_key
-          if (data.status === 'LIVE') {
-            this.setState({ isShow: false })
-          }
-        } else {
-          // this.props.history.push('/stream_video')
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-        // this.props.history.push('/stream_video')
-      })
   }
 
   leaveRoom = () => {
