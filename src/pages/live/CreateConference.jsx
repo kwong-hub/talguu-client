@@ -161,11 +161,14 @@ const CreateConference = () => {
 
             <div className="flex">
               <h1 className="mx-2">Room Id</h1>
-              <p className="font-bold text-xl">{" - "}{roomId}</p>
+              <p className="font-bold text-xl">
+                {' - '}
+                {roomId}
+              </p>
             </div>
 
             <Input
-             className="my-2"
+              className="my-2"
               readOnly
               value={link}
               suffix={
