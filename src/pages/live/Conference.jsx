@@ -49,7 +49,7 @@ export class Conference extends Component {
     },
     websocketURL: wssURL,
     isShow: false,
-    roomName: nanoid(10),
+    roomName: new URLSearchParams(this.props.location.search).get('roomId') || nanoid(12),
     // playOnly: true,
     isCameraOff: true,
 
