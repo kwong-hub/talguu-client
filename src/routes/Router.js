@@ -36,6 +36,7 @@ import Conference from '../pages/live/Conference'
 import MergerConference from '../pages/live/MergeConference'
 import JoinConference from '../pages/live/JoinConference'
 import CreateConference from '../pages/live/CreateConference'
+import LeaveConference from '../pages/live/LeaveConference';
 
 const Router = () => {
   return (
@@ -75,9 +76,10 @@ const Router = () => {
           <Route exact path="/forgot_password" component={ForgotPassword} />
           <Route exact path="/webcam" component={Publishnew} />
           <Route exact path="/conference" component={CreateConference} />
-          <Route exact path="/conference_started" component={Conference} />
-          <Route exact path="/merger" component={MergerConference} />
+          <PrivateRoute exact path="/conference_started" component={Conference} />
+          <PrivateRoute exact path="/merger" component={MergerConference} />
           <Route exact path="/join_conference" component={JoinConference} />
+          <Route exact path="/left_conference" component={LeaveConference} />
           <Route exact path="/play" component={Playernew} />
           <Route exact path="/player" component={Playernewauto} />
           <PrivateRoute exact path="/deposit" component={Deposit} />

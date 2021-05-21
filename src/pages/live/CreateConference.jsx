@@ -159,8 +159,8 @@ const CreateConference = () => {
               later. too
             </h2>
 
-            <div className="flex items-center">
-              <h1 className="mx-2">Room Id</h1>
+            <div className="flex items-center py-2">
+              <h1 className="mr-2">Room Id</h1>
               <p className="font-bold text-xl">
                 {' - '}
                 {roomId}

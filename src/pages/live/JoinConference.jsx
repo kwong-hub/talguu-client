@@ -7,6 +7,7 @@ import { AiOutlineAudio, AiOutlineAudioMuted } from 'react-icons/ai'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import videoService from '../../_services/video.service'
 import HeaderHome from '../../partials/header/HeaderHome'
+import { history } from '../../_helpers'
 
 export class JoinConference extends Component {
   webRTCAdaptor = null
@@ -182,6 +183,7 @@ export class JoinConference extends Component {
         document.getElementById('players').removeChild(node)
       }
     }
+    history.push("/left_conference")
   }
 
   publish(streamName, token) {

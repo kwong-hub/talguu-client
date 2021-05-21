@@ -2,7 +2,7 @@ import { Button, notification, Popover, message, Input } from 'antd'
 import React, { Component } from 'react'
 import { liveVideoURL, wssURL } from '../../environment/config'
 import './Player.css'
-
+import { history } from '../../_helpers'
 // import SideNav from '../../partials/sideNav/SideNav'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import videoService from '../../_services/video.service'
@@ -213,6 +213,8 @@ export class Conference extends Component {
         document.getElementById('players').removeChild(node)
       }
     }
+    history.push("/left_conference")
+
   }
 
   publish(streamName, token) {
