@@ -50,7 +50,8 @@ export class Conference extends Component {
     websocketURL: wssURL,
     isShow: false,
     // eslint-disable-next-line react/prop-types
-    roomName: new URLSearchParams(this.props.location.search).get('roomId') || nanoid(12),
+    roomName: new URLSearchParams(this.props.location.search).get('roomId') ||
+      nanoid(12),
     // playOnly: true,
     isCameraOff: true,
 

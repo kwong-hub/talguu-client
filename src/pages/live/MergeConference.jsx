@@ -225,7 +225,7 @@ export class MergerConference extends Component {
 
   createRemoteVideoOld = (streamId) => {
     const player = document.createElement('div')
-    player.className = 'col-sm-3'
+    player.className = 'flex-1 remote-video'
     player.id = 'player' + streamId
     player.innerHTML =
       '<video id="remoteVideo' +

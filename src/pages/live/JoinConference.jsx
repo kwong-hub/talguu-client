@@ -198,7 +198,7 @@ export class JoinConference extends Component {
 
   createRemoteVideoOld = (streamId) => {
     const player = document.createElement('div')
-    player.className = 'col-sm-3'
+    player.className = 'flex-1 remote-video'
     player.id = 'player' + streamId
     player.innerHTML =
       '<video id="remoteVideo' +
@@ -470,7 +470,7 @@ export class JoinConference extends Component {
             {!this.state.join_disable ? (
               <button
                 onClick={(e) => this.joinRoom()}
-                className="bg-blue-700 font-semibold text-white px-2 mx-2 shadow-sm rounded-md hover:bg-red-900"
+                className="bg-blue-700 font-semibold text-white px-2 mx-2 shadow-sm rounded-md hover:bg-blue-900"
               >
                 Join Room
               </button>
