@@ -279,7 +279,7 @@ export class MergerConference extends Component {
       mediaConstraints: this.state.mediaConstraints,
       peerconnection_config: this.state.pc_config,
       sdp_constraints: this.state.sdpConstraints,
-      localVideoId: 'mglocalVideo',
+      localVideoId: 'localVideo',
       isPlayMode: true,
       debug: false,
       callback: (info, obj) => {
@@ -513,7 +513,7 @@ export class MergerConference extends Component {
           </h2>
           <div className="flex items-start">
             <video
-              id="mglocalVideo"
+              id="localVideo"
               className="flex-1 my-6"
               autoPlay
               muted

@@ -169,7 +169,7 @@ export class Conference extends Component {
 
   publishToPublic = () => {
     window.open(
-      `${liveVideoURL}merger?${this.state.roomName}`,
+      `${liveVideoURL}merger?roomId=${this.state.roomName}`,
       '',
       'width=920,height=580,left=200,top=200'
     )
