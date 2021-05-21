@@ -183,7 +183,7 @@ export class JoinConference extends Component {
         document.getElementById('players').removeChild(node)
       }
     }
-    history.push("/left_conference")
+    history.push('/left_conference')
   }
 
   publish(streamName, token) {
@@ -447,7 +447,10 @@ export class JoinConference extends Component {
               controls
               playsinline
             ></video>
-            <div id="players" className="my-4 py-2 flex flex-1 flex-wrap-reverse"></div>
+            <div
+              id="players"
+              className="my-4 py-2 flex flex-1 flex-wrap-reverse"
+            ></div>
           </div>
           <div className="max-w-80 flex mb-4 justify-between text-gray-50">
             <button className="mx-2">

@@ -213,8 +213,7 @@ export class Conference extends Component {
         document.getElementById('players').removeChild(node)
       }
     }
-    history.push("/left_conference")
-
+    history.push('/left_conference')
   }
 
   publish(streamName, token) {
