@@ -214,6 +214,7 @@ export class Conference extends Component {
       }
     }
     history.push('/left_conference')
+    history.go(0)
   }
 
   publish(streamName, token) {

@@ -184,6 +184,7 @@ export class JoinConference extends Component {
       }
     }
     history.push('/left_conference')
+    history.go(0)
   }
 
   publish(streamName, token) {
