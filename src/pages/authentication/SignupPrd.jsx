@@ -95,7 +95,7 @@ const SignupPrd = () => {
           <Input
             className="rounded-2xl"
             prefix={<FaBuilding className="site-form-item-icon" />}
-            placeholder="Company Name*"
+            placeholder="Public Name (Editable Later)*"
           />
         </Form.Item>
         <Form.Item
