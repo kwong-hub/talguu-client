@@ -8,6 +8,7 @@ import {
   FaFacebook,
   FaGoogle,
   FaLock,
+  FaPhone,
   FaUser
 } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
@@ -18,9 +19,9 @@ import Header from '../../partials/header/Header'
 import { CREATE_PRODUCER_ASYNC, CREATE_PRODUCER_RESET } from '../../redux/types'
 
 const SignupPrd = () => {
-  const [formValues, setFormValues] = useState(() => {
-    return { phoneNumber: '12341234234' }
-  })
+  const [form] = Form.useForm()
+  const [prevValue, setPrevValue] = useState('')
+  const [formValues, setFormValues] = useState({})
   const [currentForm, setCurrentForm] = useState(0)
   const [loading, setLoading] = useState(false)
   const [errMessages, setErrMessage] = useState('')
@@ -52,19 +53,100 @@ const SignupPrd = () => {
 
   const onPersonalFinish = (values) => {
     setLoading(true)
-    setFormValues((prevValue) => {
-      return { ...prevValue, ...values }
+    setFormValues({
+      ...values,
+      phoneNumber: phoneChangeFormat(values?.phoneNumber, 'db')
     })
     dispatch({
       type: CREATE_PRODUCER_ASYNC,
-      payload: { ...formValues, ...values }
+      payload: {
+        ...formValues,
+        ...values,
+        phoneNumber: phoneChangeFormat(values?.phoneNumber, 'db')
+      }
     })
     setErrMessage('')
+  }
+
+  const updateFormat = (value) => {
+    value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6)}`
+    form.setFieldsValue({ phoneNumber: value })
+  }
+
+  const phoneNumberChangeEvent = (val) => {
+    if (val.length >= 14) {
+      const x = val.search(/(\(\d{3}\))(\s)\d{3}(-)\d{4}/)
+      if (x !== -1) {
+        const str = val.slice(x, x + 14)
+        form.setFieldsValue({ phoneNumber: str })
+      } else {
+        form.setFieldsValue({ phoneNumber: '' })
+      }
+    }
+  }
+
+  const phoneNumberChange = (value) => {
+    if (value.length === 10 && /^\d+$/.test(value)) {
+      updateFormat(value)
+      return
+    }
+    const val = value
+    if (val.length > 14) {
+      phoneNumberChangeEvent(value)
+      return
+    }
+    const lk = val[val.length - 1]
+    if (prevValue.length < val.length) {
+      if (
+        lk &&
+        ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(lk)
+      ) {
+        if (val.length === 3) {
+          if (val[0] === '1' || val[0] === '0') {
+            form.setFieldsValue({ phoneNumber: val.slice(1) })
+          }
+        } else if (val.length === 4) {
+          form.setFieldsValue({ phoneNumber: `(${val.slice(0, 3)}) ${val[3]}` })
+        } else if (val.length === 10) {
+          form.setFieldsValue({ phoneNumber: `${val.slice(0, 9)}-${val[9]}` })
+        }
+      } else if (lk) {
+        form.setFieldsValue({ phoneNumber: val.slice(0, val.length - 1) })
+      }
+      if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(lk)) {
+        setPrevValue(value)
+      }
+    } else {
+      if (val.length === 3) {
+        if (val[0] === '1' || val[0] === '0') {
+          form.setFieldsValue({ phoneNumber: val.slice(1) })
+        }
+      }
+      if (val[val.length - 1] === ' ' && val.length === 6) {
+        form.setFieldsValue({ phoneNumber: `${val.slice(1, 4)}` })
+        setPrevValue(val.slice(1, 4))
+      } else if (isNaN(val) && val.length <= 4) {
+        form.setFieldsValue({ phoneNumber: `${val.replace(/\D/g, '')}` })
+      } else {
+        console.log(form.getFieldsValue())
+        setPrevValue(form.getFieldsValue().phoneNumber)
+      }
+    }
+  }
+
+  const phoneChangeFormat = (value, type) => {
+    if (type === 'db') {
+      return '+1' + value.replace(/[()-\s]/g, '')
+    } else {
+      const v = value.replace('+1', '').replace(/[()-\s]/g, '')
+      return `(${v.slice(0, 3)}) ${v.slice(3, 6)}-${v.slice(6)}`
+    }
   }
 
   const renderPersonal = () => {
     return (
       <Form
+        form={form}
         layout="vertical"
         name="normal_login"
         className="login-form"
@@ -106,6 +188,31 @@ const SignupPrd = () => {
             className="rounded-2xl"
             prefix={<FaEnvelope className="site-form-item-icon" />}
             placeholder="E-mail Address*"
+          />
+        </Form.Item>
+        <Form.Item
+          name="phoneNumber"
+          rules={[
+            { required: true, message: 'Please input your phone number!' },
+            {
+              pattern: /^(\(\d{3}\))(\s)\d{3}(-)\d{4}$/g,
+              message:
+                'Invalid phone number format. The valid format is (000) 000-0000'
+            }
+          ]}
+        >
+          <Input
+            onChange={(e) => {
+              phoneNumberChange(e.target.value)
+            }}
+            className="rounded-2xl"
+            prefix={
+              <span className="flex justify-center items-center">
+                <FaPhone className="site-form-item-icon mr-2" />
+                +1
+              </span>
+            }
+            placeholder="(000) 000-0000"
           />
         </Form.Item>
         <Form.Item

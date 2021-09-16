@@ -132,9 +132,9 @@ class Playernewauto extends React.Component {
         <div className="my-8 pt-8 ml-0  flex flex-col w-full items-center">
           {/* YOU ARE IN AUTO PLAY PAGE <br /> */}
           <video
+            className="max-h-72 w-full"
             // eslint-disable-next-line react/no-unknown-property
             autoplay
-            className="w-full"
             width="720px"
             id="remoteVideo"
             controls

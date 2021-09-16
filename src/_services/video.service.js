@@ -207,6 +207,7 @@ const videoService = {
       const res = await instance.post(url, formData, config)
       return res
     } catch (error) {
+      console.log(error)
       return checkResponse(error)
     }
   },

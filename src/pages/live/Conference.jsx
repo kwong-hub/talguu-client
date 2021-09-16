@@ -12,6 +12,7 @@ import { AiOutlineAudio, AiOutlineAudioMuted } from 'react-icons/ai'
 import HeaderHome from '../../partials/header/HeaderHome'
 import { CopyToClipboard } from 'react-copy-to-clipboard/lib/Component'
 import { FaCopy } from 'react-icons/fa'
+import PropTypes from 'prop-types'
 
 export class Conference extends Component {
   webRTCAdaptor = null
@@ -50,7 +51,8 @@ export class Conference extends Component {
     websocketURL: wssURL,
     isShow: false,
     // eslint-disable-next-line react/prop-types
-    roomName: new URLSearchParams(this.props.location.search).get('roomId') ||
+    roomName:
+      new URLSearchParams(this.props.location.search).get('roomId') ||
       nanoid(12),
     // playOnly: true,
     isCameraOff: true,
@@ -88,7 +90,7 @@ export class Conference extends Component {
       })
       .then((data) => {
         if (data) {
-          const link = `${liveVideoURL}join_conference?token=${data.token}&expires=${data.expiresOn}&roomId=${data.roomId}`
+          const link = `${liveVideoURL}/join_conference?token=${data.token}&expires=${data.expiresOn}&roomId=${data.roomId}`
           this.setState({ link: link })
         }
       })
@@ -170,7 +172,7 @@ export class Conference extends Component {
 
   publishToPublic = () => {
     window.open(
-      `${liveVideoURL}merger?roomId=${this.state.roomName}`,
+      `${liveVideoURL}/merger?roomId=${this.state.roomName}`,
       '',
       'width=920,height=580,left=200,top=200'
     )
@@ -607,6 +609,10 @@ export class Conference extends Component {
       </div>
     )
   }
+}
+
+Conference.propTypes = {
+  location: PropTypes.any
 }
 
 export default Conference
