@@ -123,6 +123,30 @@ async function createViewer(data) {
   }
 }
 
+async function createViewerLocal(data) {
+  try {
+    const user = await axios.post(
+      `${environment}/account/viewer_sign_up_local`,
+      data
+    )
+    return user.data
+  } catch (error) {
+    return checkResponse(error)
+  }
+}
+
+async function createProducerLocal(data) {
+  try {
+    const user = await axios.post(
+      `${environment}/account/producer_sign_up_local`,
+      data
+    )
+    return user.data
+  } catch (error) {
+    return checkResponse(error)
+  }
+}
+
 export const userService = {
   login,
   logout,
@@ -134,5 +158,7 @@ export const userService = {
   updateUserProfile,
   updateCompanyProfile,
   updatePassword,
-  forgotPassword
+  forgotPassword,
+  createViewerLocal,
+  createProducerLocal
 }
