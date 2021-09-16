@@ -86,7 +86,7 @@ export class VideoPlayer extends Component {
       >
         <video
           ref={(node) => (this.videoNode = node)}
-          className="video-js"
+          className="video-js vjs-default-skin"
         ></video>
       </div>
     )

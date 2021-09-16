@@ -276,12 +276,19 @@ const WatchVideo = () => {
       videoId: currentVideo.id,
       // autoplay: true,
       controls: true,
+<<<<<<< HEAD
       poster: currentVideo?.thumbnial ||
+=======
+      poster:
+        currentVideo?.thumbnial ||
+>>>>>>> b531a232b5f440f00032c4044a71a74a2c76b612
         'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png',
       aspectRatio: '16:9',
       responsive: true,
       sources: [
         {
+          // src:
+          //   'https://8mspaa.com/video/hls_play/B5jqeJAdiZ2BSDR0oq5Big/1631610411/1631608390227trailer/playlist',
           src:
             (currentVideo
               ? currentVideo.paid
