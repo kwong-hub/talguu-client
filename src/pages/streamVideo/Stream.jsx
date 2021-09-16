@@ -67,7 +67,7 @@ const Stream = (props) => {
     responsive: true,
     sources: [
       {
-        src: `/hls/${property?.stream_key}.m3u8`,
+        src: `/hls_ts/${property?.stream_key}.m3u8`,
         type: 'application/x-mpegURL'
       }
     ],
