@@ -276,12 +276,8 @@ const WatchVideo = () => {
       videoId: currentVideo.id,
       // autoplay: true,
       controls: true,
-<<<<<<< HEAD
-      poster: currentVideo?.thumbnial ||
-=======
       poster:
         currentVideo?.thumbnial ||
->>>>>>> b531a232b5f440f00032c4044a71a74a2c76b612
         'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png',
       aspectRatio: '16:9',
       responsive: true,
