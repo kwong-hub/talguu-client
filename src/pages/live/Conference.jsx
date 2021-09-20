@@ -80,25 +80,25 @@ export class Conference extends Component {
     capture: 'camera'
   }
 
-  screenShareMenu = (
-    <Menu>
-      <Menu.Item
-        onClick={() => this.switchVideoMode('screen+camera')}
-        key="screen"
-      >
-        Screen
-      </Menu.Item>
-      <Menu.Item
-        onClick={() => this.switchVideoMode('screen+camera')}
-        key="screen+camera"
-      >
-        Screen & Camera
-      </Menu.Item>
-      <Menu.Item onClick={() => this.switchVideoMode('camera')} key="">
-        Turn Off
-      </Menu.Item>
-    </Menu>
-  )
+  // screenShareMenu = (
+  //   <Menu>
+  //     <Menu.Item
+  //       onClick={() => this.switchVideoMode('screen')}
+  //       key="screen"
+  //     >
+  //       Screen
+  //     </Menu.Item>
+  //     <Menu.Item
+  //       onClick={() => this.switchVideoMode('screen+camera')}
+  //       key="screen+camera"
+  //     >
+  //       Screen & Camera
+  //     </Menu.Item>
+  //     <Menu.Item onClick={() => this.switchVideoMode('camera')} key="">
+  //       Turn Off
+  //     </Menu.Item>
+  //   </Menu>
+  // )
 
   componentDidMount() {
     // console.log(this.props)
@@ -627,7 +627,7 @@ export class Conference extends Component {
             >
               End Call
             </button>
-            <Tooltip placement="top" title="Share Screen">
+            {/* <Tooltip placement="top" title="Share Screen">
               <Dropdown
                 overlay={this.screenShareMenu}
                 trigger={['click']}
@@ -637,7 +637,16 @@ export class Conference extends Component {
                   <MdScreenShare className="text-2xl text-gray-300" />
                 </div>
               </Dropdown>
-            </Tooltip>
+            </Tooltip> */}
+
+            <button
+              onClick={(e) => this.this.switchVideoMode('screen')}
+              className="bg-gray-500 font-semibold text-white px-2 mx-2 shadow-sm rounded-md hover:bg-gray-700"
+            >
+              <div className="mx-2 w-12 h-12 flex justify-center items-center">
+                <MdScreenShare className="text-2xl text-gray-300" />
+              </div>
+            </button>
             <button className="mx-2" onClick={(e) => this.toggleLocalMic()}>
               {this.isMicMuted ? (
                 <AiOutlineAudioMuted className="w-12 h-12"></AiOutlineAudioMuted>
