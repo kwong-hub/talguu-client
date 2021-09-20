@@ -232,7 +232,9 @@ export class JoinConference extends Component {
 
     let video = document.getElementById('remoteVideo' + obj.streamId)
 
+    console.log('***********about to create a remote video**************')
     if (video == null) {
+      console.log('***********creating remote video**************')
       this.createRemoteVideoOld(obj.streamId)
       video = document.getElementById('remoteVideo' + obj.streamId)
     }
@@ -439,7 +441,7 @@ export class JoinConference extends Component {
         <div className="flex flex-col w-full items-center">
           {/* <h2 className="text-xl ">Conference</h2> */}
 
-          <div className="flex items-start">
+          <div className="flex items-start p-2">
             <video
               id="localVideo"
               className="w-full my-6"

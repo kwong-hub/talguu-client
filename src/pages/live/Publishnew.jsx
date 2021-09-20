@@ -206,7 +206,7 @@ class Publishnew extends React.Component {
     const { streamName, isShow } = this.state
 
     return (
-      <>
+      <div className="flex-col items-center">
         <SideNav></SideNav>
         <div className="my-4 p-2 pt-8 ml-0  flex flex-col w-full items-center max-w-xl">
           <span className="py-4 text-xl font-medium">Go live from Webcam</span>
@@ -257,7 +257,7 @@ class Publishnew extends React.Component {
           ) : null}
           <div className="h-8 m-8 w-full"></div>
         </div>
-      </>
+      </div>
     )
   }
 }
