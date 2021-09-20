@@ -441,18 +441,21 @@ export class JoinConference extends Component {
         <div className="flex flex-col w-full items-center">
           {/* <h2 className="text-xl ">Conference</h2> */}
 
-          <div className="flex items-start p-2">
-            <video
-              id="localVideo"
-              className="w-full my-6"
-              autoPlay
-              muted
-              controls
-              playsinline
-            ></video>
+          <div className="flex items-center p-2">
+            <div className="my-4 py-2 flex flex-1 flex-wrap-reverse items-center self-stretch p-2 max-h-screen">
+              <video
+                id="localVideo"
+                className="w-full my-6"
+                autoPlay
+                muted
+                controls
+                playsinline
+              ></video>
+            </div>
+
             <div
               id="players"
-              className="my-4 py-2 flex flex-1 flex-wrap-reverse"
+              className="my-4 py-2 flex flex-1 flex-wrap-reverse items-center self-stretch p-2 max-h-screen"
             ></div>
           </div>
           <div className="max-w-80 flex mb-4 justify-between text-gray-50">
