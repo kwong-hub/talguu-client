@@ -640,7 +640,7 @@ export class Conference extends Component {
             </Tooltip> */}
 
             <button
-              onClick={(e) => this.this.switchVideoMode('screen')}
+              onClick={(e) => this.switchVideoMode('screen')}
               className="bg-gray-500 font-semibold text-white px-2 mx-2 shadow-sm rounded-md hover:bg-gray-700"
             >
               <div className="mx-2 w-12 h-12 flex justify-center items-center">
