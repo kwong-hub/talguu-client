@@ -1,4 +1,12 @@
-import { Button, notification, Popover, message, Input } from 'antd'
+import {
+  Button,
+  notification,
+  Popover,
+  message,
+  Input,
+  Tooltip,
+  Dropdown
+} from 'antd'
 import React, { Component } from 'react'
 import { liveVideoURL, wssURL } from '../../environment/config'
 import './Player.css'
@@ -9,10 +17,12 @@ import videoService from '../../_services/video.service'
 import { nanoid } from 'nanoid'
 import { BiGroup, BiUserPlus, BiVideo, BiVideoOff } from 'react-icons/bi'
 import { AiOutlineAudio, AiOutlineAudioMuted } from 'react-icons/ai'
+import { MdScreenShare } from 'react-icons/md'
 import HeaderHome from '../../partials/header/HeaderHome'
 import { CopyToClipboard } from 'react-copy-to-clipboard/lib/Component'
 import { FaCopy } from 'react-icons/fa'
 import PropTypes from 'prop-types'
+import Menu from 'rc-menu'
 
 export class Conference extends Component {
   webRTCAdaptor = null
@@ -66,8 +76,29 @@ export class Conference extends Component {
     leaveRoom_disable: false,
     publish_button: true,
     link: '',
-    participant: 0
+    participant: 0,
+    capture: 'camera'
   }
+
+  screenShareMenu = (
+    <Menu>
+      <Menu.Item
+        onClick={() => this.switchVideoMode('screen+camera')}
+        key="screen"
+      >
+        Screen
+      </Menu.Item>
+      <Menu.Item
+        onClick={() => this.switchVideoMode('screen+camera')}
+        key="screen+camera"
+      >
+        Screen & Camera
+      </Menu.Item>
+      <Menu.Item onClick={() => this.switchVideoMode('camera')} key="">
+        Turn Off
+      </Menu.Item>
+    </Menu>
+  )
 
   componentDidMount() {
     // console.log(this.props)
@@ -271,6 +302,22 @@ export class Conference extends Component {
     }
 
     video.srcObject = obj.stream
+  }
+
+  switchVideoMode = (value) => {
+    this.setState({ capture: value })
+    if (value === 'screen') {
+      this.webRTCAdaptor.switchDesktopCapture(this.state.publishStreamId)
+    } else if (value === 'screen+camera') {
+      this.webRTCAdaptor.switchDesktopCaptureWithCamera(
+        this.state.publishStreamId
+      )
+    } else {
+      this.webRTCAdaptor.switchVideoCameraCapture(
+        this.state.publishStreamId,
+        value
+      )
+    }
   }
 
   intianteWebRTC = () => {
@@ -574,12 +621,22 @@ export class Conference extends Component {
                 ></BiVideo>
               )}
             </button>
-            <button
+            <Dropdown
+              overlay={this.screenShareMenu}
+              trigger={['click']}
               onClick={(e) => this.leaveRoom()}
               className="bg-red-700 font-semibold text-white px-2 mx-2 shadow-sm rounded-md hover:bg-red-900"
             >
               End Call
-            </button>
+            </Dropdown>
+            <Tooltip placement="top" title="Share Screen">
+              <button
+                onClick={(e) => this.leaveRoom()}
+                className="bg-gray-500 font-semibold text-white px-2 mx-2 shadow-sm rounded-md hover:bg-red-900"
+              >
+                <MdScreenShare />
+              </button>
+            </Tooltip>
             <button className="mx-2" onClick={(e) => this.toggleLocalMic()}>
               {this.isMicMuted ? (
                 <AiOutlineAudioMuted className="w-12 h-12"></AiOutlineAudioMuted>
