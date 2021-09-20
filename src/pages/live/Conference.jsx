@@ -621,21 +621,22 @@ export class Conference extends Component {
                 ></BiVideo>
               )}
             </button>
-            <Dropdown
-              overlay={this.screenShareMenu}
-              trigger={['click']}
+            <button
               onClick={(e) => this.leaveRoom()}
               className="bg-red-700 font-semibold text-white px-2 mx-2 shadow-sm rounded-md hover:bg-red-900"
             >
               End Call
-            </Dropdown>
+            </button>
             <Tooltip placement="top" title="Share Screen">
-              <button
-                onClick={(e) => this.leaveRoom()}
+              <Dropdown
+                overlay={this.screenShareMenu}
+                trigger={['click']}
                 className="bg-gray-500 font-semibold text-white px-2 mx-2 shadow-sm rounded-md hover:bg-red-900"
               >
-                <MdScreenShare />
-              </button>
+                <div className="mx-2 w-12 h-12 flex justify-center items-center">
+                  <MdScreenShare className="text-2xl text-gray-300" />
+                </div>
+              </Dropdown>
             </Tooltip>
             <button className="mx-2" onClick={(e) => this.toggleLocalMic()}>
               {this.isMicMuted ? (
