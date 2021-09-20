@@ -61,7 +61,11 @@ function RenderSearchVideo(props) {
     >
       <div className="relative m-4">
         <img
-          src={props.video.thumbnial}
+          src={
+            props.video.thumbnial?.includes('talguu-vout1')
+              ? props.video.thumbnial
+              : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png'
+          }
           alt=""
           className="min-w-full min-h-full video_image-search"
         />
