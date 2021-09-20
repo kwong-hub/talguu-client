@@ -181,7 +181,17 @@ const YourVideo = () => {
       .getVideos(query)
       .then((data) => {
         setLoading(false)
-        setvideos(data.rows)
+        setvideos(
+          data?.rows?.map((data) => {
+            return {
+              ...data,
+              thumbnial: data.thumbnial?.includes('talguu-vout1')
+                ? data.thumbnial
+                : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png'
+            }
+          })
+        )
+        console.log('thumbnial')
         setpagination({ ...query, total: data.count })
       })
       .catch(() => {

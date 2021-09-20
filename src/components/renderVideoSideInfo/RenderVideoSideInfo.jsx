@@ -50,7 +50,11 @@ function RenderVideoSideInfo(props) {
     >
       <div className="relative max-h-full w-5/12 flex justify-center">
         <img
-          src={props.video.thumbnial}
+          src={
+            props?.video?.thumbnial?.includes('talguu-vout1')
+              ? props?.video?.thumbnial
+              : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png'
+          }
           alt=""
           className="block w-full h-28 video_image"
         />
