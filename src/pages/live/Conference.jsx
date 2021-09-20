@@ -3,9 +3,9 @@ import {
   notification,
   Popover,
   message,
-  Input,
-  Tooltip,
-  Dropdown
+  Input
+  // Tooltip,
+  // Dropdown
 } from 'antd'
 import React, { Component } from 'react'
 import { liveVideoURL, wssURL } from '../../environment/config'
@@ -22,7 +22,7 @@ import HeaderHome from '../../partials/header/HeaderHome'
 import { CopyToClipboard } from 'react-copy-to-clipboard/lib/Component'
 import { FaCopy } from 'react-icons/fa'
 import PropTypes from 'prop-types'
-import Menu from 'rc-menu'
+// import Menu from 'rc-menu'
 
 export class Conference extends Component {
   webRTCAdaptor = null
