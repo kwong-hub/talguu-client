@@ -57,8 +57,9 @@ function RenderVideo(props) {
       <div className="relative max-h-full flex justify-center">
         <img
           src={
-            props.video.thumbnial ||
-            'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png'
+            props.video.thumbnial?.includes('talguu-vout1')
+              ? props.video.thumbnial
+              : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png'
           }
           alt=""
           className="block w-full h-48 video_image"

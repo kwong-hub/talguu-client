@@ -1,6 +1,6 @@
 import './SignupViewer.css'
 
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, Modal } from 'antd'
 import React, { useEffect, useState } from 'react'
 import {
   FaEnvelope,
@@ -8,25 +8,39 @@ import {
   FaGoogle,
   FaLock,
   FaPhone,
-  FaUser
+  FaUser,
+  FaLongArrowAltRight,
+  FaLongArrowAltLeft
 } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-
+import { Link, useHistory } from 'react-router-dom'
 import logo from '../../assets/images/logo1.png'
+import msp from '../../assets/images/msp-icon.png'
+import jobDor from '../../assets/images/jobdor.png'
+
 import Header from '../../partials/header/Header'
 import { CREATE_VIEWER_ASYNC, CREATE_VIEWER_RESET } from '../../redux/types'
 
 const SignupViewer = () => {
+  const history = useHistory()
   const [form] = Form.useForm()
   const [formValues, setFormValues] = useState({})
   const [currentForm, setCurrentForm] = useState(0)
+  const [showError, setShowError] = useState(false)
   const [loading, setLoading] = useState(false)
   const [viewerErrMessages, setErrMessage] = useState('')
   const [prevValue, setPrevValue] = useState('')
+  const [email, setEmail] = useState('')
+  const [role, setRole] = useState('')
+  const [appRole, setAppRole] = useState('')
+  // const [phoneNumber, setPhoneNumber] = useState('')
+  // const [companyName, setCompanyName] = useState('')
+  const [modalVisible, setModalVisible] = useState(false)
+  const [application, setApplication] = useState('')
 
   const dispatch = useDispatch()
   const serverErrors = useSelector((state) => state.account.viewerErrMessages)
+  const viewerUser = useSelector((state) => state.account.viewerUser)
   const createViewerStatus = useSelector(
     (state) => state.account.createViewerStatus
   )
@@ -38,11 +52,36 @@ const SignupViewer = () => {
 
   useEffect(() => {
     if (createViewerStatus === 'SUCCESSFUL') {
+      setLoading(false)
+      if (viewerUser) {
+        if (['BUYER', 'APPLICANT'].includes(viewerUser.role)) {
+          setModalVisible(true)
+          setEmail(viewerUser.email)
+          setRole(viewerUser.role)
+          setAppRole('VIEWER')
+          setApplication(
+            viewerUser.role === 'BUYER' ? 'MANAGERSPECIAL.COM' : 'JOBDOR.COM'
+          )
+          return
+        } else if (['SELLER', 'EMPLOYER'].includes(viewerUser.role)) {
+          setModalVisible(true)
+          setEmail(viewerUser.email)
+          setRole(viewerUser.role)
+          setAppRole('PRODUCER')
+          setApplication(
+            viewerUser.role === 'SELLER' ? 'MANAGERSPECIAL.COM' : 'JOBDOR.COM'
+          )
+          return
+        }
+      }
+
       setCurrentForm(1)
       setLoading(false)
       setErrMessage('')
       setFormValues({})
       dispatch({ type: CREATE_VIEWER_RESET, payload: '' })
+    } else {
+      setShowError(true)
     }
   }, [createViewerStatus])
 
@@ -51,6 +90,7 @@ const SignupViewer = () => {
   }, [])
 
   const onPersonalFinish = (values) => {
+    setShowError(true)
     setLoading(true)
     setFormValues({
       ...values,
@@ -298,9 +338,11 @@ const SignupViewer = () => {
                   </Link>
                 </div>
               </div>
-              <div className="w-full text-red-500 text-md text-center mb-4">
-                {viewerErrMessages}
-              </div>
+              {showError && (
+                <div className="w-full text-red-500 text-md text-center mb-4">
+                  {viewerErrMessages}
+                </div>
+              )}
               <div>
                 {renderPersonal()}
                 <div>
@@ -333,6 +375,58 @@ const SignupViewer = () => {
           )}
         </div>
       </div>
+
+      <Modal
+        title={null}
+        visible={modalVisible}
+        onOk={() => {
+          setModalVisible(false)
+          dispatch({ type: CREATE_VIEWER_RESET, payload: '' })
+          setShowError(false)
+        }}
+        onCancel={() => {
+          setModalVisible(false)
+          dispatch({ type: CREATE_VIEWER_RESET, payload: '' })
+          setShowError(false)
+        }}
+        footer={null}
+      >
+        <div className="my-4 mx-2">
+          <div className="flex-col">
+            <div className="flex justify-center items-center">
+              {application === 'MANAGERSPECIAL.COM' ? (
+                <img src={msp} alt="" className="rounded h-14 p-2" />
+              ) : (
+                <img src={jobDor} alt="" className="rounded h-14 p-2" />
+              )}
+              <div className="flex-col text-gray-500 justify-center text-3xl">
+                <FaLongArrowAltRight /> <FaLongArrowAltLeft />
+              </div>
+              <img src={logo} alt="" className="rounded h-14 p-2" />
+            </div>
+            <p className="text-gray-600 text-md py-4 text-center w-full">
+              The email {email} is already registered in {application} as {role}
+              . You can use this email to sign in to TALGUU and become a{' '}
+              {appRole}. Otherwise, please use a different email to registered
+              as a viewer or a producer.
+            </p>
+            <div className="flex justify-end mt-4">
+              <Button
+                onClick={() => {
+                  setModalVisible(false)
+                  history.push('/login')
+                  dispatch({ type: CREATE_VIEWER_RESET, payload: '' })
+                  setShowError(false)
+                }}
+                type="primary"
+                className="-mr-3"
+              >
+                Login
+              </Button>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </div>
   )
 }

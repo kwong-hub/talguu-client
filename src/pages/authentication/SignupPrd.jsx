@@ -1,6 +1,6 @@
 import './SignupPrd.css'
 
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, Modal } from 'antd'
 import React, { useEffect, useState } from 'react'
 import {
   FaBuilding,
@@ -9,12 +9,16 @@ import {
   FaGoogle,
   FaLock,
   FaPhone,
-  FaUser
+  FaUser,
+  FaLongArrowAltRight,
+  FaLongArrowAltLeft
 } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import logo from '../../assets/images/logo1.png'
+import msp from '../../assets/images/msp-icon.png'
+import jobDor from '../../assets/images/jobdor.png'
 import Header from '../../partials/header/Header'
 import { CREATE_PRODUCER_ASYNC, CREATE_PRODUCER_RESET } from '../../redux/types'
 
@@ -26,10 +30,20 @@ const SignupPrd = () => {
   const [loading, setLoading] = useState(false)
   const [errMessages, setErrMessage] = useState('')
   const serverErrors = useSelector((state) => state.account.errMessages)
+  const [showError, setShowError] = useState(false)
   const dispatch = useDispatch()
   const createUserStatus = useSelector(
     (state) => state.account.createUserStatus
   )
+  const [email, setEmail] = useState('')
+  const [role, setRole] = useState('')
+  const [appRole, setAppRole] = useState('')
+  // const [phoneNumber, setPhoneNumber] = useState('')
+  // const [companyName, setCompanyName] = useState('')
+  const [modalVisible, setModalVisible] = useState(false)
+  const [application, setApplication] = useState('')
+  const producerUser = useSelector((state) => state.account.user)
+  const history = useHistory()
 
   useEffect(() => {
     setErrMessage(serverErrors)
@@ -37,8 +51,33 @@ const SignupPrd = () => {
 
   useEffect(() => {
     if (createUserStatus === 'SUCCESSFUL') {
-      setCurrentForm(1)
       setLoading(false)
+      if (producerUser) {
+        if (['BUYER', 'APPLICANT'].includes(producerUser.role)) {
+          setModalVisible(true)
+          setEmail(producerUser.email)
+          setRole(producerUser.role)
+          setAppRole('VIEWER')
+          setApplication(
+            producerUser.role === 'BUYER' ? 'MANAGERSPECIAL.COM' : 'JOBDOR.COM'
+          )
+          return
+        } else if (['SELLER', 'EMPLOYER'].includes(producerUser.role)) {
+          setModalVisible(true)
+          setEmail(producerUser.email)
+          setRole(producerUser.role)
+          setAppRole('PRODUCER')
+          setApplication(
+            producerUser.role === 'SELLER' ? 'MANAGERSPECIAL.COM' : 'JOBDOR.COM'
+          )
+          return
+        }
+      } else {
+        setShowError(true)
+      }
+
+      setLoading(false)
+      setCurrentForm(1)
       setErrMessage('')
       setFormValues(() => {
         return { phoneNumber: '12341234234' }
@@ -52,6 +91,7 @@ const SignupPrd = () => {
   }, [])
 
   const onPersonalFinish = (values) => {
+    setShowError(true)
     setLoading(true)
     setFormValues({
       ...values,
@@ -307,9 +347,11 @@ const SignupPrd = () => {
                   </Link>
                 </div>
               </div>
-              <div className="w-full text-red-500 text-md text-center mb-4">
-                {errMessages}
-              </div>
+              {showError && (
+                <div className="w-full text-red-500 text-md text-center mb-4">
+                  {errMessages}
+                </div>
+              )}
               <div>
                 {currentForm === 0 ? renderPersonal() : ''}
                 <div>
@@ -339,6 +381,57 @@ const SignupPrd = () => {
           )}
         </div>
       </div>
+      <Modal
+        title={null}
+        visible={modalVisible}
+        onOk={() => {
+          setModalVisible(false)
+          dispatch({ type: CREATE_PRODUCER_RESET, payload: '' })
+          setShowError(false)
+        }}
+        onCancel={() => {
+          setModalVisible(false)
+          dispatch({ type: CREATE_PRODUCER_RESET, payload: '' })
+          setShowError(false)
+        }}
+        footer={null}
+      >
+        <div className="my-4 mx-2">
+          <div className="flex-col">
+            <div className="flex justify-center items-center">
+              {application === 'MANAGERSPECIAL.COM' ? (
+                <img src={msp} alt="" className="rounded h-14 p-2" />
+              ) : (
+                <img src={jobDor} alt="" className="rounded h-14 p-2" />
+              )}
+              <div className="flex-col text-gray-500 justify-center text-3xl">
+                <FaLongArrowAltRight /> <FaLongArrowAltLeft />
+              </div>
+              <img src={logo} alt="" className="rounded h-14 p-2" />
+            </div>
+            <p className="text-gray-600 text-md py-4 text-center w-full">
+              The email {email} is already registered in {application} as {role}
+              . You can use this email to sign in to TALGUU and become a{' '}
+              {appRole}. Otherwise, please use a different email to registered
+              as a viewer or a producer.
+            </p>
+            <div className="flex justify-end mt-4">
+              <Button
+                onClick={() => {
+                  setModalVisible(false)
+                  history.push('/login')
+                  dispatch({ type: CREATE_PRODUCER_RESET, payload: '' })
+                  setShowError(false)
+                }}
+                type="primary"
+                className="-mr-3"
+              >
+                Login
+              </Button>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </div>
   )
 }
