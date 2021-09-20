@@ -502,11 +502,10 @@ export class Conference extends Component {
                 visible={this.state.visible}
                 onVisibleChange={this.handleVisibleChange}
               >
-                <BiUserPlus
-                  onClick={(e) => this.generateInvitationLink()}
-                  className="w-8 h-8 cursor-pointer mx-2"
-                ></BiUserPlus>
-                Invite to the call.
+                <div onClick={(e) => this.generateInvitationLink()}>
+                  <BiUserPlus className="w-8 h-8 cursor-pointer mx-2"></BiUserPlus>
+                  Invite to the call.
+                </div>
               </Popover>
             </div>
             <div className="flex items-center">
@@ -541,18 +540,20 @@ export class Conference extends Component {
             </div>
           </div>
           <div className="flex items-start ">
-            <video
-              src="https://assets.mixkit.co/videos/preview/mixkit-female-boxer-resting-after-her-training-40264-large.mp4"
-              id="localVideo"
-              className="flex-1 my-6"
-              autoPlay
-              muted
-              controls
-              playsinline
-            ></video>
+            <div className="my-4 py-2 flex flex-1 flex-wrap-reverse items-start self-stretch p-2 max-h-60">
+              <video
+                src="https://assets.mixkit.co/videos/preview/mixkit-female-boxer-resting-after-her-training-40264-large.mp4"
+                id="localVideo"
+                className="flex-1 my-6"
+                autoPlay
+                muted
+                controls
+                playsinline
+              ></video>
+            </div>
             <div
               id="players"
-              className="my-4 py-2 flex flex-1 flex-wrap-reverse"
+              className="my-4 py-2 flex flex-1 flex-wrap-reverse items-start self-stretch  p-2 max-h-60"
             ></div>
           </div>
 
