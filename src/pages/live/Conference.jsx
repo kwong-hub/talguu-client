@@ -518,6 +518,11 @@ export class Conference extends Component {
   }
 
   render() {
+    console.log(
+      '************************** this is state value',
+      this.state,
+      '****************************'
+    )
     return (
       <div className="mb-8 bg-gray-800">
         <HeaderHome></HeaderHome>
