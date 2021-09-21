@@ -309,6 +309,7 @@ export class Conference extends Component {
     console.log(this.publishStreamId)
     if (value === 'screen') {
       this.webRTCAdaptor.switchDesktopCapture(this.publishStreamId)
+      this.publish(this.publishStreamId, this.token)
     } else if (value === 'screen+camera') {
       this.webRTCAdaptor.switchDesktopCaptureWithCamera(this.publishStreamId)
     } else {
@@ -660,26 +661,7 @@ export class Conference extends Component {
               )}
             </button>
           </div>
-          <div className="my-4">
-            {/* <Button
-              className="mx-4"
-              type="primary"
-              disabled={this.state.join_disable}
-              onClick={(e) => this.joinRoom()}
-              id="join_publish_Button"
-            >
-              Create Room
-            </Button>
-            <Button
-              className=""
-              type="primary"
-              onClick={(e) => this.leaveRoom()}
-              disabled={this.state.leaveRoom_disable}
-              id="stop_publish_Button"
-            >
-              Leave Room
-            </Button> */}
-          </div>
+          <div className="my-4"></div>
         </div>
         <div className="h-20"></div>
       </div>
