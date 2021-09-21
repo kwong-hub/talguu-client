@@ -306,18 +306,13 @@ export class Conference extends Component {
 
   switchVideoMode = (value) => {
     this.setState({ capture: value })
-    console.log(this.state.publishStreamId)
+    console.log(this.publishStreamId)
     if (value === 'screen') {
-      this.webRTCAdaptor.switchDesktopCapture(this.state.publishStreamId)
+      this.webRTCAdaptor.switchDesktopCapture(this.publishStreamId)
     } else if (value === 'screen+camera') {
-      this.webRTCAdaptor.switchDesktopCaptureWithCamera(
-        this.state.publishStreamId
-      )
+      this.webRTCAdaptor.switchDesktopCaptureWithCamera(this.publishStreamId)
     } else {
-      this.webRTCAdaptor.switchVideoCameraCapture(
-        this.state.publishStreamId,
-        value
-      )
+      this.webRTCAdaptor.switchVideoCameraCapture(this.publishStreamId, value)
     }
   }
 
