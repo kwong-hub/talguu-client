@@ -305,7 +305,7 @@ export class Conference extends Component {
   }
 
   switchVideoMode = (value) => {
-    this.setState({ capture: value })
+    // this.setState({ capture: value })
     console.log(this.publishStreamId)
     if (value === 'screen') {
       this.webRTCAdaptor.switchDesktopCapture(this.publishStreamId)
@@ -326,9 +326,10 @@ export class Conference extends Component {
       localVideoId: 'localVideo',
       isPlayMode: false,
       debug: true,
+      dataChannelEnabled: true,
       callback: (info, obj) => {
         if (info === 'initialized') {
-          console.log('initialized')
+          console.log('** initialized')
           this.setState({
             join_disable: false,
             leaveRoom_disable: true
@@ -341,7 +342,7 @@ export class Conference extends Component {
         } else if (info === 'joinedTheRoom') {
           const room = obj.ATTR_ROOM_NAME
           thiz.roomOfStream[obj.streamId] = room
-          console.log('joined the room: ' + thiz.roomOfStream[obj.streamId])
+          console.log('** joined the room: ' + thiz.roomOfStream[obj.streamId])
           // console.log(obj)
 
           thiz.publishStreamId = obj.streamId
@@ -359,7 +360,7 @@ export class Conference extends Component {
 
           if (obj.streams != null) {
             obj.streams.forEach(function (item) {
-              console.log('Stream joined with ID: ' + item)
+              console.log('** Stream joined with ID: ' + item)
               thiz.webRTCAdaptor.play(item, thiz.token, thiz.state.roomName)
             })
             thiz.streamsList = obj.streams
@@ -371,7 +372,7 @@ export class Conference extends Component {
             )
           }, 5000)
         } else if (info === 'newStreamAvailable') {
-          console.log('noewStreamAVAILABLE')
+          console.log('** noewStreamAVAILABLE')
           thiz.playVideo(obj)
           thiz.setState({
             participant: this.state.participant + 1
@@ -380,7 +381,7 @@ export class Conference extends Component {
         } else if (info === 'publish_started') {
           // stream is being published
           console.debug(
-            'publish started to room: ' + thiz.roomOfStream[obj.streamId]
+            '** publish started to room: ' + thiz.roomOfStream[obj.streamId]
           )
           this.setState({
             join_disable: true,
@@ -389,14 +390,14 @@ export class Conference extends Component {
           //   startAnimation()
         } else if (info === 'publish_finished') {
           // stream is being finished
-          console.debug('publish finished')
+          console.debug('** publish finished')
         } else if (info === 'screen_share_stopped') {
-          console.log('screen share stopped')
+          console.log('** screen share stopped')
         } else if (info === 'browser_screen_share_supported') {
           //   screen_share_checkbox.disabled = false
         } else if (info === 'leavedFromRoom') {
           const room = obj.ATTR_ROOM_NAME
-          console.debug('leaved from the room:' + room)
+          console.debug('** leaved from the room:' + room)
           if (thiz.roomTimerId != null) {
             clearInterval(thiz.roomTimerId)
           }
@@ -416,14 +417,16 @@ export class Conference extends Component {
         } else if (info === 'closed') {
           // console.log("Connection closed");
           if (typeof obj !== 'undefined') {
-            console.log('Connecton closed: ' + JSON.stringify(obj))
+            console.log('** Connecton closed: ' + JSON.stringify(obj))
           }
         } else if (info === 'play_finished') {
-          console.log('play_finished')
+          console.log('** play_finished')
           thiz.removeRemoteVideo(obj.streamId)
         } else if (info === 'streamInformation') {
+          console.log('** stream information')
           thiz.streamInformation(obj)
         } else if (info === 'roomInformation') {
+          console.log('** room information')
           // Checks if any new stream has added, if yes, plays.
           for (const str of obj.streams) {
             if (!thiz.streamsList.includes(str)) {
@@ -439,12 +442,13 @@ export class Conference extends Component {
           // Lastly updates the current streamlist with the fetched one.
           thiz.streamsList = obj.streams
         } else if (info === 'data_channel_opened') {
-          console.log('Data Channel open for stream id', obj)
+          console.log('** Data Channel open for stream id', obj)
           thiz.isDataChannelOpen = true
         } else if (info === 'data_channel_closed') {
-          console.log('Data Channel closed for stream id', obj)
+          console.log('** Data Channel closed for stream id', obj)
           thiz.isDataChannelOpen = false
         } else if (info === 'data_received') {
+          console.log('** data received')
           thiz.handleNotificationEvent(obj)
         }
       },
@@ -513,11 +517,11 @@ export class Conference extends Component {
   }
 
   render() {
-    console.log(
-      '************************** this is state value',
-      this.state,
-      '****************************'
-    )
+    // console.log(
+    //   '************************** this is state value',
+    //   this.state,
+    //   '****************************'
+    // )
     return (
       <div className="mb-8 bg-gray-800">
         <HeaderHome></HeaderHome>
