@@ -306,10 +306,9 @@ export class Conference extends Component {
 
   switchVideoMode = (value) => {
     // this.setState({ capture: value })
-    console.log(this.publishStreamId)
+    // console.log(this.publishStreamId)
     if (value === 'screen') {
       this.webRTCAdaptor.switchDesktopCapture(this.publishStreamId)
-      this.publish(this.publishStreamId, this.token)
     } else if (value === 'screen+camera') {
       this.webRTCAdaptor.switchDesktopCaptureWithCamera(this.publishStreamId)
     } else {
