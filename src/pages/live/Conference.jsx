@@ -76,6 +76,7 @@ export class Conference extends Component {
     leaveRoom_disable: false,
     publish_button: true,
     link: '',
+    passCode: '',
     participant: 0,
     capture: 'camera'
   }
@@ -103,6 +104,7 @@ export class Conference extends Component {
   componentDidMount() {
     // console.log(this.props)
     this.webRTCAdaptor = this.intianteWebRTC()
+    // this.generatePassCode()
     this.getStreamed()
   }
 
@@ -122,10 +124,10 @@ export class Conference extends Component {
       .then((data) => {
         if (data) {
           const link = `${liveVideoURL}/join_conference?token=${data.token}&expires=${data.expiresOn}&roomId=${data.roomId}`
-          this.setState({ link: link })
+          this.setState({ link: link, passCode: data.passCode })
         }
       })
-      .catch((_err) => {})
+      .catch((_err) => { })
   }
 
   toggleLocalCamera = () => {
@@ -203,13 +205,30 @@ export class Conference extends Component {
 
   publishToPublic = () => {
     window.open(
-      `${liveVideoURL}/merger?roomId=${this.state.roomName}`,
+      `http://localhost:3000/merger?roomId=${this.state.roomName}`,
       '',
       'width=920,height=580,left=200,top=200'
     )
     this.setState({
       publish_button: false
     })
+  }
+
+  getRndInteger = (min, max) => {
+    return Math.floor(Math.random() * (max - min)) + min
+  }
+
+  generatePassCode = () => {
+    videoService
+      .editStream({
+        key: 'krbTzc_nrNyn2L6aB01',
+        passCode: this.getRndInteger(1000, 9999).toString()
+      })
+      .then((data) => {
+        console.log(data)
+        // notification.open({ message: 'Published successfully' })
+      })
+      .catch((err) => notification.error(JSON.stringify(err)))
   }
 
   unpublish = () => {
@@ -308,10 +327,13 @@ export class Conference extends Component {
     // this.setState({ capture: value })
     // console.log(this.publishStreamId)
     if (value === 'screen') {
+      console.log('a ')
       this.webRTCAdaptor.switchDesktopCapture(this.publishStreamId)
     } else if (value === 'screen+camera') {
+      console.log('b ')
       this.webRTCAdaptor.switchDesktopCaptureWithCamera(this.publishStreamId)
     } else {
+      console.log('c ')
       this.webRTCAdaptor.switchVideoCameraCapture(this.publishStreamId, value)
     }
   }
@@ -564,6 +586,12 @@ export class Conference extends Component {
               </Popover>
             </div>
             <div className="flex items-center">
+            <div className="cursor-pointer flex items-center">
+                Conference Pass Code:
+                <span className="bg-gray-200 text-blue-800 px-3 mx-2 rounded-sm">
+                  {this.state.passCode}
+                </span>
+              </div>
               <div className="cursor-pointer flex items-center">
                 <BiGroup className="w-8 h-8 mx-1"></BiGroup> Participant
                 <span className="bg-gray-200 text-blue-800 px-3 mx-2 rounded-sm">

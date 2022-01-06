@@ -1,4 +1,4 @@
-import { notification } from 'antd'
+import { notification, Modal, Input, Space } from 'antd'
 import React, { Component } from 'react'
 import { wssURL } from '../../environment/config'
 import { BiVideo, BiVideoOff } from 'react-icons/bi'
@@ -26,13 +26,16 @@ export class JoinConference extends Component {
   streamId = null
   // externalWindow = null
   state = {
+    visible: false,
+    confirmLoading: false,
+    passCode: '',
     mediaConstraints: {
       video: true,
       audio: true
     },
     // eslint-disable-next-line react/prop-types
     streamName: 'stream1',
-    token: '',
+    // token: '',
     pc_config: {
       iceServers: [
         {
@@ -47,7 +50,9 @@ export class JoinConference extends Component {
     websocketURL: wssURL,
     isShow: false,
     // eslint-disable-next-line react/prop-types
-    roomName: new URLSearchParams(this.props.location.search).get('roomId'),
+    token: new URLSearchParams(this.props.location.search).get('token'),
+    roomName: '',
+    // token: new URLSearchParams(this.props.location.search).get('token'),
     // playOnly: true,
     isCameraOff: true,
 
@@ -164,9 +169,45 @@ export class JoinConference extends Component {
     }
   }
 
+  handleJoinRoom = () => {
+    const thiy = this
+    thiy.setState({ confirmLoading: true })
+    setTimeout(() => {
+      const { token, passCode } = thiy.state
+
+      videoService.getConferenceRoom({ token, passCode })
+        .then(response => {
+          const { isValid, success, roomId } = response
+          if (isValid && success) {
+            thiy.setState({ roomName: roomId })
+            // thiy.webRTCAdaptor.joinRoom(thiy.state.roomName, thiy.streamId)
+            // notification.open({ message: 'Joined successfully' })
+            thiy.testJoin(thiy.state.roomName)
+          }
+          thiy.setState({ visible: false, confirmLoading: false })
+        })
+    }, 1)
+  }
+
+testJoin = (roomName, streamId) => {
+  this.webRTCAdaptor.joinRoom(roomName, streamId)
+  notification.open({ message: 'Joined successfully' })
+}
+
+  handleCancel = () => {
+    this.setState({ visible: false })
+  }
+
+  handlePassCode = (e) => {
+    const userPassCode = e.target.value
+    this.setState({ passCode: userPassCode })
+  }
+
   joinRoom = () => {
-    this.webRTCAdaptor.joinRoom(this.state.roomName, this.streamId)
-    notification.open({ message: 'Joined successfully' })
+    this.setState({ visible: true })
+    // this.webRTCAdaptor.joinRoom(this.state.roomName, this.streamId)
+    // notification.open({ message: 'Joined successfully' })
+    // api call
   }
 
   unpublish = () => {
@@ -453,7 +494,6 @@ export class JoinConference extends Component {
         <HeaderHome></HeaderHome>
         <div className="flex flex-col w-full items-center">
           {/* <h2 className="text-xl ">Conference</h2> */}
-
           <div className="flex items-center p-2">
             <div className="my-4 py-2 flex flex-1 flex-wrap-reverse items-center self-stretch p-2 max-h-screen">
               <video
@@ -486,12 +526,28 @@ export class JoinConference extends Component {
               )}
             </button>
             {!this.state.join_disable ? (
-              <button
-                onClick={(e) => this.joinRoom()}
-                className="bg-blue-700 font-semibold text-white px-2 mx-2 shadow-sm rounded-md hover:bg-blue-900"
-              >
-                Join Room
-              </button>
+              <>
+                <button
+                  onClick={(e) => this.joinRoom()}
+                  className="bg-blue-700 font-semibold text-white px-2 mx-2 shadow-sm rounded-md hover:bg-blue-900"
+                >
+                  Join Room
+                </button>
+                <Modal
+                  title="Pass Code"
+                  visible={this.state.visible}
+                  onOk={this.handleJoinRoom}
+                  confirmLoading={this.state.confirmLoading}
+                  onCancel={this.handleCancel}
+                >
+                  <Space direction="vertical">
+                    <Input
+                      placeholder="input pass code"
+                      onChange={this.handlePassCode}
+                    />
+                  </Space>
+                </Modal>
+              </>
             ) : (
               <button
                 onClick={(e) => this.leaveRoom()}

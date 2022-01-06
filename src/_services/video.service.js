@@ -90,6 +90,7 @@ const videoService = {
       const video = await axios.put(`${environment}/video/edit/stream`, body)
       return video.data
     } catch (error) {
+      console.log(error)
       return checkResponse(error)
     }
   },
@@ -267,7 +268,20 @@ const videoService = {
     } catch (error) {
       return checkResponse(error)
     }
+  },
+
+  getConferenceRoom: async function (body) {
+    try {
+      const res = await axios.get(
+        `${environment}/video/conference?token=${body.token}&passcode=${body.passcode}`,
+        body
+      )
+      return res.data
+    } catch (error) {
+      return checkResponse(error)
+    }
   }
+
 }
 
 export default videoService

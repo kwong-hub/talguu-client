@@ -17,8 +17,8 @@ import adapter from 'webrtc-adapter'
 
 //  };
 const mediaConstraints = {
-  video: false,
-  audio: false
+  video: true,
+  audio: true
 }
 
 export default function WebRTCAdaptor(initialValues) {
@@ -32,6 +32,14 @@ export default function WebRTCAdaptor(initialValues) {
       this.startTime = 0
       this.lastBytesReceived = 0
       this.lastBytesSent = 0
+      this.videoTrack = null
+      this.audioTrack = null
+      this.smallVideoTrack = null
+      this.originalAudioTrackGainNode = null
+      this.audioContext = null
+      this.soundOriginGainNode = null
+      this.secondStreamGainNode = null
+      this.currentVolume = null
       this.currentTimestamp = 0
       this.lastTime = 0
       this.timerId = 0
@@ -44,7 +52,7 @@ export default function WebRTCAdaptor(initialValues) {
     get averageOutgoingBitrate() {
       return Math.floor(
         (8 * (this.totalBytesSentCount - this.firstByteSentCount)) /
-          (this.currentTimestamp - this.startTime)
+        (this.currentTimestamp - this.startTime)
       )
     }
 
@@ -52,7 +60,7 @@ export default function WebRTCAdaptor(initialValues) {
     get averageIncomingBitrate() {
       return Math.floor(
         (8 * (this.totalBytesReceivedCount - this.firstBytesReceivedCount)) /
-          (this.currentTimestamp - this.startTime)
+        (this.currentTimestamp - this.startTime)
       )
     }
 
@@ -60,7 +68,7 @@ export default function WebRTCAdaptor(initialValues) {
     get currentOutgoingBitrate() {
       return Math.floor(
         (8 * (this.totalBytesSentCount - this.lastBytesSent)) /
-          (this.currentTimestamp - this.lastTime)
+        (this.currentTimestamp - this.lastTime)
       )
     }
 
@@ -68,7 +76,7 @@ export default function WebRTCAdaptor(initialValues) {
     get currentIncomingBitrate() {
       return Math.floor(
         (8 * (this.totalBytesReceivedCount - this.lastBytesReceived)) /
-          (this.currentTimestamp - this.lastTime)
+        (this.currentTimestamp - this.lastTime)
       )
     }
 
@@ -109,6 +117,7 @@ export default function WebRTCAdaptor(initialValues) {
   thiz.iceCandidateList = []
   thiz.webSocketAdaptor = null
   thiz.roomName = null
+
   thiz.videoTrackSender = null
   thiz.audioTrackSender = null
   thiz.playStreamId = []
@@ -216,17 +225,15 @@ export default function WebRTCAdaptor(initialValues) {
         const canvasStream = canvas.captureStream(15)
         canvasStream.addTrack(audioStream.getAudioTracks()[0])
 
-        if (thiz.localStream === null) {
-          stream.addTrack(audioStream.getAudioTracks()[0])
+        if (thiz.localStream == null) {
           thiz.gotStream(canvasStream)
         } else {
-          thiz.updateVideoTrack(
-            canvasStream,
-            streamId,
-            thiz.mediaConstraints,
-            onended,
-            null
-          )
+          thiz.updateVideoTrack(canvasStream, streamId, thiz.mediaConstraints, onended, null)
+        }
+        if (onEndedCallback != null) {
+          stream.getVideoTracks()[0].onended = function (event) {
+            onEndedCallback(event)
+          }
         }
 
         // update the canvas
@@ -280,6 +287,7 @@ export default function WebRTCAdaptor(initialValues) {
     // this trick, getting audio and video separately, make us add or remove tracks on the fly
     const audioTrack = stream.getAudioTracks()
     if (audioTrack.length > 0) {
+      audioTrack[0].stop()
       stream.removeTrack(audioTrack[0])
     }
 
@@ -305,12 +313,15 @@ export default function WebRTCAdaptor(initialValues) {
               true
             )
           } else if (thiz.publishMode === 'screen+camera') {
-            thiz.setDesktopwithCameraSource(
-              stream,
-              streamId,
-              audioStream,
-              onended
-            )
+            audioStream = thiz.setGainNodeStream(audioStream)
+            if (audioTrack.length > 0) {
+              const mixedStream = thiz.mixAudioStreams(stream, audioStream, streamId)
+              thiz.updateAudioTrack(mixedStream, streamId, null)
+              thiz.setDesktopwithCameraSource(stream, streamId, mixedStream, onended)
+            } else {
+              thiz.updateAudioTrack(audioStream, streamId, null)
+              thiz.setDesktopwithCameraSource(stream, streamId, audioStream, onended)
+            }
           } else {
             stream.addTrack(audioStream.getAudioTracks()[0])
             thiz.gotStream(stream)
@@ -325,17 +336,93 @@ export default function WebRTCAdaptor(initialValues) {
       // thiz.gotStream(stream);
     }
   }
+  this.setGainNodeStream = function (stream) {
+    // Get the videoTracks from the stream.
+    const videoTracks = stream.getVideoTracks()
+    // Get the audioTracks from the stream.
+    const audioTracks = stream.getAudioTracks()
+    if (thiz.originalAudioTrackGainNode) {
+      thiz.originalAudioTrackGainNode.stop()
+    }
+    thiz.originalAudioTrackGainNode = audioTracks[0]
+
+    /**
+      * Create a new audio context and build a stream source,
+      * stream destination and a gain node. Pass the stream into
+      * the mediaStreamSource so we can use it in the Web Audio API.
+      */
+    thiz.audioContext = new AudioContext()
+    const mediaStreamSource = thiz.audioContext.createMediaStreamSource(stream)
+    const mediaStreamDestination = thiz.audioContext.createMediaStreamDestination()
+    thiz.soundOriginGainNode = thiz.audioContext.createGain()
+
+    /**
+      * Connect the stream to the gainNode so that all audio
+      * passes through the gain and can be controlled by it.
+      * Then pass the stream from the gain to the mediaStreamDestination
+      * which can pass it back to the RTC client.
+      */
+    mediaStreamSource.connect(thiz.soundOriginGainNode)
+    this.soundOriginGainNode.connect(mediaStreamDestination)
+
+    if (thiz.currentVolume) {
+      thiz.soundOriginGainNode.gain.value = 1
+    } else {
+      thiz.soundOriginGainNode.gain.value = thiz.currentVolume
+    }
+
+    /**
+      * The mediaStreamDestination.stream outputs a MediaStream object
+      * containing a single AudioMediaStreamTrack. Add the video track
+      * to the new stream to rejoin the video with the controlled audio.
+      */
+    const controlledStream = mediaStreamDestination.stream
+
+    for (const videoTrack of videoTracks) {
+      controlledStream.addTrack(videoTrack)
+    }
+
+    /**
+      * Use the stream that went through the gainNode. This
+      * is the same stream but with altered input volume levels.
+      */
+    return controlledStream
+  }
 
   /**
    * Get user media
    */
   this.getUserMedia = function (mediaConstraints, audioConstraint, streamId) {
     console.log('GET USER MEDIA WORK')
+    const resetTrack = (stream) => {
+      const videoTracks = stream.getVideoTracks()
+      const audioTracks = stream.getAudioTracks()
+
+      if (videoTracks.length > 0) {
+        if (thiz.videoTrack) {
+          thiz.videoTrack.stop()
+        }
+        thiz.videoTrack = videoTracks[0]
+      }
+
+      if (audioTracks.length > 0) {
+        if (thiz.audioTrack !== null) {
+          thiz.audioTrack.stop()
+        }
+        thiz.audioTrack = audioTracks[0]
+      }
+
+      if (thiz.smallVideoTrack) {
+        thiz.smallVideoTrack.stop()
+      }
+      return stream
+    }
     // Check Media Constraint video value screen or screen + camera
     if (thiz.publishMode === 'screen+camera' || thiz.publishMode === 'screen') {
       navigator.mediaDevices
         .getDisplayMedia(mediaConstraints)
         .then(function (stream) {
+          resetTrack(stream)
           thiz.prepareStreamTracks(
             mediaConstraints,
             audioConstraint,
@@ -383,7 +470,48 @@ export default function WebRTCAdaptor(initialValues) {
         })
     }
   }
+  this.mixAudioStreams = function (stream, secondStream, streamId) {
+    // console.debug("audio stream track count: " + audioStream.getAudioTracks().length);
+    const composedStream = new MediaStream()
+    // added the video stream from the screen
+    stream.getVideoTracks().forEach(function (videoTrack) {
+      composedStream.addTrack(videoTrack)
+    })
 
+    this.audioContext = new AudioContext()
+    const audioDestionation = this.audioContext.createMediaStreamDestination()
+
+    if (stream.getAudioTracks().length > 0) {
+      this.soundOriginGainNode = this.audioContext.createGain()
+
+      // Adjust the gain for screen sound
+      this.soundOriginGainNode.gain.value = 1
+      const audioSource = this.audioContext.createMediaStreamSource(stream)
+
+      audioSource.connect(this.soundOriginGainNode).connect(audioDestionation)
+    } else {
+      console.debug('Origin stream does not have audio track')
+    }
+
+    if (secondStream.getAudioTracks().length > 0) {
+      this.secondStreamGainNode = this.audioContext.createGain()
+
+      // Adjust the gain for second sound
+      this.secondStreamGainNode.gain.value = 1
+
+      const audioSource2 = this.audioContext.createMediaStreamSource(secondStream)
+      audioSource2.connect(this.secondStreamGainNode).connect(audioDestionation)
+    } else {
+      console.debug('Second stream does not have audio track')
+    }
+
+    audioDestionation.stream.getAudioTracks().forEach(function (track) {
+      composedStream.addTrack(track)
+      console.log('audio destination add track')
+    })
+
+    return composedStream
+  }
   /**
    * Open media stream, it may be screen, camera or audio
    */
@@ -982,18 +1110,18 @@ export default function WebRTCAdaptor(initialValues) {
       } else {
         console.log(
           "Candidate's protocol(full sdp: " +
-            event.candidate.candidate +
-            ') is not supported. Supported protocols: ' +
-            thiz.candidateTypes
+          event.candidate.candidate +
+          ') is not supported. Supported protocols: ' +
+          thiz.candidateTypes
         )
         if (event.candidate.candidate !== '') {
           //
           thiz.callbackError(
             'protocol_not_supported',
             'Support protocols: ' +
-              thiz.candidateTypes.toString() +
-              ' candidate: ' +
-              event.candidate.candidate
+            thiz.candidateTypes.toString() +
+            ' candidate: ' +
+            event.candidate.candidate
           )
         }
       }
@@ -1041,9 +1169,9 @@ export default function WebRTCAdaptor(initialValues) {
       const closedStreamId = streamId
       console.log(
         'stream id in init peer connection: ' +
-          streamId +
-          ' close stream id: ' +
-          closedStreamId
+        streamId +
+        ' close stream id: ' +
+        closedStreamId
       )
       thiz.remotePeerConnection[streamId] = new RTCPeerConnection(
         thiz.peerconnection_config
@@ -1256,11 +1384,11 @@ export default function WebRTCAdaptor(initialValues) {
         if (thiz.debug) {
           console.debug(
             'set remote description is succesfull with response: ' +
-              response +
-              ' for stream : ' +
-              streamId +
-              ' and type: ' +
-              type
+            response +
+            ' for stream : ' +
+            streamId +
+            ' and type: ' +
+            type
           )
           console.debug(conf)
         }
@@ -1357,9 +1485,9 @@ export default function WebRTCAdaptor(initialValues) {
         .catch(function (error) {
           console.error(
             'ice candiate cannot be added for stream id: ' +
-              streamId +
-              ' error is: ' +
-              error
+            streamId +
+            ' error is: ' +
+            error
           )
           console.error(candidate)
         })
@@ -1367,12 +1495,12 @@ export default function WebRTCAdaptor(initialValues) {
       if (thiz.debug) {
         console.log(
           "Candidate's protocol(" +
-            candidate.protocol +
-            ') is not supported.' +
-            'Candidate: ' +
-            candidate.candidate +
-            ' Supported protocols:' +
-            thiz.candidateTypes
+          candidate.protocol +
+          ') is not supported.' +
+          'Candidate: ' +
+          candidate.candidate +
+          ' Supported protocols:' +
+          thiz.candidateTypes
         )
       }
     }
@@ -1615,9 +1743,9 @@ export default function WebRTCAdaptor(initialValues) {
         if (thiz.debug) {
           console.log(
             'received remote description type for stream id: ' +
-              obj.streamId +
-              ' type: ' +
-              obj.type
+            obj.streamId +
+            ' type: ' +
+            obj.type
           )
         }
         thiz.takeConfiguration(obj.streamId, obj.sdp, obj.type)
