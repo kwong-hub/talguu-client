@@ -61,9 +61,7 @@ export class Conference extends Component {
     websocketURL: wssURL,
     isShow: false,
     // eslint-disable-next-line react/prop-types
-    roomName:
-      new URLSearchParams(this.props.location.search).get('roomId') ||
-      nanoid(12),
+    roomName: '',
     // playOnly: true,
     isCameraOff: true,
 
@@ -103,6 +101,7 @@ export class Conference extends Component {
 
   componentDidMount() {
     // console.log(this.props)
+    this.setState({ roomName: this.getRooMId() })
     this.webRTCAdaptor = this.intianteWebRTC()
     // this.generatePassCode()
     this.getStreamed()
@@ -113,6 +112,17 @@ export class Conference extends Component {
     this.webRTCAdaptor.stop()
     this.setState({ roomName: null })
     // this.webRTCAdaptor=null;
+  }
+
+  getRooMId = () => {
+    let localRoomId = localStorage.getItem('roomId')
+    if (localRoomId) {
+      return localRoomId
+    } else {
+      localRoomId = new URLSearchParams(this.props.location.search).get('roomId') || nanoid(12)
+      localStorage.setItem('roomId', localRoomId)
+      return localRoomId
+    }
   }
 
   generateInvitationLink = () => {
@@ -586,7 +596,7 @@ export class Conference extends Component {
               </Popover>
             </div>
             <div className="flex items-center">
-            <div className="cursor-pointer flex items-center">
+              <div className="cursor-pointer flex items-center">
                 Conference Pass Code:
                 <span className="bg-gray-200 text-blue-800 px-3 mx-2 rounded-sm">
                   {this.state.passCode}

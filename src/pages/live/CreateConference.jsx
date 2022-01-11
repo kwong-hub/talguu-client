@@ -71,7 +71,10 @@ const CreateConference = () => {
         <div className="flex items-center justifiy-between text-md ">
           <FaPlus />
           <span
-            onClick={(e) => history.push('/conference_started')}
+            onClick={(e) => {
+              history.push('/conference_started')
+              localStorage.removeItem('roomId')
+            }}
             className="mt-2 mx-4"
             type="primary"
           >
