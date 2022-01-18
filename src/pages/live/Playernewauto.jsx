@@ -1,44 +1,48 @@
 import React from 'react'
+import socketIOClient from 'socket.io-client'
 import './Player.css'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import { wssURL } from '../../environment/config'
 import SideNav from '../../partials/sideNav/SideNav'
 import { notification } from 'antd'
-
+import Messages from './Messages'
+import MessageInput from './MessageInput'
+let socket
 class Playernewauto extends React.Component {
   webRTCAdaptor = null
-
-  state = {
-    mediaConstraints: {
-      video: false,
-      audio: false
-    },
-    // eslint-disable-next-line react/prop-types
-    streamName: this.props.location?.state?.stream_key,
-    token: '',
-    pc_config: {
-      iceServers: [
-        {
-          urls: 'stun:stun.l.google.com:19302'
-        }
-      ]
-    },
-    sdpConstraints: {
-      OfferToReceiveAudio: true,
-      OfferToReceiveVideo: true
-    },
-    websocketURL: wssURL,
-    isShow: false
+  constructor() {
+    super()
+    this.state = {
+      mediaConstraints: {
+        video: false,
+        audio: false
+      },
+      endpoint: '/',
+      // eslint-disable-next-line react/prop-types
+      streamName: this.props.location?.state?.stream_key,
+      token: '',
+      pc_config: {
+        iceServers: [
+          {
+            urls: 'stun:stun.l.google.com:19302'
+          }
+        ]
+      },
+      sdpConstraints: {
+        OfferToReceiveAudio: true,
+        OfferToReceiveVideo: true
+      },
+      websocketURL: wssURL,
+      isShow: false
+    }
+    socket = socketIOClient(this.state.endpoint)
   }
 
   componentDidMount() {
     console.log(this.props)
+
     this.webRTCAdaptor = this.initiateWebrtc()
-    this.setState({
-      isShow: true,
-      // eslint-disable-next-line react/prop-types
-      streamName: this.props.location?.state?.stream_key
-    })
+    this.setState({ isShow: true, streamName: this.props.location?.state?.stream_key })
   }
 
   streamChangeHandler = ({ target: { value } }) => {
@@ -86,24 +90,24 @@ class Playernewauto extends React.Component {
           // fractionLost - fraction of packet lost
           console.log(
             'Average incoming kbits/sec: ' +
-              obj.averageIncomingBitrate +
-              ' Current incoming kbits/sec: ' +
-              obj.currentIncomingBitrate +
-              ' packetLost: ' +
-              obj.packetsLost +
-              ' fractionLost: ' +
-              obj.fractionLost +
-              ' audio level: ' +
-              obj.audioLevel
+            obj.averageIncomingBitrate +
+            ' Current incoming kbits/sec: ' +
+            obj.currentIncomingBitrate +
+            ' packetLost: ' +
+            obj.packetsLost +
+            ' fractionLost: ' +
+            obj.fractionLost +
+            ' audio level: ' +
+            obj.audioLevel
           )
         } else if (info === 'data_received') {
           console.log(
             'Data received: ' +
-              obj.event.data +
-              ' type: ' +
-              obj.event.type +
-              ' for stream: ' +
-              obj.streamId
+            obj.event.data +
+            ' type: ' +
+            obj.event.type +
+            ' for stream: ' +
+            obj.streamId
           )
         } else if (info === 'bitrateMeasurement') {
           console.log(info + ' notification received')
@@ -143,6 +147,14 @@ class Playernewauto extends React.Component {
           <br />
         </div>
         <div />
+        {socket ? (
+          <div className="my-8 pt-8 ml-0  flex flex-col w-full items-center">
+            <Messages socket={socket} />
+            <MessageInput socket={socket} />
+          </div>
+        ) : (
+          <div>Not Connected</div>
+        )}
       </>
     )
   }
