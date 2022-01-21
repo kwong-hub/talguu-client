@@ -17,9 +17,9 @@ class Playernewauto extends React.Component {
         video: false,
         audio: false
       },
-      endpoint: '/',
+      endpoint: 'wss://8mspaa.com/tlgwss/',
       // eslint-disable-next-line react/prop-types
-      streamName: this.props.location?.state?.stream_key,
+      streamName: this.props?.location?.state?.stream_key,
       token: '',
       pc_config: {
         iceServers: [
