@@ -1,5 +1,6 @@
 import { notification, Modal, Input, Space } from 'antd'
 import React, { Component } from 'react'
+import socketIOClient from 'socket.io-client'
 import { wssURL } from '../../environment/config'
 import { BiVideo, BiVideoOff } from 'react-icons/bi'
 import { AiOutlineAudio, AiOutlineAudioMuted } from 'react-icons/ai'
@@ -9,7 +10,9 @@ import videoService from '../../_services/video.service'
 import HeaderHome from '../../partials/header/HeaderHome'
 import { history } from '../../_helpers'
 import { MdScreenShare } from 'react-icons/md'
-
+import Messages from './Messages'
+import MessageInput from './MessageInput'
+let socket
 export class JoinConference extends Component {
   webRTCAdaptor = null
   roomOfStream = []
@@ -25,46 +28,51 @@ export class JoinConference extends Component {
   token = ''
   streamId = null
   // externalWindow = null
-  state = {
-    visible: false,
-    confirmLoading: false,
-    passCode: '',
-    mediaConstraints: {
-      video: true,
-      audio: true
-    },
-    // eslint-disable-next-line react/prop-types
-    streamName: 'stream1',
-    // token: '',
-    pc_config: {
-      iceServers: [
-        {
-          urls: 'stun:stun.l.google.com:19302'
-        }
-      ]
-    },
-    sdpConstraints: {
-      OfferToReceiveAudio: false,
-      OfferToReceiveVideo: false
-    },
-    websocketURL: wssURL,
-    isShow: false,
-    // eslint-disable-next-line react/prop-types
-    token: new URLSearchParams(this.props.location.search).get('token'),
-    roomName: '',
-    // token: new URLSearchParams(this.props.location.search).get('token'),
-    // playOnly: true,
-    isCameraOff: true,
+  constructor() {
+    super()
+    this.state = {
+      visible: false,
+      confirmLoading: false,
+      passCode: '',
+      mediaConstraints: {
+        video: true,
+        audio: true
+      },
+      // eslint-disable-next-line react/prop-types
+      endpoint: 'wss://8mspaa.com',
+      streamName: 'stream1',
+      // token: '',
+      pc_config: {
+        iceServers: [
+          {
+            urls: 'stun:stun.l.google.com:19302'
+          }
+        ]
+      },
+      sdpConstraints: {
+        OfferToReceiveAudio: false,
+        OfferToReceiveVideo: false
+      },
+      websocketURL: wssURL,
+      isShow: false,
+      // eslint-disable-next-line react/prop-types
+      token: new URLSearchParams(this.props.location.search).get('token'),
+      roomName: '',
+      // token: new URLSearchParams(this.props.location.search).get('token'),
+      // playOnly: true,
+      isCameraOff: true,
 
-    // buttons
-    on_camera_disable: true,
-    off_camera_disable: false,
-    unmute_mic_disable: true,
-    mute_mic_disable: false,
-    join_disable: false,
-    leaveRoom_disable: false,
-    publish_button: true,
-    link: ''
+      // buttons
+      on_camera_disable: true,
+      off_camera_disable: false,
+      unmute_mic_disable: true,
+      mute_mic_disable: false,
+      join_disable: false,
+      leaveRoom_disable: false,
+      publish_button: true,
+      link: ''
+    }
+    socket = socketIOClient(this.state.endpoint, { path: '/tlgwss' })
   }
 
   componentDidMount() {
@@ -189,10 +197,10 @@ export class JoinConference extends Component {
     }, 1)
   }
 
-testJoin = (roomName, streamId) => {
-  this.webRTCAdaptor.joinRoom(roomName, streamId)
-  notification.open({ message: 'Joined successfully' })
-}
+  testJoin = (roomName, streamId) => {
+    this.webRTCAdaptor.joinRoom(roomName, streamId)
+    notification.open({ message: 'Joined successfully' })
+  }
 
   handleCancel = () => {
     this.setState({ visible: false })
@@ -573,7 +581,14 @@ testJoin = (roomName, streamId) => {
               )}
             </button>
           </div>
-
+          {socket ? (
+            <div className="max-w-80 flex mb-4 justify-between">
+              <Messages socket={socket} />
+              <MessageInput socket={socket} />
+            </div>
+          ) : (
+            <div>Not Connected</div>
+          )}
           <div className="my-4">
             {/* <Button
               className="mx-4"

@@ -44,13 +44,13 @@ export class Conference extends Component {
   // externalWindow = null
   constructor() {
     super()
-    state = {
+    this.state = {
       mediaConstraints: {
         video: true,
         audio: true
       },
       // eslint-disable-next-line react/prop-types
-      endpoint: 'wss://8mspaa.com/',
+      endpoint: 'wss://8mspaa.com',
       streamName: 'stream1',
       token: '',
       pc_config: {
@@ -70,7 +70,6 @@ export class Conference extends Component {
       roomName: '',
       // playOnly: true,
       isCameraOff: true,
-  
       // buttons
       on_camera_disable: true,
       off_camera_disable: false,
@@ -84,10 +83,8 @@ export class Conference extends Component {
       participant: 0,
       capture: 'camera'
     }
-    socket = socketIOClient(this.state.endpoint)
+    socket = socketIOClient(this.state.endpoint, { path: '/tlgwss' })
   }
-  
-
   // screenShareMenu = (
   //   <Menu>
   //     <Menu.Item
@@ -708,13 +705,13 @@ export class Conference extends Component {
             </button>
           </div>
           {socket ? (
-          <div className="max-w-80 flex mb-4 justify-between text-gray-50">
-            <Messages socket={socket} />
-            <MessageInput socket={socket} />
-          </div>
-        ) : (
-          <div>Not Connected</div>
-        )}
+            <div className="max-w-80 flex mb-4 justify-between">
+              <Messages socket={socket} />
+              <MessageInput socket={socket} />
+            </div>
+          ) : (
+            <div>Not Connected</div>
+          )}
           <div className="my-4"></div>
         </div>
         <div className="h-20"></div>
