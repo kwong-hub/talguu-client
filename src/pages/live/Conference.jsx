@@ -8,6 +8,7 @@ import {
   // Dropdown
 } from 'antd'
 import React, { Component } from 'react'
+import socketIOClient from 'socket.io-client'
 import { liveVideoURL, wssURL } from '../../environment/config'
 import './Player.css'
 import { history } from '../../_helpers'
@@ -22,8 +23,10 @@ import HeaderHome from '../../partials/header/HeaderHome'
 import { CopyToClipboard } from 'react-copy-to-clipboard/lib/Component'
 import { FaCopy } from 'react-icons/fa'
 import PropTypes from 'prop-types'
+import Messages from './Messages'
+import MessageInput from './MessageInput'
 // import Menu from 'rc-menu'
-
+let socket
 export class Conference extends Component {
   webRTCAdaptor = null
   roomOfStream = []
@@ -39,45 +42,51 @@ export class Conference extends Component {
   token = ''
   streamId = null
   // externalWindow = null
-  state = {
-    mediaConstraints: {
-      video: true,
-      audio: true
-    },
-    // eslint-disable-next-line react/prop-types
-    streamName: 'stream1',
-    token: '',
-    pc_config: {
-      iceServers: [
-        {
-          urls: 'stun:stun.l.google.com:19302'
-        }
-      ]
-    },
-    sdpConstraints: {
-      OfferToReceiveAudio: false,
-      OfferToReceiveVideo: false
-    },
-    websocketURL: wssURL,
-    isShow: false,
-    // eslint-disable-next-line react/prop-types
-    roomName: '',
-    // playOnly: true,
-    isCameraOff: true,
-
-    // buttons
-    on_camera_disable: true,
-    off_camera_disable: false,
-    unmute_mic_disable: true,
-    mute_mic_disable: false,
-    join_disable: false,
-    leaveRoom_disable: false,
-    publish_button: true,
-    link: '',
-    passCode: '',
-    participant: 0,
-    capture: 'camera'
+  constructor() {
+    super()
+    state = {
+      mediaConstraints: {
+        video: true,
+        audio: true
+      },
+      // eslint-disable-next-line react/prop-types
+      endpoint: 'wss://8mspaa.com/',
+      streamName: 'stream1',
+      token: '',
+      pc_config: {
+        iceServers: [
+          {
+            urls: 'stun:stun.l.google.com:19302'
+          }
+        ]
+      },
+      sdpConstraints: {
+        OfferToReceiveAudio: false,
+        OfferToReceiveVideo: false
+      },
+      websocketURL: wssURL,
+      isShow: false,
+      // eslint-disable-next-line react/prop-types
+      roomName: '',
+      // playOnly: true,
+      isCameraOff: true,
+  
+      // buttons
+      on_camera_disable: true,
+      off_camera_disable: false,
+      unmute_mic_disable: true,
+      mute_mic_disable: false,
+      join_disable: false,
+      leaveRoom_disable: false,
+      publish_button: true,
+      link: '',
+      passCode: '',
+      participant: 0,
+      capture: 'camera'
+    }
+    socket = socketIOClient(this.state.endpoint)
   }
+  
 
   // screenShareMenu = (
   //   <Menu>
@@ -215,7 +224,7 @@ export class Conference extends Component {
 
   publishToPublic = () => {
     window.open(
-      `http://localhost:3000/merger?roomId=${this.state.roomName}`,
+      `/merger?roomId=${this.state.roomName}`,
       '',
       'width=920,height=580,left=200,top=200'
     )
@@ -698,6 +707,14 @@ export class Conference extends Component {
               )}
             </button>
           </div>
+          {socket ? (
+          <div className="max-w-80 flex mb-4 justify-between text-gray-50">
+            <Messages socket={socket} />
+            <MessageInput socket={socket} />
+          </div>
+        ) : (
+          <div>Not Connected</div>
+        )}
           <div className="my-4"></div>
         </div>
         <div className="h-20"></div>
