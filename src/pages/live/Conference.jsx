@@ -44,6 +44,7 @@ export class Conference extends Component {
   // externalWindow = null
   constructor() {
     super()
+    // this.handleVideoChange = this.handleVideoChange.bind(this)
     this.state = {
       mediaConstraints: {
         video: true,
@@ -81,7 +82,9 @@ export class Conference extends Component {
       link: '',
       passCode: '',
       participant: 0,
-      capture: 'camera'
+      capture: 'camera',
+      audioDevices: [],
+      videoDevices: []
     }
     socket = socketIOClient(this.state.endpoint, { path: '/tlgwss' })
   }
@@ -129,6 +132,20 @@ export class Conference extends Component {
       localStorage.setItem('roomId', localRoomId)
       return localRoomId
     }
+  }
+
+  handleVideoChange = (event) => {
+    // e.preventDefault()
+    if (event.target.value !== 'Select Input source') {
+      this.webRTCAdaptor.switchVideoCameraCapture(this.publishStreamId, event.target.value)
+    }
+    console.log('button working...' + event.target.value)
+  }
+
+  handleAudioChange = (event) => {
+    // e.preventDefault()
+
+    console.log('button working...' + event.target.value)
   }
 
   generateInvitationLink = () => {
@@ -377,6 +394,19 @@ export class Conference extends Component {
             thiz.handleCameraButtons()
           }
           thiz.joinRoom()
+        } else if (info === 'available_devices') {
+          console.log('devices devices devices...')
+          for (let index = 0; index < obj.length; index++) {
+            if (obj[index].kind === 'audioinput') {
+              this.setState(prevState => ({
+                audioDevices: [...prevState.audioDevices, obj[index]]
+              }))
+            } else if (obj[index].kind === 'videoinput') {
+              this.setState(prevState => ({
+                videoDevices: [...prevState.videoDevices, obj[index]]
+              }))
+            }
+          }
         } else if (info === 'joinedTheRoom') {
           const room = obj.ATTR_ROOM_NAME
           thiz.roomOfStream[obj.streamId] = room
@@ -656,6 +686,38 @@ export class Conference extends Component {
             ></div>
           </div>
 
+          <div className="flex items-center justify-between w-1/3 p-4">
+            <div>
+              <div className="flex flex-col items-center p-5">
+                <label className="text-white p-3">Audio input source </label>
+                <select id="audioSource" onChange={this.handleAudioChange} className="p-3">
+                  <option key={null} value={null}>Select Input source</option>
+                  {
+                    this.state.audioDevices.map(audioDevice => {
+                      return (
+                        <option key={audioDevice.deviceId} value={audioDevice.deviceId}>{audioDevice.label}</option>
+                      )
+                    })
+                  }
+                </select>
+              </div>
+            </div>
+            <div>
+              <div className="flex flex-col items-center p-5">
+                <label className="text-white p-3">Video input source </label>
+                <select id="videoSource" onChange={this.handleVideoChange} className="p-3">
+                  <option key={null} value={null} >Select Input source</option>
+                  {
+                    this.state.videoDevices.map(videoDevice => {
+                      return (
+                        <option key={videoDevice.deviceId} value={videoDevice.deviceId}>{videoDevice.label}</option>
+                      )
+                    })
+                  }
+                </select>
+              </div>
+            </div>
+          </div>
           <div className="max-w-80 flex mb-4 justify-between text-gray-50">
             <button className="mx-2">
               {this.isCameraOff ? (
