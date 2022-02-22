@@ -28,55 +28,53 @@ export class JoinConference extends Component {
   token = ''
   streamId = null
   // externalWindow = null
-  constructor() {
-    super()
-    this.state = {
-      visible: false,
-      confirmLoading: false,
-      passCode: '',
-      mediaConstraints: {
-        video: true,
-        audio: true
-      },
-      // eslint-disable-next-line react/prop-types
-      endpoint: 'wss://8mspaa.com',
-      streamName: 'stream1',
-      // token: '',
-      pc_config: {
-        iceServers: [
-          {
-            urls: 'stun:stun.l.google.com:19302'
-          }
-        ]
-      },
-      sdpConstraints: {
-        OfferToReceiveAudio: false,
-        OfferToReceiveVideo: false
-      },
-      websocketURL: wssURL,
-      isShow: false,
-      // eslint-disable-next-line react/prop-types
-      token: new URLSearchParams(this.props.location.search).get('token'),
-      roomName: '',
-      // token: new URLSearchParams(this.props.location.search).get('token'),
-      // playOnly: true,
-      isCameraOff: true,
 
-      // buttons
-      on_camera_disable: true,
-      off_camera_disable: false,
-      unmute_mic_disable: true,
-      mute_mic_disable: false,
-      join_disable: false,
-      leaveRoom_disable: false,
-      publish_button: true,
-      link: ''
-    }
-    socket = socketIOClient(this.state.endpoint, { path: '/tlgwss' })
+  state = {
+    visible: false,
+    confirmLoading: false,
+    passCode: '',
+    mediaConstraints: {
+      video: true,
+      audio: true
+    },
+    // eslint-disable-next-line react/prop-types
+    endpoint: 'wss://8mspaa.com',
+    streamName: 'stream1',
+    // token: '',
+    pc_config: {
+      iceServers: [
+        {
+          urls: 'stun:stun.l.google.com:19302'
+        }
+      ]
+    },
+    sdpConstraints: {
+      OfferToReceiveAudio: false,
+      OfferToReceiveVideo: false
+    },
+    websocketURL: wssURL,
+    isShow: false,
+    // eslint-disable-next-line react/prop-types
+    token: new URLSearchParams(this.props?.location?.search).get('token'),
+    roomName: '',
+    // token: new URLSearchParams(this.props.location.search).get('token'),
+    // playOnly: true,
+    isCameraOff: true,
+
+    // buttons
+    on_camera_disable: true,
+    off_camera_disable: false,
+    unmute_mic_disable: true,
+    mute_mic_disable: false,
+    join_disable: false,
+    leaveRoom_disable: false,
+    publish_button: true,
+    link: ''
   }
 
   componentDidMount() {
     // eslint-disable-next-line react/prop-types
+    socket = socketIOClient(this.state.endpoint, { path: '/tlgwss' })
     console.log(this.state.roomName)
     this.webRTCAdaptor = this.intianteWebRTC()
     // this.getStreamed()
