@@ -17,7 +17,7 @@ class Playernewauto extends React.Component {
         video: false,
         audio: false
       },
-      endpoint: 'wss://8mspaa.com/tlgwss/',
+      endpoint: 'wss://8mspaa.com/',
       // eslint-disable-next-line react/prop-types
       streamName: this.props?.location?.state?.stream_key,
       token: '',
@@ -35,7 +35,7 @@ class Playernewauto extends React.Component {
       websocketURL: wssURL,
       isShow: false
     }
-    socket = socketIOClient(this.state.endpoint)
+    socket = socketIOClient(this.state.endpoint, { path: '/tlgwss' })
   }
 
   componentDidMount() {
