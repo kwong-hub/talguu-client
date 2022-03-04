@@ -217,11 +217,12 @@ export default function WebRTCAdaptor(initialValues) {
         // TODO: check audio track
         screenVideo.srcObject = stream
         screenVideo.play()
+
         // create video element for camera
-        const cameraVideo = document.createElement('video')
+        // const cameraVideo = document.createElement('video')
         // TODO: check audio track
-        cameraVideo.srcObject = cameraStream
-        cameraVideo.play()
+        // cameraVideo.srcObject = cameraStream
+        // cameraVideo.play()
         const canvasStream = canvas.captureStream(15)
         canvasStream.addTrack(audioStream.getAudioTracks()[0])
 
@@ -249,28 +250,14 @@ export default function WebRTCAdaptor(initialValues) {
             canvas.height
           )
 
-          const cameraWidth =
-            screenVideo.videoWidth * (thiz.camera_percent / 100)
-          const cameraHeight =
-            (cameraVideo.videoHeight / cameraVideo.videoWidth) * cameraWidth
-
-          const positionX = canvas.width - cameraWidth - thiz.camera_margin
-          let positionY
-
-          if (thiz.camera_location === 'top') {
-            positionY = thiz.camera_margin
-          } else {
-            // if not top, make it bottom
-            // draw camera on right bottom corner
-            positionY = canvas.height - cameraHeight - thiz.camera_margin
-          }
-          canvasContext.drawImage(
-            cameraVideo,
-            positionX,
-            positionY,
-            cameraWidth,
-            cameraHeight
-          )
+          // const positionX = canvas.width - cameraWidth - thiz.camera_margin
+          // canvasContext.drawImage(
+          // cameraVideo,
+          // positionX,
+          // positionY,
+          // cameraWidth,
+          // cameraHeight
+          // )
         }, 66)
       })
       .catch(function (error) {
@@ -301,6 +288,7 @@ export default function WebRTCAdaptor(initialValues) {
 
           const onended = function (event) {
             thiz.callback('screen_share_stopped')
+            thiz.localVideo.style.display = 'block'
             thiz.setVideoCameraSource(streamId, mediaConstraints, null, true)
           }
 
@@ -313,7 +301,7 @@ export default function WebRTCAdaptor(initialValues) {
               true
             )
           } else if (thiz.publishMode === 'screen+camera') {
-            audioStream = thiz.setGainNodeStream(audioStream)
+            // audioStream = thiz.setGainNodeStream(audioStream)
             if (audioTrack.length > 0) {
               const mixedStream = thiz.mixAudioStreams(stream, audioStream, streamId)
               thiz.updateAudioTrack(mixedStream, streamId, null)
@@ -875,21 +863,22 @@ export default function WebRTCAdaptor(initialValues) {
   this.switchDesktopCapture = function (streamId) {
     console.log('switchDesktopCapture')
     thiz.publishMode = 'screen'
-
     let audioConstraint = false
     if (
-      typeof mediaConstraints.audio !== 'undefined' &&
-      mediaConstraints.audio !== false
+      typeof this.mediaConstraints.audio !== 'undefined' &&
+      this.mediaConstraints.audio !== false
     ) {
       audioConstraint = mediaConstraints.audio
     }
-
+    if (typeof this.mediaConstraints.video !== 'undefined' && this.mediaConstraints.video !== false) {
+      this.mediaConstraints.video = true
+    }
     thiz.getUserMedia(thiz.mediaConstraints, audioConstraint, streamId)
   }
 
   this.switchDesktopCaptureWithCamera = function (streamId) {
     thiz.publishMode = 'screen+camera'
-
+    thiz.localVideo.style.display = 'none'
     let audioConstraint = false
     if (
       typeof mediaConstraints.audio !== 'undefined' &&

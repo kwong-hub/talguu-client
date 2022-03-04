@@ -20,7 +20,7 @@ export class MergerConference extends Component {
   merger = new StreamMerger(1020, 720, true)
   playOnly = false
   token = ''
-  streamId = null
+  streamId = 'krbTzc_nrNyn2L6aB01'
   oldId = null
   xindex = 0
   yindex = 0
