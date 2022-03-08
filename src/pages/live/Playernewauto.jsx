@@ -148,9 +148,13 @@ class Playernewauto extends React.Component {
         </div>
         <div />
         {socket ? (
-          <div className="my-8 pt-8 ml-0  flex flex-col w-full items-center">
-            <Messages socket={socket} />
-            <MessageInput socket={socket} />
+          <div className='flex flex-col items-center'>
+            <div className="w-96 flex flex-col mb-4 bg-gray-200 h-36 p-5 rounded-xl">
+              <Messages socket={socket} />
+            </div>
+            <div className="pt-8 ml-0  flex flex-col w-full items-center">
+              <MessageInput socket={socket} />
+            </div>
           </div>
         ) : (
           <div>Not Connected</div>

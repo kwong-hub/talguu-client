@@ -30,7 +30,7 @@ function Messages({ socket }) {
   }, [socket])
 
   return (
-    <div className="message-list">
+    <div className="message-list overflow-y-scroll">
       {[...Object.values(messages)]
         .sort((a, b) => a.time - b.time)
         .map((message) => (

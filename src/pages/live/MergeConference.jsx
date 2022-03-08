@@ -526,7 +526,7 @@ export class MergerConference extends Component {
             ></div>
           </div>
 
-          <div className="my-4">
+          <div className="my-4 z-10">
             <Button
               className="mx-4"
               type="primary"

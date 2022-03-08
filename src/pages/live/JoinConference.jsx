@@ -11,7 +11,6 @@ import HeaderHome from '../../partials/header/HeaderHome'
 import { history } from '../../_helpers'
 import { MdScreenShare } from 'react-icons/md'
 import Messages from './Messages'
-import MessageInput from './MessageInput'
 let socket
 export class JoinConference extends Component {
   webRTCAdaptor = null
@@ -281,13 +280,14 @@ export class JoinConference extends Component {
     let video = document.getElementById('remoteVideo' + obj.streamId)
 
     console.log('***********about to create a remote video**************')
-    if (video == null) {
+    if (video == null && obj.streamId !== 'krbTzc_nrNyn2L6aB01') {
       console.log('***********creating remote video**************')
       this.createRemoteVideoOld(obj.streamId)
       video = document.getElementById('remoteVideo' + obj.streamId)
     }
-
-    video.srcObject = obj.stream
+    if (video != null) {
+      video.srcObject = obj.stream
+    }
   }
 
   switchVideoMode = (value) => {
@@ -580,9 +580,8 @@ export class JoinConference extends Component {
             </button>
           </div>
           {socket ? (
-            <div className="max-w-80 flex mb-4 justify-between">
-              <Messages socket={socket} />
-              <MessageInput socket={socket} />
+            <div className="w-96 flex mb-4 justify-between bg-white h-36 p-5 rounded-xl">
+              <Messages socket={socket}/>
             </div>
           ) : (
             <div>Not Connected</div>
@@ -602,7 +601,7 @@ export class JoinConference extends Component {
               type="primary"
               onClick={(e) => this.leaveRoom()}
               disabled={this.state.leaveRoom_disable}
-              id="stop_publish_Button"
+              id="stop_publish_Button12"
             >
               Leave Room
             </Button> */}

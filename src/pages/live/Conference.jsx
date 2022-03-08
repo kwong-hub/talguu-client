@@ -24,7 +24,6 @@ import { CopyToClipboard } from 'react-copy-to-clipboard/lib/Component'
 import { FaCopy } from 'react-icons/fa'
 import PropTypes from 'prop-types'
 import Messages from './Messages'
-import MessageInput from './MessageInput'
 // import Menu from 'rc-menu'
 let socket
 export class Conference extends Component {
@@ -145,6 +144,10 @@ export class Conference extends Component {
   handleAudioChange = (event) => {
     // e.preventDefault()
 
+    console.log('button working...' + event.target.value)
+    if (event.target.value !== 'Select Input source') {
+      this.webRTCAdaptor.switchAudioInputSource(this.publishStreamId, event.target.value)
+    }
     console.log('button working...' + event.target.value)
   }
 
@@ -348,12 +351,13 @@ export class Conference extends Component {
 
     let video = document.getElementById('remoteVideo' + obj.streamId)
 
-    if (video == null) {
+    if (video == null && obj.streamId !== 'krbTzc_nrNyn2L6aB01') {
       this.createRemoteVideoOld(obj.streamId)
       video = document.getElementById('remoteVideo' + obj.streamId)
     }
-
-    video.srcObject = obj.stream
+    if (video != null) {
+      video.srcObject = obj.stream
+    }
   }
 
   switchVideoMode = (value) => {
@@ -767,9 +771,8 @@ export class Conference extends Component {
             </button>
           </div>
           {socket ? (
-            <div className="max-w-80 flex mb-4 justify-between">
+            <div className="w-96 flex mb-4 justify-between bg-white h-36 p-5 rounded-xl">
               <Messages socket={socket} />
-              <MessageInput socket={socket} />
             </div>
           ) : (
             <div>Not Connected</div>
