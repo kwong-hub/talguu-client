@@ -494,6 +494,10 @@ export class Conference extends Component {
         } else if (info === 'play_finished') {
           console.log('** play_finished')
           thiz.removeRemoteVideo(obj.streamId)
+          this.setState({
+            join_disable: true,
+            leaveRoom_disable: false
+          })
         } else if (info === 'streamInformation') {
           console.log('** stream information')
           thiz.streamInformation(obj)
@@ -643,9 +647,9 @@ export class Conference extends Component {
                 </span>
               </div>
               <div className="cursor-pointer flex items-center">
-                <BiGroup className="w-8 h-8 mx-1"></BiGroup> Participant
+                <BiGroup className="w-8 h-8 mx-1"></BiGroup>
                 <span className="bg-gray-200 text-blue-800 px-3 mx-2 rounded-sm">
-                  {this.state.participant}
+                  LIVE
                 </span>
               </div>
               <div>
@@ -657,17 +661,10 @@ export class Conference extends Component {
                     onClick={(e) => this.publishToPublic()}
                     id="join_publish_Button"
                   >
-                    Publish to public
+                    Prepare to Broadcast
                   </Button>
                 ) : (
-                  <Button
-                    className="mx-4"
-                    type="primary"
-                    onClick={(e) => this.unpublish()}
-                    id="join_publish_Button"
-                  >
-                    Un-Publish
-                  </Button>
+                  <></>
                 )}
               </div>
             </div>
