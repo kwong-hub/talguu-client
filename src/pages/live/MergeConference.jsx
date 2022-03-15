@@ -66,6 +66,13 @@ export class MergerConference extends Component {
 
   componentDidMount() {
     // console.log(this.props)
+    var thiz = this
+    window.addEventListener('beforeunload', function (event) {
+      this.alert('hisisisi')
+      if (!thiz.state.join_disable) {
+        thiz.leaveRoom()
+      }
+    })
     this.getStreamed()
     this.webRTCAdaptor = this.intianteWebRTC()
   }
@@ -539,7 +546,7 @@ export class MergerConference extends Component {
             <Button
               className=""
               type="primary"
-              onClick={(e) => this.leaveRoom()}
+              onClick={(e) => window.close()}
               disabled={this.state.leaveRoom_disable}
               id="stop_publish_Button"
             >

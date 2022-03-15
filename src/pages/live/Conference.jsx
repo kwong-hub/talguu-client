@@ -40,6 +40,7 @@ export class Conference extends Component {
   playOnly = false
   token = ''
   streamId = null
+  publisherWindow = null
   // externalWindow = null
   constructor() {
     super()
@@ -240,7 +241,7 @@ export class Conference extends Component {
   }
 
   publishToPublic = () => {
-    window.open(
+    this.publisherWindow = window.open(
       `/merger?roomId=${this.state.roomName}`,
       '',
       'width=920,height=580,left=200,top=200'
@@ -270,7 +271,12 @@ export class Conference extends Component {
   unpublish = () => {
     videoService
       .endStream(this.state.streamName)
-      .then(() => this.setState({ publish_button: false }))
+      .then(() => {
+        this.setState({ publish_button: false })
+        if (this.publisherWindow) {
+          this.publisherWindow.close()
+        }
+      })
       .catch((err) => console.log('err', err))
   }
 
@@ -494,7 +500,7 @@ export class Conference extends Component {
         } else if (info === 'play_finished') {
           console.log('** play_finished')
           thiz.removeRemoteVideo(obj.streamId)
-          this.setState({
+          thiz.setState({
             join_disable: true,
             leaveRoom_disable: false
           })
@@ -513,6 +519,11 @@ export class Conference extends Component {
           for (const str of thiz.streamsList) {
             if (!obj.streams.includes(str)) {
               thiz.removeRemoteVideo(str)
+              thiz.setState({
+                join_disable: false,
+                leaveRoom_disable: false,
+                publish_button: true
+              })
             }
           }
           // Lastly updates the current streamlist with the fetched one.
@@ -664,7 +675,14 @@ export class Conference extends Component {
                     Prepare to Broadcast
                   </Button>
                 ) : (
-                  <></>
+                    <Button
+                      className="mx-4"
+                      type="primary"
+                      onClick={(e) => this.unpublish()}
+                      id="join_publish_Button"
+                    >
+                      Un-Publish
+                    </Button>
                 )}
               </div>
             </div>

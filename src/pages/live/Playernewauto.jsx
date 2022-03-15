@@ -40,7 +40,6 @@ class Playernewauto extends React.Component {
 
   componentDidMount() {
     console.log(this.props)
-
     this.webRTCAdaptor = this.initiateWebrtc()
     this.setState({ isShow: true, streamName: this.props.location?.state?.stream_key })
   }
