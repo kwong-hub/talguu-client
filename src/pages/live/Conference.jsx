@@ -241,14 +241,17 @@ export class Conference extends Component {
   }
 
   publishToPublic = () => {
+    if (this.publisherWindow != null) {
+      this.publisherWindow.close()
+    }
     this.publisherWindow = window.open(
       `/merger?roomId=${this.state.roomName}`,
       '',
       'width=920,height=580,left=200,top=200'
     )
-    this.setState({
-      publish_button: false
-    })
+    // this.setState({
+    // publish_button: false
+    // })
   }
 
   getRndInteger = (min, max) => {
@@ -360,6 +363,10 @@ export class Conference extends Component {
     if (video == null && obj.streamId !== 'krbTzc_nrNyn2L6aB01') {
       this.createRemoteVideoOld(obj.streamId)
       video = document.getElementById('remoteVideo' + obj.streamId)
+    } else if (obj.streamId === 'krbTzc_nrNyn2L6aB01') {
+      this.setState({
+        publish_button: false
+      })
     }
     if (video != null) {
       video.srcObject = obj.stream
@@ -479,7 +486,6 @@ export class Conference extends Component {
           if (thiz.roomTimerId != null) {
             clearInterval(thiz.roomTimerId)
           }
-
           this.setState({
             join_disable: false,
             leaveRoom_disable: true
@@ -681,7 +687,7 @@ export class Conference extends Component {
                       onClick={(e) => this.unpublish()}
                       id="join_publish_Button"
                     >
-                      Un-Publish
+                      Stop Broadcast
                     </Button>
                 )}
               </div>

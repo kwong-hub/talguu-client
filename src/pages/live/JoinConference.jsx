@@ -183,11 +183,19 @@ export class JoinConference extends Component {
       videoService.getConferenceRoom({ token, passCode })
         .then(response => {
           const { isValid, success, roomId } = response
-          if (isValid && success) {
+          if (isValid && success && response.passCode === passCode) {
             thiy.setState({ roomName: roomId })
             // thiy.webRTCAdaptor.joinRoom(thiy.state.roomName, thiy.streamId)
             // notification.open({ message: 'Joined successfully' })
             thiy.testJoin(thiy.state.roomName)
+          } else {
+            const args = {
+              message: 'Pass Code',
+              description:
+                'Invalid passcode or link.',
+              duration: 3
+            }
+            notification.open(args)
           }
           thiy.setState({ visible: false, confirmLoading: false })
         })
