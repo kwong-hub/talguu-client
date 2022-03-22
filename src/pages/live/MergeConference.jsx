@@ -68,13 +68,25 @@ export class MergerConference extends Component {
     // console.log(this.props)
     var thiz = this
     window.addEventListener('beforeunload', function (event) {
-      this.alert('hisisisi')
-      if (!thiz.state.join_disable) {
-        thiz.leaveRoom()
+      // this.alert('hisisisi')
+      // if (!thiz.state.join_disable) {
+      // thiz.leaveRoom()
+      // }
+      if (thiz.state.join_disable) {
+        thiz.unpublish()
       }
     })
     this.getStreamed()
     this.webRTCAdaptor = this.intianteWebRTC()
+  }
+
+  unpublish = () => {
+    videoService
+      .endStream(this.streamId)
+      .then(() => {
+        this.leaveRoom()
+      })
+      .catch((err) => console.log('err', err))
   }
 
   turnOffLocalCamera = () => {
