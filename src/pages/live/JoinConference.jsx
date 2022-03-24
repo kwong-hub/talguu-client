@@ -515,7 +515,6 @@ export class JoinConference extends Component {
                 className="w-full my-6"
                 autoPlay
                 muted
-                controls
                 playsinline
               ></video>
             </div>

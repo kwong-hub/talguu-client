@@ -701,7 +701,6 @@ export class Conference extends Component {
                 className="flex-1 my-6"
                 autoPlay
                 muted
-                controls
                 playsinline
               ></video>
             </div>
