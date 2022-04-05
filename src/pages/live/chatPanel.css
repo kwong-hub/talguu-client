@@ -77,16 +77,19 @@ textarea {
 
 .chat-content{
   position: fixed;
-  top: 118px;
-  left: 16px;
+  top: 48px;
+  right: 16px;
+  z-index: 20;
+  height: 400px;
 }
 
 .viewer-chat-content{
   position: fixed;
-  top: 118px;
-  left: 96.2px;
+  top: 58px;
+  right: 96.2px;
 }
 
+
 .message-container{
-  height: 530px;
+  height: 560px;
 }

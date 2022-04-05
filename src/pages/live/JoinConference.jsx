@@ -683,39 +683,6 @@ export class JoinConference extends Component {
           {/* <h2 className="text-xl ">Conference</h2> */}
 
           <div className="flex border-b-2 border-gray-500 p-4 w-full justify-between text-white">
-            <div className="flex items-center">
-              {/* chat part begins */}
-
-              <div className="w-72">
-                <div
-                  className="flex items-center justify-between chat-panel-btn bg-gray-800 hover:bg-gray-700"
-                  onClick={() => this.toggleChatPanel()}
-                >
-                  <button className="text-gray-200">Chat Panel</button>
-                  <span className="mx-3 text-gray-200">
-                    {this.state.openChatPanel ? (
-                      <IoIosArrowUp />
-                    ) : (
-                      <IoIosArrowDown />
-                    )}
-                  </span>
-                </div>
-              </div>
-
-              {this.state.openChatPanel && (
-                
-                  <ChatPanel
-                    incomingChats={this.state.incomingChats}
-                    chatMessage={this.state.chatMessage}
-                    handleMessageChange={this.handleMessageChange}
-                    canSendMessage={false}
-                    handleSendMessage={this.handleSendMessage}
-                    typing={this.state.typing}
-                  />
-             
-              )}
-              {/* chat part ends */}
-            </div>
             {/* setting */}
             <div>
               <div
@@ -872,6 +839,37 @@ export class JoinConference extends Component {
           </div>
         </div>
         <div className="h-20"></div>
+
+        {/* chat part begins */}
+
+        {!this.state.openChatPanel && (
+          <div className="w-72 h-16 fixed bottom-2 right-2">
+            <div
+              className="flex items-center justify-between chat-panel-btn bg-gray-800 hover:bg-gray-700"
+              onClick={() => this.toggleChatPanel()}
+            >
+              <button className="text-gray-200">Open chat</button>
+              <span className="mx-3 text-gray-200">
+                <IoIosArrowDown />
+              </span>
+            </div>
+          </div>
+        )}
+
+        {this.state.openChatPanel && (
+          <ChatPanel
+            incomingChats={this.state.incomingChats}
+            chatMessage={this.state.chatMessage}
+            handleMessageChange={this.handleMessageChange}
+            canSendMessage={false}
+            handleSendMessage={this.handleSendMessage}
+            typing={this.state.typing}
+            openChatPanel={this.state.openChatPanel}
+            toggleChatPanel={this.toggleChatPanel}
+          />
+        )}
+
+        {/* chat part ends */}
       </div>
     )
   }

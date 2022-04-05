@@ -2,6 +2,8 @@ import { Divider } from 'antd'
 import React from 'react'
 import { IoSendSharp } from 'react-icons/io5'
 
+import { AiOutlineClose} from 'react-icons/ai'
+
 const ChatPanel = ({
     incomingChats,
     chatMessage,
@@ -9,13 +11,32 @@ const ChatPanel = ({
     canSendMessage,
     handleSendMessage,
     typing,
-    viewerPanel
+    viewerPanel,
+    openChatPanel,
+    toggleChatPanel,
 }) => {
 
     return (
-        <div className={viewerPanel ? "w-72 z-30 viewer-chat-content" : "w-72 z-30 chat-content"}>
-            <div className="w-full flex flex-col items-start h-screen relative bg-gray-700 message-container">
-              <div className="flex flex-col items-start h-full overflow-y-auto pb-20">
+
+        <div className={viewerPanel ? "w-72 z-30 h-screen viewer-chat-content" : "w-72 z-30 chat-content"}>
+            <div className="w-full flex flex-col items-start relative bg-gray-700 message-container">
+              
+                {openChatPanel && (
+                    <div className="w-72 h-16 absolute top-0 right-0">
+                        <div
+                            className="flex items-center justify-between chat-panel-btn bg-gray-800 hover:bg-gray-700"
+                            onClick={() => toggleChatPanel()}
+                        >
+                            <button className="text-gray-200">Close chat</button>
+                            <span className="mx-3 text-gray-200">
+                                <AiOutlineClose />
+                            </span>
+                        </div>
+                    </div>
+                )}
+              
+              <div className="flex flex-col items-start h-full w-full overflow-y-auto pb-20 mt-10">
+
                   {incomingChats.length > 0 ? (
                       incomingChats.map((chat, index) => {
                           return (
@@ -23,7 +44,6 @@ const ChatPanel = ({
                                   className="flex flex-col mt-3 px-2 items-start justify-start"
                                   key={index}
                               >
-
                                   <div className="chat-message flex items-start">
                                       <p className="chat-user">{chat.user.name}</p>
                                       <Divider style={{
@@ -41,7 +61,7 @@ const ChatPanel = ({
                           )
                       })
                   ) : (
-                      <p className="mt-10 pl-16">No chats available</p>
+                      <p className="mt-10 pl-16 text-gray-100">No chats available</p>
                   )}
               </div>
              {

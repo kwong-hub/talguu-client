@@ -192,40 +192,36 @@ class Playernewauto extends React.Component {
       <div className="-mt-2 pt-16 mb-8">
         <SideNav></SideNav>
 
-        <div className="flex border-gray-500 p-4 w-full justify-between text-white">
-          <div className="flex items-center">
-            {/* chat part begins */}
+        {/* chat part begins */}
 
-            <div className="w-72 ml-20">
-              <div
-                className="flex items-center justify-between chat-panel-btn bg-gray-100 hover:bg-gray-300"
-                onClick={() => this.toggleChatPanel()}
-              >
-                <button className="text-gray-800">Chat Panel</button>
-                <span className="mx-3 text-gray-800">
-                  {this.state.openChatPanel ? (
-                    <IoIosArrowUp />
-                  ) : (
-                    <IoIosArrowDown />
-                  )}
-                </span>
-              </div>
+        {!this.state.openChatPanel && (
+          <div className="w-72 h-16 fixed bottom-2 right-2">
+            <div
+              className="flex items-center justify-between chat-panel-btn bg-gray-800 hover:bg-gray-700"
+              onClick={() => this.toggleChatPanel()}
+            >
+              <button className="text-gray-200">Open chat</button>
+              <span className="mx-3 text-gray-200">
+                  <IoIosArrowDown />
+              </span>
             </div>
-
-            {this.state.openChatPanel && (
-              <ChatPanel
-                incomingChats={this.state.incomingChats}
-                chatMessage={this.state.chatMessage}
-                handleMessageChange={this.handleMessageChange}
-                canSendMessage={true}
-                handleSendMessage={this.handleSendMessage}
-                typing={this.state.typing}
-                viewerPanel={true}
-              />
-            )}
           </div>
-        </div>
+        )}
 
+        {this.state.openChatPanel && (
+          <ChatPanel
+            incomingChats={this.state.incomingChats}
+            chatMessage={this.state.chatMessage}
+            handleMessageChange={this.handleMessageChange}
+            canSendMessage={true}
+            handleSendMessage={this.handleSendMessage}
+            typing={this.state.typing}
+            openChatPanel={this.state.openChatPanel}
+            toggleChatPanel={this.toggleChatPanel}
+          />
+        )}
+
+        {/* chat part ends */}
         <div className="w-full flex items-center p-8 justify-center">
           <div className="my-8 border-2 p-6 player_container">
             {/* YOU ARE IN AUTO PLAY PAGE <br /> */}

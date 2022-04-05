@@ -209,7 +209,7 @@ class Publishnew extends React.Component {
     return (
       <div className="flex-col items-center">
         <SideNav></SideNav>
-        <div className="my-4 p-2 pt-8 ml-0  flex flex-col w-full items-center max-w-xl">
+        <div className="my-4 p-2 pt-8 ml-20  flex flex-col w-full items-center max-w-xl">
           <span className="py-4 text-xl font-medium">Go live from Webcam</span>
           <video id="localVideo" autoPlay muted controls playsInline></video>
           <br />
