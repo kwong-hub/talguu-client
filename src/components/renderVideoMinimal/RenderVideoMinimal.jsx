@@ -5,8 +5,14 @@ import moment from 'moment'
 import React from 'react'
 import { FaPlayCircle } from 'react-icons/fa'
 import PropTypes from 'prop-types'
+import { useHistory } from 'react-router-dom'
+
+
 
 const RenderVideoMinimal = (props) => {
+
+  const history = useHistory()
+  
   const play = (video) => {
     history.push(`/watch/${video.id}`)
   }

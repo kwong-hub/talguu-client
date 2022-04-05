@@ -5,6 +5,7 @@ import { wssURL } from '../../environment/config'
 import SideNav from '../../partials/sideNav/SideNav'
 import { Button, message, notification } from 'antd'
 import videoService from '../../_services/video.service'
+import { history } from '../../_helpers'
 // import CopyToClipboard from 'react-copy-to-clipboard'
 // import { FaCopy } from 'react-icons/fa'
 

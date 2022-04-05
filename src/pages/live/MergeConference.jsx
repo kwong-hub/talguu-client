@@ -1,4 +1,4 @@
-import { Button, notification } from 'antd'
+import { Button, notification, Avatar } from 'antd'
 import React, { Component } from 'react'
 import { wssURL } from '../../environment/config'
 
@@ -6,6 +6,13 @@ import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import StreamMerger from '../../_helpers/streaam_merger'
 import videoService from '../../_services/video.service'
 import HeaderHome from '../../partials/header/HeaderHome'
+import { history } from '../../_helpers'
+
+import userIcon from '../../assets/images/user_avatar_2.png'
+import { UserOutlined } from '@ant-design/icons'
+
+import './Player.css'
+
 
 export class MergerConference extends Component {
   webRTCAdaptor = null
@@ -242,7 +249,7 @@ export class MergerConference extends Component {
     this.webRTCAdaptor.play(obj.streamId, this.token, this.state.roomName)
   }
 
-  createRemoteVideoOld = (streamId) => {
+  createRemoteVideoOldxy = (streamId) => {
     const player = document.createElement('div')
     player.className = 'flex-1 remote-video'
     player.id = 'player' + streamId
@@ -253,13 +260,66 @@ export class MergerConference extends Component {
     document.getElementById('players').appendChild(player)
   }
 
+  createRemoteVideoOld = (streamId) => {
+    const video2 = document.querySelector('#video_2 > video')
+    const video3 = document.querySelector('#video_3 > video')
+    const video4 = document.querySelector('#video_4 > video')
+
+    if (!video2) {
+      const parent2 = document.getElementById('video_2')
+      const player2 = document.createElement('video')
+      player2.id = 'remoteVideo' + streamId
+      player2.autoplay = true
+      player2.controls = true
+      player2.className = 'videoPlayer'
+      parent2.removeChild(parent2.firstChild)
+      parent2.appendChild(player2)
+    } else if (!video3) {
+      const parent3 = document.getElementById('video_3')
+      const player3 = document.createElement('video')
+      player3.id = 'remoteVideo' + streamId
+      player3.autoplay = true
+      player3.controls = true
+      player3.className = 'videoPlayer'
+      parent3.removeChild(parent3.firstChild)
+      parent3.appendChild(player3)
+    } else if (!video4) {
+      const parent4 = document.getElementById('video_4')
+      const player4 = document.createElement('video')
+      player4.autoplay = true
+      player4.controls = true
+      player4.className = 'videoPlayer'
+      player4.id = 'remoteVideo' + streamId
+      parent4.removeChild(parent4.firstChild)
+      parent4.appendChild(player4)
+    }
+  }
+
+  removeRemoteVideo = (streamId) => {
+    const video = document.getElementById('remoteVideo' + streamId)
+    if (video != null) {
+      const vidPlayer = document.getElementById('remoteVideo' + streamId)
+      const parentcnt = vidPlayer.parentElement
+
+      const avaterDive = document.createElement('div')
+      avaterDive.className = 'avatar_style'
+      avaterDive.innerHTML = `
+                  
+                  <img src='${userIcon}' alt='user avatar' class="user_icon_style" />
+                `
+      vidPlayer.remove()
+      parentcnt.appendChild(avaterDive)
+    }
+    this.webRTCAdaptor.stop(streamId)
+  }
+
   remoteVideo = (streamId) => (
     <div className="flex flex-col" id={'player' + streamId}>
       <video id={'remoteVideo' + streamId} controls autoPlay></video>
     </div>
   )
 
-  removeRemoteVideo = (streamId) => {
+  removeRemoteVideoxy = (streamId) => {
     const video = document.getElementById('remoteVideo' + streamId)
     if (video != null) {
       const player = document.getElementById('player' + streamId)
@@ -530,7 +590,26 @@ export class MergerConference extends Component {
           <h2 className="text-xl text-white py-4">
             ENJOY THE POWER OF BROADCASTING
           </h2>
-          <div className="flex items-start">
+
+          <div className="video_player_container">
+            {/* first row */}
+            <div className="video_player_content">
+              <div className="video_player_inner_merger">
+                <video
+                  src="https://assets.mixkit.co/videos/preview/mixkit-female-boxer-resting-after-her-training-40264-large.mp4"
+                  id="localVideo"
+                  className="videoPlayer_merger"
+                  autoPlay
+                  muted
+                  playsinline
+                ></video>
+              </div>
+            </div>
+          </div>
+
+          {/* video player container ends */}
+
+          {/* <div className="flex items-start">
             <video
               id="localVideo"
               className="flex-1 my-6"
@@ -543,11 +622,11 @@ export class MergerConference extends Component {
               id="players"
               className="my-4 py-2 flex flex-1 flex-wrap-reverse"
             ></div>
-          </div>
+          </div> */}
 
           <div className="my-4 z-10">
             <Button
-              className="mx-4"
+              className="mx-4 px-5 py-2 text-center leading-3"
               type="primary"
               disabled={this.state.join_disable}
               onClick={(e) => this.joinRoom()}
@@ -556,7 +635,7 @@ export class MergerConference extends Component {
               Start
             </Button>
             <Button
-              className=""
+              className="px-5 py-2 text-center leading-3"
               type="primary"
               onClick={(e) => window.close()}
               disabled={this.state.leaveRoom_disable}

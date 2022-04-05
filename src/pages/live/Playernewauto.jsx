@@ -4,14 +4,26 @@ import './Player.css'
 import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import { wssURL } from '../../environment/config'
 import SideNav from '../../partials/sideNav/SideNav'
-import { notification } from 'antd'
+import { notification, message } from 'antd'
 import Messages from './Messages'
 import MessageInput from './MessageInput'
+
+import './playernewauto.css'
+
+import './chatPanel.css'
+
+import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io'
+import ChatPanel from './ChatPanel'
+
+
 let socket
 class Playernewauto extends React.Component {
   webRTCAdaptor = null
   constructor() {
     super()
+
+    this.chatText = React.createRef()
+
     this.state = {
       mediaConstraints: {
         video: false,
@@ -33,7 +45,13 @@ class Playernewauto extends React.Component {
         OfferToReceiveVideo: true
       },
       websocketURL: wssURL,
-      isShow: false
+      isShow: false,
+      incomingChats: [],
+      openChatPanel: false,
+      chatMessage: '',
+      typing: false,
+      isModalVisible: false,
+      incomingMessage: {}
     }
     socket = socketIOClient(this.state.endpoint, { path: '/tlgwss' })
   }
@@ -41,9 +59,29 @@ class Playernewauto extends React.Component {
   componentDidMount() {
     console.log(this.props)
     this.webRTCAdaptor = this.initiateWebrtc()
-    this.setState({ isShow: true, streamName: this.props.location?.state?.stream_key })
+    this.setState({
+      isShow: true,
+      streamName: this.props.location?.state?.stream_key
+    })
+
+    socket.on('message', this.messageListener)
+   
   }
 
+
+     messageListener = (message) => {
+      this.state.incomingChats.push(message)
+      this.setState({
+        incomingChats: this.state.incomingChats
+      })
+    }
+
+
+  componentWillUnmount() {
+    socket.off('message', this.messageListener)
+  }
+
+  
   streamChangeHandler = ({ target: { value } }) => {
     console.log(value)
     this.setState({ streamName: value })
@@ -89,24 +127,24 @@ class Playernewauto extends React.Component {
           // fractionLost - fraction of packet lost
           console.log(
             'Average incoming kbits/sec: ' +
-            obj.averageIncomingBitrate +
-            ' Current incoming kbits/sec: ' +
-            obj.currentIncomingBitrate +
-            ' packetLost: ' +
-            obj.packetsLost +
-            ' fractionLost: ' +
-            obj.fractionLost +
-            ' audio level: ' +
-            obj.audioLevel
+              obj.averageIncomingBitrate +
+              ' Current incoming kbits/sec: ' +
+              obj.currentIncomingBitrate +
+              ' packetLost: ' +
+              obj.packetsLost +
+              ' fractionLost: ' +
+              obj.fractionLost +
+              ' audio level: ' +
+              obj.audioLevel
           )
         } else if (info === 'data_received') {
           console.log(
             'Data received: ' +
-            obj.event.data +
-            ' type: ' +
-            obj.event.type +
-            ' for stream: ' +
-            obj.streamId
+              obj.event.data +
+              ' type: ' +
+              obj.event.type +
+              ' for stream: ' +
+              obj.streamId
           )
         } else if (info === 'bitrateMeasurement') {
           console.log(info + ' notification received')
@@ -125,40 +163,82 @@ class Playernewauto extends React.Component {
     })
   }
 
+  toggleChatPanel = () => {
+    this.setState((prevState) => ({
+      openChatPanel: !prevState.openChatPanel
+    }))
+  }
+
+  handleMessageChange = (e) => {
+    this.setState({
+      chatMessage: e.target.value,
+      typing: true
+    })
+  }
+
+  handleSendMessage = () => {
+    if (!this.state.chatMessage) {
+      return
+    }
+    socket.emit('message', this.state.chatMessage)
+    this.setState({chatMessage:""});
+  }
+
   render() {
     // eslint-disable-next-line no-unused-vars
     const { streamName, isShow } = this.state
 
     return (
-      <>
+      <div className="-mt-2 pt-16 mb-8">
         <SideNav></SideNav>
-        <div className="my-8 pt-8 ml-0  flex flex-col w-full items-center">
-          {/* YOU ARE IN AUTO PLAY PAGE <br /> */}
-          <video
-            className="max-h-72 w-full"
-            // eslint-disable-next-line react/no-unknown-property
-            autoplay
-            width="720px"
-            id="remoteVideo"
-            controls
-            playsInline
-          ></video>
-          <br />
-        </div>
-        <div />
-        {socket ? (
-          <div className='flex flex-col items-center'>
-            <div className="pt-8 ml-0  flex flex-col w-full items-center">
-              <MessageInput socket={socket} />
+
+        <div className="flex border-gray-500 p-4 w-full justify-between text-white">
+          <div className="flex items-center">
+            {/* chat part begins */}
+
+            <div className="w-72 ml-20">
+              <div
+                className="flex items-center justify-between chat-panel-btn bg-gray-100 hover:bg-gray-300"
+                onClick={() => this.toggleChatPanel()}
+              >
+                <button className="text-gray-800">Chat Panel</button>
+                <span className="mx-3 text-gray-800">
+                  {this.state.openChatPanel ? (
+                    <IoIosArrowUp />
+                  ) : (
+                    <IoIosArrowDown />
+                  )}
+                </span>
+              </div>
             </div>
-            <div className="w-96 flex flex-col mb-4 bg-gray-200 h-36 p-5 rounded-xl">
-              <Messages socket={socket} />
-            </div>
+
+            {this.state.openChatPanel && (
+              <ChatPanel
+                incomingChats={this.state.incomingChats}
+                chatMessage={this.state.chatMessage}
+                handleMessageChange={this.handleMessageChange}
+                canSendMessage={true}
+                handleSendMessage={this.handleSendMessage}
+                typing={this.state.typing}
+                viewerPanel={true}
+              />
+            )}
           </div>
-        ) : (
-          <div>Not Connected</div>
-        )}
-      </>
+        </div>
+
+        <div className="w-full flex items-center p-8 justify-center">
+          <div className="my-8 border-2 p-6 player_container">
+            {/* YOU ARE IN AUTO PLAY PAGE <br /> */}
+            <video
+              className="h-full w-full"
+              autoplay
+              id="remoteVideo"
+              controls
+              playsInline
+            ></video>
+          </div>
+        </div>
+      </div>
     )
   }
 }

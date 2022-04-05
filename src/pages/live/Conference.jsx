@@ -1,12 +1,4 @@
-import {
-  Button,
-  notification,
-  Popover,
-  message,
-  Input
-  // Tooltip,
-  // Dropdown
-} from 'antd'
+import { Button, notification, Popover, message, Input, Avatar } from 'antd'
 import React, { Component } from 'react'
 import socketIOClient from 'socket.io-client'
 import { liveVideoURL, wssURL } from '../../environment/config'
@@ -22,8 +14,25 @@ import { MdScreenShare } from 'react-icons/md'
 import HeaderHome from '../../partials/header/HeaderHome'
 import { CopyToClipboard } from 'react-copy-to-clipboard/lib/Component'
 import { FaCopy } from 'react-icons/fa'
+import { AiOutlineUser } from 'react-icons/ai'
 import PropTypes from 'prop-types'
 import Messages from './Messages'
+import { UserOutlined } from '@ant-design/icons'
+
+import './chatPanel.css'
+
+import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io'
+
+import { IoSendSharp } from 'react-icons/io5'
+
+import { AiFillSetting } from 'react-icons/ai'
+
+import SettingModal from './SettingModal'
+
+import userIcon from '../../assets/images/user_avatar_2.png'
+import ChatPanel from './ChatPanel'
+
+
 // import Menu from 'rc-menu'
 let socket
 export class Conference extends Component {
@@ -84,7 +93,13 @@ export class Conference extends Component {
       participant: 0,
       capture: 'camera',
       audioDevices: [],
-      videoDevices: []
+      videoDevices: [],
+      incomingChats: [],
+      openChatPanel: false,
+      chatMessage: '',
+      typing: false,
+      isModalVisible: false,
+      incomingMessage: {}
     }
     socket = socketIOClient(this.state.endpoint, { path: '/tlgwss' })
   }
@@ -114,13 +129,26 @@ export class Conference extends Component {
     this.webRTCAdaptor = this.intianteWebRTC()
     // this.generatePassCode()
     this.getStreamed()
+
+    socket.on('message', this.messageListener)
   }
+
+  messageListener = (message) => {
+    this.state.incomingChats.push(message)
+    this.setState({
+      incomingChats: this.state.incomingChats
+    })
+    console.log('message: ', message)
+  }
+
 
   componentWillUnmount() {
     this.webRTCAdaptor.closeStream()
     this.webRTCAdaptor.stop()
     this.setState({ roomName: null })
     // this.webRTCAdaptor=null;
+
+    socket.off('message', this.messageListener)
   }
 
   getRooMId = () => {
@@ -128,7 +156,9 @@ export class Conference extends Component {
     if (localRoomId) {
       return localRoomId
     } else {
-      localRoomId = new URLSearchParams(this.props.location.search).get('roomId') || nanoid(12)
+      localRoomId =
+        new URLSearchParams(this.props.location.search).get('roomId') ||
+        nanoid(12)
       localStorage.setItem('roomId', localRoomId)
       return localRoomId
     }
@@ -137,9 +167,11 @@ export class Conference extends Component {
   handleVideoChange = (event) => {
     // e.preventDefault()
     if (event.target.value !== 'Select Input source') {
-      this.webRTCAdaptor.switchVideoCameraCapture(this.publishStreamId, event.target.value)
+      this.webRTCAdaptor.switchVideoCameraCapture(
+        this.publishStreamId,
+        event.target.value
+      )
     }
-    console.log('button working...' + event.target.value)
   }
 
   handleAudioChange = (event) => {
@@ -147,7 +179,10 @@ export class Conference extends Component {
 
     console.log('button working...' + event.target.value)
     if (event.target.value !== 'Select Input source') {
-      this.webRTCAdaptor.switchAudioInputSource(this.publishStreamId, event.target.value)
+      this.webRTCAdaptor.switchAudioInputSource(
+        this.publishStreamId,
+        event.target.value
+      )
     }
     console.log('button working...' + event.target.value)
   }
@@ -164,7 +199,7 @@ export class Conference extends Component {
           this.setState({ link: link, passCode: data.passCode })
         }
       })
-      .catch((_err) => { })
+      .catch((_err) => {})
   }
 
   toggleLocalCamera = () => {
@@ -324,15 +359,50 @@ export class Conference extends Component {
     this.webRTCAdaptor.play(obj.streamId, this.token, this.state.roomName)
   }
 
-  createRemoteVideoOld = (streamId) => {
+  createRemoteVideoOldxy = (streamId) => {
     const player = document.createElement('div')
     player.className = 'flex-1 remote-video'
     player.id = 'player' + streamId
     player.innerHTML =
       '<video id="remoteVideo' +
       streamId +
-      '"controls autoplay playsinline></video>'
+      '" className="flex-1 my-6" controls autoplay playsinline></video>'
     document.getElementById('players').appendChild(player)
+  }
+
+  createRemoteVideoOld = (streamId) => {
+    const video2 = document.querySelector('#video_2 > video')
+    const video3 = document.querySelector('#video_3 > video')
+    const video4 = document.querySelector('#video_4 > video')
+
+    if (!video2) {
+      const parent2 = document.getElementById('video_2')
+      const player2 = document.createElement('video')
+      player2.id = 'remoteVideo' + streamId
+      player2.autoplay = true
+      player2.controls = true
+      player2.className = 'videoPlayer'
+      parent2.removeChild(parent2.firstChild)
+      parent2.appendChild(player2)
+    } else if (!video3) {
+      const parent3 = document.getElementById('video_3')
+      const player3 = document.createElement('video')
+      player3.id = 'remoteVideo' + streamId
+      player3.autoplay = true
+      player3.controls = true
+      player3.className = 'videoPlayer'
+      parent3.removeChild(parent3.firstChild)
+      parent3.appendChild(player3)
+    } else if (!video4) {
+      const parent4 = document.getElementById('video_4')
+      const player4 = document.createElement('video')
+      player4.autoplay = true
+      player4.controls = true
+      player4.className = 'videoPlayer'
+      player4.id = 'remoteVideo' + streamId
+      parent4.removeChild(parent4.firstChild)
+      parent4.appendChild(player4)
+    }
   }
 
   remoteVideo = (streamId) => (
@@ -344,9 +414,17 @@ export class Conference extends Component {
   removeRemoteVideo = (streamId) => {
     const video = document.getElementById('remoteVideo' + streamId)
     if (video != null) {
-      const player = document.getElementById('player' + streamId)
-      video.srcObject = null
-      document.getElementById('players').removeChild(player)
+      const vidPlayer = document.getElementById('remoteVideo' + streamId)
+      const parentcnt = vidPlayer.parentElement
+
+      const avaterDive = document.createElement('div')
+      avaterDive.className = 'avatar_style'
+      avaterDive.innerHTML = `
+                  
+                  <img src='${userIcon}' alt='user avatar' class="user_icon_style" />
+                `
+      vidPlayer.remove()
+      parentcnt.appendChild(avaterDive)
     }
     this.webRTCAdaptor.stop(streamId)
   }
@@ -415,11 +493,11 @@ export class Conference extends Component {
           console.log('devices devices devices...')
           for (let index = 0; index < obj.length; index++) {
             if (obj[index].kind === 'audioinput') {
-              this.setState(prevState => ({
+              this.setState((prevState) => ({
                 audioDevices: [...prevState.audioDevices, obj[index]]
               }))
             } else if (obj[index].kind === 'videoinput') {
-              this.setState(prevState => ({
+              this.setState((prevState) => ({
                 videoDevices: [...prevState.videoDevices, obj[index]]
               }))
             }
@@ -609,6 +687,46 @@ export class Conference extends Component {
     message.info('Copied!')
   }
 
+  toggleChatPanel = () => {
+    this.setState((prevState) => ({
+      openChatPanel: !prevState.openChatPanel
+    }))
+    console.log('openChatPanel: ', this.openChatPanel)
+  }
+
+  handleMessageChange = (e) => {
+    this.setState({
+      chatMessage: e.target.value,
+      typing: true
+    })
+  }
+
+  handleSendMessage = () => {
+    if (!this.state.chatMessage) {
+      return
+    }
+    socket.emit('message', this.state.chatMessage)
+    
+  }
+
+  showSettingModal = () => {
+    this.setState({
+      isModalVisible: true
+    })
+  }
+
+  handleCancel = () => {
+    this.setState({
+      isModalVisible: false
+    })
+  }
+
+  handleOk = () => {
+    this.setState({
+      isModalVisible: false
+    })
+  }
+
   render() {
     // console.log(
     //   '************************** this is state value',
@@ -618,13 +736,57 @@ export class Conference extends Component {
     return (
       <div className="mb-8 bg-gray-800">
         <HeaderHome></HeaderHome>
+
+        {this.state.isModalVisible && (
+          <SettingModal
+            isModalVisible={this.state.isModalVisible}
+            handleCancel={this.handleCancel}
+            audioDevices={this.state.audioDevices}
+            videoDevices={this.state.videoDevices}
+            handleVideoChange={this.handleVideoChange}
+            handleAudioChange={this.handleAudioChange}
+            handleOk={this.handleOk}
+          />
+        )}
+
         <div className="my-10 pt-4 flex flex-col  items-center">
           {/* <h2 className="text-xl semibold">About the Conference</h2> */}
-          <div className="flex border-b-2 border-gray-500 p-4 w-4/5 justify-between text-white">
-            <div>
+          <div className="flex border-b-2 border-gray-500 p-4 w-full justify-between text-white">
+            <div className="flex items-center">
+              {/* chat part begins */}
+
+              <div className="w-72">
+                <div
+                  className="flex items-center justify-between chat-panel-btn bg-gray-800 hover:bg-gray-700"
+                  onClick={() => this.toggleChatPanel()}
+                >
+                  <button className="text-gray-200">Chat Panel</button>
+                  <span className="mx-3 text-gray-200">
+                    {this.state.openChatPanel ? (
+                      <IoIosArrowUp />
+                    ) : (
+                      <IoIosArrowDown />
+                    )}
+                  </span>
+                </div>
+              </div>
+
+              {this.state.openChatPanel && (
+                <ChatPanel
+                  incomingChats={this.state.incomingChats}
+                  chatMessage={this.state.chatMessage}
+                  handleMessageChange={this.handleMessageChange}
+                  canSendMessage={false}
+                  handleSendMessage={this.handleSendMessage}
+                  typing={this.state.typing}
+                />
+              )}
+
+              {/* chat part ends */}
+
               <Popover
                 content={
-                  <div className="w-72 text-gray-600">
+                  <div className="w-72 text-gray-600 ml-3">
                     <Input
                       readOnly
                       value={this.state.link}
@@ -656,6 +818,7 @@ export class Conference extends Component {
                 </div>
               </Popover>
             </div>
+
             <div className="flex items-center">
               <div className="cursor-pointer flex items-center">
                 Conference Pass Code:
@@ -681,68 +844,81 @@ export class Conference extends Component {
                     Prepare to Broadcast
                   </Button>
                 ) : (
-                    <Button
-                      className="mx-4"
-                      type="primary"
-                      onClick={(e) => this.unpublish()}
-                      id="join_publish_Button"
-                    >
-                      Stop Broadcast
-                    </Button>
+                  <Button
+                    className="mx-4"
+                    type="primary"
+                    onClick={(e) => this.unpublish()}
+                    id="join_publish_Button"
+                  >
+                    Stop Broadcast
+                  </Button>
                 )}
               </div>
+
+              <div
+                className="flex items-center"
+                onClick={this.showSettingModal}
+              >
+                <span className=" cursor-pointer flex items-center justify-center">
+                  <AiFillSetting className="w-7 h-7 ml-4 mr-2" />
+                  Setting
+                </span>
+              </div>
             </div>
-          </div>
-          <div className="flex items-center">
-            <div className="my-4 py-2 flex flex-1 flex-wrap-reverse items-center self-stretch p-2 max-h-screen">
-              <video
-                src="https://assets.mixkit.co/videos/preview/mixkit-female-boxer-resting-after-her-training-40264-large.mp4"
-                id="localVideo"
-                className="flex-1 my-6"
-                autoPlay
-                muted
-                playsinline
-              ></video>
-            </div>
-            <div
-              id="players"
-              className="my-4 py-2 flex flex-1 flex-wrap-reverse items-center self-stretch  p-2 max-h-screen"
-            ></div>
           </div>
 
-          <div className="flex items-center justify-between w-1/3 p-4">
-            <div>
-              <div className="flex flex-col items-center p-5">
-                <label className="text-white p-3">Audio input source </label>
-                <select id="audioSource" onChange={this.handleAudioChange} className="p-3">
-                  <option key={null} value={null}>Select Input source</option>
-                  {
-                    this.state.audioDevices.map(audioDevice => {
-                      return (
-                        <option key={audioDevice.deviceId} value={audioDevice.deviceId}>{audioDevice.label}</option>
-                      )
-                    })
-                  }
-                </select>
+          {/* video player container begins */}
+
+          <div className="video_player_container">
+            {/* first row */}
+            <div className="video_player_content">
+              <div className="video_player_inner">
+                <video
+                  src="https://assets.mixkit.co/videos/preview/mixkit-female-boxer-resting-after-her-training-40264-large.mp4"
+                  id="localVideo"
+                  className="videoPlayer"
+                  autoPlay
+                  muted
+                  playsinline
+                ></video>
+              </div>
+              <div className="video_player_inner" id="video_2">
+                <div className="avatar_style">
+                  <img
+                    src={userIcon}
+                    alt="user avatar"
+                    className="user_icon_style"
+                  />
+                </div>
               </div>
             </div>
-            <div>
-              <div className="flex flex-col items-center p-5">
-                <label className="text-white p-3">Video input source </label>
-                <select id="videoSource" onChange={this.handleVideoChange} className="p-3">
-                  <option key={null} value={null} >Select Input source</option>
-                  {
-                    this.state.videoDevices.map(videoDevice => {
-                      return (
-                        <option key={videoDevice.deviceId} value={videoDevice.deviceId}>{videoDevice.label}</option>
-                      )
-                    })
-                  }
-                </select>
+            {/* second row  */}
+            <div className="video_player_content mt-2">
+              <div className="video_player_inner" id="video_3">
+                <div className="avatar_style">
+                  <Avatar
+                    shape="square"
+                    size={120}
+                    icon={<UserOutlined />}
+                    style={{ background: '#1F2937', alignItems: 'center' }}
+                  />
+                </div>
+              </div>
+              <div className="video_player_inner" id="video_4">
+                <div className="avatar_style">
+                  <img
+                    src={userIcon}
+                    alt="user avatar"
+                    className="user_icon_style"
+                  />
+                </div>
               </div>
             </div>
           </div>
-          <div className="max-w-80 flex mb-4 justify-between text-gray-50">
+
+          {/* video player container ends */}
+
+          <div className="max-w-80 flex mb-4 justify-between text-gray-50 mt-12">
             <button className="mx-2">
               {this.isCameraOff ? (
                 <BiVideoOff
@@ -762,17 +938,6 @@ export class Conference extends Component {
             >
               End Call
             </button>
-            {/* <Tooltip placement="top" title="Share Screen">
-              <Dropdown
-                overlay={this.screenShareMenu}
-                trigger={['click']}
-                className="bg-gray-500 font-semibold text-white px-2 mx-2 shadow-sm rounded-md hover:bg-red-900"
-              >
-                <div className="mx-2 w-12 h-12 flex justify-center items-center">
-                  <MdScreenShare className="text-2xl text-gray-300" />
-                </div>
-              </Dropdown>
-            </Tooltip> */}
 
             <button
               onClick={(e) => this.switchVideoMode('screen+camera')}
@@ -790,13 +955,13 @@ export class Conference extends Component {
               )}
             </button>
           </div>
-          {socket ? (
+          {/* {socket ? (
             <div className="w-96 flex mb-4 justify-between bg-white h-36 p-5 rounded-xl">
               <Messages socket={socket} />
             </div>
           ) : (
             <div>Not Connected</div>
-          )}
+          )} */}
           <div className="my-4"></div>
         </div>
         <div className="h-20"></div>

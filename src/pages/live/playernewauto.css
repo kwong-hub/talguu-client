@@ -1,0 +1,8 @@
+
+
+.player_container {
+    border: 1px solid black;
+    box-shadow: 0 8px 8px 0 rgba(5, 7, 10, 0.2), 0 6px 20px 0 rgba(5, 7, 10, 0.19);
+    width: 450px;
+    height: 330px;
+}
