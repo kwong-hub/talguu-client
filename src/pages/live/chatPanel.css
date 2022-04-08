@@ -83,11 +83,12 @@ textarea {
   height: 400px;
 }
 
-.viewer-chat-content{
+/* .viewer-chat-content{
   position: fixed;
-  top: 58px;
-  right: 96.2px;
-}
+  right: 0.5rem; 
+  bottom: 5.5rem; 
+  z-index: 20;
+} */
 
 
 .message-container{
@@ -109,10 +110,12 @@ textarea {
 } 
 .chat-content{
   position: fixed;
-  top: 47px;
-  right: 16px;
+  right: 0.5rem; 
+  bottom: 8.8rem; 
   z-index: 20;
-  height: 400px;
+}
+.message-container{
+  height: 480px;
 }
 }
 

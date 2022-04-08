@@ -11,14 +11,13 @@ const ChatPanel = ({
     canSendMessage,
     handleSendMessage,
     typing,
-    viewerPanel,
     openChatPanel,
     toggleChatPanel,
 }) => {
 
     return (
 
-        <div className={viewerPanel ? "w-72 z-30 h-screen viewer-chat-content" : "w-72 z-30 chat-content"}>
+        <div className="w-72 z-30 h-screen chat-content">
             <div className="w-full flex flex-col items-start relative bg-gray-700 message-container">
               
                 {openChatPanel && (

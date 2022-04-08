@@ -9,7 +9,6 @@ import HeaderHome from '../../partials/header/HeaderHome'
 import { history } from '../../_helpers'
 
 import userIcon from '../../assets/images/user_avatar_2.png'
-import { UserOutlined } from '@ant-design/icons'
 
 import './Player.css'
 

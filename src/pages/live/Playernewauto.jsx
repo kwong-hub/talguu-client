@@ -200,7 +200,7 @@ class Playernewauto extends React.Component {
               className="flex items-center justify-between chat-panel-btn bg-gray-800 hover:bg-gray-700"
               onClick={() => this.toggleChatPanel()}
             >
-              <button className="text-gray-200">Open chat</button>
+              <button className="text-gray-100">Open chat</button>
               <span className="mx-3 text-gray-200">
                 <IoIosArrowDown />
               </span>
