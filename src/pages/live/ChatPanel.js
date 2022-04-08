@@ -66,7 +66,7 @@ const ChatPanel = ({
               </div>
              {
                  canSendMessage && (
-                        <div className="h-16 absolute bottom-0 left-0 bg-gray-200 chat-container z-50">
+                        <div className="h-16 absolute bottom-0 left-0 bg-gray-100 chat-container z-50">
                             <div className="chat-container-inner flex items-center justify-center mb-2">
                                 <textarea
                                     type="text"

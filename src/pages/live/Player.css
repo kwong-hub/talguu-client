@@ -16,7 +16,7 @@ video {
   flex-direction: column;
   padding: 5px;
   /* background: rgb(19, 75, 19); */
-  height: 400px !important;
+  height: 550px !important;
   width: 700px !important;
   margin-top: 10px !important;
 }
@@ -25,9 +25,8 @@ video {
   display: flex;
   flex-direction: row;
   width: 100% !important;
-  height: 300px !important;
+  height: 250px !important;
   align-items: center;
-  /* background:rgb(94, 7, 7); */
 }
 .video_player_inner {
   width: 48% !important;
@@ -39,8 +38,17 @@ video {
   box-shadow: 0 8px 8px 0 rgba(5, 7, 10, 0.2), 0 6px 20px 0 rgba(5, 7, 10, 0.19);
 }
 
+
+.video_player_content_merger{
+  display: flex;
+  flex-direction: row;
+  width: 100% !important;
+  height: 480px !important;
+  align-items: center;
+}
+
 .video_player_inner_merger{
-    width: 90% !important;
+  width: 90% !important;
   margin-right: 2% !important;
   height: 100% !important;
   /* background: purple; */
@@ -51,15 +59,17 @@ video {
 }
 
 .videoPlayer{
-  width: 336px !important;
-  height: 190px !important;
-  object-fit: fill;
+  width: 320px !important;
+  height: 240px !important;
+  object-fit: contain;
+  object-position: 50% 50%;
 }
 
 .videoPlayer_merger{
-  width: 686px !important;
-  height: 290px !important;
-  object-fit: fill;
+  width: 640px !important;
+  height: 480px !important;
+  object-fit: contain;
+  object-position: 50% 50%;
 }
 
 .avatar_style{
@@ -71,7 +81,6 @@ video {
 }
 
 .user_icon_style{
-  width: 50x;
   align-self: center;
-  margin-top: 13%;
+  margin-top: 18%;
 }

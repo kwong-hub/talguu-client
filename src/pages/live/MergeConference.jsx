@@ -591,9 +591,9 @@ export class MergerConference extends Component {
             ENJOY THE POWER OF BROADCASTING
           </h2>
 
-          <div className="video_player_container">
+          <div className="video_player_container_merger">
             {/* first row */}
-            <div className="video_player_content">
+            <div className="video_player_content_merger">
               <div className="video_player_inner_merger">
                 <video
                   src="https://assets.mixkit.co/videos/preview/mixkit-female-boxer-resting-after-her-training-40264-large.mp4"

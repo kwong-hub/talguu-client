@@ -864,11 +864,10 @@ export class Conference extends Component {
             <div className="video_player_content mt-2">
               <div className="video_player_inner" id="video_3">
                 <div className="avatar_style">
-                  <Avatar
-                    shape="square"
-                    size={120}
-                    icon={<UserOutlined />}
-                    style={{ background: '#1F2937', alignItems: 'center' }}
+                  <img
+                    src={userIcon}
+                    alt="user avatar"
+                    className="user_icon_style"
                   />
                 </div>
               </div>
@@ -937,7 +936,7 @@ export class Conference extends Component {
             >
               <button className="text-gray-200">Open chat</button>
               <span className="mx-3 text-gray-200">
-                  <IoIosArrowDown />
+                <IoIosArrowDown />
               </span>
             </div>
           </div>

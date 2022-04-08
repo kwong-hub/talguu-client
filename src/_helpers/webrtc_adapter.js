@@ -17,7 +17,11 @@ import adapter from 'webrtc-adapter'
 
 //  };
 const mediaConstraints = {
-  video: true,
+  video: {
+    width: { min: 320, ideal: 640 },
+    height: { min: 240, ideal: 480 },
+    aspectRatio: { ideal: 1.33333333333 }
+  },
   audio: true
 }
 

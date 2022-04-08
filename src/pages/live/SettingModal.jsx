@@ -33,16 +33,18 @@ function SettingModal({
                 <option key={null} value={null}>
                   Select Input source
                 </option>
-                {audioDevices.map((audioDevice) => {
-                  return (
-                    <option
-                      key={audioDevice.deviceId}
-                      value={audioDevice.deviceId}
-                    >
-                      {audioDevice.label}
-                    </option>
-                  )
-                })}
+                {audioDevices.length > 0
+                  ? audioDevices.map((audioDevice) => {
+                      return (
+                        <option
+                          key={audioDevice.deviceId}
+                          value={audioDevice.deviceId}
+                        >
+                          {audioDevice.label}
+                        </option>
+                      )
+                    })
+                  : null}
               </select>
             </div>
           </div>
@@ -57,16 +59,20 @@ function SettingModal({
                 <option key={null} value={null}>
                   Select Input source
                 </option>
-                {videoDevices.map((videoDevice) => {
-                  return (
-                    <option
-                      key={videoDevice.deviceId}
-                      value={videoDevice.deviceId}
-                    >
-                      {videoDevice.label}
-                    </option>
-                  )
-                })}
+
+                {videoDevices.length > 0
+                  ? videoDevices.map((videoDevice) => {
+                      return (
+                        <option
+                          key={videoDevice.deviceId}
+                          value={videoDevice.deviceId}
+                        >
+                          {videoDevice.label}
+                        </option>
+                      )
+                    })
+                  : null
+                  }
               </select>
             </div>
           </div>

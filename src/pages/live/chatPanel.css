@@ -77,7 +77,7 @@ textarea {
 
 .chat-content{
   position: fixed;
-  top: 48px;
+  top: 128px;
   right: 16px;
   z-index: 20;
   height: 400px;
@@ -91,5 +91,28 @@ textarea {
 
 
 .message-container{
-  height: 560px;
+  height: 480px;
 }
+
+.viewer_chat_container{
+  position: fixed;
+  right: 0.5rem; 
+  bottom: 0.5rem; 
+}
+
+
+@media only screen and (max-width: 600px) {
+ .viewer_chat_container{
+  position: fixed;
+  right: 0.5rem; 
+  bottom: 3.5rem; 
+} 
+.chat-content{
+  position: fixed;
+  top: 47px;
+  right: 16px;
+  z-index: 20;
+  height: 400px;
+}
+}
+

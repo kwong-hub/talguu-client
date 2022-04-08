@@ -189,20 +189,20 @@ class Playernewauto extends React.Component {
     const { streamName, isShow } = this.state
 
     return (
-      <div className="-mt-2 pt-16 mb-8">
+      <div className="-mt-2 pt-16 mb-8 body-player">
         <SideNav></SideNav>
 
         {/* chat part begins */}
 
         {!this.state.openChatPanel && (
-          <div className="w-72 h-16 fixed bottom-2 right-2">
+          <div className="w-72 h-16 viewer_chat_container">
             <div
               className="flex items-center justify-between chat-panel-btn bg-gray-800 hover:bg-gray-700"
               onClick={() => this.toggleChatPanel()}
             >
               <button className="text-gray-200">Open chat</button>
               <span className="mx-3 text-gray-200">
-                  <IoIosArrowDown />
+                <IoIosArrowDown />
               </span>
             </div>
           </div>
@@ -222,16 +222,18 @@ class Playernewauto extends React.Component {
         )}
 
         {/* chat part ends */}
-        <div className="w-full flex items-center p-8 justify-center">
-          <div className="my-8 border-2 p-6 player_container">
-            {/* YOU ARE IN AUTO PLAY PAGE <br /> */}
-            <video
-              className="h-full w-full"
-              autoplay
-              id="remoteVideo"
-              controls
-              playsInline
-            ></video>
+        <div className="video_player_container_viewer">
+          <div className="video_player_content_viewer">
+            <div className="video_player_viewer">
+              {/* YOU ARE IN AUTO PLAY PAGE <br /> */}
+              <video
+                className="videoPlayer_viewer"
+                autoplay
+                id="remoteVideo"
+                controls
+                playsInline
+              ></video>
+            </div>
           </div>
         </div>
       </div>
