@@ -12,10 +12,16 @@
 .video_player_content_viewer{
   max-width: 512px !important;
   max-height: 384px !important;
-  margin-top: 50px;
-  margin-left: 100px;
+  margin-top: 35px;
+  margin-left: 30px;
 }
 
+.user-chat-panel{
+  position: fixed;
+  bottom: 5.5rem;
+  right: 2.5rem;
+  z-index: 20;
+}
 .video_player_viewer {
   width: 100% !important;
   height: 100% !important;
@@ -51,6 +57,13 @@
   box-shadow: none !important;
   object-fit: contain;
   object-position: 50% 50%;
+}
+
+.user-chat-panel{
+  position: fixed;
+  bottom: 5.5rem;
+  right: 2.5rem;
+  z-index: 20;
 }
 
 }

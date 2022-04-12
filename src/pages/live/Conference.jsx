@@ -14,16 +14,12 @@ import { MdScreenShare } from 'react-icons/md'
 import HeaderHome from '../../partials/header/HeaderHome'
 import { CopyToClipboard } from 'react-copy-to-clipboard/lib/Component'
 import { FaCopy } from 'react-icons/fa'
-import { AiOutlineUser } from 'react-icons/ai'
 import PropTypes from 'prop-types'
-import Messages from './Messages'
-import { UserOutlined } from '@ant-design/icons'
 
 import './chatPanel.css'
 
-import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io'
+import { IoIosArrowDown } from 'react-icons/io'
 
-import { IoSendSharp } from 'react-icons/io5'
 
 import { AiFillSetting } from 'react-icons/ai'
 
@@ -794,12 +790,17 @@ export class Conference extends Component {
                   {this.state.passCode}
                 </span>
               </div>
-              <div className="cursor-pointer flex items-center">
-                <BiGroup className="w-8 h-8 mx-1"></BiGroup>
-                <span className="bg-gray-200 text-blue-800 px-3 mx-2 rounded-sm">
+              {!this.state.publish_button && (
+                <div className="cursor-pointer flex items-center">
+                  <BiGroup className="w-8 h-8 mx-1"></BiGroup>
+                  {/* Blink div begins here */}
+                  <div className="div-blinker"></div>
+                  {/* <span className="bg-gray-200 text-blue-800 px-3 mx-2 rounded-sm">
                   LIVE
-                </span>
-              </div>
+                </span> */}
+                  {/* Blink div ends here */}
+                </div>
+              )}
               <div>
                 {this.state.publish_button ? (
                   <Button

@@ -1,4 +1,19 @@
 
+.div-blinker{
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  animation-name: blinkerDiv;
+  animation-duration:1s;
+  border-radius:50%;
+  animation-iteration-count: infinite;
+}
+
+@keyframes blinkerDiv {
+  0% {background-color:red}
+  100% {background-color:white}
+}
+
 .chat-panel-btn{
   border: 1px solid black;
   color: white;
@@ -51,9 +66,6 @@
   color: #1890FF;
 }
 
-/* .send-message-btn:hover {
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
-} */
 
 textarea {
   border: none;
@@ -78,9 +90,15 @@ textarea {
 .chat-content{
   position: fixed;
   right: 0.5rem; 
-  bottom: 5.5rem; 
-  z-index: 20;
-  height: 400px;
+  bottom: 1.5rem;
+  height: 503px;
+}
+
+.user-chat-content{
+  position: fixed;
+  right: 2.5rem; 
+  bottom: 5.5rem;
+  height: 503px;
 }
 
 /* .viewer-chat-content{
@@ -92,7 +110,7 @@ textarea {
 
 
 .message-container{
-  height: 480px;
+  height: 500px;
 }
 
 .viewer_chat_container{
@@ -112,10 +130,20 @@ textarea {
   position: fixed;
   right: 0.5rem; 
   bottom: 8.8rem; 
-  z-index: 20;
+  z-index: 40;
+  height: 439px;
 }
 .message-container{
-  height: 480px;
+  height: 500px;
 }
+
+.user-chat-content{
+  position: fixed;
+  right: 0.8rem; 
+  bottom: 3.5rem;
+  height: 503px;
+  background: #1890FF;
+}
+
 }
 

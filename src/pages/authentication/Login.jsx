@@ -146,6 +146,7 @@ const Login = (props) => {
   return (
     <div className="relative">
       <Header />
+
       <div className="absolute bottom-20 left-0 w-64 ">
         <img
           src={require('../../assets/images/login-svg-2.svg').default}

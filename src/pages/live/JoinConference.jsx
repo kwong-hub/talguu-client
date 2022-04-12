@@ -681,7 +681,7 @@ export class JoinConference extends Component {
         <div className="flex flex-col w-full items-center">
           {/* <h2 className="text-xl ">Conference</h2> */}
 
-          <div className="flex border-b-2 border-gray-500 p-4 w-full justify-between text-white">
+          <div className="flex border-b-2 border-gray-500 p-4 w-full justify-end text-white">
             {/* setting */}
             <div>
               <div
@@ -809,13 +809,7 @@ export class JoinConference extends Component {
               )}
             </button>
           </div>
-          {/* {socket ? (
-            <div className="w-96 flex mb-4 justify-between bg-white h-36 p-5 rounded-xl">
-              <Messages socket={socket} />
-            </div>
-          ) : (
-            <div>Not Connected</div>
-          )} */}
+  
           <div className="my-4">
             {/* <Button
               className="mx-4"

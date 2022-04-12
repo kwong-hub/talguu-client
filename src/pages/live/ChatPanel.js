@@ -2,7 +2,7 @@ import { Divider } from 'antd'
 import React from 'react'
 import { IoSendSharp } from 'react-icons/io5'
 
-import { AiOutlineClose} from 'react-icons/ai'
+import { AiOutlineClose } from 'react-icons/ai'
 
 const ChatPanel = ({
     incomingChats,
@@ -13,13 +13,17 @@ const ChatPanel = ({
     typing,
     openChatPanel,
     toggleChatPanel,
+    userChatPanel,
 }) => {
+
+
+    console.log("incomingMessages: ", incomingChats)
 
     return (
 
-        <div className="w-72 z-30 h-screen chat-content">
-            <div className="w-full flex flex-col items-start relative bg-gray-700 message-container">
-              
+        <div className={userChatPanel ? "w-72 z-30 user-chat-content" : "w-72 z-30 h-screen chat-content"}>
+            <div className="w-full flex flex-col items-start relative bg-gray-700 h-full">
+
                 {openChatPanel && (
                     <div className="w-72 h-16 absolute top-0 right-0">
                         <div
@@ -33,38 +37,39 @@ const ChatPanel = ({
                         </div>
                     </div>
                 )}
-              
-              <div className="flex flex-col items-start h-full w-full overflow-y-auto pb-20 mt-10">
 
-                  {incomingChats.length > 0 ? (
-                      incomingChats.map((chat, index) => {
-                          return (
-                              <div
-                                  className="flex flex-col mt-3 px-2 items-start justify-start"
-                                  key={index}
-                              >
-                                  <div className="chat-message flex items-start">
-                                      <p className="chat-user">{chat.user.name}</p>
-                                      <Divider style={{
-                                          color:"#ffffff", 
-                                          background:"#3a3838",
-                                          marginTop:"9px",
-                                          marginBottom:"9px",
-                                          padding:"0px",
-                                          height:"1px"
-                                      }} />
-                                      <p className="c-message">{chat.value}</p>
-                                      <p className="chat-time">{new Date(chat.time).toLocaleTimeString()}</p>
-                                  </div>
-                              </div>
-                          )
-                      })
-                  ) : (
-                      <p className="mt-10 pl-16 text-gray-100">No chats available</p>
-                  )}
-              </div>
-             {
-                 canSendMessage && (
+                <div className="flex flex-col items-start h-screen w-full overflow-y-auto pb-20 mt-10">
+
+                    {incomingChats.length > 0 ? (
+                        
+                        incomingChats.map((chat, index) => {
+                            return (
+                                <div
+                                    className="flex flex-col mt-3 px-2 items-start justify-start"
+                                    key={index}
+                                >
+                                    <div className="chat-message flex items-start">
+                                        <p className="chat-user">{chat.value.userName}</p>
+                                        <Divider style={{
+                                            color: "#ffffff",
+                                            background: "#3a3838",
+                                            marginTop: "9px",
+                                            marginBottom: "9px",
+                                            padding: "0px",
+                                            height: "1px"
+                                        }} />
+                                        <p className="c-message">{chat.value.message}</p>
+                                        <p className="chat-time">{new Date(chat.time).toLocaleTimeString()}</p>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    ) : (
+                        <p className="mt-10 pl-16 text-gray-100">No chats available</p>
+                    )}
+                </div>
+                {
+                    canSendMessage && (
                         <div className="h-16 absolute bottom-0 left-0 bg-gray-100 chat-container z-50">
                             <div className="chat-container-inner flex items-center justify-center mb-2">
                                 <textarea
@@ -84,11 +89,15 @@ const ChatPanel = ({
                                 )}
                             </div>
                         </div>
-                 )
-             }
-          </div>
-      </div>
-  )
+                    )
+                }
+            </div>
+        </div>
+    )
 }
 
 export default ChatPanel
+
+
+
+

@@ -5,16 +5,14 @@ import WebRTCAdaptor from '../../_helpers/webrtc_adapter'
 import { wssURL } from '../../environment/config'
 import SideNav from '../../partials/sideNav/SideNav'
 import { notification, message } from 'antd'
-import Messages from './Messages'
-import MessageInput from './MessageInput'
 
 import './playernewauto.css'
 
 import './chatPanel.css'
 
-import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io'
+import { IoIosArrowDown } from 'react-icons/io'
 import ChatPanel from './ChatPanel'
-
+import SenderNameModal from './SenderNameModal'
 
 let socket
 class Playernewauto extends React.Component {
@@ -51,7 +49,10 @@ class Playernewauto extends React.Component {
       chatMessage: '',
       typing: false,
       isModalVisible: false,
-      incomingMessage: {}
+      incomingMessage: {},
+      senderName: '',
+      openSenderModal: false,
+      isLoading: false
     }
     socket = socketIOClient(this.state.endpoint, { path: '/tlgwss' })
   }
@@ -65,23 +66,19 @@ class Playernewauto extends React.Component {
     })
 
     socket.on('message', this.messageListener)
-   
   }
 
-
-     messageListener = (message) => {
-      this.state.incomingChats.push(message)
-      this.setState({
-        incomingChats: this.state.incomingChats
-      })
-    }
-
+  messageListener = (message) => {
+    this.state.incomingChats.push(message)
+    this.setState({
+      incomingChats: this.state.incomingChats
+    })
+  }
 
   componentWillUnmount() {
     socket.off('message', this.messageListener)
   }
 
-  
   streamChangeHandler = ({ target: { value } }) => {
     console.log(value)
     this.setState({ streamName: value })
@@ -176,12 +173,71 @@ class Playernewauto extends React.Component {
     })
   }
 
+  handleSenderName = () => {
+    const pseudoName = localStorage.getItem('pseudoName')
+    if (pseudoName) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   handleSendMessage = () => {
+    // perform the following steps
+    // 1. check the pseudo user name in the local localStorage
+    // 2. If not, open the modal to ask for pseudo username
+    // 3. save to localStorage
+    // 4. send message with pseudo username
+
     if (!this.state.chatMessage) {
       return
     }
-    socket.emit('message', this.state.chatMessage)
-    this.setState({chatMessage:""});
+
+    const sender = this.handleSenderName()
+
+    if (sender) {
+      const _chat = this.state.chatMessage
+      const _sender = localStorage.getItem('pseudoName')
+
+      const _message = { message: _chat, userName: _sender }
+      console.log('sentMessageObject: ', _message)
+      socket.emit('message', _message)
+      this.setState({ chatMessage: '' })
+    } else {
+      this.setState({
+        openSenderModal: true
+      })
+    }
+  }
+
+  savePseudoName = (values) => {
+    this.setState({
+      isLoading: true
+    })
+    localStorage.setItem('pseudoName', values.pseudoName)
+    const _chat = this.state.chatMessage
+    const _sender = values.pseudoName
+
+    const _message = { message: _chat, userName: _sender }
+    setTimeout(() => {
+      socket.emit('message', _message)
+      this.setState({
+        senderName: _sender,
+        openSenderModal: false,
+        chatMessage: '',
+        isLoading: false
+      })
+    }, 3000)
+  }
+
+  savePseudoNameFailed = () => {
+    message.error('Failed to save your name')
+  }
+
+  handleCancel = () => {
+    this.setState({
+      openSenderModal: false
+    })
   }
 
   render() {
@@ -194,19 +250,42 @@ class Playernewauto extends React.Component {
 
         {/* chat part begins */}
 
+        {this.state.openSenderModal && (
+          <SenderNameModal
+            openSenderModal={this.state.openSenderModal}
+            savePseudoName={this.savePseudoName}
+            handleCancel={this.handleCancel}
+            savePseudoNameFailed={this.savePseudoNameFailed}
+            isLoading={this.state.isLoading}
+          />
+        )}
+
         {!this.state.openChatPanel && (
-          <div className="w-72 h-16 viewer_chat_container">
+          <div className="w-72 h-16 user-chat-panel">
             <div
               className="flex items-center justify-between chat-panel-btn bg-gray-800 hover:bg-gray-700"
               onClick={() => this.toggleChatPanel()}
             >
-              <button className="text-gray-100">Open chat</button>
+              <button className="text-gray-100">Message to producer</button>
               <span className="mx-3 text-gray-200">
                 <IoIosArrowDown />
               </span>
             </div>
           </div>
         )}
+        {/* {this.state.openChatPanel && (
+          <div className="w-72 h-16 absolute top-0 right-0">
+            <div
+              className="flex items-center justify-between chat-panel-btn bg-gray-800 hover:bg-gray-700"
+              onClick={() => this.toggleChatPanel()}
+            >
+              <button className="text-gray-200">Close chat</button>
+              <span className="mx-3 text-gray-200">
+                <AiOutlineClose />
+              </span>
+            </div>
+          </div>
+        )} */}
 
         {this.state.openChatPanel && (
           <ChatPanel
@@ -218,6 +297,7 @@ class Playernewauto extends React.Component {
             typing={this.state.typing}
             openChatPanel={this.state.openChatPanel}
             toggleChatPanel={this.toggleChatPanel}
+            userChatPanel={true}
           />
         )}
 

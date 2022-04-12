@@ -43,14 +43,14 @@ video {
   display: flex;
   flex-direction: row;
   width: 100% !important;
-  height: 480px !important;
+  height: 384px !important;
   align-items: center;
 }
 
 .video_player_inner_merger{
-  width: 90% !important;
+  width: 512px !important;
   margin-right: 2% !important;
-  height: 100% !important;
+  height: 384px !important;
   /* background: purple; */
   border: 1px solid rgb(148, 140, 140);
   padding: 5px;
@@ -66,8 +66,8 @@ video {
 }
 
 .videoPlayer_merger{
-  width: 640px !important;
-  height: 480px !important;
+  width: 512px !important;
+  height: 384px !important;
   object-fit: contain;
   object-position: 50% 50%;
 }

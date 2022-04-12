@@ -37,6 +37,7 @@ import MergerConference from '../pages/live/MergeConference'
 import JoinConference from '../pages/live/JoinConference'
 import CreateConference from '../pages/live/CreateConference'
 import LeaveConference from '../pages/live/LeaveConference'
+import signupAsProducer from '../pages/authentication/signupAsProducer'
 
 const Router = () => {
   return (
@@ -62,7 +63,8 @@ const Router = () => {
           <PrivateRoute path="/account" component={Profile} />
           <Route exact path="/" component={Home} />
           <Route exact path="/landing" component={Landing} />
-          <Route path="/signupprd" component={SignupPrd} />
+          {/* <Route path="/signupprd" component={SignupPrd} /> */}
+          <Route path="/signupprd" component={signupAsProducer} />
           <Route path="/signup_viewer" component={SignupViewer} />
           <PrivateRoute exact path="/profile" component={Profile} />
           <Route exact path="/login" component={Login} />
