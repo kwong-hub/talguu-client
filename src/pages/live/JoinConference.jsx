@@ -10,7 +10,7 @@ import videoService from '../../_services/video.service'
 import HeaderHome from '../../partials/header/HeaderHome'
 import { history } from '../../_helpers'
 import { MdScreenShare } from 'react-icons/md'
-import userIcon from '../../assets/images/user_avatar_2.png'
+import userIcon from '../../assets/images/avatar_black.png'
 import { UserOutlined } from '@ant-design/icons'
 
 import './Player.css'
@@ -713,10 +713,11 @@ export class JoinConference extends Component {
               </div>
               <div className="video_player_inner" id="video_2">
                 <div className="avatar_style">
-                  <img
-                    src={userIcon}
-                    alt="user avatar"
-                    className="user_icon_style"
+                  <Avatar
+                    shape="square"
+                    size={120}
+                    icon={<UserOutlined />}
+                    style={{ background: 'black', alignItems: 'center' }}
                   />
                 </div>
               </div>
@@ -729,16 +730,17 @@ export class JoinConference extends Component {
                     shape="square"
                     size={120}
                     icon={<UserOutlined />}
-                    style={{ background: '#1F2937', alignItems: 'center' }}
+                    style={{ background: 'black', alignItems: 'center' }}
                   />
                 </div>
               </div>
               <div className="video_player_inner" id="video_4">
                 <div className="avatar_style">
-                  <img
-                    src={userIcon}
-                    alt="user avatar"
-                    className="user_icon_style"
+                  <Avatar
+                    shape="square"
+                    size={120}
+                    icon={<UserOutlined />}
+                    style={{ background: 'black', alignItems: 'center' }}
                   />
                 </div>
               </div>
@@ -747,7 +749,7 @@ export class JoinConference extends Component {
 
           {/* video player container ends */}
 
-          <div className="max-w-80 flex mb-4 justify-between text-gray-50 mt-9">
+          <div className="max-w-80 flex mb-4 justify-between text-gray-50 mt-4">
             <button className="mx-2">
               {this.isCameraOff ? (
                 <BiVideoOff
@@ -809,7 +811,7 @@ export class JoinConference extends Component {
               )}
             </button>
           </div>
-  
+
           <div className="my-4">
             {/* <Button
               className="mx-4"

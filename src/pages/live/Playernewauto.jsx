@@ -13,6 +13,7 @@ import './chatPanel.css'
 import { IoIosArrowDown } from 'react-icons/io'
 import ChatPanel from './ChatPanel'
 import SenderNameModal from './SenderNameModal'
+import { userService } from '../../_services/user.service'
 
 let socket
 class Playernewauto extends React.Component {
@@ -52,7 +53,8 @@ class Playernewauto extends React.Component {
       incomingMessage: {},
       senderName: '',
       openSenderModal: false,
-      isLoading: false
+      isLoading: false,
+      user:{}
     }
     socket = socketIOClient(this.state.endpoint, { path: '/tlgwss' })
   }
@@ -66,6 +68,14 @@ class Playernewauto extends React.Component {
     })
 
     socket.on('message', this.messageListener)
+
+    userService.getUserProfile().then((data) => {
+      if (data.success) {
+        this.setState({
+          user: data.user
+        })
+      }
+    })
   }
 
   messageListener = (message) => {
@@ -193,21 +203,38 @@ class Playernewauto extends React.Component {
       return
     }
 
-    const sender = this.handleSenderName()
+    // const sender = this.handleSenderName()
+    // const _sender = localStorage.getItem('pseudoName')
 
-    if (sender) {
-      const _chat = this.state.chatMessage
-      const _sender = localStorage.getItem('pseudoName')
+    // if (sender) {
+    const _chat = this.state.chatMessage
+    const _user = this.state.user.lastName
 
-      const _message = { message: _chat, userName: _sender }
-      console.log('sentMessageObject: ', _message)
-      socket.emit('message', _message)
-      this.setState({ chatMessage: '' })
-    } else {
-      this.setState({
-        openSenderModal: true
-      })
+    var sender = ""
+    if(_user === ""){
+      sender = "xxxx"
+    }else if(_user.length > 4){
+      sender = _user.substring(_user.length - 4)
+    }else if(_user.length < 4){
+      if(_user.length === 1){
+        sender = _user.substring(_user.length - 1) + "xxx"
+      }else if(_user.length === 2){
+        sender = _user.substring(_user.length - 2) + "xx"
+      }else if (_user.length === 3){
+        sender = _user.substring(_user.length - 3) + "x"
+      }
     }
+
+    // const sender = this.state.user.firstName + ' ' + this.state.user.lastName
+    const _message = { message: _chat, userName: sender }
+    console.log('sentMessageObject: ', _message)
+    socket.emit('message', _message)
+    this.setState({ chatMessage: '' })
+    // } else {
+    //   this.setState({
+    //     openSenderModal: true
+    //   })
+    // }
   }
 
   savePseudoName = (values) => {

@@ -17,11 +17,11 @@ const ChatPanel = ({
 }) => {
 
 
-    console.log("incomingMessages: ", incomingChats)
+    // console.log("incomingMessages: ", incomingChats)
 
     return (
 
-        <div className={userChatPanel ? "w-72 z-30 user-chat-content" : "w-72 z-30 h-screen chat-content"}>
+        <div className={userChatPanel ? "w-72 z-30 user-chat-content" : "w-72 z-30 chat-content"}>
             <div className="w-full flex flex-col items-start relative bg-gray-700 h-full">
 
                 {openChatPanel && (

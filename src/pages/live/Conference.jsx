@@ -25,8 +25,13 @@ import { AiFillSetting } from 'react-icons/ai'
 
 import SettingModal from './SettingModal'
 
-import userIcon from '../../assets/images/user_avatar_2.png'
+// import userIcon from '../../assets/images/user_avatar_2.png'
+
+import userIcon from '../../assets/images/avatar_black.png'
 import ChatPanel from './ChatPanel'
+
+import { UserOutlined } from '@ant-design/icons'
+
 
 // import Menu from 'rc-menu'
 let socket
@@ -742,7 +747,7 @@ export class Conference extends Component {
           />
         )}
 
-        <div className="my-10 pt-4 flex flex-col  items-center">
+        <div className="my-9 pt-4 flex flex-col  items-center">
           {/* <h2 className="text-xl semibold">About the Conference</h2> */}
           <div className="flex border-b-2 border-gray-500 p-4 w-full justify-between text-white">
             <div className="flex items-center">
@@ -853,10 +858,16 @@ export class Conference extends Component {
               </div>
               <div className="video_player_inner" id="video_2">
                 <div className="avatar_style">
-                  <img
+                  {/* <img
                     src={userIcon}
                     alt="user avatar"
                     className="user_icon_style"
+                  /> */}
+                  <Avatar
+                    shape="square"
+                    size={120}
+                    icon={<UserOutlined />}
+                    style={{ background: 'black', alignItems: 'center' }}
                   />
                 </div>
               </div>
@@ -865,19 +876,21 @@ export class Conference extends Component {
             <div className="video_player_content mt-2">
               <div className="video_player_inner" id="video_3">
                 <div className="avatar_style">
-                  <img
-                    src={userIcon}
-                    alt="user avatar"
-                    className="user_icon_style"
+                  <Avatar
+                    shape="square"
+                    size={120}
+                    icon={<UserOutlined />}
+                    style={{ background: 'black', alignItems: 'center' }}
                   />
                 </div>
               </div>
               <div className="video_player_inner" id="video_4">
                 <div className="avatar_style">
-                  <img
-                    src={userIcon}
-                    alt="user avatar"
-                    className="user_icon_style"
+                  <Avatar
+                    shape="square"
+                    size={120}
+                    icon={<UserOutlined />}
+                    style={{ background: 'black', alignItems: 'center' }}
                   />
                 </div>
               </div>
@@ -886,17 +899,17 @@ export class Conference extends Component {
 
           {/* video player container ends */}
 
-          <div className="max-w-80 flex mb-4 justify-between text-gray-50 mt-8">
+          <div className="max-w-80 flex mb-4 justify-between text-gray-50 mt-2">
             <button className="mx-2">
               {this.isCameraOff ? (
                 <BiVideoOff
                   onClick={(e) => this.toggleLocalCamera()}
-                  className="w-12 h-12"
+                  className="w-11 h-11"
                 ></BiVideoOff>
               ) : (
                 <BiVideo
                   onClick={(e) => this.toggleLocalCamera()}
-                  className="w-12 h-12"
+                  className="w-11 h-11"
                 ></BiVideo>
               )}
             </button>
@@ -911,15 +924,15 @@ export class Conference extends Component {
               onClick={(e) => this.switchVideoMode('screen+camera')}
               className="bg-gray-500 font-semibold text-white px-2 mx-2 shadow-sm rounded-md hover:bg-gray-700"
             >
-              <div className="mx-2 w-12 h-12 flex justify-center items-center">
+              <div className="mx-2 w-11 h-11 flex justify-center items-center">
                 <MdScreenShare className="text-2xl text-gray-300" />
               </div>
             </button>
             <button className="mx-2" onClick={(e) => this.toggleLocalMic()}>
               {this.isMicMuted ? (
-                <AiOutlineAudioMuted className="w-12 h-12"></AiOutlineAudioMuted>
+                <AiOutlineAudioMuted className="w-11 h-11"></AiOutlineAudioMuted>
               ) : (
-                <AiOutlineAudio className="w-12 h-12"></AiOutlineAudio>
+                <AiOutlineAudio className="w-11 h-11"></AiOutlineAudio>
               )}
             </button>
           </div>

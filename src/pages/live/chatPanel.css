@@ -61,7 +61,6 @@
 }
 
 .send-message-btn{
-  /* background-color: #4CAF50;  */
   border: none;
   color: #1890FF;
 }
@@ -101,12 +100,6 @@ textarea {
   height: 503px;
 }
 
-/* .viewer-chat-content{
-  position: fixed;
-  right: 0.5rem; 
-  bottom: 5.5rem; 
-  z-index: 20;
-} */
 
 
 .message-container{
@@ -129,9 +122,9 @@ textarea {
 .chat-content{
   position: fixed;
   right: 0.5rem; 
-  bottom: 8.8rem; 
+  bottom: 1.5rem; 
   z-index: 40;
-  height: 439px;
+  height: 460px;
 }
 .message-container{
   height: 500px;
