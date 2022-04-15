@@ -25,6 +25,11 @@ const mediaConstraints = {
   audio: true
 }
 
+const mediaConstraintsDeskSharing = {
+  video: true,
+  audio: true
+}
+
 export default function WebRTCAdaptor(initialValues) {
   class PeerStats {
     constructor(streamId) {
@@ -412,7 +417,7 @@ export default function WebRTCAdaptor(initialValues) {
     // Check Media Constraint video value screen or screen + camera
     if (thiz.publishMode === 'screen+camera' || thiz.publishMode === 'screen') {
       navigator.mediaDevices
-        .getDisplayMedia(mediaConstraints)
+        .getDisplayMedia(mediaConstraintsDeskSharing)
         .then(function (stream) {
           resetTrack(stream)
           thiz.prepareStreamTracks(
