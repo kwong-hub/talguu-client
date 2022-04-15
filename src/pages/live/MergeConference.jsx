@@ -586,7 +586,7 @@ export class MergerConference extends Component {
       <div className="pt-16 bg-gray-800 text-white ">
         <HeaderHome></HeaderHome>
         <div className="flex flex-col w-full items-center h-screen">
-          <h2 className="text-xl text-white py-4">
+          <h2 className="text-xl text-white py-2">
             ENJOY THE POWER OF BROADCASTING
           </h2>
 

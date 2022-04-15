@@ -309,21 +309,21 @@ const SignupViewer = () => {
   return (
     <div>
       <Header />
-      <div className="flex m-auto items-center justify-center w-auto md:p-8 pt-2 mt-14">
+      <div className="flex m-auto items-center justify-center w-auto md:p-8 pt-2 mt-1">
         <div className="flex justify-center items-center h-full w-full max-w-sm">
           {currentForm !== 1 ? (
-            <div className="w-full  flex flex-col justify-center m-4 p-4 py-8 shadow-md rounded-2xl bg-white">
+            <div className="w-full  flex flex-col justify-center m-4 p-4 py-6 shadow-md rounded-2xl bg-white">
               <div className="flex justify-center flex-col items-center ">
-                <img className="" src={logo} alt="Logo" width={50} />
+                {/* <img className="" src={logo} alt="Logo" width={50} /> */}
 
-                <p className="text-2xl text-gray-700 my-6">
+                <p className="text-2xl text-gray-700 mb-6">
                   Create a New Account
                 </p>
-                <div className="flex bg-gray-100 rounded-3xl mb-8">
+                <div className="flex bg-gray-100 rounded-3xl mb-7">
                   <Link to="/login">
                     <Button
                       shape="round"
-                      className="flex items-center border-transparent bg-transparent m-1 px-4"
+                      className="flex items-center m-1 px-4"
                     >
                       Login
                     </Button>
@@ -331,7 +331,7 @@ const SignupViewer = () => {
                   <Link to="/signup_viewer">
                     <Button
                       shape="round"
-                      className="flex items-center   m-1 px-4"
+                      className="flex items-center m-1 px-4"
                     >
                       Sign Up
                     </Button>
@@ -349,8 +349,9 @@ const SignupViewer = () => {
                   <div className="flex px-2 text-blue-500 text-lg">
                     <Link to="/signupprd">Join as Producer</Link>
                   </div>
-                  <p className="my-6">OR USING</p>
-                  <div className="flex justify-evenly">
+                  {/* <p className="my-6">OR USING</p> */}
+                  
+                  {/* <div className="flex justify-evenly">
                     <Button
                       shape="round"
                       icon={<FaGoogle />}
@@ -366,7 +367,8 @@ const SignupViewer = () => {
                     >
                       Facebook
                     </Button>
-                  </div>
+                  </div> */}
+
                 </div>
               </div>
             </div>

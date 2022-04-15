@@ -193,48 +193,39 @@ class Playernewauto extends React.Component {
   }
 
   handleSendMessage = () => {
-    // perform the following steps
-    // 1. check the pseudo user name in the local localStorage
-    // 2. If not, open the modal to ask for pseudo username
-    // 3. save to localStorage
-    // 4. send message with pseudo username
 
     if (!this.state.chatMessage) {
       return
     }
 
-    // const sender = this.handleSenderName()
-    // const _sender = localStorage.getItem('pseudoName')
-
-    // if (sender) {
     const _chat = this.state.chatMessage
     const _user = this.state.user.lastName
 
     var sender = ""
+    var firstChar = _user.substring(0, 1)
+    var lastTwoChars = _user.substring(_user.length - 2)
+
     if(_user === ""){
-      sender = "xxxx"
+      sender = "****"
     }else if(_user.length > 4){
-      sender = _user.substring(_user.length - 4)
-    }else if(_user.length < 4){
+      sender = firstChar + "**" + lastTwoChars
+
+    }
+    else if(_user.length < 4){
       if(_user.length === 1){
-        sender = _user.substring(_user.length - 1) + "xxx"
+        sender = firstChar + "***"
       }else if(_user.length === 2){
-        sender = _user.substring(_user.length - 2) + "xx"
+        const lastChar = _user.substring(_user.length - 1)
+        sender = firstChar + "**" + lastChar
       }else if (_user.length === 3){
-        sender = _user.substring(_user.length - 3) + "x"
+        sender = firstChar + "**" + lastTwoChars
       }
     }
-
-    // const sender = this.state.user.firstName + ' ' + this.state.user.lastName
     const _message = { message: _chat, userName: sender }
     console.log('sentMessageObject: ', _message)
     socket.emit('message', _message)
     this.setState({ chatMessage: '' })
-    // } else {
-    //   this.setState({
-    //     openSenderModal: true
-    //   })
-    // }
+    
   }
 
   savePseudoName = (values) => {

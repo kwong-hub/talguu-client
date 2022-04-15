@@ -35,13 +35,18 @@ const signupAsProducer = () => {
 
               <p className="text-2xl text-gray-700 my-6">On invitation only</p>
               <p className="text-md text-gray-700 my-6">
-                  If you are interested in joining, please send an email to 
-                  <span className='text-green-700'> kwong@talguu.com </span>
-                  </p>
-              <div className="flex bg-gray-100 rounded-3xl mb-8">
-                <Link to="/login">
+                If you are interested in joining, please send an email to
+                <span style={{color:"#1890ff"}}> kwong@talguu.com </span>
+              </p>
+              <div className="flex bg-white mb-8">
+                <Link
+                  to="/login"
+                  className=" rounded-3xl border-green-700 px-5"
+                >
                   <Button
                     shape="round"
+                    style={{background:"#1890ff", paddingLeft:"20px", paddingRight:"20px"}}
+                    type='primary'
                     className="flex items-center border-transparent bg-transparent m-1 px-4"
                   >
                     Login

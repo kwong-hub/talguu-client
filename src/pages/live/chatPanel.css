@@ -4,14 +4,15 @@
   height: 20px;
   background-color: red;
   animation-name: blinkerDiv;
-  animation-duration:1s;
+  animation-duration:1.5s;
   border-radius:50%;
   animation-iteration-count: infinite;
 }
 
 @keyframes blinkerDiv {
   0% {background-color:red}
-  100% {background-color:white}
+  50%{background-color: rgb(56, 54, 54)}
+  100% {background-color:rgb(3, 3, 3)}
 }
 
 .chat-panel-btn{

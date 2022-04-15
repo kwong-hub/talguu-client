@@ -749,7 +749,7 @@ export class Conference extends Component {
 
         <div className="my-9 pt-4 flex flex-col  items-center">
           {/* <h2 className="text-xl semibold">About the Conference</h2> */}
-          <div className="flex border-b-2 border-gray-500 p-4 w-full justify-between text-white">
+          <div className="flex border-b-2 border-gray-500 p-4 w-full md:justify-between text-white">
             <div className="flex items-center">
               {/* chat part begins */}
 
@@ -851,6 +851,7 @@ export class Conference extends Component {
                   src="https://assets.mixkit.co/videos/preview/mixkit-female-boxer-resting-after-her-training-40264-large.mp4"
                   id="localVideo"
                   className="videoPlayer"
+                  poster={userIcon}
                   autoPlay
                   muted
                   playsinline
@@ -943,7 +944,7 @@ export class Conference extends Component {
         {/* chat part begins */}
 
         {!this.state.openChatPanel && (
-          <div className="w-72 h-16 fixed bottom-2 right-2">
+          <div className="w-72 h-16 fixed bottom-2 right-4">
             <div
               className="flex items-center justify-between chat-panel-btn bg-gray-800 hover:bg-gray-700"
               onClick={() => this.toggleChatPanel()}

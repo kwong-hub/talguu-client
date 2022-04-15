@@ -144,7 +144,7 @@ const Login = (props) => {
   }
 
   return (
-    <div className="relative">
+    <div className="relative h-screen">
       <Header />
 
       <div className="absolute bottom-20 left-0 w-64 ">
@@ -159,7 +159,7 @@ const Login = (props) => {
           alt="Logo"
         />
       </div>
-      <div className="flex justify-center items-center h-full pt-2 mt-14">
+      <div className="flex justify-center items-center h-full pt-2 mt-4">
         <div className="w-full max-w-xs flex flex-col justify-center m-4 p-4 py-8 shadow-md rounded-2xl bg-white">
           <div className="flex justify-center flex-col items-center ">
             <img className="w-32" src={logo} alt="Logo" />
@@ -232,12 +232,12 @@ const Login = (props) => {
                   <Checkbox>Remember me</Checkbox>
                 </Form.Item> */}
 
-                <a
+                <p
                   className="login-form-forgot"
                   onClick={(e) => forgotPassword()}
                 >
                   Forgot password
-                </a>
+                </p>
               </Form.Item>
 
               <Form.Item>
@@ -251,7 +251,7 @@ const Login = (props) => {
                 </Button>
               </Form.Item>
             </Form>
-
+{/* 
             <div>
               <p className="my-4">OR USING</p>
               <div className="flex justify-evenly">
@@ -271,7 +271,7 @@ const Login = (props) => {
                   Facebook
                 </Button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

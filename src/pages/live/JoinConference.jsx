@@ -838,7 +838,7 @@ export class JoinConference extends Component {
         {/* chat part begins */}
 
         {!this.state.openChatPanel && (
-          <div className="w-72 h-16 fixed bottom-2 right-2">
+          <div className="w-72 h-16 fixed bottom-2 right-4">
             <div
               className="flex items-center justify-between chat-panel-btn bg-gray-800 hover:bg-gray-700"
               onClick={() => this.toggleChatPanel()}
