@@ -312,11 +312,11 @@ const SignupViewer = () => {
       <div className="flex m-auto items-center justify-center w-auto md:p-8 pt-2 mt-1 h-screen">
         <div className="flex justify-center items-center h-full w-full max-w-sm">
           {currentForm !== 1 ? (
-            <div className="w-full  flex flex-col h-full justify-center m-4 p-4 py-6 shadow-md rounded-2xl bg-white">
+            <div className="w-full  flex flex-col h-full justify-center m-4 p-4 md:py-6 py-3 shadow-md rounded-2xl bg-white">
               <div className="flex justify-center flex-col items-center ">
                 {/* <img className="" src={logo} alt="Logo" width={50} /> */}
 
-                <p className="md:text-2xl text-xl text-gray-700 md:mb-6 mb-4 mt-5 md:mt-2">
+                <p className="md:text-2xl text-xl text-gray-700 md:mb-6 mb-4 md:mt-2">
                   Create a New Account
                 </p>
                 <div className="hidden md:block">
