@@ -575,7 +575,7 @@ const phoneNumberChangeEvent = (val) => {
                 </p>
               </div>
             </div>
-            <div className="px-6 w-full md:w-1/2">
+            <div className="px-6 w-full md:w-1/2 mb-8">
               <div className="bg-white p-8 md:my-4 border rounded-xl">
                 <div className="text-xl font-semibold flex pb-6">
                   <p>Password Change</p>

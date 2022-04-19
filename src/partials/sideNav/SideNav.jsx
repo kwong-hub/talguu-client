@@ -218,10 +218,17 @@ const SideNav = (props) => {
               onClick={() => toggleSearch()}
               className="p-2 text-4xl text-gray-300 mx-3"
             />
-            <Dropdown overlay={accountMenu} placement="bottomRight"
-            style={{marginRight: '5px'}}
-            arrow>
-              <FaUser className="p-2 text-4xl text-gray-300" />
+            <Dropdown
+              overlay={accountMenu}
+              placement="bottomRight"
+              trigger={['click']}
+              arrow
+            >
+              <span
+                className="ant-dropdown-link"
+                onClick={(e) => e.preventDefault()}>
+                <FaUser className="p-2 text-4xl text-gray-300" />
+              </span>
             </Dropdown>
           </div>
           {/* <span

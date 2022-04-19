@@ -159,7 +159,7 @@ const Login = (props) => {
           alt="Logo"
         />
       </div>
-      <div className="flex justify-center items-center h-full pt-2 mt-4">
+      <div className="flex justify-center md:items-center h-full pt-2 mt-4">
         <div className="w-full max-w-xs flex flex-col justify-center m-4 p-4 py-8 md:shadow-md rounded-2xl bg-white">
           <div className="flex justify-center flex-col items-center ">
             <img className="w-32" src={logo} alt="Logo" />
