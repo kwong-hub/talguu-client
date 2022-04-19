@@ -160,33 +160,35 @@ const Login = (props) => {
         />
       </div>
       <div className="flex justify-center items-center h-full pt-2 mt-4">
-        <div className="w-full max-w-xs flex flex-col justify-center m-4 p-4 py-8 shadow-md rounded-2xl bg-white">
+        <div className="w-full max-w-xs flex flex-col justify-center m-4 p-4 py-8 md:shadow-md rounded-2xl bg-white">
           <div className="flex justify-center flex-col items-center ">
             <img className="w-32" src={logo} alt="Logo" />
             <p className="text-sm text-purple-600 my-4">
               Welcome back to Talguu
             </p>
 
-            <p className="text-2xl text-gray-700 mb-4">
+            <p className="text-2xl text-gray-700 mb-4 hidden md:block">
               Login into you Account!
             </p>
-            <div className="flex bg-gray-100 rounded-3xl mb-8">
-              <Link to="/login">
-                <Button
-                  shape="round"
-                  className="flex items-center text-white m-1 px-4 bg-blue-500"
-                >
-                  Login
-                </Button>
-              </Link>
-              <Link to="/signup_viewer">
-                <Button
-                  shape="round"
-                  className="flex items-center border-transparent bg-transparent m-1 px-4"
-                >
-                  Sign Up
-                </Button>
-              </Link>
+            <div className="hidden md:block">
+              <div className="flex bg-gray-100 rounded-3xl mb-8">
+                <Link to="/login">
+                  <Button
+                    shape="round"
+                    className="flex items-center text-white m-1 px-4 bg-blue-500"
+                  >
+                    Login
+                  </Button>
+                </Link>
+                <Link to="/signup_viewer">
+                  <Button
+                    shape="round"
+                    className="flex items-center border-transparent bg-transparent m-1 px-4"
+                  >
+                    Sign Up
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
           <div>
@@ -251,7 +253,7 @@ const Login = (props) => {
                 </Button>
               </Form.Item>
             </Form>
-{/* 
+            {/* 
             <div>
               <p className="my-4">OR USING</p>
               <div className="flex justify-evenly">

@@ -430,7 +430,6 @@ export default function WebRTCAdaptor(initialValues) {
         .catch(function (error) {
           if (error.name === 'NotAllowedError') {
             console.debug('Permission denied error')
-
             thiz.callbackError('ScreenSharePermissionDenied')
 
             // Redirect Default Stream Camera
@@ -442,11 +441,7 @@ export default function WebRTCAdaptor(initialValues) {
 
               thiz.openStream(mediaConstraints)
             } else {
-              // thiz.switchVideoCameraCapture(streamId)
-              //thiz.callback('screen_share_stopped')
-              thiz.localVideo.style.display = 'block'
-              thiz.setVideoCameraSource(streamId, mediaConstraints, null, true)
-              
+              thiz.switchVideoCameraCapture(streamId)
             }
           } else {
             thiz.callbackError(error.name, error.message)

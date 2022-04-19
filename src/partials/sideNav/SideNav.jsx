@@ -213,12 +213,14 @@ const SideNav = (props) => {
               />
             </Link>
           </div>
-          <div className="flex">
+          <div className="flex mr-2">
             <FaSearch
               onClick={() => toggleSearch()}
-              className="p-2 text-4xl text-gray-300"
+              className="p-2 text-4xl text-gray-300 mx-3"
             />
-            <Dropdown overlay={accountMenu} placement="bottomRight" arrow>
+            <Dropdown overlay={accountMenu} placement="bottomRight"
+            style={{marginRight: '5px'}}
+            arrow>
               <FaUser className="p-2 text-4xl text-gray-300" />
             </Dropdown>
           </div>

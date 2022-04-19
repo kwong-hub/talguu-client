@@ -40,9 +40,9 @@ const Settings = (props) => {
             <h1 className="text-gray-800 text-lg text-left">
               Billing and Payment
             </h1>
-            <h4 className="text-gray-700 text-md text-left font-light">
+            {/* <h4 className="text-gray-700 text-md text-left font-light">
               Choose how you make payment
-            </h4>
+            </h4> */}
           </div>
           <div className="mt-2 sm:mt-0 text-left">
             <Button

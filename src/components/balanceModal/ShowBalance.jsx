@@ -40,7 +40,7 @@ const ShowBalance = (props) => {
         okText='Ok'>
         <div className='flex flex-col justify-center items-center py-4 '>
           <h2>Balance</h2>
-          <p className='text-2xl font-bold '>{(Math.round(balance * 100) / 100).toFixed(2)}$</p>
+          <p className='text-2xl font-bold '>${(Math.round(balance * 100) / 100).toFixed(2)}</p>
         </div>
       </Modal>
     </div>

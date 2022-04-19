@@ -340,11 +340,11 @@ export class Conference extends Component {
   leaveRoom = () => {
     this.webRTCAdaptor.leaveFromRoom(this.state.roomName)
 
-    //for (const node in document.getElementById('players').childNodes) {
-      //if (node.tagName === 'DIV' && node.id !== 'localVideo') {
-        //document.getElementById('players').removeChild(node)
-      //}
-    //}
+    // for (const node in document.getElementById('players').childNodes) {
+    //   if (node.tagName === 'DIV' && node.id !== 'localVideo') {
+    //     document.getElementById('players').removeChild(node)
+    //   }
+    // }
     history.push('/left_conference')
     history.go(0)
   }
