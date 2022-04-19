@@ -160,8 +160,8 @@ const Login = (props) => {
         />
       </div>
       <div className="flex justify-center md:items-center h-full pt-2 mt-4">
-        <div className="w-full max-w-xs flex flex-col justify-center m-4 p-4 py-8 md:shadow-md rounded-2xl bg-white">
-          <div className="flex justify-center flex-col items-center ">
+        <div className="w-full max-w-xs flex flex-col justify-center md:m-4 py-8 px-8 md:px-4 md:shadow-md rounded-2xl bg-white">
+          <div className="flex justify-center flex-col md:items-center ">
             <img className="w-32" src={logo} alt="Logo" />
             <p className="text-sm text-purple-600 my-4">
               Welcome back to Talguu
