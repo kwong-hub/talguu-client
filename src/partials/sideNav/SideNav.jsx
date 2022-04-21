@@ -307,7 +307,7 @@ const SideNav = (props) => {
                   }`}
                 >
                   <Link to="/live_video">
-                    <Tooltip placement="rightTop" title="Live Videos">
+                    <Tooltip placement="rightTop" title="Live Broadcast">
                       <FaLifeRing
                         className={
                           'text-3xl inline text-gray-300 hover:text-white'

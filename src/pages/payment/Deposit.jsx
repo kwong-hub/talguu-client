@@ -83,7 +83,7 @@ const Deposit = (props) => {
           <div className="m-4 py-2 px-2 border rounded-full border-gray-100 text-gray-700 text-lg">
             Balance
             <span className="font-black px-2">
-              {(Math.round(balance * 100) / 100).toFixed(2)}$
+              ${(Math.round(balance * 100) / 100).toFixed(2)}
             </span>
           </div>
           <h2 className="text-xl text-gray-800 font-semibold py-4">Payment</h2>
