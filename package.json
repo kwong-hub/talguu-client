@@ -2,7 +2,7 @@
   "name": "talguu-client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://8mspaa.com",
+  "proxy": "https://dd.talguu.com",
   "dependencies": {
     "@antmedia/webrtc_adaptor": "^2.4.2",
     "@craco/craco": "^6.0.0",

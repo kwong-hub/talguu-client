@@ -273,7 +273,7 @@ const videoService = {
   getConferenceRoom: async function (body) {
     try {
       const res = await axios.get(
-        `${environment}/video/conference?token=${body.token}&passcode=${body.passcode}`,
+        `${environment}/video/conference?token=${body.token}&passcode=${body.passCode}`,
         body
       )
       return res.data
