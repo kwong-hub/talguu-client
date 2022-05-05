@@ -245,7 +245,7 @@ export class LiveVideos extends Component {
         <SideNav></SideNav>
         <div className="flex relative items-end px-4 py-4 mt-16 sm:mt-24 -mb-10 sm:mb-0">
           <p className="absolute text-lg font-semibold text-blue-700">
-            Live Videos
+            Live Broadcasts
           </p>
         </div>
         {this.state.currentLive && (

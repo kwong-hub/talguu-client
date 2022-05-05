@@ -18,7 +18,7 @@ const Stream = (props) => {
   // const [streamKey] = useState(property?.stream_key)
   // const [title, setTitle] = useState(property?.title)
   // const [describe, setDescribe] = useState(property?.description)
-  const [streamURL] = useState('rtmp://dd.talguu.com/show')
+  const [streamURL] = useState('rtmp://8mspaa.com/show')
   const history = useHistory()
   useEffect(() => {
     getStreamed()

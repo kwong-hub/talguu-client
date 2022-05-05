@@ -48,7 +48,7 @@ export class JoinConference extends Component {
       audio: true
     },
     // eslint-disable-next-line react/prop-types
-    endpoint: 'wss://dd.talguu.com',
+    endpoint: 'wss://8mspaa.com',
     streamName: 'stream1',
     // token: '',
     pc_config: {
