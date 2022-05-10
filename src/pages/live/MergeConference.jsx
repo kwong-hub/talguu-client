@@ -587,7 +587,7 @@ export class MergerConference extends Component {
         <HeaderHome></HeaderHome>
         <div className="flex flex-col w-full items-center h-screen">
           <h2 className="text-xl text-white py-2">
-            ENJOY THE POWER OF BROADCASTING
+            ENJOY THE POWER OF CONFERENCE BROADCASTING
           </h2>
 
           <div className="video_player_container_merger">

@@ -163,7 +163,7 @@ const Deposit = (props) => {
                       message: 'Please input your Amount!'
                     }
                   ]}
-                  help="Deposit amount should greater than 10$"
+                  help="Deposit amount should greater than $10"
                 >
                   <Input
                     className="rounded-md "

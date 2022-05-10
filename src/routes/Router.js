@@ -38,6 +38,11 @@ import JoinConference from '../pages/live/JoinConference'
 import CreateConference from '../pages/live/CreateConference'
 import LeaveConference from '../pages/live/LeaveConference'
 import signupAsProducer from '../pages/authentication/signupAsProducer'
+import Laughter from '../pages/laughter/Laughter'
+import LaughterVideoPlayer from '../pages/laughter/LaughterVideoPlayer'
+import AuthLaugher from '../pages/laughter/auth/AuthLaugher'
+import Producer from '../pages/laughter/producer/Producer'
+import ProducerProfile from '../pages/laughter/producer/ProducerProfile'
 
 const Router = () => {
   return (
@@ -45,14 +50,44 @@ const Router = () => {
       {/* <Home /> */}
       <BrowserRouter history={history}>
         <Switch>
+          {/* <Route exact path="/" component={Laughter} /> */}
           <Route exact path="/" component={Videos} />
           <Route exact path="/search" component={SearchVideo} />
           <Route path="/watch/:vidId" component={WatchVideo} />
           <PrivateRoute path="/live_video" component={LiveVideos} />
+
+          <Route
+            exact
+            path="/laughter/video-player"
+            component={LaughterVideoPlayer}
+          />
+
+          <Route
+            exact
+            path="/producer"
+            component={Producer}
+          />
+          <Route
+            exact
+            path="/producer/profile"
+            component={ProducerProfile}
+          />
+
+
           <PrivateRoute
             path="/purchased_playlist"
             component={PurchasedPlaylist}
           />
+
+          {/* <PrivateRoute
+            path="/laughter"
+            component={AuthLaugher}
+          /> */}
+          {/* <PrivateRoute 
+            path="/laughter/video-player" 
+            component={LaughterVideoPlayer} 
+          /> */}
+          
           <PrivateRoute path="/saved_later" component={SavedPlayList} />
           <PrivateRoute path="/upload_video" component={UploadVideo} />
           <PrivateRoute path="/upload_2" component={UploadAnt} />

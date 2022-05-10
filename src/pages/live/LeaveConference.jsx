@@ -9,7 +9,7 @@ const LeaveConference = () => {
     <div>
       <SideNav></SideNav>
       <div className="flex flex-col items-center justify-start mt-20 ">
-        <h1 className="text-5xl p-2">You Left the Meeting</h1>
+        <h1 className="text-5xl p-2">YOU HAVE LEFT THE CONF BROADCASTING</h1>
         <div className="flex py-4">
           <Button
             className="mx-2"

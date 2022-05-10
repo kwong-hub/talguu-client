@@ -60,7 +60,7 @@ export class Conference extends Component {
         audio: true
       },
       // eslint-disable-next-line react/prop-types
-      endpoint: 'wss://8mspaa.com',
+      endpoint: 'wss://dd.talguu.com',
       streamName: 'stream1',
       token: '',
       pc_config: {
@@ -99,7 +99,9 @@ export class Conference extends Component {
       chatMessage: '',
       typing: false,
       isModalVisible: false,
-      incomingMessage: {}
+      incomingMessage: {},
+      audioSourceSelected: '',
+      videoSourceSelected: '',
     }
     socket = socketIOClient(this.state.endpoint, { path: '/tlgwss' })
   }
@@ -171,6 +173,9 @@ export class Conference extends Component {
         event.target.value
       )
     }
+    this.setState({
+      videoSourceSelected: event.target.value
+    })
   }
 
   handleAudioChange = (event) => {
@@ -183,7 +188,9 @@ export class Conference extends Component {
         event.target.value
       )
     }
-    console.log('button working...' + event.target.value)
+    this.setState({
+      audioSourceSelected: event.target.value
+    })
   }
 
   generateInvitationLink = () => {
@@ -501,6 +508,20 @@ export class Conference extends Component {
               }))
             }
           }
+
+
+          if(this.state.audioDevices.length > 0){
+            this.setState({
+              audioSourceSelected: this.state.audioDevices[0].deviceId
+            })
+          }
+
+          if(this.state.videoDevices.length > 0){
+             this.setState({
+               videoSourceSelected: this.state.videoDevices[0].deviceId
+             })
+          }
+
         } else if (info === 'joinedTheRoom') {
           const room = obj.ATTR_ROOM_NAME
           thiz.roomOfStream[obj.streamId] = room
@@ -744,6 +765,8 @@ export class Conference extends Component {
             handleVideoChange={this.handleVideoChange}
             handleAudioChange={this.handleAudioChange}
             handleOk={this.handleOk}
+            audioSourceSelected = {this.state.audioSourceSelected}
+            videoSourceSelected = {this.state.videoSourceSelected}
           />
         )}
 
@@ -783,7 +806,7 @@ export class Conference extends Component {
                   onClick={(e) => this.generateInvitationLink()}
                 >
                   <BiUserPlus className="w-8 h-8  mx-2"></BiUserPlus>
-                  Invite to the call.
+                  Generate Private Invitation Link
                 </div>
               </Popover>
             </div>

@@ -24,6 +24,9 @@ import { useDispatch } from 'react-redux'
 import { LOGOUT_ASYNC } from '../../redux/types'
 import { RiLiveFill, RiLiveLine } from 'react-icons/ri'
 
+import {BsFillEmojiLaughingFill} from 'react-icons/bs'
+
+
 const { Search } = Input
 
 const SideNav = (props) => {
@@ -70,7 +73,7 @@ const SideNav = (props) => {
   )
 
   const menuTextStyle =
-    'text-left text-xs h-full inline-block text-gray-500 hover:text-gray-900'
+    'text-left text-xs h-full inline-block text-gray-500 hover:text-gray-900 mt-0.5'
   const menuIconStyle = 'text-2xl inline text-gray-500'
 
   const mobileMenu = (
@@ -78,6 +81,17 @@ const SideNav = (props) => {
       onClick={handleMenuClick}
       className="fixed z-20 bottom-0 flex sm:hidden w-screen overflow-hidden p-2 mt-10"
     >
+      {/* mobile laughter begins */}
+      {/* <Menu.Item key="1">
+        <Link to="/">
+          <div className="flex flex-col items-center justify-center">
+            <BsFillEmojiLaughingFill className={menuIconStyle} />
+            <span className={menuTextStyle}>Laughter</span>
+          </div>
+        </Link>
+      </Menu.Item> */}
+
+      {/* mobile laughter ends */}
       <Menu.Item key="1">
         <Link to="/">
           <div className="flex flex-col items-center justify-center">
@@ -226,7 +240,8 @@ const SideNav = (props) => {
             >
               <span
                 className="ant-dropdown-link"
-                onClick={(e) => e.preventDefault()}>
+                onClick={(e) => e.preventDefault()}
+              >
                 <FaUser className="p-2 text-4xl text-gray-300" />
               </span>
             </Dropdown>
@@ -280,12 +295,33 @@ const SideNav = (props) => {
         </div>
       </div>
       <ul className="w-14 min-h-full fixed left-0 top-0 list-disc space-y-5 p-1 border-r hidden sm:block  mt-2">
-        <li
+        {/* laughter begins */}
+
+        {/* <li
           className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
             location.pathname === '/' ? 'bg-gray-400' : ''
           }`}
         >
           <Link to="/">
+            <Tooltip
+              className="list-tooltip"
+              placement="rightTop"
+              title="Laughter"
+            >
+              <BsFillEmojiLaughingFill
+                className={'text-3xl inline text-gray-300 hover:text-white'}
+              />
+            </Tooltip>
+          </Link>
+        </li> */}
+        {/* laughter ends */}
+
+        <li
+          className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
+            location.pathname === '/' ? 'bg-gray-400' : ''
+          }`}
+        >
+          <Link to="/videos">
             <Tooltip
               className="list-tooltip"
               placement="rightTop"
@@ -297,10 +333,28 @@ const SideNav = (props) => {
             </Tooltip>
           </Link>
         </li>
+
         {user ? (
           <>
             {user.role === 'VIEWER' ? (
               <>
+                {/* authenticated laughter begins  */}
+                <li
+                  className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
+                    location.pathname === '/laughter' ? 'bg-gray-400' : ''
+                  }`}
+                >
+                  <Link to="/laughter">
+                    <Tooltip placement="rightTop" title="Laughter">
+                      <FaLifeRing
+                        className={
+                          'text-3xl inline text-gray-300 hover:text-white'
+                        }
+                      />
+                    </Tooltip>
+                  </Link>
+                </li>
+                {/* authenticated laughter ends */}
                 <li
                   className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
                     location.pathname === '/live_video' ? 'bg-gray-400' : ''

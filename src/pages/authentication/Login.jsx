@@ -167,10 +167,10 @@ const Login = (props) => {
               Welcome back to Talguu
             </p>
 
-            <p className="text-2xl text-gray-700 mb-4 hidden md:block">
+            {/* <p className="text-2xl text-gray-700 mb-4 hidden md:block">
               Login into you Account!
-            </p>
-            <div className="hidden md:block">
+            </p> */}
+            {/* <div className="hidden md:block">
               <div className="flex bg-gray-100 rounded-3xl mb-8">
                 <Link to="/login">
                   <Button
@@ -189,7 +189,7 @@ const Login = (props) => {
                   </Button>
                 </Link>
               </div>
-            </div>
+            </div> */}
           </div>
           <div>
             <p className="text-center bg-gray-200 text-red-800 mb-4 ">
