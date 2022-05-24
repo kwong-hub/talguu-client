@@ -6,6 +6,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import { laughterService } from '../../../_services/laughter.service'
 
 import InfiniteScroll from 'react-infinite-scroll-component'
+import '../laughter_style.css'
 
 
 const AuthLaugher = () => {
@@ -90,6 +91,7 @@ const AuthLaugher = () => {
                     <InfiniteScroll
                         dataLength={dataSource.length}
                         next={fetchMoreData}
+                        className="scroll-style"
                         hasMore={hasMore}
                         loader={
                             <div className="flex items-center justify-center">
@@ -107,7 +109,6 @@ const AuthLaugher = () => {
                         {dataSource.length > 0 ? (
                             <div className="flex flex-wrap">
                                 {dataSource.map((data, index) => {
-                                    log("gifPath: ", data.gifPath)
                                     return (
                                         <div
                                             className="p-1 flex md:w-1/4 w-1/2 h-52"

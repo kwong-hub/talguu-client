@@ -245,7 +245,7 @@ const SendLaughter = () => {
                                     /> */}
                                     <img
                                         className='block w-full h-full'
-                                        onClick={()=> selectedDecorator(data.id)}
+                                        onClick={() => selectedDecorator(data.id)}
                                         src={data.gifPath}
                                         alt={data.gifPath} />
                                 </div>

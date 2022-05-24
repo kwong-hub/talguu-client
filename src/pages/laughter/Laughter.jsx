@@ -125,7 +125,7 @@ const Laughter = () => {
 
 
             {dataSource.length > 0 ? (
-              <div className="flex flex-wrap">
+              <div className="flex flex-wrap w-full">
                 {dataSource.map((data, index) => {
                   return (
                     <div
@@ -144,9 +144,11 @@ const Laughter = () => {
               </div>
             ) : (
               <div>
-                <p className="text-red-500 text-md">
+                {
+                  !loading && <p className="text-red-500 text-md">
                   There is no video available
                 </p>
+                }
               </div>
             )}
           </InfiniteScroll>

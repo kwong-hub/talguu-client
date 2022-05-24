@@ -24,8 +24,7 @@ import { useDispatch } from 'react-redux'
 import { LOGOUT_ASYNC } from '../../redux/types'
 import { RiLiveFill, RiLiveLine } from 'react-icons/ri'
 
-import {BsFillEmojiLaughingFill} from 'react-icons/bs'
-
+import { BsFillEmojiLaughingFill } from 'react-icons/bs'
 
 const { Search } = Input
 
@@ -328,23 +327,25 @@ const SideNav = (props) => {
         </li>
         {/* laughter begins */}
 
-        <li
-          className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-            location.pathname === '/' ? 'bg-gray-400' : ''
-          }`}
-        >
-          <Link to="/laughter-home">
-            <Tooltip
-              className="list-tooltip"
-              placement="rightTop"
-              title="Laughter"
-            >
-              <BsFillEmojiLaughingFill
-                className={'text-3xl inline text-gray-300 hover:text-white'}
-              />
-            </Tooltip>
-          </Link>
-        </li>
+        {!user && (
+          <li
+            className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
+              location.pathname === '/laughter-home' ? 'bg-gray-400' : ''
+            }`}
+          >
+            <Link to="/laughter-home">
+              <Tooltip
+                className="list-tooltip"
+                placement="rightTop"
+                title="Laughter"
+              >
+                <BsFillEmojiLaughingFill
+                  className={'text-3xl inline text-gray-300 hover:text-white'}
+                />
+              </Tooltip>
+            </Link>
+          </li>
+        )}
         {/* laughter ends */}
 
         {user ? (
