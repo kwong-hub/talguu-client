@@ -7,7 +7,6 @@ import { laughterService } from '../../../_services/laughter.service'
 
 import InfiniteScroll from 'react-infinite-scroll-component'
 
-import './laughter_style.css'
 
 const AuthLaugher = () => {
 
@@ -92,7 +91,6 @@ const AuthLaugher = () => {
                         dataLength={dataSource.length}
                         next={fetchMoreData}
                         hasMore={hasMore}
-                        className="scroll-style"
                         loader={
                             <div className="flex items-center justify-center">
                                 <Spin indicator={antIcon} />
@@ -112,7 +110,7 @@ const AuthLaugher = () => {
                                     log("gifPath: ", data.gifPath)
                                     return (
                                         <div
-                                            className="p-1 flex md:w-1/4 w-1/2 h-44"
+                                            className="p-1 flex md:w-1/4 w-1/2 h-52"
                                             key={index}
                                             onClick={() => goToDetail(data.id)}
                                         >

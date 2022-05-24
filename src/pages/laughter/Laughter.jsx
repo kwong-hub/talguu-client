@@ -79,8 +79,6 @@ const Laughter = () => {
     return setStatus(true)
   }, [status])
 
-  
-
   const goToDetail = (id) => {
     log('Detail: ' + id)
     const user = JSON.parse(localStorage.getItem('user'))
@@ -125,12 +123,13 @@ const Laughter = () => {
           >
             {/* <p>Total: {dataSource.length}</p> */}
 
+
             {dataSource.length > 0 ? (
               <div className="flex flex-wrap">
                 {dataSource.map((data, index) => {
                   return (
                     <div
-                      className="p-1 flex md:w-1/4 w-1/2 h-44"
+                      className="p-1 flex md:w-1/4 w-1/2 h-52"
                       key={index}
                       onClick={() => goToDetail(data.id)}
                     >

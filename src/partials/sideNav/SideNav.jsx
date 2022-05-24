@@ -309,6 +309,23 @@ const SideNav = (props) => {
         </div>
       </div>
       <ul className="w-14 min-h-full fixed left-0 top-0 list-disc space-y-5 p-1 border-r hidden sm:block  mt-2">
+        <li
+          className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
+            location.pathname === '/' ? 'bg-gray-400' : ''
+          }`}
+        >
+          <Link to="/">
+            <Tooltip
+              className="list-tooltip"
+              placement="rightTop"
+              title="All Videos"
+            >
+              <FaVideo
+                className={'text-3xl inline text-gray-300 hover:text-white'}
+              />
+            </Tooltip>
+          </Link>
+        </li>
         {/* laughter begins */}
 
         <li
@@ -329,24 +346,6 @@ const SideNav = (props) => {
           </Link>
         </li>
         {/* laughter ends */}
-
-        <li
-          className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-            location.pathname === '/videos' ? 'bg-gray-400' : ''
-          }`}
-        >
-          <Link to="/videos">
-            <Tooltip
-              className="list-tooltip"
-              placement="rightTop"
-              title="All Videos"
-            >
-              <FaVideo
-                className={'text-3xl inline text-gray-300 hover:text-white'}
-              />
-            </Tooltip>
-          </Link>
-        </li>
 
         {user ? (
           <>

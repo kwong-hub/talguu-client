@@ -52,7 +52,7 @@ export const HomeContainer = ({
                     <img
                         onClick={gotoDetail}
                         className='block w-full h-full'
-                        src='https://dd.talguu.com/video/gif/1631623503042trailer.gif'
+                        src='https://savageuniversal.com/wp-content/uploads/2014/08/young-woman-laughing.jpg'
                         alt='' />
                 </div>
 
@@ -90,7 +90,7 @@ export const HomeContainer = ({
                     <div className={`absolute h-72 top-16 -left-5 w-9 px-2 rounded-tr-3xl rounded-br-3xl bg-${sidebarColor}`}>
                         <button className="text-white cursor-pointer text-xl
                                 leading-none border h-full border-solid border-transparent 
-                                bg-transparent block lg:hidden outline-none focus:outline-none"
+                                bg-transparent block outline-none focus:outline-none"
                             type="button"
                             onClick={toggleSidebar}
                         >
