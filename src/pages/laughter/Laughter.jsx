@@ -111,6 +111,7 @@ const Laughter = () => {
             dataLength={dataSource.length}
             next={fetchMoreData}
             hasMore={hasMore}
+            className="scroll-style"
             loader={
               <div className="flex items-center justify-center">
                 <Spin indicator={antIcon} />

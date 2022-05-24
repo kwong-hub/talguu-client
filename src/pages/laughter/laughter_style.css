@@ -3,3 +3,13 @@
     background-color: red;
     height: 400px;
 }
+.scroll-style {
+     all: initial !important;
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+    .scroll-style::-webkit-scrollbar {
+      all: initial !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
