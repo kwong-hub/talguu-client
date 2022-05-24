@@ -66,11 +66,11 @@ const Laughter = () => {
   const fetchMoreData = () => {
     log('fetchMore called!')
 
-    setLoading(true)
-    if (dataSource.length === total) {
-      setHasMore(false)
-      return
-    }
+    // setLoading(true)
+    // if (dataSource.length === total) {
+    //   setHasMore(false)
+    //   return
+    // }
     setPage(page + 1)
   }
 
@@ -106,7 +106,7 @@ const Laughter = () => {
           />
         </div>
 
-        <div className="w-full">
+        <div className="px-3">
           <InfiniteScroll
             dataLength={dataSource.length}
             next={fetchMoreData}
@@ -122,15 +122,14 @@ const Laughter = () => {
               </div>
             }
           >
-            <p>Total: {dataSource.length}</p>
+            {/* <p>Total: {dataSource.length}</p> */}
 
             {dataSource.length > 0 ? (
-              <div className="flex flex-wrap w-full">
+              <div className="flex flex-wrap">
                 {dataSource.map((data, index) => {
-                  log('gifPath: ', data.gifPath)
                   return (
                     <div
-                      className="p-1 flex flex-wrap md:w-1/3 w-1/2 h-44"
+                      className="p-1 flex md:w-1/4 w-1/2 h-44"
                       key={index}
                       onClick={() => goToDetail(data.id)}
                     >

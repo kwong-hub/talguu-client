@@ -29,6 +29,12 @@ const LaughterVideoPlayer = () => {
 
     const video_src = SAMPLE_VIDEOS[0].video_url
 
+    useEffect(() => {
+        window.addEventListener('load', function () {
+            onPlayerSwipe()
+        }, false)
+    }, [])
+
 
     const handlePlayerReady = (player) => {
         playerRef.current = player;
@@ -42,17 +48,15 @@ const LaughterVideoPlayer = () => {
             onPlayerSwipe()
             console.log('player is waiting');
         });
+        player.on('pause', () => {
+            onPlayerSwipe()
+            console.log('player is paused');
+        });
 
         player.on('dispose', () => {
             console.log('player will dispose');
         });
     }
-
-    useEffect(() => {
-        window.addEventListener('load', function () {
-            onPlayerSwipe()
-        }, false)
-    }, [])
 
 
     const handleSendLaughter = () => {
@@ -79,7 +83,7 @@ const LaughterVideoPlayer = () => {
     }
 
     const videoJsOptions = {
-        autoplay: false,
+        autoplay: true,
         controls: true,
         loop: true,
         responsive: true,

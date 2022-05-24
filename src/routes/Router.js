@@ -51,8 +51,8 @@ const Router = () => {
       {/* <Home /> */}
       <BrowserRouter history={history}>
         <Switch>
-          <Route exact path="/" component={Laughter} />
-          <Route exact path="/videos" component={Videos} />
+          <Route exact path="/" component={Videos} />
+          <Route exact path="/laughter-home" component={Laughter} />
           <Route exact path="/search" component={SearchVideo} />
           <Route path="/watch/:vidId" component={WatchVideo} />
           <PrivateRoute path="/live_video" component={LiveVideos} />

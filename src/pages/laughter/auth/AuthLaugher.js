@@ -60,11 +60,11 @@ const AuthLaugher = () => {
     const fetchMoreData = () => {
         log('fetchMore called!')
 
-        setLoading(true)
-        if (dataSource.length === total) {
-            setHasMore(false)
-            return
-        }
+        // setLoading(true)
+        // if (dataSource.length === total) {
+        //     setHasMore(false)
+        //     return
+        // }
         setPage(page + 1)
     }
 
@@ -86,7 +86,7 @@ const AuthLaugher = () => {
         <div className="pt-2 sm:ml-14 mt-12">
             <SideNav></SideNav>
             <div className="flex relative mt-2 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
-                <div className="w-full">
+                <div className="w-full px-3">
                     <InfiniteScroll
                         dataLength={dataSource.length}
                         next={fetchMoreData}
@@ -103,7 +103,6 @@ const AuthLaugher = () => {
                                 <p style={{ textAlign: 'center' }}>Yay! You have seen it all</p>
                             </div>
                         }>
-                        <p>Total: {dataSource.length}</p>
 
                         {dataSource.length > 0 ? (
                             <div className="flex flex-wrap">
@@ -111,7 +110,7 @@ const AuthLaugher = () => {
                                     log("gifPath: ", data.gifPath)
                                     return (
                                         <div
-                                            className="p-1 flex flex-wrap md:w-1/3 w-1/2 h-44"
+                                            className="p-1 flex md:w-1/4 w-1/2 h-44"
                                             key={index}
                                             onClick={() => goToDetail(data.id)}
                                         >

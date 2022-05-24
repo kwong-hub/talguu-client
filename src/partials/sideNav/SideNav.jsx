@@ -81,10 +81,20 @@ const SideNav = (props) => {
       onClick={handleMenuClick}
       className="fixed z-20 bottom-0 flex sm:hidden w-screen overflow-hidden p-2 mt-10"
     >
+      {/* mobile laughter ends */}
+      <Menu.Item key="2">
+        <Link to="/">
+          <div className="flex flex-col items-center justify-center">
+            <FaVideo className={menuIconStyle} />
+            <span className={menuTextStyle}>Videos</span>
+          </div>
+        </Link>
+      </Menu.Item>
+
       {/* mobile laughter begins */}
       {!user && (
         <Menu.Item key="1">
-          <Link to="/">
+          <Link to="/laughter-home">
             <div className="flex flex-col items-center justify-center">
               <BsFillEmojiLaughingFill className={menuIconStyle} />
               <span className={menuTextStyle}>Laughter</span>
@@ -92,16 +102,6 @@ const SideNav = (props) => {
           </Link>
         </Menu.Item>
       )}
-
-      {/* mobile laughter ends */}
-      <Menu.Item key="2">
-        <Link to="/videos">
-          <div className="flex flex-col items-center justify-center">
-            <FaVideo className={menuIconStyle} />
-            <span className={menuTextStyle}>Videos</span>
-          </div>
-        </Link>
-      </Menu.Item>
 
       <Menu.Item key="22">
         <Link to="/live_video">
@@ -311,12 +311,12 @@ const SideNav = (props) => {
       <ul className="w-14 min-h-full fixed left-0 top-0 list-disc space-y-5 p-1 border-r hidden sm:block  mt-2">
         {/* laughter begins */}
 
-        {/* <li
+        <li
           className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
             location.pathname === '/' ? 'bg-gray-400' : ''
           }`}
         >
-          <Link to="/">
+          <Link to="/laughter-home">
             <Tooltip
               className="list-tooltip"
               placement="rightTop"
@@ -327,7 +327,7 @@ const SideNav = (props) => {
               />
             </Tooltip>
           </Link>
-        </li> */}
+        </li>
         {/* laughter ends */}
 
         <li
