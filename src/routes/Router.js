@@ -38,7 +38,12 @@ import JoinConference from '../pages/live/JoinConference'
 import CreateConference from '../pages/live/CreateConference'
 import LeaveConference from '../pages/live/LeaveConference'
 import signupAsProducer from '../pages/authentication/signupAsProducer'
-
+import Laughter from '../pages/laughter/Laughter'
+import LaughterVideoPlayer from '../pages/laughter/LaughterVideoPlayer'
+import AuthLaugher from '../pages/laughter/auth/AuthLaugher'
+import Producer from '../pages/laughter/producer/Producer'
+import ProducerProfile from '../pages/laughter/producer/ProducerProfile'
+import SendLaughter from '../pages/laughter/send/SendLaughter'
 
 const Router = () => {
   return (
@@ -46,12 +51,17 @@ const Router = () => {
       {/* <Home /> */}
       <BrowserRouter history={history}>
         <Switch>
-          {/* <Route exact path="/" component={Laughter} /> */}
-          <Route exact path="/" component={Videos} />
+          <Route exact path="/" component={Laughter} />
+          <Route exact path="/videos" component={Videos} />
           <Route exact path="/search" component={SearchVideo} />
           <Route path="/watch/:vidId" component={WatchVideo} />
           <PrivateRoute path="/live_video" component={LiveVideos} />
 
+          <Route
+            exact
+            path="/laughter/video-player"
+            component={LaughterVideoPlayer}
+          />
 
           <Route
             exact
@@ -64,16 +74,22 @@ const Router = () => {
             component={ProducerProfile}
           />
 
+          <Route
+            exact
+            path="/laughter/send"
+            component={SendLaughter}
+          />
+
 
           <PrivateRoute
             path="/purchased_playlist"
             component={PurchasedPlaylist}
           />
 
-          {/* <PrivateRoute
+          <PrivateRoute
             path="/laughter"
             component={AuthLaugher}
-          /> */}
+          />
           {/* <PrivateRoute 
             path="/laughter/video-player" 
             component={LaughterVideoPlayer} 

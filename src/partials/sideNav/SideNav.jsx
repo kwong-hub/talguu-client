@@ -82,18 +82,20 @@ const SideNav = (props) => {
       className="fixed z-20 bottom-0 flex sm:hidden w-screen overflow-hidden p-2 mt-10"
     >
       {/* mobile laughter begins */}
-      {/* <Menu.Item key="1">
-        <Link to="/">
-          <div className="flex flex-col items-center justify-center">
-            <BsFillEmojiLaughingFill className={menuIconStyle} />
-            <span className={menuTextStyle}>Laughter</span>
-          </div>
-        </Link>
-      </Menu.Item> */}
+      {!user && (
+        <Menu.Item key="1">
+          <Link to="/">
+            <div className="flex flex-col items-center justify-center">
+              <BsFillEmojiLaughingFill className={menuIconStyle} />
+              <span className={menuTextStyle}>Laughter</span>
+            </div>
+          </Link>
+        </Menu.Item>
+      )}
 
       {/* mobile laughter ends */}
-      <Menu.Item key="1">
-        <Link to="/">
+      <Menu.Item key="2">
+        <Link to="/videos">
           <div className="flex flex-col items-center justify-center">
             <FaVideo className={menuIconStyle} />
             <span className={menuTextStyle}>Videos</span>
@@ -101,7 +103,7 @@ const SideNav = (props) => {
         </Link>
       </Menu.Item>
 
-      <Menu.Item key="2">
+      <Menu.Item key="22">
         <Link to="/live_video">
           <div className="flex flex-col items-center justify-center">
             <FaLifeRing className={menuIconStyle} />
@@ -111,6 +113,18 @@ const SideNav = (props) => {
       </Menu.Item>
       {user ? (
         <>
+          {user.role === 'VIEWER' ? (
+            <Menu.Item key="1">
+              <Link to="/laughter">
+                <div className="flex flex-col items-center justify-center">
+                  <BsFillEmojiLaughingFill className={menuIconStyle} />
+                  <span className={menuTextStyle}>Laughter</span>
+                </div>
+              </Link>
+            </Menu.Item>
+          ) : (
+            ''
+          )}
           {user.role === 'VIEWER' ? (
             <Menu.Item key="3">
               <Link to="/saved_later">
@@ -158,7 +172,7 @@ const SideNav = (props) => {
             ''
           )}
           {user.role === 'PRODUCER' ? (
-            <Menu.Item key="6">
+            <Menu.Item key="16">
               <Link to="/upload_video">
                 <div className="flex flex-col items-center justify-center">
                   <FaCloudUploadAlt className={menuIconStyle} />
@@ -170,7 +184,7 @@ const SideNav = (props) => {
             ''
           )}
           {user.role === 'PRODUCER' ? (
-            <Menu.Item key="6">
+            <Menu.Item key="26">
               <Link to="/live_stream">
                 <div className="flex flex-col items-center justify-center">
                   <FaStream className={menuIconStyle} />
@@ -182,7 +196,7 @@ const SideNav = (props) => {
             ''
           )}
           {user.role === 'PRODUCER' ? (
-            <Menu.Item key="6">
+            <Menu.Item key="36">
               <Link to="/live_stream">
                 <div className="flex flex-col items-center justify-center">
                   <FaStream className={menuIconStyle} />
@@ -318,7 +332,7 @@ const SideNav = (props) => {
 
         <li
           className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-            location.pathname === '/' ? 'bg-gray-400' : ''
+            location.pathname === '/videos' ? 'bg-gray-400' : ''
           }`}
         >
           <Link to="/videos">
@@ -346,7 +360,7 @@ const SideNav = (props) => {
                 >
                   <Link to="/laughter">
                     <Tooltip placement="rightTop" title="Laughter">
-                      <FaLifeRing
+                      <BsFillEmojiLaughingFill
                         className={
                           'text-3xl inline text-gray-300 hover:text-white'
                         }

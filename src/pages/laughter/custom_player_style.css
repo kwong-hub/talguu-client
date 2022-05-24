@@ -1,0 +1,19 @@
+@import '~video.js/dist/video-js.css';
+
+.video-js .vjs-big-play-button {
+  top: calc(50% - 1.2em);
+  left: calc(50% - 1.5em);
+}
+.video-js {
+  max-height: 100%;
+}
+
+.vjs-theme-forest .vjs-play-progress,
+.vjs-theme-forest .vjs-play-progress:before {
+  background-color: #40a9ff65;
+}
+
+.vjs-theme-forest .vjs-control-bar {
+  background-color: rgba(43, 51, 63, 0.9);
+  margin-bottom: 0em;
+}

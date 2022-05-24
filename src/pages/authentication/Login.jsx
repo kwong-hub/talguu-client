@@ -106,7 +106,7 @@ const Login = (props) => {
                 pathname: location.search.replace('?return_url=', '')
               })
             } else {
-              history.push('/')
+              history.push('/laughter')
             }
           } else {
             if (['BUYER', 'APPLICANT'].includes(resp.role)) {
