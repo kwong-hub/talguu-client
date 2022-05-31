@@ -18,8 +18,8 @@ import adapter from 'webrtc-adapter'
 //  };
 const mediaConstraints = {
   video: {
-    width: { min: 384, ideal: 768 },
-    height: { min: 216, ideal: 432 },
+    width: { min: 1280, ideal: 768 },
+    height: { min: 720, ideal: 432 },
     aspectRatio: { ideal: 1.777777778 }
   },
   audio: true
@@ -55,6 +55,14 @@ export default function WebRTCAdaptor(initialValues) {
       this.firstByteSentCount = 0
       this.firstBytesReceivedCount = 0
       this.audioLevel = -1
+      this.mediaConstraints = {
+        video: {
+          width: { min: 1280, ideal: 768 },
+          height: { min: 720, ideal: 432 },
+          aspectRatio: { ideal: 1.777777778 }
+        },
+        audio: true
+      }
     }
 
     // kbits/sec
@@ -212,9 +220,9 @@ export default function WebRTCAdaptor(initialValues) {
     onEndedCallback
   ) {
     thiz.desktopStream = stream
-
+    console.log("zzy" + mediaConstraints.video)
     navigator.mediaDevices
-      .getUserMedia({ video: true, audio: false })
+      .getUserMedia(mediaConstraints)
       .then(function (cameraStream) {
         // create a canvas element
         const canvas = document.createElement('canvas')
@@ -452,6 +460,16 @@ export default function WebRTCAdaptor(initialValues) {
 
     // If mediaConstraints only user camera
     else {
+      
+      
+      let mediaConstraints = {
+        video: {
+          width: { min: 380, ideal: 768 },
+          height: { min: 180, ideal: 432 },
+          aspectRatio: { ideal: 1.777777778 }
+        },
+        audio: true
+      }
       navigator.mediaDevices
         .getUserMedia(mediaConstraints)
         .then(function (stream) {
