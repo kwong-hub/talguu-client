@@ -152,7 +152,7 @@ const LaughterVideoPlayer = () => {
             const videoJsOptions = {
                 videoId: currentVideo.id,
                 autoplay: true,
-                controls: true,
+                controls: false,
                 poster: currentVideo?.thumbnial?.includes('talguu-vout1')
                     ? currentVideo?.thumbnial
                     : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png',
