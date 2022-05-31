@@ -1,132 +1,188 @@
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoSendSharp } from 'react-icons/io5';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
-import { SAMPLE_VIDEOS } from './sampleVideos';
-import { swipeDetect } from './swipeDetector';
 import VideoPlayer from './VideoPlayer';
 
 import talguuLogo from '../../assets/images/talguu_logo.png'
+import videoService from '../../_services/video.service';
+import { Space, Spin } from 'antd';
+import { config } from './swiperConfig';
+import { useSwipeable } from 'react-swipeable';
 
+
+import './custom_player_style.css'
 
 const LaughterVideoPlayer = () => {
 
     const history = useHistory()
+
+    const [currentVideo, setCurrentVideo] = useState({})
+    const [randomStr, setRandomStr] = useState('')
+    const [loading, setLoading] = useState(true)
+    const { vidId } = useParams()
+    const [playVideo, setPlayVideo] = useState(false)
+
     const playerRef = React.useRef(null);
 
-
-    // useEffect(() => {
-    //     const user = JSON.parse(localStorage.getItem('user'))
-    //     console.log("user: " + user)
-    //     if (!user || user.role !== 'VIEWER') {
-    //         history.push({
-    //             pathname: '/login',
-    //         })
-    //     }
-    // }, [])
-
-
-    const video_src = SAMPLE_VIDEOS[0].video_url
-
-    useEffect(() => {
-        window.addEventListener('load', function () {
-            onPlayerSwipe()
-        }, false)
-    }, [])
 
 
     const handlePlayerReady = (player) => {
         playerRef.current = player;
 
-        player.on('playing', () => {
-            onPlayerSwipe()
-            console.log("player is playing....")
-        })
-
+        // You can handle player events here, for example:
         player.on('waiting', () => {
-            onPlayerSwipe()
-            console.log('player is waiting');
-        });
-        player.on('pause', () => {
-            onPlayerSwipe()
-            console.log('player is paused');
+            player.log('player is waiting');
         });
 
         player.on('dispose', () => {
-            console.log('player will dispose');
+            player.log('player will dispose');
         });
-    }
+    };
 
 
-    const handleSendLaughter = () => {
-        history.push('/laughter/send')
-    }
-
-    const onPlayerSwipe = () => {
-        var el = document.getElementById('playerDiv')
-        var hideTimer = null
-        swipeDetect(el, function (swipeDir) {
-            if (swipeDir !== 'none') {
-                clearTimeout(hideTimer)
-                if (swipeDir === 'up' || swipeDir === 'down') {
-                    console.log("swipe: ", swipeDir)
-                    // send to home 
-                    history.push("/laughter")
-                } else if (swipeDir === 'right' || swipeDir === 'left') {
-                    console.log("swipe: ", swipeDir)
-                    // go to producer profile
-                    history.push("/producer")
-                }
+    useEffect(() => {
+        if (vidId) {
+            const singleVideoLaughter = () => {
+                videoService.getPaidVideoUrl(vidId).then(res => {
+                    if (res) {
+                        setLoading(false)
+                        setCurrentVideo(res)
+                    } else {
+                        setCurrentVideo({})
+                    }
+                })
             }
-        })
+
+            singleVideoLaughter()
+        }
+
+        window.scrollTo(0, 0)
+
+    }, [])
+
+    useEffect(() => {
+        setPlayVideo(true)
+        setRandomStr(new Date().getTime().toString())
+        window.scrollTo(0, 0)
+        return () => { }
+    }, [currentVideo])
+
+
+
+
+
+    const handleSendLaughter = (currentVideo) => {
+
+        const user = JSON.parse(localStorage.getItem('user'))
+        
+        if (!user || user.role !== 'VIEWER') {
+            history.push({
+                pathname: '/login',
+                search: `?return_url=/laughter/send/${currentVideo.id}`
+            })
+        } else {
+            history.push(`/laughter/send/${currentVideo.id}`)
+        }
+
     }
 
-    const videoJsOptions = {
-        autoplay: true,
-        controls: true,
-        loop: true,
-        responsive: true,
-        aspectRatio: '9:16',
-        muted: true,
-        sources: [{
-            src: `${video_src}`,
-            type: 'video/mp4'
-        }]
 
+    const handlers = useSwipeable({
+        onSwipedLeft: () => {
+            const producerId = currentVideo.producerId
+            history.push(`/producer/${producerId}`)
+        },
+        onSwipedRight: () => {
+            const producerId = currentVideo.producerId
+            history.push(`/producer/${producerId}`)
+        },
+        onSwipedUp: () => {
+            history.push(`/laughter`)
+        },
+        onSwipedDown: () => {
+            history.push(`/laughter`)
+        },
+        ...config,
+    });
+
+
+
+
+
+    const renderPlayer = () => {
+        const videoJsOptions = {
+            videoId: currentVideo.id,
+            autoplay: true,
+            controls: true,
+            poster: currentVideo?.thumbnial?.includes('talguu-vout1')
+                ? currentVideo?.thumbnial
+                : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png',
+            aspectRatio: '9:16',
+            responsive: true,
+            fill: true,
+            sources: [
+                {
+                    src: currentVideo.trailer ? currentVideo.trailer : '',
+                    type: currentVideo.video_type
+                }
+            ]
+        }
+
+        if (currentVideo) {
+            return (
+                <div className="player_container_laughter">
+                    <div className="player_content"
+                        key={randomStr}
+                    >
+                        <VideoPlayer
+                            options={videoJsOptions}
+                            onReady={handlePlayerReady}
+                        />
+
+                    </div>
+                    <div className='flex w-full h-14 md:w-1/2 justify-between z-50 py-1 absolute top-3'>
+                        <div className='items-start ml-2'>
+                            <img src={talguuLogo} className="w-20 h-7" alt="logo" />
+                        </div>
+
+                        <div className='flex flex-col items-end mr-3 cursor-pointer'>
+                            <button
+                                onClick={() => handleSendLaughter(currentVideo)}
+                                className='text-white px-5 py-2 text-lg rounded-3xl border-2 border-gray-600 bg-gray-600'
+                            >
+                                <span className='flex items-center justify-center'>
+                                    <IoSendSharp className='mr-3' />
+                                    Send
+                                </span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            )
+        }
     }
 
-
-    // const sendVideo = () => {
-    //     console.log("Button Listening...")
-    //     history.push("/laughter/send")
-    // }
 
     return (
-        <div className='w-full relative flex flex-col' id='playerDiv'>
-            <VideoPlayer
-                options={videoJsOptions}
-                onReady={handlePlayerReady}
-            />
-
-            {/* send laughter button here... */}    
-            <div className='flex w-full h-14 justify-between z-50 py-1 absolute top-3'>
-                <div className='items-start ml-2'>
-                    <img src={talguuLogo} className="w-20 h-7" alt="logo" />
-                </div>
-
-                <div className='flex flex-col items-end mr-3 cursor-pointer'>
-                    <button
-                        onClick={() => handleSendLaughter()}
-                        // state={{ data: "https://s3.us-west-2.amazonaws.com/talguu-videos/Short/Snaptik_7036075105381862661_the-shaba-kitchen.mp4" }}
-                        className='text-white px-5 py-2 text-lg rounded-3xl border-2 border-gray-600 bg-gray-600'
-                    >
-                        <span className='flex items-center justify-center'>
-                            <IoSendSharp className='mr-3' />
-                            Send
-                        </span>
-                    </button>
-                </div>
+        <div
+            {...handlers}
+            id='playerDiv'
+            className='w-full h-full relative'
+        >
+            <div className='player_content'>
+                {playVideo && currentVideo ? (
+                    renderPlayer()
+                    // <div>This is the test div</div>
+                ) :
+                    <div className="w-screen mx-auto mt-40">
+                        <Space size="middle">
+                            <Spin size="large" />
+                        </Space>
+                    </div>
+                }
             </div>
         </div>
     )

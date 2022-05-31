@@ -17,3 +17,154 @@
   background-color: rgba(43, 51, 63, 0.9);
   margin-bottom: 0em;
 }
+
+.pay_button:hover {
+  transition: all 0.2s;
+  color: #ddd;
+}
+
+.pay_button:active {
+  transition: all 0.2s;
+  color: #fff;
+}
+
+
+
+.laughter_video_thumbnail {
+  transition: all 0.2s;
+}
+
+.laughter_video_thumbnail:hover > div > .watch_video_buttons {
+  visibility: visible;
+}
+
+@media (min-width: 640px) {
+  .laughter_video_thumbnail:hover > div > .watch_later {
+    visibility: visible;
+  }
+  .laughter_video_thumbnail:hover > div > .video_gif {
+    display: block;
+  }
+
+  .laughter_video_thumbnail:hover > div > .video_image {
+    display: none;
+  }
+}
+
+.video_thumbnail:hover > div > .video_title {
+  color: #222;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .player_container_laughter{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    /* background: #eeee12; */
+  }
+  .player_content{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    /* background: red; */
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .player_container_laughter{
+    position: relative;
+    width: 100%;
+    height: calc(100vh * 9/16);
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    /* background: #eeee12; */
+  }
+  .player_content{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    /* background: green; */
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .player_container_laughter{
+    position: relative;
+    width: 100%;
+    height: calc(100vh * 16/9);
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    /* background: #eeee12; */
+  }
+  .player_content{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    /* background: blue; */
+  }
+}
+
+/* w-full h-screen md:absolute lg:absolute md:left-20 md:right-20 md:top-0 md:w-1/2 md:h-screen lg:w-1/2 lg:h-screen */
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .player_container_laughter{
+    position: relative;
+    width: 100%;
+    height: calc(100vh * 16/9);
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    /* background: #313119; */
+  }
+  .player_content{
+    width: 50%;
+    height: 50%;
+    position: absolute;
+    left: 25%;
+    top: 0%;
+    /* background: rgb(6, 1, 10); */
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+   .player_container_laughter{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    /* padding-bottom: 177%; */
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    /* background: #eeee12; */
+    overflow: hidden;
+  }
+  .player_content{
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    left: 25%;
+    top: 0%;
+    /* background: yellowgreen; */
+  }
+}

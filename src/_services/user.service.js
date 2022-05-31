@@ -28,6 +28,17 @@ function logout(redirectUrl = '') {
   history.go(0)
 }
 
+
+const getProducerProfile = async (producerId) => {
+  try {
+    const producer = await axios.get(`${environment}/account/producer/${producerId}`)
+    return producer
+  } catch (error) {
+    return error
+  }
+}
+
+
 async function getUser() {
   try {
     const user = await axios.get(`${environment}/user`)
@@ -160,5 +171,6 @@ export const userService = {
   updatePassword,
   forgotPassword,
   createViewerLocal,
-  createProducerLocal
+  createProducerLocal,
+  getProducerProfile
 }

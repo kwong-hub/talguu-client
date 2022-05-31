@@ -59,13 +59,13 @@ const Router = () => {
 
           <Route
             exact
-            path="/laughter/video-player"
+            path="/laughter/watch/:vidId"
             component={LaughterVideoPlayer}
           />
 
           <Route
             exact
-            path="/producer"
+            path="/producer/:producerId"
             component={Producer}
           />
           <Route
@@ -76,7 +76,7 @@ const Router = () => {
 
           <Route
             exact
-            path="/laughter/send"
+            path="/laughter/send/:vidId"
             component={SendLaughter}
           />
 

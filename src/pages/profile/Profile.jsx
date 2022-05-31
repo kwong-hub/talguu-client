@@ -9,7 +9,12 @@ import { userService } from '../../_services/user.service'
 import { FaBuilding, FaKey, FaPhone } from 'react-icons/fa'
 import { ImLocation2 } from 'react-icons/im'
 
-import {validatePhone} from '../../_helpers/validatePhone.js'
+import {BsFillArrowLeftCircleFill} from 'react-icons/bs'
+
+import { useHistory } from 'react-router-dom'
+
+
+
 
 const Profile = (props) => {
   const [user, setuser] = useState()
@@ -22,6 +27,8 @@ const [form] = Form.useForm()
 const [form2] = Form.useForm()
 
  const [prevValue, setPrevValue] = useState('')
+
+const history = useHistory()
 
 
 const updateFormat = (value) => {
@@ -234,15 +241,21 @@ const phoneNumberChangeEvent = (val) => {
   }, [])
 
 
-  console.log("user: ", user)
+  const back = () =>{
+    history.push("/laughter")
+  }
 
   return (
     <div className="">
       <SideNav></SideNav>
+
       {profile ? (
         <>
+          {/* <button type="button" className="my-4 mx-4  mt-20 flex justify-start" onClick={back}>
+            <BsFillArrowLeftCircleFill className="w-6 h-6 text-purple-800" />
+          </button> */}
           {' '}
-          <div className="mx-auto sm:w-10/12 flex flex-col mt-20 md:flex-row justify-center items-baseline">
+          <div className="mx-auto sm:w-10/12 mt-16 flex flex-col md:flex-row justify-center items-baseline">
             <div className="w-1/3 hidden md:inline-block ">
               <Avatar
                 className="shadow-xl "
@@ -563,7 +576,7 @@ const phoneNumberChangeEvent = (val) => {
               </>
             )}
           </div>
-          <div className="flex mx-auto sm:w-10/12 flex-col mt-8 md:flex-row justify-center items-baseline">
+          <div className="flex mx-auto sm:w-10/12 flex-col mt-3 md:flex-row justify-center items-baseline">
             <div className="w-1/3 hidden md:inline-block">
               <FaKey className="flex text-4xl  mx-auto" />
               <div className="m-4">

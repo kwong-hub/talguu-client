@@ -14,9 +14,27 @@ const laughterVideos = async (page, pageSize) => {
     }
 }
 
+const getSingleLaughterVideo = async (videoId) => {
+    try {
+        const response = await axios.get(`${environment}/video/laughter/${videoId}`)
+        return response;
+    } catch (error) {
+        return error
+    }
+}
 
+const getProducerLaughterVideos = async (producerId, page, pageSize) => {
+    try {
+        const response = await axios.get(`${environment}/video/laughter/${producerId}?page=${page}&pageSize=${pageSize}`)
+        return response;
+    } catch (error) {
+        return error
+    }
+}
 
 
 export const laughterService = {
-    laughterVideos
+    laughterVideos,
+    getSingleLaughterVideo,
+    getProducerLaughterVideos
 }

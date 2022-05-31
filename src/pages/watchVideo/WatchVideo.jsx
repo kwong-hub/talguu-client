@@ -48,7 +48,7 @@ const WatchVideo = () => {
   const commentRef = useRef()
 
   const user = JSON.parse(localStorage.getItem('user'))
-
+ 
   useEffect(() => {
     if (vidId) {
       dispatch({ type: GET_PAID_VIDEO_URL_ASYNC, payload: vidId })
@@ -64,6 +64,8 @@ const WatchVideo = () => {
     return () => {}
   }, [currentVideo])
 
+
+  
   if (errorMessage === 'NO_BALANCE' || errorMessage === 'NOT_ENOUGH_BALANCE') {
     history.push('/deposit')
   }

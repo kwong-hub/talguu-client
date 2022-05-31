@@ -1,39 +1,98 @@
-import React, {useEffect} from 'react'
+import { Spin } from 'antd'
+import React from 'react'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
-const RenderLaughterVideos = ({dataSource, goToDetail, handleScroll}) => {
+import { useHistory } from 'react-router-dom'
 
+import './custom_player_style.css'
 
+const RenderLaughterVideos = ({
+  dataSource,
+  antIcon,
+  fetchMoreData,
+  hasMore,
+  loading
+}) => {
+  const history = useHistory()
 
-  useEffect(() => {
-    // getAllVideos()
-    window.addEventListener('scroll', handleScroll)
-    return () => {}
-  }, [])
+  const watchVideo = (video) => {
+    const user = JSON.parse(localStorage.getItem('user'))
+    
+    // if (!user || user.role !== 'VIEWER') {
+    //   history.push({
+    //     pathname: '/login',
+    //     search: `?return_url=/laughter/watch/${video.id}`
+    //   })
+    // } else {
+    // }
+    history.push(`/laughter/watch/${video.id}`)
+  }
 
-
+  const renderVideos = () => {
+    if (dataSource.length > 0) {
+      return (
+        <div className="flex flex-wrap">
+          {dataSource.map((video, index) => {
+            return (
+              <div
+                className="p-1 flex md:w-1/4 w-1/2 h-52 cursor-pointer laughter_video_thumbnail"
+                key={index}
+                onClick={() => watchVideo(video)}
+              >
+                <img
+                  src={
+                    video.thumbnial?.includes('talguu-vout1')
+                      ? video.thumbnial
+                      : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png'
+                  }
+                  alt=""
+                  className="w-full h-full"
+                />
+                <img
+                  src={
+                    video.main_gif ? video.main_gif : video.trailer_gif || ''
+                  }
+                  className="hidden h-48 video_gif mx-auto"
+                  alt=""
+                />
+              </div>
+            )
+          })}
+        </div>
+      )
+    } else {
+      if (!loading) {
+        return (
+          <div>
+            <p className="text-red-500 text-md">There is no video available</p>
+          </div>
+        )
+      }
+    }
+  }
 
   return (
-    <div className="px-1 relative">
-      <div className="flex flex-wrap">
-        {dataSource.map((data, index) => {
-          return (
-            <div
-              className="p-1 flex flex-wrap md:w-1/3 w-1/2 h-44"
-              key={index}
-              onClick={() => goToDetail(data.id)}
-            >
-              {/* <img
-                className="w-full h-full"
-                src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR_BSXPlBjoBeJruSaCamv7kQuMNjoIIWX0CITXUVoapFCbRM9g"
-                alt="Messi"
-              /> */}
-              <video className="block w-full h-full" controls>
-                    <source src={data.gifPath} type="video/mp4" />
-               </video>
-            </div>
-          )
-        })}
-      </div>
+    <div className="px-3">
+      <InfiniteScroll
+        dataLength={dataSource.length}
+        next={fetchMoreData}
+        hasMore={hasMore}
+        className="scroll-style"
+        loader={
+          loading && <div className="flex items-center justify-center">
+            <Spin indicator={antIcon} />
+          </div>
+        }
+        endMessage={
+          <div className="w-full mb-14 mt-5 p-5 flex items-center justify-center">
+            <p style={{ textAlign: 'center' }}>Yay! You have seen it all</p>
+          </div>
+        }
+      >
+        {/* <p>Total: {dataSource.length}</p> */}
+
+        {renderVideos()}
+      </InfiniteScroll>
     </div>
   )
 }

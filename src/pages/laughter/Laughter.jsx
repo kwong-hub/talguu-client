@@ -11,6 +11,8 @@ import { statusData, sidebarItems } from './sidebarItems'
 import './laughter_style.css'
 
 import InfiniteScroll from 'react-infinite-scroll-component'
+import RenderLaughterVideos from './RenderLaughterVideos'
+import videoService from '../../_services/video.service'
 
 const Laughter = () => {
   const history = useHistory()
@@ -36,17 +38,7 @@ const Laughter = () => {
     // }
   }, [page, pageSize])
 
-  // const handleScroll = (e) => {
-  //   const _scrollHeight = e.target.documentElement.scrollTop
-  //   const _elementHeight = window.innerHeight
-
-  //   const _elementHeightTotal = _scrollHeight + _elementHeight + 1
-
-  //   const screenHeight = e.target.documentElement.scrollHeight
-  //   if (_elementHeightTotal >= screenHeight) {
-  //     getAllVideos()
-  //   }
-  // }
+  
 
   const getAllVideos = (page, pageSize) => {
     setLoading(true)
@@ -79,15 +71,7 @@ const Laughter = () => {
     return setStatus(true)
   }, [status])
 
-  const goToDetail = (id) => {
-    log('Detail: ' + id)
-    const user = JSON.parse(localStorage.getItem('user'))
-    if (!user || user.role !== 'VIEWER') {
-      history.push('/login')
-    } else {
-      history.push('/laughter/video-player')
-    }
-  }
+
 
   return (
     <div className="pt-2 sm:ml-14 mt-12">
@@ -104,55 +88,15 @@ const Laughter = () => {
           />
         </div>
 
-        <div className="px-3">
-          <InfiniteScroll
-            dataLength={dataSource.length}
-            next={fetchMoreData}
-            hasMore={hasMore}
-            className="scroll-style"
-            loader={
-              <div className="flex items-center justify-center">
-                <Spin indicator={antIcon} />
-              </div>
-            }
-            endMessage={
-              <div className="w-full mb-14 mt-5 p-5 flex items-center justify-center">
-                <p style={{ textAlign: 'center' }}>Yay! You have seen it all</p>
-              </div>
-            }
-          >
-            {/* <p>Total: {dataSource.length}</p> */}
 
+        <RenderLaughterVideos
+          dataSource={dataSource}
+          antIcon={antIcon}
+          fetchMoreData={fetchMoreData}
+          hasMore={hasMore}
+          loading={loading}
+        />
 
-            {dataSource.length > 0 ? (
-              <div className="flex flex-wrap w-full">
-                {dataSource.map((data, index) => {
-                  return (
-                    <div
-                      className="p-1 flex md:w-1/4 w-1/2 h-52"
-                      key={index}
-                      onClick={() => goToDetail(data.id)}
-                    >
-                      <img
-                        className="w-full h-full"
-                        src={data.gifPath}
-                        alt={data.gifPath}
-                      />
-                    </div>
-                  )
-                })}
-              </div>
-            ) : (
-              <div>
-                {
-                  !loading && <p className="text-red-500 text-md">
-                  There is no video available
-                </p>
-                }
-              </div>
-            )}
-          </InfiniteScroll>
-        </div>
       </div>
     </div>
   )

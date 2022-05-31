@@ -71,6 +71,7 @@ function RenderVideo(props) {
               : props.video.trailer_gif || ''
           }
           className="hidden h-48 video_gif mx-auto"
+          alt=''
         />
         <div className="absolute thumbnail_button_container">
           <Tooltip

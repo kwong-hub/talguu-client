@@ -923,7 +923,7 @@ export class Conference extends Component {
 
           {/* video player container ends */}
 
-          <div className="max-w-80 flex mb-4 justify-between text-gray-50 mt-2">
+          <div className="max-w-80 flex mb-4 justify-between text-gray-50 mt-5">
             <button className="mx-2">
               {this.isCameraOff ? (
                 <BiVideoOff

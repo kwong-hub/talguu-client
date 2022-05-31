@@ -1,5 +1,5 @@
 
-import React,{useEffect} from 'react'
+import React, { useEffect } from 'react'
 
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
@@ -7,7 +7,6 @@ import './custom_player_style.css'
 
 
 const VideoPlayer = (props) => {
-
 
     const videoRef = React.useRef(null);
     const playerRef = React.useRef(null);
@@ -41,13 +40,34 @@ const VideoPlayer = (props) => {
         };
     }, [playerRef]);
 
+    const handleHotKeys = (e) => {
+        e.preventDefault()
+        switch (e.key) {
+            case 'ArrowRight':
+                this.player.currentTime(Math.floor(this.player.currentTime()) + 5)
+                break
+            case 'ArrowLeft':
+                this.player.currentTime(Math.ceil(this.player.currentTime()) - 5)
+                break
+            case ' ':
+                this.player.paused() ? this.player.play() : this.player.pause()
+                break
+            default:
+                break
+        }
+    }
 
-  return (
-      <div data-vjs-player>
-          <video ref={videoRef}
-              className="video-js vjs-big-play-centered" />
-      </div>
-  )
+    return (
+        <div
+            data-vjs-player
+            onKeyUp={(e) => handleHotKeys(e)}
+            onKeyDown={(e) => e.preventDefault()}
+            className=""
+        >
+            <video ref={videoRef}
+                className="video-js vjs-big-play-centered"></video>
+        </div>
+    )
 }
 
 export default VideoPlayer
