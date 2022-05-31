@@ -82,7 +82,7 @@ export const HomeContainer = ({
                             toggleSidebar={toggleSidebar}
                             sidebarItems={sidebarItems}
                             title={title}
-                            sidebarColor={sidebarColor}
+                            sidebarColor="purple-700"
                         />
                     </div>
                 ) : (

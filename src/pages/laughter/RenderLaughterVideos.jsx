@@ -11,7 +11,8 @@ const RenderLaughterVideos = ({
   antIcon,
   fetchMoreData,
   hasMore,
-  loading
+  loading,
+  type,
 }) => {
   const history = useHistory()
 
@@ -39,7 +40,7 @@ const RenderLaughterVideos = ({
                 key={index}
                 onClick={() => watchVideo(video)}
               >
-                <img
+                {/* <img
                   src={
                     video.thumbnial?.includes('talguu-vout1')
                       ? video.thumbnial
@@ -47,12 +48,12 @@ const RenderLaughterVideos = ({
                   }
                   alt=""
                   className="w-full h-full"
-                />
+                /> */}
                 <img
                   src={
-                    video.main_gif ? video.main_gif : video.trailer_gif || ''
+                    video.trailer_gif ? video.trailer_gif : video.main_gif || ''
                   }
-                  className="hidden h-48 video_gif mx-auto"
+                  className="h-48 video_gif mx-auto"
                   alt=""
                 />
               </div>
@@ -72,7 +73,7 @@ const RenderLaughterVideos = ({
   }
 
   return (
-    <div className="px-3">
+    <div className="md:px-3 lg:px-3">
       <InfiniteScroll
         dataLength={dataSource.length}
         next={fetchMoreData}

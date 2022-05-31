@@ -65,7 +65,7 @@ const AuthLaugher = () => {
     return (
         <div className="pt-2 sm:ml-14 mt-12">
             <SideNav></SideNav>
-            <div className="flex relative mt-2 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
+            <div className="flex relative pb-20 mt-2 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
                 <div className="w-full">
                     <RenderLaughterVideos
                         dataSource={dataSource}
@@ -73,6 +73,7 @@ const AuthLaugher = () => {
                         fetchMoreData={fetchMoreData}
                         hasMore={hasMore}
                         loading={loading}
+                        type="auth"
                     />
                 </div>
             </div>

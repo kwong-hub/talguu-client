@@ -22,6 +22,8 @@ const VideoPlayer = (props) => {
                 onReady && onReady(player);
             });
 
+            console.log("playerChecking: ", player)
+
         } else {
 
 
@@ -39,6 +41,8 @@ const VideoPlayer = (props) => {
             }
         };
     }, [playerRef]);
+
+
 
     const handleHotKeys = (e) => {
         e.preventDefault()

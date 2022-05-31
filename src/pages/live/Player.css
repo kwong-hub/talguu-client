@@ -16,7 +16,7 @@ video {
   flex-direction: column;
   /* padding: 5px; */
   /* background: rgb(19, 75, 19); */
-  margin-left: -8%;
+  margin-left: -8% !important;
   width: 800px !important;
   height: 440px !important;
   margin-top: 10px !important;
@@ -27,7 +27,7 @@ video {
   flex-direction: row;
   width: 100% !important;
   height: 220px !important;
-  align-items: center;
+  /* align-items: center; */
   /* background-color: aqua; */
 }
 .video_player_inner {
