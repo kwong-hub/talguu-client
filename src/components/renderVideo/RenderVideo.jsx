@@ -102,7 +102,7 @@ function RenderVideo(props) {
             </Tooltip>
           </div>
         }
-        <div className="bg-gray-600 rounded-sm absolute bottom-1 right-1 py-0 px-4 bg-opacity-40"></div>
+        <div className="bg-gray-600 rounded-sm absolute bottom-1 right-1 py-4 px-4 bg-opacity-40"></div>
         {props.video.paid
           ? ''
           : (!user || user.role === 'VIEWER') && (

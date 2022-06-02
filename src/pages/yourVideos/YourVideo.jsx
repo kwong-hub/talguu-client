@@ -143,7 +143,7 @@ const YourVideo = () => {
       .deleteVideo(video.id)
       .then((data) => {
         if (data) {
-          message.success('Video is deleted Successfull!.')
+          message.success('Video is deleted Successfully!.')
           getVideos({ ...pagination, streamed: key })
         }
       })
@@ -163,7 +163,7 @@ const YourVideo = () => {
       .togglePublishVideo(video.id)
       .then((data) => {
         if (data.success) {
-          message.success('Video changed successfull!.')
+          message.success('Video changed successfully!.')
           getVideos({ ...pagination, streamed: key })
         } else {
           message.success('Video Failed to changed!.')
@@ -215,7 +215,7 @@ const YourVideo = () => {
             Your Video Content{' '}
           </h2>
           <p className="font-normal text-gray-500">
-            Analyse,Manage,Edit,Delete
+            Analyze,Manage,Edit,Delete
           </p>
         </div>
         <Tabs className="m-2" defaultActiveKey="0" onChange={currentKey}>
@@ -231,6 +231,17 @@ const YourVideo = () => {
             />
           </TabPane>
           <TabPane tab="Live" key="1">
+            <Table
+              scroll={{ x: 720 }}
+              pagination={pagination}
+              loading={loading}
+              columns={columns}
+              onChange={handleTableChange}
+              rowKey={(record) => record.id}
+              dataSource={videos}
+            />
+          </TabPane>
+          <TabPane tab="Laughter" key="2">
             <Table
               scroll={{ x: 720 }}
               pagination={pagination}

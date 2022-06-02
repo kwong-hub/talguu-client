@@ -309,7 +309,7 @@ const WatchVideo = () => {
           >
             <VideoPlayer {...videoJsOptions}></VideoPlayer>
           </div>
-          <div className="flex-col mx-1 mt-44 sm:mt-4">
+          <div className="flex-col mx-1 mt-48 sm:mt-6">
             <div className="w-full flex justify-between">
               <div className="text-gray-800 lg:text-2xl text-md  text-left">
                 {currentVideo?.title}

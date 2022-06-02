@@ -32,11 +32,12 @@ const RenderLaughterVideos = ({
   const renderVideos = () => {
     if (dataSource.length > 0) {
       return (
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap items-center">
           {dataSource.map((video, index) => {
             return (
+              // p-2 flex md:w-1/4 w-1/2 h-52 cursor-pointer laughter_video_thumbnail
               <div
-                className="p-1 flex md:w-1/4 w-1/2 h-52 cursor-pointer laughter_video_thumbnail"
+                className="laughter_video_thumb_style laughter_video_thumbnail"
                 key={index}
                 onClick={() => watchVideo(video)}
               >
@@ -53,7 +54,7 @@ const RenderLaughterVideos = ({
                   src={
                     video.trailer_gif ? video.trailer_gif : video.main_gif || ''
                   }
-                  className="h-48 video_gif mx-auto"
+                  className="w-full h-full"
                   alt=""
                 />
               </div>
@@ -80,18 +81,20 @@ const RenderLaughterVideos = ({
         hasMore={hasMore}
         className="scroll-style"
         loader={
-          loading && <div className="flex items-center justify-center">
-            <Spin indicator={antIcon} />
-          </div>
+          loading && (
+            <div className="flex items-center justify-center">
+              <Spin indicator={antIcon} />
+            </div>
+          )
         }
         endMessage={
           <div className="w-full mb-14 mt-5 p-5 flex items-center justify-center">
-            <p style={{ textAlign: 'center' }}>Yay! You have seen it all</p>
+            <p style={{ textAlign: 'center' }}>{''}</p>
           </div>
         }
       >
         {/* <p>Total: {dataSource.length}</p> */}
-
+        {/* Yay! You have seen it all */}
         {renderVideos()}
       </InfiniteScroll>
     </div>

@@ -11,6 +11,8 @@ import videoService from '../../_services/video.service'
 import SideNav from '../../partials/sideNav/SideNav'
 import Dragger from 'antd/lib/upload/Dragger'
 
+import { Select } from 'antd'
+
 // const { Dragger } = Upload;
 const initialState = {
   file: null,
@@ -26,6 +28,8 @@ const initialState = {
 
 class UploadVideo extends Component {
   fileList = []
+  Option = Select.Option
+
   state = {
     file: null,
     fileSelected: false,
@@ -35,6 +39,7 @@ class UploadVideo extends Component {
     describe: '',
     files: {},
     progress: 0,
+    videoType: 'video',
     active: '',
     uploadProps: {
       accept: '.mp4, .flv, .mkv, .mpeg, .mov',
@@ -50,6 +55,12 @@ class UploadVideo extends Component {
 
   cancelUpload = () => {
     this.setState(initialState)
+  }
+
+  handleChange = (value) => {
+    this.setState({
+      videoType: value
+    })
   }
 
   uploadFileS3 = () => {
@@ -77,14 +88,15 @@ class UploadVideo extends Component {
       .then((res) => {
         // console.log(res);
         const videoLink = res.config.url + '/' + fileName
-        const { title, describe } = this.state
+        const { title, describe, videoType } = this.state
         const { size, type } = this.state.file
         const videoObj = {
           video_link: videoLink,
           title,
           describe,
           video_size: size,
-          video_type: type
+          video_type: type,
+          type: videoType
         }
         return videoService.addVideo(videoObj)
       })
@@ -197,30 +209,48 @@ class UploadVideo extends Component {
                     </div>
                   )}
                 </div>
-                <label className="flex flex-col sm:flex-row items-baseline w-3/4">
-                  Title
-                  <input
-                    className="border p-2 m-2 w-full rounded-xl focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-transparent focus:border-blue-500"
-                    type="text"
-                    value={this.state.title}
-                    onChange={(e) => {
-                      this.setState({ title: e.target.value })
-                    }}
-                  />
-                </label>
 
-                <label className="flex flex-col sm:flex-row items-baseline w-3/4">
-                  Description
-                  <textarea
-                    className="border w-full p-1 m-4 rounded-lg focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-transparent focus:border-blue-500"
-                    type="text"
-                    value={this.state.describe}
-                    onChange={(e) => {
-                      this.setState({ describe: e.target.value })
-                    }}
-                  ></textarea>
-                </label>
+                <div className="mt-4 p-3 w-3/4">
+                  <label className="flex flex-col sm:flex-row items-baseline w-3/4 my-2">
+                    Select Type
+                    <Select
+                      placeholder="Select video type"
+                      defaultValue="video"
+                      onChange={this.handleChange}
+                      style={{
+                        width: '30%',
+                        paddingLeft: 10
+                      }}
+                    >
+                      <Select.Option value="video">Video</Select.Option>
+                      <Select.Option value="laughter">Laughter</Select.Option>
+                    </Select>
+                  </label>
 
+                  <label className="flex flex-col sm:flex-row items-baseline w-full">
+                    Title
+                    <input
+                      className="border p-2 m-2 w-full rounded-xl focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-transparent focus:border-blue-500"
+                      type="text"
+                      value={this.state.title}
+                      onChange={(e) => {
+                        this.setState({ title: e.target.value })
+                      }}
+                    />
+                  </label>
+
+                  <label className="flex flex-col sm:flex-row items-baseline w-full">
+                    Description
+                    <textarea
+                      className="border w-full p-1 m-4 rounded-lg focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-transparent focus:border-blue-500"
+                      type="text"
+                      value={this.state.describe}
+                      onChange={(e) => {
+                        this.setState({ describe: e.target.value })
+                      }}
+                    ></textarea>
+                  </label>
+                </div>
                 <Button
                   size={60}
                   type="primary"

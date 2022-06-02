@@ -187,7 +187,7 @@ const LaughterVideoPlayer = () => {
                         />
 
                     </div>
-                    <div className='flex w-full h-14 md:w-1/2 justify-between py-1 absolute top-3'>
+                    <div className='flex w-full h-14 md:w-full justify-between py-1 absolute top-3'>
                         <div className='items-start ml-2'>
                             <img src={talguuLogo} className="w-20 h-7" alt="logo" />
                         </div>
@@ -205,17 +205,17 @@ const LaughterVideoPlayer = () => {
                         </div>
                     </div>
 
-                   
-                        <div
-                            className='custom_play_button cursor-pointer'
-                            onClick={handlePlayPause}
-                        >
+
+                    <div
+                        className='custom_play_button cursor-pointer'
+                        onClick={handlePlayPause}
+                    >
                         {
                             !isPlaying &&
                             <FaPlayCircle className='w-10 h-10 text-white' />
                         }
-                        </div>
-                    
+                    </div>
+
                     <div className='w-full'>
                         <LaughterSideNav></LaughterSideNav>
                     </div>
@@ -235,23 +235,14 @@ const LaughterVideoPlayer = () => {
         <div
             {...handlers}
             id='playerDiv'
-            className='w-full h-screen'
+            className='w-full h-screen bg-black md:bg-white lg:bg-white'
         >
-
-            {playVideo && currentVideo ? (
-                renderPlayer()
-                // <div>This is the test div</div>
-            ) :
-                loading ? (
-
-                    <div className="w-screen mx-auto mt-40">
-                        <Space size="middle">
-                            <Spin size="large" />
-                        </Space>
-                    </div>
-
+            <div className='player_content'>
+                {playVideo && currentVideo ? (
+                    renderPlayer()
+                    // <div>This is the test div</div>
                 ) :
-                    (
+                    loading ? (
 
                         <div className="w-screen mx-auto mt-40">
                             <Space size="middle">
@@ -259,8 +250,18 @@ const LaughterVideoPlayer = () => {
                             </Space>
                         </div>
 
-                    )
-            }
+                    ) :
+                        (
+
+                            <div className="w-screen mx-auto mt-40">
+                                <Space size="middle">
+                                    <Spin size="large" />
+                                </Space>
+                            </div>
+
+                        )
+                }
+            </div>
 
         </div>
     )
