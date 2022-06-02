@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { IoSendSharp } from 'react-icons/io5';
-import {useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import VideoPlayer from './VideoPlayer';
 
@@ -13,8 +13,8 @@ import { useSwipeable } from 'react-swipeable';
 
 
 import './custom_player_style.css'
-import SideNav from '../../partials/sideNav/SideNav';
 import LaughterSideNav from './LaughterSideNav';
+import { FaPlayCircle } from 'react-icons/fa';
 
 const LaughterVideoPlayer = () => {
 
@@ -42,6 +42,7 @@ const LaughterVideoPlayer = () => {
 
         player.on('pause', () => {
             player.log('player is paused');
+            setIsPlaying(false);
         });
         player.on('play', () => {
             player.log('player is playing....');
@@ -53,8 +54,6 @@ const LaughterVideoPlayer = () => {
             player.log('player will dispose');
         });
     };
-
-
 
 
     useEffect(() => {
@@ -87,16 +86,24 @@ const LaughterVideoPlayer = () => {
 
 
 
-   const handleOnPlayerClick = () => {
-      const player = playerRef.current
-      console.log("I am at least listening to your click!")
-       if(player){
-           console.log("Playing: ", playerRef.current.paused())
-       }else{
-        player.play()
-       }
+    const handlePlayPause = () => {
+        const player = playerRef.current
+        // const xyPlayer = document.getElementById("myPlayerLaughter")
 
-   }
+
+        if (isPlaying) {
+            player.pause()
+            console.log("player status changed xyz: ", isPlaying)
+            //    setIsPlaying()
+
+        } else {
+            player.play()
+            console.log("player status changed: ", isPlaying)
+        }
+
+    }
+
+
 
     const handleSendLaughter = (currentVideo) => {
 
@@ -167,19 +174,20 @@ const LaughterVideoPlayer = () => {
                 ]
             }
             return (
-                <div className="player_container_laughter">
-                    <div 
-                        className="player_content"
+                <div className="">
+                    <div
+                        className="cursor-pointer"
                         key={randomStr}
-                        onClick={handleOnPlayerClick}
+                        onClick={handlePlayPause}
                     >
                         <VideoPlayer
                             options={videoJsOptions}
                             onReady={handlePlayerReady}
+                            handlePlayPause={handlePlayPause}
                         />
 
                     </div>
-                    <div className='flex w-full h-14 md:w-1/2 justify-between z-50 py-1 absolute top-3'>
+                    <div className='flex w-full h-14 md:w-1/2 justify-between py-1 absolute top-3'>
                         <div className='items-start ml-2'>
                             <img src={talguuLogo} className="w-20 h-7" alt="logo" />
                         </div>
@@ -195,11 +203,25 @@ const LaughterVideoPlayer = () => {
                                 </span>
                             </button>
                         </div>
+                    </div>
 
+                   
+                        <div
+                            className='custom_play_button cursor-pointer'
+                            onClick={handlePlayPause}
+                        >
+                        {
+                            !isPlaying &&
+                            <FaPlayCircle className='w-10 h-10 text-white' />
+                        }
+                        </div>
+                    
+                    <div className='w-full'>
+                        <LaughterSideNav></LaughterSideNav>
                     </div>
                 </div>
             )
-        }else{
+        } else {
             <div className='w-full h-full flex items-center justify-center'>
                 <p>
                     {'There is no video to play'}
@@ -213,17 +235,23 @@ const LaughterVideoPlayer = () => {
         <div
             {...handlers}
             id='playerDiv'
-            className='w-full h-screen relative'
+            className='w-full h-screen'
         >
 
-        <LaughterSideNav></LaughterSideNav>
+            {playVideo && currentVideo ? (
+                renderPlayer()
+                // <div>This is the test div</div>
+            ) :
+                loading ? (
 
-            <div className='w-full h-full'>
-                {playVideo && currentVideo ? (
-                    renderPlayer()
-                    // <div>This is the test div</div>
+                    <div className="w-screen mx-auto mt-40">
+                        <Space size="middle">
+                            <Spin size="large" />
+                        </Space>
+                    </div>
+
                 ) :
-                    loading ? (
+                    (
 
                         <div className="w-screen mx-auto mt-40">
                             <Space size="middle">
@@ -231,18 +259,9 @@ const LaughterVideoPlayer = () => {
                             </Space>
                         </div>
 
-                    ): 
-                        (
+                    )
+            }
 
-                            <div className="w-screen mx-auto mt-40">
-                                <Space size="middle">
-                                    <Spin size="large" />
-                                </Space>
-                            </div>
-
-                        )
-                   }
-            </div>
         </div>
     )
 }

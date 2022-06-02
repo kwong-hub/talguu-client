@@ -10,7 +10,7 @@ const VideoPlayer = (props) => {
 
     const videoRef = React.useRef(null);
     const playerRef = React.useRef(null);
-    const { options, onReady } = props;
+    const { options, onReady, handlePlayPause } = props;
 
     useEffect(() => {
         // make sure Video.js player is only initialized once
@@ -67,8 +67,11 @@ const VideoPlayer = (props) => {
             onKeyUp={(e) => handleHotKeys(e)}
             onKeyDown={(e) => e.preventDefault()}
             className=""
+            onClick={handlePlayPause}
         >
-            <video ref={videoRef}
+            <video
+                ref={videoRef}
+                id="myPlayerLaughter"
                 className="video-js vjs-big-play-centered"></video>
         </div>
     )
