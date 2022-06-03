@@ -22,6 +22,8 @@ const EditUploadVideos = (props) => {
     history.goBack()
   }
 
+  console.log("video: ", video)
+
   const publishVideo = () => {
     videoService
       .updateVideo({
@@ -42,7 +44,7 @@ const EditUploadVideos = (props) => {
   const videoJsOptions = {
     autoplay: false,
     controls: true,
-    aspectRatio: '16:9',
+    aspectRatio: (video.type==="LAUGHTER" ? '9:16' :'16:9'),
     responsive: true,
     sources: [
       {
@@ -69,7 +71,7 @@ const EditUploadVideos = (props) => {
         Publish Changes
       </Button>
       <div className="flex sm:flex-row mx-4 flex-col-reverse">
-        <div className="w-full">
+        <div className={video.type === 'LAUGHTER' ? 'w-2/3' : 'w-full'}>
           <Form
             layout="vertical"
             name="normal_login"
@@ -109,21 +111,27 @@ const EditUploadVideos = (props) => {
                 placeholder="Description*"
               />
             </Form.Item>
-            <Form.Item
-              label="Video Price"
-              name="price"
-              className="w-full items-start"
-              help="Add this videos cost, make sure your price value this video."
-              rules={[{ required: false, message: 'Please input your price!' }]}
-            >
-              <Input
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                className="rounded-lg text-gray-700 text-lg p-2"
-                prefix={<FaDollarSign className="site-form-item-icon" />}
-                placeholder="0.23"
-              />
-            </Form.Item>
+
+            {/* price input iff type is video */}
+            {video.type === 'VIDEO' && (
+              <Form.Item
+                label="Video Price"
+                name="price"
+                className="w-full items-start"
+                help="Add this videos cost, make sure your price value this video."
+                rules={[
+                  { required: false, message: 'Please input your price!' }
+                ]}
+              >
+                <Input
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  className="rounded-lg text-gray-700 text-lg p-2"
+                  prefix={<FaDollarSign className="site-form-item-icon" />}
+                  placeholder="0.23"
+                />
+              </Form.Item>
+            )}
           </Form>
           <div>
             <div className="flex flex-col items-start justify-start">
@@ -132,19 +140,33 @@ const EditUploadVideos = (props) => {
                 Select or upload a picture that shows what&apos;s in your video.
                 A good thumbnail stands out and draws viewers&apos; attention.
               </h3>
-              <Thumbnail videoId={video.id} thumbnails={video.thumbnial} />
+              <Thumbnail
+                videoId={video.id}
+                thumbnails={video.thumbnial}
+                videoType={video.type}
+              />
             </div>
-            <div className="flex flex-col items-start justify-start">
-              <h2 className="text-lg">Trailer</h2>
-              <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
-                Select or upload a trailer that shows what&apos;s in your video
-                in a minute. A good trailer draws viewers&apos; attention.
-              </h3>
-              <Trailer videoId={video.id} />
-            </div>
+
+            {/* show trailer iff type is VIDEO */}
+
+            {video.type === 'VIDEO' && (
+              <div className="flex flex-col items-start justify-start">
+                <h2 className="text-lg">Trailer</h2>
+                <h3 className="text-md text-gray-600 items-start m-0 p-0 text-justify">
+                  Select or upload a trailer that shows what&apos;s in your
+                  video in a minute. A good trailer draws viewers&apos;
+                  attention.
+                </h3>
+                <Trailer videoId={video.id} />
+              </div>
+            )}
           </div>
         </div>
-        <div className="w-3/4 p-4 ">
+        <div
+          className={
+            video.type === 'LAUGHTER' ? 'edit_player_content' : 'w-3/4 p-4'
+          }
+        >
           <VideoPlayer {...videoJsOptions} />
 
           <div></div>

@@ -15,6 +15,7 @@ import { useSwipeable } from 'react-swipeable';
 import './custom_player_style.css'
 import LaughterSideNav from './LaughterSideNav';
 import { FaPlayCircle } from 'react-icons/fa';
+import { laughterService } from '../../_services/laughter.service';
 
 const LaughterVideoPlayer = () => {
 
@@ -59,7 +60,8 @@ const LaughterVideoPlayer = () => {
     useEffect(() => {
         if (vidId) {
             const singleVideoLaughter = () => {
-                videoService.getPaidVideoUrl(vidId).then(res => {
+                laughterService.getLaughterVideoUrl(vidId).then(res => {
+                    console.log("res: ", res)
                     if (res) {
                         setLoading(false)
                         setCurrentVideo(res)
@@ -168,7 +170,7 @@ const LaughterVideoPlayer = () => {
                 fill: true,
                 sources: [
                     {
-                        src: currentVideo.trailer ? currentVideo.trailer : '',
+                        src: currentVideo.video_link,
                         type: currentVideo.video_type
                     }
                 ]

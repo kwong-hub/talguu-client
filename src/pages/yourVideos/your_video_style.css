@@ -1,0 +1,9 @@
+
+.edit_player_content {
+  width: 324px !important;
+  height: 576px !important;
+  position: absolute;
+  right: 2%;
+  top: 14%;
+  /* background: rgb(6, 1, 10); */
+}

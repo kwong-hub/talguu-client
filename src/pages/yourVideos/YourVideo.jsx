@@ -15,11 +15,11 @@ const YourVideo = () => {
     current: 1,
     pageSize: 5
   })
-  const [key, setkey] = useState(0)
+  const [key, setkey] = useState("VIDEO")
 
   useEffect(() => {
     console.log(key)
-    getVideos({ ...pagination, streamed: key })
+    getVideos({ ...pagination, type: key })
     return () => {}
   }, [key])
 
@@ -134,7 +134,10 @@ const YourVideo = () => {
   }
 
   const editVideo = (video) => {
-    history.push(`/edit/${video.id}`)
+    history.push({
+      pathname: `/edit/${video.id}`,
+      state: {video}
+    })
     // history.go(0);
   }
 
@@ -144,7 +147,7 @@ const YourVideo = () => {
       .then((data) => {
         if (data) {
           message.success('Video is deleted Successfully!.')
-          getVideos({ ...pagination, streamed: key })
+          getVideos({ ...pagination, type: key })
         }
       })
       .catch((err) => {
@@ -153,18 +156,21 @@ const YourVideo = () => {
       })
   }
   const publishVideo = (video) => {
-    if (!video.trailer || !video.thumbnial) {
-      message.info(
-        'Video should have trailer and thumbnail before publish, edit add thumbnail and trailer.'
-      )
-      return
+    console.log("Video: ", video)
+    if(video.type==="VIDEO"){
+      if (!video.trailer || !video.thumbnial) {
+        message.info(
+          'Video should have trailer and thumbnail before publish, edit add thumbnail and trailer.'
+        )
+        return
+      }
     }
     videoService
       .togglePublishVideo(video.id)
       .then((data) => {
         if (data.success) {
           message.success('Video changed successfully!.')
-          getVideos({ ...pagination, streamed: key })
+          getVideos({ ...pagination, type: key })
         } else {
           message.success('Video Failed to changed!.')
         }
@@ -200,10 +206,10 @@ const YourVideo = () => {
   }
 
   const handleTableChange = (pagination, filters, sorter) => {
-    getVideos({ ...pagination, streamed: key })
+    getVideos({ ...pagination, type: key })
   }
   const currentKey = (skey) => {
-    setkey(parseInt(skey))
+    setkey(skey)
     // getVideos({ ...pagination, streamed: key })
   }
   return (
@@ -218,8 +224,8 @@ const YourVideo = () => {
             Analyze,Manage,Edit,Delete
           </p>
         </div>
-        <Tabs className="m-2" defaultActiveKey="0" onChange={currentKey}>
-          <TabPane tab="Uploaded" key="0">
+        <Tabs className="m-2" defaultActiveKey="VIDEO" onChange={currentKey}>
+          <TabPane tab="Uploaded" key="VIDEO">
             <Table
               scroll={{ x: 720 }}
               pagination={pagination}
@@ -230,7 +236,7 @@ const YourVideo = () => {
               dataSource={videos}
             />
           </TabPane>
-          <TabPane tab="Live" key="1">
+          {/* <TabPane tab="Live" key="1">
             <Table
               scroll={{ x: 720 }}
               pagination={pagination}
@@ -240,8 +246,8 @@ const YourVideo = () => {
               rowKey={(record) => record.id}
               dataSource={videos}
             />
-          </TabPane>
-          <TabPane tab="Laughter" key="2">
+          </TabPane> */}
+          <TabPane tab="Laughter" key="LAUGHTER">
             <Table
               scroll={{ x: 720 }}
               pagination={pagination}

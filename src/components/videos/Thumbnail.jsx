@@ -127,15 +127,19 @@ export class Thumbnail extends Component {
     )
     return (
       <>
-        <div className='flex items-center justify-center'>
-          {this.props.thumbnails && <img src={this.props.thumbnails} className='max-h-24' />}
-          <ImgCrop rotate aspect={245 / 164} beforeCrop={this.beforeCrop}>
+        <div className="flex items-center justify-center">
+          {/* 245 / 164 */}
+          {this.props.thumbnails && (
+            <img src={this.props.thumbnails} className="max-h-24" alt="thumbnail" />
+          )}
+          <ImgCrop rotate aspect={this.props.videoType==="LAUGHTER" ? (270 / 480) : (245 / 164)} beforeCrop={this.beforeCrop}>
             <Upload
-              listType='picture-card'
+              listType="picture-card"
               fileList={fileList}
               onPreview={this.handlePreview}
               onChange={this.handleChange}
-              className='w-auto m-2'>
+              className="w-auto m-2"
+            >
               {fileList.length >= 1 ? null : uploadButton}
             </Upload>
           </ImgCrop>
@@ -145,17 +149,21 @@ export class Thumbnail extends Component {
           visible={previewVisible}
           title={previewTitle}
           footer={null}
-          onCancel={this.handleCancel}>
-          <img alt='example' style={{ width: '100%' }} src={previewImage} />
+          onCancel={this.handleCancel}
+        >
+          <img alt="example" style={{ width: '100%' }} src={previewImage} />
         </Modal>
-        <p className='bg-gray-100 text-red-600 text-sm'>{this.state.formatError}</p>
+        <p className="bg-gray-100 text-red-600 text-sm">
+          {this.state.formatError}
+        </p>
         {this.state.uploading && (
           <Button
-            className='flex my-4 w-auto'
-            type='primary'
+            className="flex my-4 w-auto"
+            type="primary"
             onClick={this.onUpload}
             loading={this.state.uploaded}
-            style={{ marginTop: 16 }}>
+            style={{ marginTop: 16 }}
+          >
             {this.state.uploaded ? 'Uploading' : 'Start Upload'}
           </Button>
         )}

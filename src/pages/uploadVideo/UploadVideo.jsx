@@ -39,7 +39,7 @@ class UploadVideo extends Component {
     describe: '',
     files: {},
     progress: 0,
-    videoType: 'video',
+    videoType: 'VIDEO',
     active: '',
     uploadProps: {
       accept: '.mp4, .flv, .mkv, .mpeg, .mov',
@@ -178,7 +178,7 @@ class UploadVideo extends Component {
             <div>
               <form
                 onSubmit={this.submit}
-                className="flex flex-col w-full items-center my-8 text-xl text-gray-500"
+                className="flex flex-col w-full items-center my-8 text-md text-gray-500"
               >
                 <div className="w-full p-2">
                   {!this.state.fileSelected && (
@@ -215,15 +215,15 @@ class UploadVideo extends Component {
                     Select Type
                     <Select
                       placeholder="Select video type"
-                      defaultValue="video"
+                      defaultValue="VIDEO"
                       onChange={this.handleChange}
                       style={{
                         width: '30%',
                         paddingLeft: 10
                       }}
                     >
-                      <Select.Option value="video">Video</Select.Option>
-                      <Select.Option value="laughter">Laughter</Select.Option>
+                      <Select.Option value="VIDEO">VIDEO</Select.Option>
+                      <Select.Option value="LAUGHTER">LAUGHTER</Select.Option>
                     </Select>
                   </label>
 
@@ -257,7 +257,7 @@ class UploadVideo extends Component {
                   shape="round"
                   icon={<RiArrowRightCircleLine />}
                   onClick={this.submit}
-                  className="w-64 my-4 py-5 flex justify-center items-center text-xl p-4 transform hover:scale-110 motion-reduce:transform-none"
+                  className="w-64 my-4 py-5 flex justify-center items-center text-md p-4 transform hover:scale-110 motion-reduce:transform-none"
                 >
                   Next
                 </Button>

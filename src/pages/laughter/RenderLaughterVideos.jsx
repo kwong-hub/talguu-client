@@ -52,7 +52,7 @@ const RenderLaughterVideos = ({
                 /> */}
                 <img
                   src={
-                    video.trailer_gif ? video.trailer_gif : video.main_gif || ''
+                    video.main_gif 
                   }
                   className="w-full h-full"
                   alt=""
@@ -74,7 +74,7 @@ const RenderLaughterVideos = ({
   }
 
   return (
-    <div className="md:px-3 lg:px-3">
+    <div className="md:px-3 lg:px-3 w-full">
       <InfiniteScroll
         dataLength={dataSource.length}
         next={fetchMoreData}
@@ -82,8 +82,8 @@ const RenderLaughterVideos = ({
         className="scroll-style"
         loader={
           loading && (
-            <div className="flex items-center justify-center">
-              <Spin indicator={antIcon} />
+            <div className="w-full flex items-center justify-center">
+              <Spin indicator={antIcon} className="w-10 h-10" />
             </div>
           )
         }
