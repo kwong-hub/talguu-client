@@ -13,7 +13,9 @@ import SideNav from '../../partials/sideNav/SideNav'
 
 const EditUploadVideos = (props) => {
   const history = useHistory()
-  const [video] = useState(props.location.state)
+  const _video = {...props.location.state.video}
+
+  const [video] = useState(_video)
   const [title, setTitle] = useState(video?.title)
   const [describe, setDescribe] = useState(video?.describe)
   const [price, setPrice] = useState(0.23)
@@ -22,7 +24,7 @@ const EditUploadVideos = (props) => {
     history.goBack()
   }
 
-  console.log("video: ", video)
+  console.log("_video leyet yale: ", props.location.state)
 
   const publishVideo = () => {
     videoService

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation, useHistory, useParams } from 'react-router-dom';
-import { Form, Input, message, Spin } from 'antd';
+import { Form, Input, message, Spin, Steps, Button } from 'antd';
 
 
 import { BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill } from 'react-icons/bs'
@@ -34,6 +34,10 @@ const SendLaughter = () => {
     const [playVideo, setPlayVideo] = useState(false)
 
 
+    const { Step } = Steps;
+    const [current, setCurrent] = useState(0);
+
+
 
 
     const handlePlayerReady = (player) => {
@@ -48,6 +52,7 @@ const SendLaughter = () => {
             player.log('player will dispose');
         });
     };
+
 
 
     useEffect(() => {
@@ -90,6 +95,48 @@ const SendLaughter = () => {
 
 
 
+    const SenderInfo = () => {
+        return (
+            <div className=''>
+                <p>Sender Info</p>
+            </div>
+        )
+    }
+
+
+    const LaughterDecorator = () => {
+        return (
+            <div className=''>
+                <p>Select Decorator </p>
+            </div>
+        )
+    }
+
+    const PreviewLaughter = () => {
+        return (
+            <div className=''>
+                <p>Preview Laughter</p>
+            </div>
+        )
+    }
+
+
+    const steps = [
+        {
+            title: 'Info',
+            content: <SenderInfo />,
+        },
+        {
+            title: 'Decorator',
+            content: <LaughterDecorator />,
+        },
+        {
+            title: 'Preview',
+            content: <PreviewLaughter />,
+        },
+    ];
+
+
 
     const getAllVideos = (page, pageSize) => {
         setLoading(true)
@@ -106,7 +153,13 @@ const SendLaughter = () => {
     }
 
 
+    const next = () => {
+        setCurrent(current + 1);
+    };
 
+    const prev = () => {
+        setCurrent(current - 1);
+    };
 
     const USD_PER_PERSON = 0.20
 
@@ -196,6 +249,7 @@ const SendLaughter = () => {
 
             </div>
 
+
             <div className='mt-3 pt-3 flex flex-col'>
 
                 <div className='flex p-2 mb-3 py-5'>
@@ -258,7 +312,7 @@ const SendLaughter = () => {
                     </div>
                     <div className='ml-2 w-1/2 overflow-hidden'>
                         {playVideo && currentVideo ? (
-                            
+
                             renderPlayer()
                         ) :
                             <div className="w-screen mx-auto mt-40">
@@ -277,7 +331,7 @@ const SendLaughter = () => {
                 <div className='flex flex-col w-full h-52 items-center' {...handlers}>
                     {/* replace carousel here */}
                     {
-                       dataSource.length > 0 ? 
+                        dataSource.length > 0 ?
                             dataSource.map((video, index) => {
                                 return (
                                     <div key={index} className='w-4/5 md:w-1/2 lg:w-1/2 h-full overflow-hidden'>
@@ -301,7 +355,7 @@ const SendLaughter = () => {
                                     </div>
                                 )
                             })
-                            : 
+                            :
 
                             (
                                 <p>There are no more videos</p>
@@ -327,6 +381,7 @@ const SendLaughter = () => {
                     </button>
                 </div>
             </div>
+
 
         </div>
     )

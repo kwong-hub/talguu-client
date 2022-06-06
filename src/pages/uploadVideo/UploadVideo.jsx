@@ -50,7 +50,8 @@ class UploadVideo extends Component {
       customRequest: (data) => {
         return this.fileSelected(data.file)
       }
-    }
+    },
+    video: {}
   }
 
   cancelUpload = () => {
@@ -101,7 +102,13 @@ class UploadVideo extends Component {
         return videoService.addVideo(videoObj)
       })
       .then((res) => {
-        this.props.history.push('/finish-upload', { ...res.data.video })
+        const videOb = {...res.data.video}
+        this.setState({ video: videOb })
+
+        this.props.history.push({
+          pathname: '/finish-upload',
+          state: {video: this.state.video}
+        })
       })
       .catch((err) => console.log(err))
   }
@@ -153,7 +160,10 @@ class UploadVideo extends Component {
 
   nextClick = (to) => {
     this.setState({ active: to })
-    this.props.history.push('/finish-upload')
+    this.props.history.push({
+      pathname: '/finish-upload',
+      state: {video: this.state.video}
+    })
   }
 
   uploadButton = () => (

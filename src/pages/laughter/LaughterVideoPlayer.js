@@ -125,12 +125,30 @@ const LaughterVideoPlayer = () => {
 
     const handlers = useSwipeable({
         onSwipedLeft: () => {
+            const user = JSON.parse(localStorage.getItem('user'))
             const producerId = currentVideo.producerId
-            history.push(`/producer/${producerId}`)
+
+            if (!user || user.role !== 'VIEWER') {
+                history.push({
+                    pathname: '/login',
+                    search: `?return_url=/producer/${producerId}`
+                })
+            } else {
+                history.push(`/producer/${producerId}`)
+            }
         },
         onSwipedRight: () => {
+            const user = JSON.parse(localStorage.getItem('user'))
             const producerId = currentVideo.producerId
-            history.push(`/producer/${producerId}`)
+
+            if (!user || user.role !== 'VIEWER') {
+                history.push({
+                    pathname: '/login',
+                    search: `?return_url=/producer/${producerId}`
+                })
+            } else {
+                history.push(`/producer/${producerId}`)
+            }
         },
         onSwipedUp: () => {
             const user = JSON.parse(localStorage.getItem('user'))
@@ -162,6 +180,7 @@ const LaughterVideoPlayer = () => {
                 videoId: currentVideo.id,
                 autoplay: true,
                 controls: false,
+                errorDisplay: false,
                 poster: currentVideo?.thumbnial?.includes('talguu-vout1')
                     ? currentVideo?.thumbnial
                     : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png',

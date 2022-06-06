@@ -30,9 +30,9 @@ const YourVideo = () => {
       key: 'thumbnial',
       width: 150,
       fixed: 'left',
-      render: (text) => (
+      render: (thumbnial) => (
         <div className="hover:bg-blue-200 cursor-pointer">
-          <img src={text} className="w-32" alt="thumbnail" />
+          <img src={thumbnial} className="w-32" alt="thumbnail" />
         </div>
       )
     },
@@ -161,6 +161,13 @@ const YourVideo = () => {
       if (!video.trailer || !video.thumbnial) {
         message.info(
           'Video should have trailer and thumbnail before publish, edit add thumbnail and trailer.'
+        )
+        return
+      }
+    }if (video.type === 'LAUGHTER') {
+      if (!video.thumbnial) {
+        message.info(
+          'Video should have thumbnail before publish, edit and add thumbnail'
         )
         return
       }

@@ -309,15 +309,15 @@ const WatchVideo = () => {
           >
             <VideoPlayer {...videoJsOptions}></VideoPlayer>
           </div>
-          <div className="flex-col mx-1 mt-48 sm:mt-6">
+          <div className="flex-col mx-1 mt-44 sm:mt-6 player_details">
             <div className="w-full flex justify-between">
-              <div className="text-gray-800 lg:text-2xl text-md  text-left">
+              <div className="text-gray-800 lg:text-2xl text-md  text-left py-5 md:py-0 mt-4 md:mt-0">
                 {currentVideo?.title}
               </div>
               {currentVideo.paid || (user && user.role !== 'VIEWER') ? (
                 ''
               ) : (
-                <div className="py-0">
+                <div className="py-5 md:py-0 lg:py-0 mt-4 md:mt-0 lg:mt-0">
                   <Button
                     type="primary"
                     onClick={(event) =>
@@ -330,7 +330,7 @@ const WatchVideo = () => {
                 </div>
               )}
             </div>
-            <div className="flex justify-between text-gray-800 text-2xl w-full text-left">
+            <div className="flex justify-between text-gray-800 text-2xl w-full text-left px-3 md:py-3 lg:py-3">
               <div className="flex items-end">
                 <span className="text-gray-400 text-lg">
                   {currentVideo?.viewCount}

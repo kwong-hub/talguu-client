@@ -32,7 +32,7 @@ const RenderLaughterVideos = ({
   const renderVideos = () => {
     if (dataSource.length > 0) {
       return (
-        <div className="flex flex-wrap items-center">
+        <div className="flex flex-wrap items-center justify-center w-full lg:justify-start">
           {dataSource.map((video, index) => {
             return (
               // p-2 flex md:w-1/4 w-1/2 h-52 cursor-pointer laughter_video_thumbnail
