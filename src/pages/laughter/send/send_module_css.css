@@ -1,0 +1,9 @@
+
+
+.sender_player_style {
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    width: 270px;
+    height: 480px;
+}

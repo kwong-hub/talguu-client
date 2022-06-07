@@ -12,6 +12,8 @@ import { slides } from './sample_gifs';
 import videoService from '../../../_services/video.service';
 import { config } from '../swiperConfig';
 
+import './send_module_css.css'
+
 const SendLaughter = () => {
 
     // const { TextArea } = Input
@@ -33,9 +35,12 @@ const SendLaughter = () => {
     const [randomStr, setRandomStr] = useState('')
     const [playVideo, setPlayVideo] = useState(false)
 
+    const [senderName, setSenderName] = useState('')
+
 
     const { Step } = Steps;
     const [current, setCurrent] = useState(0);
+    const { TextArea } = Input;
 
 
 
@@ -58,7 +63,8 @@ const SendLaughter = () => {
     useEffect(() => {
         if (vidId) {
             const singleVideoLaughter = () => {
-                videoService.getPaidVideoUrl(vidId).then(res => {
+                laughterService.getLaughterVideoUrl(vidId).then(res => {
+                    console.log("res: ", res)
                     if (res) {
                         setLoading(false)
                         setCurrentVideo(res)
@@ -72,7 +78,6 @@ const SendLaughter = () => {
         }
 
         window.scrollTo(0, 0)
-
     }, [])
 
 
@@ -98,7 +103,68 @@ const SendLaughter = () => {
     const SenderInfo = () => {
         return (
             <div className=''>
-                <p>Sender Info</p>
+                <div className='flex flex-col w-full'>
+                    <p className='text-sm font-bold'>Send this video to my friend (s)</p>
+                    <h1 className='text-xl font-bold text-purple-700'>US ${USD_PER_PERSON}/person</h1>
+
+                    <div className='flex flex-col items-center my-3'>
+                        <Form
+                            labelCol={{ span: 2 }}
+                            className='flex flex-col p-2 mb-10'
+                            initialValues={{}}
+                            name="basic"
+                            onFinish={onFinish}
+                            onFinishFailed={onFinishFailed}
+                            autoComplete="off"
+                            layout='horizontal'
+                        >
+                            <Form.Item
+                                label="Receiver Email"
+                                name="email"
+                                className='w-full self-center ant-item'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Input receiver email',
+                                    },
+                                ]}
+                            >
+                                <Input placeholder='receiver email' />
+                            </Form.Item>
+
+                            {/* <Form.Item
+                                label="Sender Name"
+                                name="senderName"
+                                className='w-full self-center ant-item'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Input sender name',
+                                    },
+                                ]}
+                            >
+                                <Input placeholder="sender's name" />
+                            </Form.Item> */}
+
+
+                            <Form.Item
+                                label="Message"
+                                name="message"
+                                className='w-full self-center ant-item'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Input your message',
+                                    },
+                                ]}
+                            >
+                                <TextArea rows={4} />
+                            </Form.Item>
+
+                        </Form>
+
+                    </div>
+                </div>
             </div>
         )
     }
@@ -107,7 +173,60 @@ const SendLaughter = () => {
     const LaughterDecorator = () => {
         return (
             <div className=''>
-                <p>Select Decorator </p>
+                <p className='text-sm font-bold mb-5'>Select Intro Videos</p>
+
+                <div className='flex flex-col w-full h-full items-center' {...handlers}>
+                    {/* replace carousel here */}
+
+
+                    {
+
+                        loading ? (<div className="w-screen mx-auto mt-40">
+                            <Spin size="middle">
+                                <Spin size="large" />
+                            </Spin>
+                        </div>) :
+                            dataSource.length > 0 ?
+                                dataSource.map((video, index) => {
+
+                                    let videoJsOptions = {
+                                        videoId: video.id,
+                                        autoplay: false,
+                                        controls: true,
+                                        errorDisplay: false,
+                                        poster: video?.thumbnial?.includes('talguu-vout1')
+                                            ? video?.thumbnial
+                                            : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png',
+                                        aspectRatio: '9:16',
+                                        responsive: true,
+                                        fill: true,
+                                        sources: [
+                                            {
+                                                src: video.video_link,
+                                                type: video.video_type
+                                            }
+                                        ]
+                                    }
+                                    return (
+                                        <div key={randomStr}
+                                            className='sender_player_style'>
+
+                                            <VideoPlayer
+                                                options={videoJsOptions}
+                                                onReady={handlePlayerReady}
+                                            />
+                                        </div>
+                                    )
+                                })
+                                :
+
+                                (
+                                    <p>There are no more videos</p>
+                                )
+                    }
+
+                </div>
+
             </div>
         )
     }
@@ -115,7 +234,21 @@ const SendLaughter = () => {
     const PreviewLaughter = () => {
         return (
             <div className=''>
-                <p>Preview Laughter</p>
+
+                <p className='text-sm font-bold mb-5'>Preview</p>
+
+                <div className='ml-2 sender_player_style'>
+                    {playVideo && currentVideo ? (
+
+                        renderPlayer()
+                    ) :
+                        <div className="w-screen mx-auto mt-40">
+                            <Spin size="middle">
+                                <Spin size="large" />
+                            </Spin>
+                        </div>
+                    }
+                </div>
             </div>
         )
     }
@@ -123,11 +256,11 @@ const SendLaughter = () => {
 
     const steps = [
         {
-            title: 'Info',
+            title: 'Sender Info',
             content: <SenderInfo />,
         },
         {
-            title: 'Decorator',
+            title: 'Intro video',
             content: <LaughterDecorator />,
         },
         {
@@ -186,7 +319,7 @@ const SendLaughter = () => {
 
 
     const handlers = useSwipeable({
-        onSwiped: (eventData) => {
+        onSwipedLeft: () => {
             if (dataSource.length === total) {
                 setHasMore(false)
                 return
@@ -195,6 +328,17 @@ const SendLaughter = () => {
             // we cam access the property of swiped item
             console.log('swiped: ', dataSource)
         },
+        onSwipedRight: () => {
+            if (page === 1) {
+                setHasMore(false)
+                return
+            } else {
+                setPage(page - 1)
+            }
+            // we cam access the property of swiped item
+            console.log('swiped: ', dataSource)
+        },
+
         ...config,
     });
 
@@ -206,6 +350,7 @@ const SendLaughter = () => {
             videoId: currentVideo.id,
             autoplay: false,
             controls: true,
+            errorDisplay: false,
             poster: currentVideo?.thumbnial?.includes('talguu-vout1')
                 ? currentVideo?.thumbnial
                 : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png',
@@ -214,14 +359,14 @@ const SendLaughter = () => {
             fill: true,
             sources: [
                 {
-                    src: currentVideo.trailer ? currentVideo.trailer : '',
+                    src: currentVideo.video_link,
                     type: currentVideo.video_type
                 }
             ]
         }
         if (currentVideo) {
             return (
-                <div 
+                <div
                     className='w-full md:h-96 lg:h-96 md:w-2/3 lg:w-2/3'
                     key={randomStr}
                 >
@@ -237,8 +382,8 @@ const SendLaughter = () => {
 
 
     return (
-        <div className='w-full relative h-full'>
-            <div className='w-full flex flex-col items-start'>
+        <div className='w-full relative h-full py-5 px-5'>
+            {/* <div className='w-full flex flex-col items-start'>
                 <button
                     type='button'
                     className='px-6 mr-5 mt-5 w-20'
@@ -247,141 +392,51 @@ const SendLaughter = () => {
                     <BsFillArrowLeftCircleFill className='w-8 h-8 text-purple-800' />
                 </button>
 
+            </div> */}
+
+
+
+            <div className='flex flex-nowrap'>
+                {/* <Steps
+                    direction='horizontal'
+                    current={current}>
+                    {steps.map((item) => (
+                        <Step
+                            className=""
+                            key={item.title}
+                            title={item.title}
+                        />
+                    ))}
+                </Steps> */}
             </div>
+            <div className="my-5">{steps[current].content}</div>
 
-
-            <div className='mt-3 pt-3 flex flex-col'>
-
-                <div className='flex p-2 mb-3 py-5'>
-                    <div className='flex flex-col w-1/2'>
-                        <p className='text-sm font-bold'>Send this video to my friend (s)</p>
-                        <h1 className='text-xl font-bold text-purple-700'>US ${USD_PER_PERSON}/person</h1>
-
-                        <div className='flex flex-col items-center'>
-                            <Form
-                                labelCol={{ span: 2 }}
-                                className='flex flex-col p-2 mb-10'
-                                initialValues={{}}
-                                name="basic"
-                                onFinish={onFinish}
-                                onFinishFailed={onFinishFailed}
-                                autoComplete="off"
-                                layout='horizontal'
-                            >
-                                <Form.Item
-                                    name="email"
-                                    className='w-full self-center ant-item'
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Input your email',
-                                        },
-                                    ]}
-                                >
-                                    <Input placeholder='email' />
-                                </Form.Item>
-
-                                <Form.Item
-                                    name="phoneNumber"
-                                    className='w-full self-center ant-item'
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Input your phone number',
-                                        },
-                                    ]}
-                                >
-                                    <Input placeholder='phone' />
-                                </Form.Item>
-
-                                <Form.Item
-                                    name="senderName"
-                                    className='w-full self-center ant-item'
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Input sender name',
-                                        },
-                                    ]}
-                                >
-                                    <Input placeholder="sender's name" />
-                                </Form.Item>
-                            </Form>
-
-                        </div>
-                    </div>
-                    <div className='ml-2 w-1/2 overflow-hidden'>
-                        {playVideo && currentVideo ? (
-
-                            renderPlayer()
-                        ) :
-                            <div className="w-screen mx-auto mt-40">
-                                <Spin size="middle">
-                                    <Spin size="large" />
-                                </Spin>
-                            </div>
-                        }
-                    </div>
+            {
+                !loading &&
+                <div className="steps-action">
+                    {current < steps.length - 1 && dataSource.length > 0 && (
+                        <Button type="primary" onClick={() => next()}>
+                            Next
+                        </Button>
+                    )}
+                    {current === steps.length - 1 && (
+                        <Button type="primary" onClick={() => message.success('Processing complete!')}>
+                            Done
+                        </Button>
+                    )}
+                    {current > 0 && (
+                        <Button
+                            style={{
+                                margin: '0 8px',
+                            }}
+                            onClick={() => prev()}
+                        >
+                            Previous
+                        </Button>
+                    )}
                 </div>
 
-
-                {/* slider with preview and next button */}
-
-
-                <div className='flex flex-col w-full h-52 items-center' {...handlers}>
-                    {/* replace carousel here */}
-                    {
-                        dataSource.length > 0 ?
-                            dataSource.map((video, index) => {
-                                return (
-                                    <div key={index} className='w-4/5 md:w-1/2 lg:w-1/2 h-full overflow-hidden'>
-
-                                        <img
-                                            src={
-                                                video.thumbnial?.includes('talguu-vout1')
-                                                    ? video.thumbnial
-                                                    : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png'
-                                            }
-                                            alt=""
-                                            className="w-full h-full"
-                                        />
-                                        <img
-                                            src={
-                                                video.main_gif ? video.main_gif : video.trailer_gif || ''
-                                            }
-                                            className="hidden h-48 video_gif mx-auto"
-                                            alt=""
-                                        />
-                                    </div>
-                                )
-                            })
-                            :
-
-                            (
-                                <p>There are no more videos</p>
-                            )
-                    }
-
-                </div>
-
-                <div className='flex items-center justify-center mt-4 p-3'>
-                    <button
-                        type='button'
-                        className='bg-purple-800 text-white uppercase rounded-xl px-6 py-2 mr-5'
-                        onClick={handlePreview}
-                    >
-                        PREVIEW
-                    </button>
-                    <button
-                        type='button'
-                        className='bg-purple-800 text-white rounded-xl uppercase px-6 py-2 w-20'
-                        onClick={handleSend}
-                    >
-                        SEND
-                    </button>
-                </div>
-            </div>
-
+            }
 
         </div>
     )
