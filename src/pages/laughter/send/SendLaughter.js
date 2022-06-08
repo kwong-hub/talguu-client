@@ -3,16 +3,18 @@ import { useLocation, useHistory, useParams } from 'react-router-dom';
 import { Form, Input, message, Spin, Steps, Button } from 'antd';
 
 
-import { BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill } from 'react-icons/bs'
 import { useSwipeable } from 'react-swipeable';
 
 import VideoPlayer from '../VideoPlayer'
 import { laughterService } from '../../../_services/laughter.service';
 import { slides } from './sample_gifs';
-import videoService from '../../../_services/video.service';
 import { config } from '../swiperConfig';
 
 import './send_module_css.css'
+import SenderInfo from './SenderInfo';
+import LaughterDecorator from './LaughterDecorator';
+
+import { BsFillArrowLeftCircleFill } from 'react-icons/bs'
 
 const SendLaughter = () => {
 
@@ -35,27 +37,23 @@ const SendLaughter = () => {
     const [randomStr, setRandomStr] = useState('')
     const [playVideo, setPlayVideo] = useState(false)
 
-    const [senderName, setSenderName] = useState('')
-
 
     const { Step } = Steps;
     const [current, setCurrent] = useState(0);
     const { TextArea } = Input;
 
 
+    const [receiverEmail, setReceiverEmail] = useState('')
+    const [specialMessage, setSpecialMessage] = useState('')
+
+    const [sendingData, setSendingData] = useState({})
+    const [decoratorId, setDecoratorId] = useState(dataSource[0]?.id)
+
+
 
 
     const handlePlayerReady = (player) => {
         playerRef.current = player;
-
-        // You can handle player events here, for example:
-        player.on('waiting', () => {
-            player.log('player is waiting');
-        });
-
-        player.on('dispose', () => {
-            player.log('player will dispose');
-        });
     };
 
 
@@ -98,142 +96,44 @@ const SendLaughter = () => {
         }
     }, [page, pageSize])
 
+    const handlers = useSwipeable({
+        onSwipedLeft: () => {
+            if (dataSource.length === total) {
+                setHasMore(false)
+                return
+            }
+            setPage(page + 1)
+            // we cam access the property of swiped item
+            let id = dataSource[0].id
+            // setSendingData((prevData) => ({
+            //     ...prevData,
+            //     decoratorId: id
+            // }))
+            setDecoratorId(id)
+            console.log("decoratorId: ", id)
+        },
+        onSwipedRight: () => {
+            if (page === 1) {
+                setHasMore(false)
+                return
+            } else {
+                setPage(page - 1)
+            }
+            let id = dataSource[0].id
+            setDecoratorId(id)
+            console.log("decoratorId: ", id)
+        },
+
+        ...config,
+    });
 
 
-    const SenderInfo = () => {
-        return (
-            <div className=''>
-                <div className='flex flex-col w-full'>
-                    <p className='text-sm font-bold'>Send this video to my friend (s)</p>
-                    <h1 className='text-xl font-bold text-purple-700'>US ${USD_PER_PERSON}/person</h1>
-
-                    <div className='flex flex-col items-center my-3'>
-                        <Form
-                            labelCol={{ span: 2 }}
-                            className='flex flex-col p-2 mb-10'
-                            initialValues={{}}
-                            name="basic"
-                            onFinish={onFinish}
-                            onFinishFailed={onFinishFailed}
-                            autoComplete="off"
-                            layout='horizontal'
-                        >
-                            <Form.Item
-                                label="Receiver Email"
-                                name="email"
-                                className='w-full self-center ant-item'
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Input receiver email',
-                                    },
-                                ]}
-                            >
-                                <Input placeholder='receiver email' />
-                            </Form.Item>
-
-                            {/* <Form.Item
-                                label="Sender Name"
-                                name="senderName"
-                                className='w-full self-center ant-item'
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Input sender name',
-                                    },
-                                ]}
-                            >
-                                <Input placeholder="sender's name" />
-                            </Form.Item> */}
 
 
-                            <Form.Item
-                                label="Message"
-                                name="message"
-                                className='w-full self-center ant-item'
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Input your message',
-                                    },
-                                ]}
-                            >
-                                <TextArea rows={4} />
-                            </Form.Item>
-
-                        </Form>
-
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-
-    const LaughterDecorator = () => {
-        return (
-            <div className=''>
-                <p className='text-sm font-bold mb-5'>Select Intro Videos</p>
-
-                <div className='flex flex-col w-full h-full items-center' {...handlers}>
-                    {/* replace carousel here */}
-
-
-                    {
-
-                        loading ? (<div className="w-screen mx-auto mt-40">
-                            <Spin size="middle">
-                                <Spin size="large" />
-                            </Spin>
-                        </div>) :
-                            dataSource.length > 0 ?
-                                dataSource.map((video, index) => {
-
-                                    let videoJsOptions = {
-                                        videoId: video.id,
-                                        autoplay: false,
-                                        controls: true,
-                                        errorDisplay: false,
-                                        poster: video?.thumbnial?.includes('talguu-vout1')
-                                            ? video?.thumbnial
-                                            : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png',
-                                        aspectRatio: '9:16',
-                                        responsive: true,
-                                        fill: true,
-                                        sources: [
-                                            {
-                                                src: video.video_link,
-                                                type: video.video_type
-                                            }
-                                        ]
-                                    }
-                                    return (
-                                        <div key={randomStr}
-                                            className='sender_player_style'>
-
-                                            <VideoPlayer
-                                                options={videoJsOptions}
-                                                onReady={handlePlayerReady}
-                                            />
-                                        </div>
-                                    )
-                                })
-                                :
-
-                                (
-                                    <p>There are no more videos</p>
-                                )
-                    }
-
-                </div>
-
-            </div>
-        )
-    }
 
     const PreviewLaughter = () => {
         return (
-            <div className=''>
+            <div className='flex flex-col w-full h-full items-center'>
 
                 <p className='text-sm font-bold mb-5'>Preview</p>
 
@@ -257,11 +157,22 @@ const SendLaughter = () => {
     const steps = [
         {
             title: 'Sender Info',
-            content: <SenderInfo />,
+            content: <SenderInfo
+                receiverEmail={receiverEmail}
+                specialMessage={specialMessage}
+                setReceiverEmail={setReceiverEmail}
+                setSpecialMessage={setSpecialMessage}
+            />,
         },
         {
             title: 'Intro video',
-            content: <LaughterDecorator />,
+            content: <LaughterDecorator
+                handlers={handlers}
+                loading={loading}
+                dataSource={dataSource}
+                randomStr={randomStr}
+                handlePlayerReady={handlePlayerReady}
+            />,
         },
         {
             title: 'Preview',
@@ -287,60 +198,56 @@ const SendLaughter = () => {
 
 
     const next = () => {
+
+        if (!receiverEmail || !specialMessage) {
+            message.error("please fill all the required fields")
+            return
+        }
+        if(!isEmail(receiverEmail)) {
+            message.error("Please insert the valid email")
+            return
+        }
+
+        const body = {
+            email: receiverEmail,
+            message: specialMessage,
+            videoId: vidId,
+            decoratorId: decoratorId
+        }
+
+        setSendingData(body)
+
         setCurrent(current + 1);
+
     };
+
+
+    const  isEmail = (val) => {
+        let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (regEmail.test(val)) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    const submitLaughterData = () => {
+        if (!receiverEmail || !specialMessage || !vidId || decoratorId) {
+            message.error("please fill all the required fields")
+            return
+        }
+
+        console.log("FINAL DATA: ", sendingData)
+    }
 
     const prev = () => {
         setCurrent(current - 1);
     };
 
-    const USD_PER_PERSON = 0.20
-
-    const onFinish = (values) => {
-        console.log('Success:', values);
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
-
-    const handlePreview = () => {
-        console.log("preview: ")
-    }
-
-    const handleSend = () => {
-        message.success("Laughter sent successfully!")
-    }
-
     const back = () => {
         history.push(`/laughter/watch/${vidId}`)
+        message.success("Back clicked")
     }
-
-
-
-    const handlers = useSwipeable({
-        onSwipedLeft: () => {
-            if (dataSource.length === total) {
-                setHasMore(false)
-                return
-            }
-            setPage(page + 1)
-            // we cam access the property of swiped item
-            console.log('swiped: ', dataSource)
-        },
-        onSwipedRight: () => {
-            if (page === 1) {
-                setHasMore(false)
-                return
-            } else {
-                setPage(page - 1)
-            }
-            // we cam access the property of swiped item
-            console.log('swiped: ', dataSource)
-        },
-
-        ...config,
-    });
 
 
 
@@ -383,16 +290,20 @@ const SendLaughter = () => {
 
     return (
         <div className='w-full relative h-full py-5 px-5'>
-            {/* <div className='w-full flex flex-col items-start'>
-                <button
-                    type='button'
-                    className='px-6 mr-5 mt-5 w-20'
-                    onClick={back}
-                >
-                    <BsFillArrowLeftCircleFill className='w-8 h-8 text-purple-800' />
-                </button>
+            
+            {
+              current === 0 && 
+                <div className='w-full flex flex-col items-start'>
+                    <button
+                        type='button'
+                        className='px-6 mr-5 mt-5 w-20'
+                        onClick={back}
+                    >
+                        <BsFillArrowLeftCircleFill className='w-8 h-8 text-purple-800' />
+                    </button>
 
-            </div> */}
+                </div>
+            }
 
 
 
@@ -409,7 +320,7 @@ const SendLaughter = () => {
                     ))}
                 </Steps> */}
             </div>
-            <div className="my-5">{steps[current].content}</div>
+            <div className="my-5 mt-6">{steps[current].content}</div>
 
             {
                 !loading &&
@@ -420,7 +331,7 @@ const SendLaughter = () => {
                         </Button>
                     )}
                     {current === steps.length - 1 && (
-                        <Button type="primary" onClick={() => message.success('Processing complete!')}>
+                        <Button type="primary" onClick={() => submitLaughterData()}>
                             Done
                         </Button>
                     )}

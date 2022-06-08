@@ -127,28 +127,31 @@ const LaughterVideoPlayer = () => {
         onSwipedLeft: () => {
             const user = JSON.parse(localStorage.getItem('user'))
             const producerId = currentVideo.producerId
+            history.push(`/producer/${producerId}`)
 
-            if (!user || user.role !== 'VIEWER') {
-                history.push({
-                    pathname: '/login',
-                    search: `?return_url=/producer/${producerId}`
-                })
-            } else {
-                history.push(`/producer/${producerId}`)
-            }
+            // if (!user || user.role !== 'VIEWER') {
+            //     history.push({
+            //         pathname: '/login',
+            //         search: `?return_url=/producer/${producerId}`
+            //     })
+            // } else {
+            //     history.push(`/producer/${producerId}`)
+            // }
         },
         onSwipedRight: () => {
             const user = JSON.parse(localStorage.getItem('user'))
             const producerId = currentVideo.producerId
 
-            if (!user || user.role !== 'VIEWER') {
-                history.push({
-                    pathname: '/login',
-                    search: `?return_url=/producer/${producerId}`
-                })
-            } else {
-                history.push(`/producer/${producerId}`)
-            }
+            history.push(`/producer/${producerId}`)
+            
+            // if (!user || user.role !== 'VIEWER') {
+            //     history.push({
+            //         pathname: '/login',
+            //         search: `?return_url=/producer/${producerId}`
+            //     })
+            // } else {
+            //     history.push(`/producer/${producerId}`)
+            // }
         },
         onSwipedUp: () => {
             const user = JSON.parse(localStorage.getItem('user'))

@@ -4,6 +4,6 @@
     display: flex;
     align-items: center;
     justify-content:center;
-    width: 270px;
-    height: 480px;
+    width: 324px; /* 30% of 1080 */
+    height: 576px; /* 30% of 1920 */
 }
