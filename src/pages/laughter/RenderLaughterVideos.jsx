@@ -1,4 +1,4 @@
-import { Spin } from 'antd'
+import { Divider, Spin } from 'antd'
 import React from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
@@ -32,16 +32,34 @@ const RenderLaughterVideos = ({
   const renderVideos = () => {
     if (dataSource.length > 0) {
       return (
-        <div className="flex flex-wrap items-center justify-center w-full lg:justify-start">
-          {dataSource.map((video, index) => {
-            return (
-              // p-2 flex md:w-1/4 w-1/2 h-52 cursor-pointer laughter_video_thumbnail
-              <div
-                className="laughter_video_thumb_style laughter_video_thumbnail"
-                key={index}
-                onClick={() => watchVideo(video)}
-              >
-                {/* <img
+        <>
+          {type === 'producerVideos' && (
+            <>
+              <p className="text-md text-gray-800 font-bold text-center py-3">
+                Videos
+              </p>
+
+              <Divider
+                style={{
+                  marginTop: '-5px',
+                  marginBottom: '15px',
+                  background: '#D3D3D3',
+                  height: '1px'
+                }}
+              />
+            </>
+          )}
+
+          <div className="flex flex-wrap items-center justify-center w-full lg:justify-start">
+            {dataSource.map((video, index) => {
+              return (
+                // p-2 flex md:w-1/4 w-1/2 h-52 cursor-pointer laughter_video_thumbnail
+                <div
+                  className="laughter_video_thumb_style laughter_video_thumbnail"
+                  key={index}
+                  onClick={() => watchVideo(video)}
+                >
+                  {/* <img
                   src={
                     video.thumbnial?.includes('talguu-vout1')
                       ? video.thumbnial
@@ -50,17 +68,12 @@ const RenderLaughterVideos = ({
                   alt=""
                   className="w-full h-full"
                 /> */}
-                <img
-                  src={
-                    video.main_gif 
-                  }
-                  className="w-full h-full"
-                  alt=""
-                />
-              </div>
-            )
-          })}
-        </div>
+                  <img src={video.main_gif} className="w-full h-full" alt="" />
+                </div>
+              )
+            })}
+          </div>
+        </>
       )
     } else {
       if (!loading) {

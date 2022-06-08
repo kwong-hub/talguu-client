@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Spin } from 'antd'
 import SideNav from '../../../partials/sideNav/SideNav'
 import { useHistory } from 'react-router-dom'
 import { LoadingOutlined } from '@ant-design/icons'
 import { laughterService } from '../../../_services/laughter.service'
 
-import InfiniteScroll from 'react-infinite-scroll-component'
 import '../laughter_style.css'
 import './auth.laughter.css'
 import RenderLaughterVideos from '../RenderLaughterVideos'
-import videoService from '../../../_services/video.service'
 
 const AuthLaugher = () => {
 
@@ -50,13 +47,12 @@ const AuthLaugher = () => {
     }
 
     const fetchMoreData = () => {
-        log('fetchMore called!')
-
-        setLoading(true)
-        if (dataSource.length >= total) {
-            setHasMore(false)
-            return
-        }
+        
+        // setLoading(true)
+        // if (dataSource.length >= total) {
+        //     setHasMore(false)
+        //     return
+        // }
         setPage(page + 1)
     }
 

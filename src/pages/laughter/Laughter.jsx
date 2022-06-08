@@ -1,18 +1,13 @@
-import { Spin } from 'antd'
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import SideNav from '../../partials/sideNav/SideNav'
 import { laughterService } from '../../_services/laughter.service'
 import { LoadingOutlined } from '@ant-design/icons'
-import HomeContainer from './home/HomeContainer'
 
-import { statusData, sidebarItems } from './sidebarItems'
 
 import './laughter_style.css'
 
-import InfiniteScroll from 'react-infinite-scroll-component'
 import RenderLaughterVideos from './RenderLaughterVideos'
-import videoService from '../../_services/video.service'
 
 const Laughter = () => {
   const history = useHistory()
@@ -56,8 +51,6 @@ const Laughter = () => {
   }
 
   const fetchMoreData = () => {
-    log('fetchMore called!')
-
     // setLoading(true)
     // if (dataSource.length === total) {
     //   setHasMore(false)
@@ -65,12 +58,6 @@ const Laughter = () => {
     // }
     setPage(page + 1)
   }
-
-  const updateDataStatus = useCallback(() => {
-    log('function Called!')
-    return setStatus(true)
-  }, [status])
-
 
 
   return (
@@ -95,7 +82,7 @@ const Laughter = () => {
           fetchMoreData={fetchMoreData}
           hasMore={hasMore}
           loading={loading}
-          type="public"
+          type="publicLaughter"
         />
 
       </div>

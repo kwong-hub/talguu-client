@@ -127,7 +127,10 @@ const LaughterVideoPlayer = () => {
         onSwipedLeft: () => {
             const user = JSON.parse(localStorage.getItem('user'))
             const producerId = currentVideo.producerId
-            history.push(`/producer/${producerId}`)
+            history.push({
+                pathname: `/producer/${producerId}`,
+                state: {vidId}
+            })
 
             // if (!user || user.role !== 'VIEWER') {
             //     history.push({
@@ -141,9 +144,11 @@ const LaughterVideoPlayer = () => {
         onSwipedRight: () => {
             const user = JSON.parse(localStorage.getItem('user'))
             const producerId = currentVideo.producerId
+            history.push({
+                pathname: `/producer/${producerId}`,
+                state: { vidId }
+            })
 
-            history.push(`/producer/${producerId}`)
-            
             // if (!user || user.role !== 'VIEWER') {
             //     history.push({
             //         pathname: '/login',
@@ -184,9 +189,9 @@ const LaughterVideoPlayer = () => {
                 autoplay: true,
                 controls: false,
                 errorDisplay: false,
-                poster: currentVideo?.thumbnial?.includes('talguu-vout1')
-                    ? currentVideo?.thumbnial
-                    : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png',
+                // poster: currentVideo?.thumbnial?.includes('talguu-vout1')
+                //     ? currentVideo?.thumbnial
+                //     : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png',
                 aspectRatio: '9:16',
                 responsive: true,
                 fill: true,

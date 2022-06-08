@@ -34,6 +34,8 @@ const SendLaughter = () => {
     const [hasMore, setHasMore] = useState(true)
 
     const [currentVideo, setCurrentVideo] = useState({})
+    const [decoratorVideo, setDecoratorVideo] = useState({})
+
     const [randomStr, setRandomStr] = useState('')
     const [playVideo, setPlayVideo] = useState(false)
 
@@ -172,6 +174,9 @@ const SendLaughter = () => {
                 dataSource={dataSource}
                 randomStr={randomStr}
                 handlePlayerReady={handlePlayerReady}
+                totalDecorators={total}
+                page={page}
+                decoratorVideo={decoratorVideo}
             />,
         },
         {
@@ -191,6 +196,18 @@ const SendLaughter = () => {
                 const { count, rows } = videos
                 setTotal(count)
                 setDataSource(rows)
+                // get video id
+                const videoId = rows[0].id
+
+                laughterService.getLaughterVideoUrl(videoId).then(res => {
+                    if (res) {
+                        setLoading(false)
+                        setDecoratorVideo(res)
+                    } else {
+                        setDecoratorVideo({})
+                    }
+                })
+
             }
             setLoading(false)
         })
@@ -232,11 +249,11 @@ const SendLaughter = () => {
     }
 
     const submitLaughterData = () => {
-        if (!receiverEmail || !specialMessage || !vidId || decoratorId) {
+        if (!receiverEmail || !specialMessage || !vidId || !decoratorId) {
             message.error("please fill all the required fields")
             return
         }
-
+        
         console.log("FINAL DATA: ", sendingData)
     }
 
@@ -255,23 +272,29 @@ const SendLaughter = () => {
 
         const videoJsOptions = {
             videoId: currentVideo.id,
-            autoplay: false,
+            autoplay: true,
             controls: true,
             errorDisplay: false,
-            poster: currentVideo?.thumbnial?.includes('talguu-vout1')
-                ? currentVideo?.thumbnial
-                : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png',
+            // poster: currentVideo?.thumbnial?.includes('talguu-vout1')
+            //     ? currentVideo?.thumbnial
+            //     : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png',
             aspectRatio: '9:16',
             responsive: true,
             fill: true,
             sources: [
                 {
+                    src: decoratorVideo.video_link,
+                    type: decoratorVideo.video_type
+                },
+                {
                     src: currentVideo.video_link,
                     type: currentVideo.video_type
                 }
+                
             ]
         }
         if (currentVideo) {
+            console.log("selected: ", dataSource[0].video_link)
             return (
                 <div
                     className='w-full md:h-96 lg:h-96 md:w-2/3 lg:w-2/3'
