@@ -70,7 +70,7 @@ const Router = () => {
           />
           <Route
             exact
-            path="/producer/profile"
+            path="/producer-profile/:producerId"
             component={ProducerProfile}
           />
 

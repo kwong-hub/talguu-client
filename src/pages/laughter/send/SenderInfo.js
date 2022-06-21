@@ -24,7 +24,7 @@ const SenderInfo = ({
                   <div className='w-full'>
                       <div className='flex my-3'>
                           <p className='text-sm text-red-600 mx-2'>*</p>
-                          <p className='text-sm text-gray-600'>Receiver Email</p>
+                          <p className='text-sm text-gray-600'>Receiver Email (Phone number)</p>
                       </div>
                       <Form.Item
                           rules={[

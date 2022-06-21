@@ -93,7 +93,13 @@ const SideNav = (props) => {
       {/* mobile laughter begins */}
       {!user && (
         <Menu.Item key="1">
-          <Link to="/laughter-home">
+          <Link
+            to={{
+              pathname: '/laughter-home',
+              state: { laughter_page_offset: 1, page_limit: 6 },
+              search: `laughter_page_offset=1&page_limit=6`
+            }}
+          >
             <div className="flex flex-col items-center justify-center">
               <BsFillEmojiLaughingFill className={menuIconStyle} />
               <span className={menuTextStyle}>Laughter</span>
@@ -114,7 +120,13 @@ const SideNav = (props) => {
         <>
           {user.role === 'VIEWER' ? (
             <Menu.Item key="1">
-              <Link to="/laughter">
+              <Link
+                to={{
+                  pathname: '/laughter',
+                  state: { laughter_page_offset: 1, page_limit: 6 },
+                  search: `laughter_page_offset=1&page_limit=6`
+                }}
+              >
                 <div className="flex flex-col items-center justify-center">
                   <BsFillEmojiLaughingFill className={menuIconStyle} />
                   <span className={menuTextStyle}>Laughter</span>
@@ -333,7 +345,13 @@ const SideNav = (props) => {
               location.pathname === '/laughter-home' ? 'bg-gray-400' : ''
             }`}
           >
-            <Link to="/laughter-home">
+            <Link
+              to={{
+                pathname: '/laughter-home',
+                state: { laughter_page_offset: 1, page_limit: 6 },
+                search: `laughter_page_offset=1&page_limit=6`
+              }}
+            >
               <Tooltip
                 className="list-tooltip"
                 placement="rightTop"
@@ -358,7 +376,13 @@ const SideNav = (props) => {
                     location.pathname === '/laughter' ? 'bg-gray-400' : ''
                   }`}
                 >
-                  <Link to="/laughter">
+                  <Link
+                    to={{
+                      pathname: '/laughter',
+                      state: { laughter_page_offset: 1, page_limit: 6 },
+                      search: `laughter_page_offset=1&page_limit=6`
+                    }}
+                  >
                     <Tooltip placement="rightTop" title="Laughter">
                       <BsFillEmojiLaughingFill
                         className={

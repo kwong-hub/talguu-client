@@ -95,7 +95,7 @@ const WatchVideo = () => {
     const viewerVideosTemp = viewerVideos.map((v) => {
       if (v.id === video.id) {
         return video
-      }
+      } 
       return v
     })
     dispatch({ type: UPDATE_USER_VIDEOS, payload: viewerVideosTemp })
@@ -424,7 +424,7 @@ const WatchVideo = () => {
             <RenderVideo
               playVideo={play}
               for="watch_video"
-              key={video.id}
+              key={randomStr}
               video={video}
               paymentModalVisible={paymentModalVisibleFunc}
               fromWatch={true}

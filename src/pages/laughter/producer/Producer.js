@@ -24,7 +24,9 @@ export const Producer = () => {
 
     const location = useLocation()
 
-    const { vidId } = location.state
+    const vidId  = location?.state.vidId
+    const laughterPageOffset = location?.state.laughter_page_offset
+    const pageLimit = location?.state.page_limit
 
 
     const [page, setPage] = useState(1)
@@ -48,9 +50,6 @@ export const Producer = () => {
     useEffect(() => {
         getAllVideos(page, pageSize)
 
-        return () => {
-            setHasMore(false)
-        }
     }, [page, pageSize])
 
 
@@ -154,12 +153,20 @@ export const Producer = () => {
     }
 
     const producerProfile = () => {
-        history.push("/producer/profile")
+       
+        history.push({
+          pathname: `/producer-profile/${producerId}`,
+          state: {
+            laughter_page_offset: laughterPageOffset,
+            page_limit: pageLimit,
+            vidId
+          }
+        })
     }
 
 
     const fetchMoreData = () => {
-        log('fetchMore called!')
+        // log('fetchMore called!')
 
         // setLoading(true)
         // if (dataSource.length === total) {
@@ -205,7 +212,14 @@ export const Producer = () => {
     // }
 
     const back = () => {
-        history.push(`/laughter/watch/${vidId}`)
+        history.push({
+          pathname: `/laughter/watch/${vidId}`,
+          search: `laughter_page_offset=${laughterPageOffset}&page_limit=${pageLimit}`,
+          state: {
+            laughter_page_offset: laughterPageOffset,
+            page_limit: pageLimit
+          }
+        })
     }
 
 

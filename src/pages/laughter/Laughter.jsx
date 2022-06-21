@@ -83,6 +83,8 @@ const Laughter = () => {
           hasMore={hasMore}
           loading={loading}
           type="publicLaughter"
+          page={page}
+          pageSize={pageSize}
         />
 
       </div>

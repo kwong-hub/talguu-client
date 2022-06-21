@@ -6,7 +6,6 @@ import { useHistory, useParams } from 'react-router-dom';
 import VideoPlayer from './VideoPlayer';
 
 import talguuLogo from '../../assets/images/talguu_logo.png'
-import videoService from '../../_services/video.service';
 import { Space, Spin } from 'antd';
 import { config } from './swiperConfig';
 import { useSwipeable } from 'react-swipeable';
@@ -16,6 +15,8 @@ import './custom_player_style.css'
 import LaughterSideNav from './LaughterSideNav';
 import { FaPlayCircle } from 'react-icons/fa';
 import { laughterService } from '../../_services/laughter.service';
+
+import {useLocation} from 'react-router-dom'
 
 const LaughterVideoPlayer = () => {
 
@@ -30,6 +31,11 @@ const LaughterVideoPlayer = () => {
 
     const playerRef = React.useRef(null);
 
+
+    const location = useLocation()
+
+    const laughterPageOffset = location?.state.laughter_page_offset
+    const pageLimit = location?.state.page_limit
 
 
     const handlePlayerReady = (player) => {
@@ -92,15 +98,12 @@ const LaughterVideoPlayer = () => {
         const player = playerRef.current
         // const xyPlayer = document.getElementById("myPlayerLaughter")
 
-
         if (isPlaying) {
             player.pause()
-            console.log("player status changed xyz: ", isPlaying)
             //    setIsPlaying()
 
         } else {
             player.play()
-            console.log("player status changed: ", isPlaying)
         }
 
     }
@@ -114,10 +117,22 @@ const LaughterVideoPlayer = () => {
         if (!user || user.role !== 'VIEWER') {
             history.push({
                 pathname: '/login',
-                search: `?return_url=/laughter/send/${currentVideo.id}`
+                search: `?return_url=/laughter/send/${currentVideo.id}`,
+                state: {
+                laughter_page_offset: laughterPageOffset,
+                page_limit: pageLimit
+              }
+                
             })
         } else {
-            history.push(`/laughter/send/${currentVideo.id}`)
+            history.push({
+              pathname: `/laughter/send/${currentVideo.id}`,
+              state: {
+                laughter_page_offset: laughterPageOffset,
+                page_limit: pageLimit
+              }
+            })
+            
         }
 
     }
@@ -128,8 +143,13 @@ const LaughterVideoPlayer = () => {
             const user = JSON.parse(localStorage.getItem('user'))
             const producerId = currentVideo.producerId
             history.push({
-                pathname: `/producer/${producerId}`,
-                state: {vidId}
+              pathname: `/producer/${producerId}`,
+              state: {
+                laughter_page_offset: laughterPageOffset,
+                page_limit: pageLimit,
+                vidId
+              },
+              search: `laughter_page_offset=${laughterPageOffset}&page_limit=${pageLimit}`
             })
 
             // if (!user || user.role !== 'VIEWER') {
@@ -145,8 +165,13 @@ const LaughterVideoPlayer = () => {
             const user = JSON.parse(localStorage.getItem('user'))
             const producerId = currentVideo.producerId
             history.push({
-                pathname: `/producer/${producerId}`,
-                state: { vidId }
+              pathname: `/producer/${producerId}`,
+              state: {
+                laughter_page_offset: laughterPageOffset,
+                page_limit: pageLimit,
+                vidId
+              },
+              search: `laughter_page_offset=${laughterPageOffset}&page_limit=${pageLimit}`
             })
 
             // if (!user || user.role !== 'VIEWER') {
@@ -161,17 +186,33 @@ const LaughterVideoPlayer = () => {
         onSwipedUp: () => {
             const user = JSON.parse(localStorage.getItem('user'))
             if (!user || user.role !== 'VIEWER') {
-                history.push(`/laughter-home`)
+                history.push({
+                    pathname: `/laughter-home`,
+                    state: { laughter_page_offset: laughterPageOffset, page_limit: pageLimit },
+                    search: `laughter_page_offset=${laughterPageOffset}&page_limit=${pageLimit}`
+                })
             } else {
-                history.push(`/laughter`)
+                history.push({
+                    pathname: `/laughter`,
+                    state: { laughter_page_offset: laughterPageOffset, page_limit: pageLimit },
+                    search: `laughter_page_offset=${laughterPageOffset}&page_limit=${pageLimit}`
+                })
             }
         },
         onSwipedDown: () => {
             const user = JSON.parse(localStorage.getItem('user'))
             if (!user || user.role !== 'VIEWER') {
-                history.push(`/laughter-home`)
+                history.push({
+                    pathname: `/laughter-home`,
+                    state: { laughter_page_offset: laughterPageOffset, page_limit: pageLimit },
+                    search: `laughter_page_offset=${laughterPageOffset}&page_limit=${pageLimit}`
+                })
             } else {
-                history.push(`/laughter`)
+                history.push({
+                    pathname: `/laughter`,
+                    state: {laughter_page_offset: laughterPageOffset, page_limit: pageLimit },
+                    search: `laughter_page_offset=${laughterPageOffset}&page_limit=${pageLimit}`
+                })
             }
         },
         ...config,
@@ -224,7 +265,7 @@ const LaughterVideoPlayer = () => {
                         <div className='flex flex-col items-end mr-3 cursor-pointer'>
                             <button
                                 onClick={() => handleSendLaughter(currentVideo)}
-                                className='text-white px-5 py-2 text-lg rounded-3xl border-1 border-gray-600 bg-gray-600'
+                                className='text-white px-5 py-2 text-lg rounded-3xl border-1 border-gray-600 bg-gray-600 opacity-75'
                             >
                                 <span className='flex items-center justify-center'>
                                     <IoSendSharp className='mr-3' />

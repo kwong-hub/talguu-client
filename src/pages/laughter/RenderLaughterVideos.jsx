@@ -13,20 +13,17 @@ const RenderLaughterVideos = ({
   hasMore,
   loading,
   type,
+  page,
+  pageSize
 }) => {
   const history = useHistory()
 
   const watchVideo = (video) => {
-    const user = JSON.parse(localStorage.getItem('user'))
-    
-    // if (!user || user.role !== 'VIEWER') {
-    //   history.push({
-    //     pathname: '/login',
-    //     search: `?return_url=/laughter/watch/${video.id}`
-    //   })
-    // } else {
-    // }
-    history.push(`/laughter/watch/${video.id}`)
+    history.push({
+      pathname: `/laughter/watch/${video.id}`,
+      state: { laughter_page_offset: page, page_limit: pageSize },
+      search: `laughter_page_offset=${page}&page_limit=${pageSize}`
+    })
   }
 
   const renderVideos = () => {
@@ -59,15 +56,6 @@ const RenderLaughterVideos = ({
                   key={index}
                   onClick={() => watchVideo(video)}
                 >
-                  {/* <img
-                  src={
-                    video.thumbnial?.includes('talguu-vout1')
-                      ? video.thumbnial
-                      : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png'
-                  }
-                  alt=""
-                  className="w-full h-full"
-                /> */}
                   <img src={video.main_gif} className="w-full h-full" alt="" />
                 </div>
               )
@@ -95,9 +83,16 @@ const RenderLaughterVideos = ({
         className="scroll-style"
         loader={
           loading && (
-            <div className="w-full flex items-center justify-center">
-              <Spin indicator={antIcon} className="w-10 h-10" />
-            </div>
+            Array.from(new Array(2)).map((item, index) => {
+              return (
+                <div key={index} className="flex flex-wrap">
+                  <div className="video_skeleton mx-3 ml-2"></div>
+                  <div className="video_skeleton mx-3"></div>
+                  <div className="video_skeleton mx-3 ml-2"></div>
+                  <div className="video_skeleton mx-3"></div>
+                </div>
+              )
+            })            
           )
         }
         endMessage={

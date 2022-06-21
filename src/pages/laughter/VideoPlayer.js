@@ -22,10 +22,7 @@ const VideoPlayer = (props) => {
                 onReady && onReady(player);
             });
 
-            console.log("playerChecking: ", player)
-
         } else {
-
 
         }
     }, [options, videoRef]);
