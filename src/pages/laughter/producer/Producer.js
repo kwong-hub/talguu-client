@@ -224,11 +224,11 @@ export const Producer = () => {
 
 
     return (
-        <div>
-            <div className="pt-2 sm:ml-14 mt-12">
-                <SideNav></SideNav>
-                <div className="flex relative mt-2 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
-                    {/* <div className='w-full flex flex-col items-start'>
+      <div>
+        <div className="pt-2 sm:ml-14 mt-12">
+          <SideNav></SideNav>
+          <div className="flex relative mt-2 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
+            {/* <div className='w-full flex flex-col items-start'>
                         <button
                             type='button'
                             className='px-6 mr-5 mt-5 w-20'
@@ -238,63 +238,55 @@ export const Producer = () => {
                         </button>
 
                     </div> */}
-                    <div className='flex items-center justify-between w-full'>
-                        {
-                            isLoading ? (
-                                // <><Spin indicator={antIcon} /></>
-                                null
-                            ) : (
-                                <>
-                                    <div className='w-10 mx-2'>
-                                        <button
-                                            type='button'
-                                            className='w-full'
-                                            onClick={back}
-                                        >
-                                                <BsFillArrowLeftCircleFill className='w-8 h-8 text-purple-800' />
-                                        </button>
+            <div className="flex items-center justify-between w-full">
+              {isLoading ? // <><Spin indicator={antIcon} /></>
+              null : (
+                <>
+                  <div className="w-10 mx-2">
+                    <button type="button" className="w-full" onClick={back}>
+                      <BsFillArrowLeftCircleFill className="w-8 h-8 text-purple-800" />
+                    </button>
+                  </div>
 
-                                    </div>
+                  <div className="flex items-center justify-between px-2 w-full">
+                    <div className="flex items-center">
+                      <Avatar size={40} icon={<UserOutlined />} />
 
-                                    <div className='flex items-center justify-between px-2 w-full' >
-
-                                        <div className='flex items-center'>
-                                            <Avatar size={40} icon={<UserOutlined />} />
-
-                                            <div className='flex flex-col items-center px-3 py-3'>
-                                                <h3 className='text-xl text-gray-600'>
-                                                    {producerInfo.firstName} {producerInfo.firstName}
-                                                </h3>
-                                                <p className='text-sm text-gray-700'>
-                                                    {producerInfo.email}
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <Button
-                                            onClick={() => producerProfile()}
-                                            type='primary'
-                                            className='outline outline-2 mr-2'>
-                                            Profile
-                                        </Button>
-                                    </div>
-                                </>
-                            )
-                        }
+                      <div className="flex flex-col items-center px-3 py-3">
+                        <h3 className="text-xl text-gray-600">
+                          {producerInfo.firstName} {producerInfo.firstName}
+                        </h3>
+                        <p className="text-sm text-gray-700">
+                          {producerInfo.email}
+                        </p>
+                      </div>
                     </div>
 
-                    <div className="w-full mt-4">
+                    <Button
+                      onClick={() => producerProfile()}
+                      type="primary"
+                      className="outline outline-2 mr-2"
+                    >
+                      Profile
+                    </Button>
+                  </div>
+                </>
+              )}
+            </div>
 
-                        <RenderLaughterVideos
-                            dataSource={dataSource}
-                            antIcon={antIcon}
-                            fetchMoreData={fetchMoreData}
-                            hasMore={hasMore}
-                            loading={loading}
-                            type="producerVideos"
-                        />
+            <div className="w-full mt-4">
+              <RenderLaughterVideos
+                dataSource={dataSource}
+                antIcon={antIcon}
+                fetchMoreData={fetchMoreData}
+                hasMore={hasMore}
+                loading={loading}
+                type="producerVideos"
+                page={page}
+                pageSize={pageSize}
+              />
 
-                        {/* {loading ? (
+              {/* {loading ? (
                             <div className="absolute top-1/2 left-1/2 w-20 h-12 flex items-center justify-center">
                                 <Spin indicator={antIcon} />
                             </div>
@@ -307,10 +299,10 @@ export const Producer = () => {
                                 }
                             </div>
                         } */}
-                    </div>
-                </div>
-            </div >
-        </div >
+            </div>
+          </div>
+        </div>
+      </div>
     )
 }
 export default Producer

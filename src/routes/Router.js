@@ -44,6 +44,7 @@ import AuthLaugher from '../pages/laughter/auth/AuthLaugher'
 import Producer from '../pages/laughter/producer/Producer'
 import ProducerProfile from '../pages/laughter/producer/ProducerProfile'
 import SendLaughter from '../pages/laughter/send/SendLaughter'
+import PublicVideoPlayer from '../pages/laughter/PublicVideoPlayer'
 
 const Router = () => {
   return (
@@ -62,39 +63,32 @@ const Router = () => {
             path="/laughter/watch/:vidId"
             component={LaughterVideoPlayer}
           />
-
           <Route
             exact
-            path="/producer/:producerId"
-            component={Producer}
+            path="/laughter-public/watch-video/:vidId"
+            component={PublicVideoPlayer}
           />
+
+          <Route exact path="/producer/:producerId" component={Producer} />
           <Route
             exact
             path="/producer-profile/:producerId"
             component={ProducerProfile}
           />
 
-          <Route
-            exact
-            path="/laughter/send/:vidId"
-            component={SendLaughter}
-          />
-
+          <Route exact path="/laughter/send/:vidId" component={SendLaughter} />
 
           <PrivateRoute
             path="/purchased_playlist"
             component={PurchasedPlaylist}
           />
 
-          <PrivateRoute
-            path="/laughter"
-            component={AuthLaugher}
-          />
+          <PrivateRoute path="/laughter" component={AuthLaugher} />
           {/* <PrivateRoute 
             path="/laughter/video-player" 
             component={LaughterVideoPlayer} 
           /> */}
-          
+
           <PrivateRoute path="/saved_later" component={SavedPlayList} />
           <PrivateRoute path="/upload_video" component={UploadVideo} />
           <PrivateRoute path="/upload_2" component={UploadAnt} />

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 import SideNav from '../../partials/sideNav/SideNav'
 import { laughterService } from '../../_services/laughter.service'
 import { LoadingOutlined } from '@ant-design/icons'
@@ -13,7 +13,7 @@ const Laughter = () => {
   const history = useHistory()
   // let page = 1
 
-  const [pageSize, setPageSize] = useState(6)
+  const [pageSize, setPageSize] = useState(10)
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
   const [dataSource, setDataSource] = useState([])
@@ -21,9 +21,21 @@ const Laughter = () => {
   const [status, setStatus] = useState(false)
   const [hasMore, setHasMore] = useState(true)
 
+
   const antIcon = <LoadingOutlined style={{ fontSize: 36 }} spin />
 
-  const log = console.log
+      const location = useLocation()
+
+    
+      
+
+  useEffect(() => {
+    window.scroll({
+      left: 0,
+      behavior: 'smooth'
+    })
+  }, [])
+
 
   useEffect(() => {
     getAllVideos(page, pageSize)

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import SideNav from '../../../partials/sideNav/SideNav'
-import { useHistory, useLocation } from 'react-router-dom'
 import { LoadingOutlined } from '@ant-design/icons'
 import { laughterService } from '../../../_services/laughter.service'
 
@@ -10,16 +9,9 @@ import RenderLaughterVideos from '../RenderLaughterVideos'
 
 const AuthLaugher = () => {
 
-    const history = useHistory()
-
-    const location = useLocation()
-
-    const laughterPageOffset = location?.state.laughter_page_offset || 1
-    const pageLimit = location?.state.page_limit || 6
-
 
     const [page, setPage] = useState(3)
-    const [pageSize, setPageSize] = useState(6)
+    const [pageSize, setPageSize] = useState(10)
     const [total, setTotal] = useState(0)
     const [dataSource, setDataSource] = useState([])
     const [loading, setLoading] = useState(false)

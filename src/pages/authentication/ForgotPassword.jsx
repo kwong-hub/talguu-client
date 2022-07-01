@@ -26,9 +26,9 @@ const ForgotPassword = () => {
     <div className="relative">
       <Header />
 
-      <div className="flex flex-col items-center justify-center h-screen">
-        <img className="" src={logo} alt="Logo" width={50} />
-        <p className="text-gray-800 text-xl py-4">Forgot Password</p>
+      <div className="px-5 flex flex-col items-center justify-center h-screen bg-gradient-to-r from-blue-500 via-purple-500 to-blue-800">
+        
+     
 
         {success ? (
           <div>
@@ -38,7 +38,11 @@ const ForgotPassword = () => {
             </Link>
           </div>
         ) : (
-          <div className="bg-white p-4 shadow-sm border rounded-xl max-w-md">
+          <div className=" bg-white bg-opacity-20 backdrop-blur-2xl shadow-2xl rounded-xl p-4  max-w-md text-white">
+              <img className="" src={logo} alt="Logo" width={70} />
+        <p className="text-white text-xl py-4">Forgot Password</p>
+           
+           
             <p className="">
               Enter your verifed email address and we will send you a password
               reset link.
@@ -59,8 +63,8 @@ const ForgotPassword = () => {
                 ]}
               >
                 <Input
-                  className="rounded-2xl"
-                  prefix={<FaUser className="site-form-item-icon" />}
+                  className="rounded-xl w-64 h-10"
+                  prefix={<FaUser className="site-form-item-icon text-blue-500" />}
                   placeholder="E-mail Address"
                 />
               </Form.Item>
@@ -70,7 +74,7 @@ const ForgotPassword = () => {
                   type="primary"
                   htmlType="submit"
                   shape="round"
-                  className="login-form-button w-full"
+                  className="login-form-button w-44"
                 >
                   Send Email
                 </Button>
@@ -78,6 +82,7 @@ const ForgotPassword = () => {
             </Form>
           </div>
         )}
+      
       </div>
     </div>
   )

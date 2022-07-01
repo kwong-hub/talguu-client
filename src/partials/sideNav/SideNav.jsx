@@ -48,12 +48,12 @@ const SideNav = (props) => {
     dispatch({ type: LOGOUT_ASYNC })
   }
   const accountMenu = (
-    <div className=" bg-white shadow-lg rounded-lg">
+    <div className="bg-white shadow-lg rounded-lg -mr-2">
       <div className="flex flex-col py-4 px-8 items-center ">
         <Avatar
-          className="flex items-center justify-center"
+          className="flex items-center justify-center bg-gray-200"
           size={40}
-          icon={<FaUser />}
+          icon={<FaUser className="text-blue-500" />}
         />
         <span className="font-semibold pt-2 text-lg">{user?.name}</span>
         <span className="text-gray-600 text-sm ">{user?.email}</span>
@@ -72,13 +72,13 @@ const SideNav = (props) => {
   )
 
   const menuTextStyle =
-    'text-left text-xs h-full inline-block text-gray-500 hover:text-gray-900 mt-0.5'
-  const menuIconStyle = 'text-2xl inline text-gray-500'
+    'text-left text-xs h-full inline-block text-gray-800 hover:text-blue-500 mt-0.5'
+  const menuIconStyle = 'text-2xl inline text-blue-500'
 
   const mobileMenu = (
     <Menu
       onClick={handleMenuClick}
-      className="fixed z-20 bottom-0 flex sm:hidden w-screen overflow-hidden p-2 mt-10"
+      className="fixed z-20 bottom-0 flex sm:hidden w-screen overflow-hidden p-2 mt-1 bg-gray-100 bg-opacity-100 backdrop-blur-xl"
     >
       {/* mobile laughter ends */}
       <Menu.Item key="2">
@@ -96,8 +96,6 @@ const SideNav = (props) => {
           <Link
             to={{
               pathname: '/laughter-home',
-              state: { laughter_page_offset: 1, page_limit: 6 },
-              search: `laughter_page_offset=1&page_limit=6`
             }}
           >
             <div className="flex flex-col items-center justify-center">
@@ -123,8 +121,6 @@ const SideNav = (props) => {
               <Link
                 to={{
                   pathname: '/laughter',
-                  state: { laughter_page_offset: 1, page_limit: 6 },
-                  search: `laughter_page_offset=1&page_limit=6`
                 }}
               >
                 <div className="flex flex-col items-center justify-center">
@@ -240,22 +236,22 @@ const SideNav = (props) => {
 
   const suffix = <FaSearch className="text-xl text-gray-300" />
   return (
-    <div className="container bottom-0 bg-transparent  sm:bg-white">
-      <div className="fixed z-10 right-0 left-0 sm:left-14 top-0 bg-white shadow-sm">
-        <div className="flex justify-between sm:hidden pt-2">
-          <div className="text-2xl mr-4 flex items-center justify-center header_title text-gray-500">
+    <div className="container bottom-0 bg-transparent sm:bg-red-500">
+      <div className="px-5 md:p-3 fixed z-10 right-0 left-0 sm:left-14 top-0 bg-white">
+        <div className="flex justify-between sm:hidden -mx-5 pt-3 pb-3 bg-gray-100 bg-opacity-100 backdrop-blur-xl">
+          <div className="text-xl  mr-4 flex items-center justify-center header_title text-gray-500">
             <Link to="/" className="flex items-center">
               <img
                 src={logo}
                 alt=""
-                className="rounded pl-2 sm:pl-0 w-24 sm:w-32"
+                className="rounded pl-2 sm:pl-0 w-24 sm:w-64"
               />
             </Link>
           </div>
           <div className="flex mr-2">
             <FaSearch
               onClick={() => toggleSearch()}
-              className="p-2 text-4xl text-gray-300 mx-3"
+              className="p-2 text-4xl text-blue-500 mx-3"
             />
             <Dropdown
               overlay={accountMenu}
@@ -267,7 +263,7 @@ const SideNav = (props) => {
                 className="ant-dropdown-link"
                 onClick={(e) => e.preventDefault()}
               >
-                <FaUser className="p-2 text-4xl text-gray-300" />
+                <FaUser className="p-2 text-4xl text-blue-500" />
               </span>
             </Dropdown>
           </div>
@@ -290,17 +286,17 @@ const SideNav = (props) => {
             </Dropdown>
           </span> */}
         </div>
-        <div className="block sm:flex p-1 justify-between items-center">
-          <div className="hidden sm:flex text-2xl mr-4 items-center justify-center header_title text-gray-500">
+        <div className="block sm:flex  justify-between items-center">
+          <div className="hidden sm:flex text-xl mr-4 items-center justify-center header_title text-gray-500">
             <Link to="/" className="flex items-center">
-              <img src={logo} alt="" className="rounded w-32" />
+              <img src={logo} alt="" className="rounded w-28" />
             </Link>
           </div>
-          <div className="hidden sm:block bg-white sm:static w-full lg:w-1/2">
+          <div className="hidden sm:block bg-transparent sm:static w-full lg:w-1/3 font-bold">
             <Search
               placeholder="Search videos here..."
               enterButton="Search"
-              size="large"
+              size="medium"
               suffix={suffix}
               onSearch={onSearch}
             />
@@ -309,7 +305,7 @@ const SideNav = (props) => {
             <span className="text-gray-500 hidden sm:flex ml-6 cursor-pointer text-lg items-center hover:text-gray-700 md:ml-20">
               {/* <Link to="/account"> */}
               <Dropdown overlay={accountMenu} placement="bottomRight" arrow>
-                <FaUser className={'text-3xl inline text-gray-300'} />
+                <FaUser className={'text-xl inline text-blue-500'} />
               </Dropdown>
               {/* <Tooltip placement="rightTop" title="Account"></Tooltip> */}
               {/* </Link> */}
@@ -319,10 +315,10 @@ const SideNav = (props) => {
           )}
         </div>
       </div>
-      <ul className="w-14 min-h-full fixed left-0 top-0 list-disc space-y-5 p-1 border-r hidden sm:block  mt-2">
+      <ul className="w-14  min-h-full fixed left-0 top-0 list-disc space-y-5 p-1 border-r hidden sm:block pt-5">
         <li
           className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-            location.pathname === '/' ? 'bg-gray-400' : ''
+            location.pathname === '/' ? 'bg-gray-100' : ''
           }`}
         >
           <Link to="/">
@@ -332,7 +328,7 @@ const SideNav = (props) => {
               title="All Videos"
             >
               <FaVideo
-                className={'text-3xl inline text-gray-300 hover:text-white'}
+                className={'text-3xl inline text-blue-400 hover:text-white'}
               />
             </Tooltip>
           </Link>
@@ -348,8 +344,7 @@ const SideNav = (props) => {
             <Link
               to={{
                 pathname: '/laughter-home',
-                state: { laughter_page_offset: 1, page_limit: 6 },
-                search: `laughter_page_offset=1&page_limit=6`
+                
               }}
             >
               <Tooltip
@@ -358,7 +353,7 @@ const SideNav = (props) => {
                 title="Laughter"
               >
                 <BsFillEmojiLaughingFill
-                  className={'text-3xl inline text-gray-300 hover:text-white'}
+                  className={'text-3xl inline text-blue-400 hover:text-white transform hover:text-xl'}
                 />
               </Tooltip>
             </Link>
@@ -379,8 +374,7 @@ const SideNav = (props) => {
                   <Link
                     to={{
                       pathname: '/laughter',
-                      state: { laughter_page_offset: 1, page_limit: 6 },
-                      search: `laughter_page_offset=1&page_limit=6`
+                    
                     }}
                   >
                     <Tooltip placement="rightTop" title="Laughter">
@@ -566,16 +560,18 @@ const SideNav = (props) => {
             <Link to="/login">
               <Tooltip placement="rightTop" title="Login">
                 <FaSignInAlt
-                  className={'text-3xl inline text-gray-300 hover:text-white'}
+                  className={'text-3xl inline text-blue-400 hover:text-white'}
                 />
               </Tooltip>
             </Link>
           </li>
         )}
       </ul>
+
       {mobileMenu}
+
       {searchVisible && (
-        <div className="fixed z-20 p-2 top-12 left-0 right-0 bg-white sm:static w-full lg:w-1/2 pb-4">
+        <div className="fixed z-20 p-2 top-12 left-0 right-0 bg-transparent sm:static w-full lg:w-1/2 pb-4">
           <Search
             placeholder="Search videos here..."
             enterButton="Search"

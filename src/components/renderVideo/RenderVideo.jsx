@@ -48,9 +48,9 @@ function RenderVideo(props) {
       onClick={(event) => props.playVideo(props.video)}
       className={
         props.for
-          ? 'flex-col w-full md:w-4/12 lg:w-full sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch overflow-h' +
+          ? 'flex-col w-full md:w-4/12 lg:w-80 sm:w-6/12 pt-2 cursor-pointer video_thumbnail overflow-h transform hover:scale-110  transition duration-1000 ease-in-out bg-white rounded-xl shadow-md' +
             varClassNames
-          : 'flex-col w-full md:w-4/12 lg:w-3/12 sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch overflow-h' +
+          : 'flex-col w-full md:w-4/12 lg:w-72 sm:w-6/12 pt-2 cursor-pointer video_thumbnail overflow-h transform hover:scale-110  transition duration-1000 ease-in-out bg-white rounded-xl shadow-md' +
             varClassNames
       }
     >
@@ -62,7 +62,7 @@ function RenderVideo(props) {
               : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png'
           }
           alt=""
-          className="block w-full h-48 video_image"
+          className="block h-42 video_image"
         />
         <img
           src={
@@ -118,25 +118,25 @@ function RenderVideo(props) {
               </div>
             )}
         {!props.video.paid ? (
-          <div className="flex items-center bg-white text-gray-700 rounded-sm absolute top-1 left-1 py-0 px-4">
-            <FaDollarSign className="text-gray-700 text-xs" />{' '}
+          <div className="flex items-center bg-transparent bg-black rounded-xl text-white  absolute top-1 left-1 py-0 px-4 text-md">
+            <FaDollarSign className="text-white text-sm" />{' '}
             {props.video?.video_price}
           </div>
         ) : (
           ''
         )}
-        <div className="flex items-center bg-white text-gray-700 rounded-sm absolute bottom-1 right-1 py-0 px-4">
+        <div className="flex items-center bg-black text-white rounded-md absolute bottom-1 front-bold right-1 py-0 px-2">
           {moment(duration.split('.')[0], [moment.ISO_8601, 'HH:mm:ss']).format(
             'H:m:ss'
           )}
         </div>
       </div>
       <div className="flex-col">
-        <h4 className="my-2 text-left text-md text-gray-600 video_title">
+        <h4 className="my-2 text-left text-md text-gray-600 video_title font-bold">
           {props.video.title}
         </h4>
         <div className="flex">
-          <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2">
+          <span className="flex items-center text-gray-500 cursor-pointer hover:text-blue-400 text-sm font-bold">
             {props.video.viewCount} views
           </span>
         </div>

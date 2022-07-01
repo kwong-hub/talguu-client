@@ -1,5 +1,5 @@
-import { Divider, Spin } from 'antd'
-import React from 'react'
+import { Divider } from 'antd'
+import React, { useState, useEffect } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
 import { useHistory } from 'react-router-dom'
@@ -18,10 +18,30 @@ const RenderLaughterVideos = ({
 }) => {
   const history = useHistory()
 
+  const [scrollPosition, setScrollPosition] = useState(0)
+
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+
+  }, [])
+
+
+  const handleScroll = () => {
+    const position = window.pageYOffset
+    setScrollPosition(position)
+  }
+
+
+
   const watchVideo = (video) => {
     history.push({
       pathname: `/laughter/watch/${video.id}`,
-      state: { laughter_page_offset: page, page_limit: pageSize },
+      state: { laughter_page_offset: page, page_limit: pageSize, scrollPosition },
       search: `laughter_page_offset=${page}&page_limit=${pageSize}`
     })
   }
@@ -47,7 +67,7 @@ const RenderLaughterVideos = ({
             </>
           )}
 
-          <div className="flex flex-wrap items-center justify-center w-full lg:justify-start">
+          <div className="flex flex-wrap items-center justify-center w-full lg:justify-center">
             {dataSource.map((video, index) => {
               return (
                 // p-2 flex md:w-1/4 w-1/2 h-52 cursor-pointer laughter_video_thumbnail
@@ -56,7 +76,7 @@ const RenderLaughterVideos = ({
                   key={index}
                   onClick={() => watchVideo(video)}
                 >
-                  <img src={video.main_gif} className="w-full h-full" alt="" />
+                  <img src={video.main_gif} className="hover:scale-110  transform transition duration-1000 rounded-xl w-full h-full shadow-gray-900" alt="" />
                 </div>
               )
             })}
@@ -75,7 +95,7 @@ const RenderLaughterVideos = ({
   }
 
   return (
-    <div className="md:px-3 lg:px-3 w-full">
+    <div className="w-full">
       <InfiniteScroll
         dataLength={dataSource.length}
         next={fetchMoreData}
@@ -85,14 +105,15 @@ const RenderLaughterVideos = ({
           loading && (
             Array.from(new Array(2)).map((item, index) => {
               return (
-                <div key={index} className="flex flex-wrap">
-                  <div className="video_skeleton mx-3 ml-2"></div>
-                  <div className="video_skeleton mx-3"></div>
-                  <div className="video_skeleton mx-3 ml-2"></div>
-                  <div className="video_skeleton mx-3"></div>
+                <div key={index} className="flex flex-wrap h-96 w-full my-3 items-center ">
+                  <div className="video_skeleton rounded-xl md:h-96 md:w-56 w-40 h-48 m-2 "></div>
+                  <div className="video_skeleton rounded-xl md:h-96 md:w-56 w-40 h-48 m-2 "></div>
+                  <div className="video_skeleton rounded-xl md:h-96 md:w-56 w-40 h-48 m-2"></div>
+                  <div className="video_skeleton rounded-xl md:h-96 md:w-56 w-40 h-48 m-2"></div>
+                  <div className="video_skeleton rounded-xl md:h-96 md:w-56 w-40 h-48 m-2"></div>
                 </div>
               )
-            })            
+            })
           )
         }
         endMessage={

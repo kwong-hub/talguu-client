@@ -31,13 +31,14 @@ const LaughterDecorator = ({
         {dots.slice(0, 10).map((data, index) => (
           <div
             key={index}
-            className={`w-4 h-4 rounded-3xl mt-4 my-3 mx-1 ${
-              page === data ? 'bg-red-700' : 'bg-gray-700'
+            className={`w-4 h-4 rounded-3xl mt-4 my-3 mx-1 md:mt-2 md:my-2 md:w-3  md:h-3 ${
+              page === data ? 'bg-blue-500' : 'bg-gray-300'
             } `}
           ></div>
         ))}
-        <div className="text-xl text-gray-800 ml-1 font-bold -mt-2">
-          <span className="text-3xl text-gray-800">. . .</span> {dots.length}
+        <div className="flex items-center justify-center gap-2 text-xl  ml-1 ">
+          <span className="text-2xl md:text-sm text-black font-bold">. . .</span> 
+          <span className="text-sm md:text-md text-blue-800 font-bold"> {dots.length}</span>
         </div>
       </div>
     )
@@ -87,8 +88,8 @@ const LaughterDecorator = ({
   }
 
   return (
-    <div className="">
-      <p className="text-sm font-bold mb-5">Select Intro Videos</p>
+    <div className="w-full md:w-72 mx-auto">
+      <p className="text-sm font-bold mb-5 md:mb-2">Select Intro Videos</p>
 
       {renderPlayer()}
 

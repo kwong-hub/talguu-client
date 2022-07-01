@@ -16,6 +16,7 @@ import logo from '../../assets/images/logo1.png'
 import msp from '../../assets/images/msp-icon.png'
 import jobDor from '../../assets/images/jobdor.png'
 import Header from '../../partials/header/Header'
+import ParticleBackground from '../../components/ParticleBackground';
 
 const Login = (props) => {
   const dispatch = useDispatch()
@@ -95,6 +96,7 @@ const Login = (props) => {
   }
 
   const onFinish = (values) => {
+    setPassword(values.password)
     userService
       .login(values)
       .then((resp) => {
@@ -144,26 +146,31 @@ const Login = (props) => {
   }
 
   return (
-    <div className="relative h-screen">
+    
+    <div className="z-50 flex items-center justify-center relative h-screen p-5 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-800">
+     
       <Header />
-
-      <div className="absolute bottom-20 left-0 w-64 ">
+     
+      <div className="hidden md:absolute md:bottom-20 md:left-0 md:w-64 ">
+        
         <img
           src={require('../../assets/images/login-svg-2.svg').default}
           alt="Logo"
         />
       </div>
-      <div className="absolute bottom-10 left-0 w-1/4 ">
+      <div className="hidden md:block md:absolute md:bottom-10 md:left-0 md:w-1/4 ">
         <img
           src={require('../../assets/images/login-svg.svg').default}
           alt="Logo"
         />
       </div>
+      
       <div className="flex justify-center md:items-center md:h-full pt-2 mt-20 md:mt-4">
-        <div className="w-full max-w-xs h-full flex flex-col justify-center md:m-4 py-8 px-8 md:px-4 md:shadow-md rounded-2xl bg-white">
+      <ParticleBackground/>
+        <div className="w-full max-w-xs h-50 flex flex-col justify-center md:m-4 py-8 px-8 md:px-4 md:shadow-md bg-white bg-opacity-20 backdrop-blur-2xl shadow-2xl rounded-xl">
           <div className="flex justify-center flex-col items-center ">
             <img className="w-32" src={logo} alt="Logo" />
-            <p className="text-sm text-purple-600 my-4">
+            <p className="text-md text-purple-200 my-4 font-bold">
               Welcome back to Talguu
             </p>
 
@@ -197,7 +204,7 @@ const Login = (props) => {
             </p>
             <Form
               name="normal_login"
-              className="login-form"
+              className="login-form px-5"
               initialValues={{ remember: true }}
               onFinish={onFinish}
             >
@@ -208,8 +215,8 @@ const Login = (props) => {
                 ]}
               >
                 <Input
-                  className="rounded-2xl"
-                  prefix={<FaUser className="site-form-item-icon" />}
+                  className="rounded-xl"
+                  prefix={<FaUser className="site-form-item-icon text-blue-500 mr-3" />}
                   placeholder="E-mail Address"
                 />
               </Form.Item>
@@ -220,11 +227,11 @@ const Login = (props) => {
                 ]}
               >
                 <Input
-                  onChange={(e) => {
-                    setPassword(e.target.value)
-                  }}
-                  className="rounded-2xl "
-                  prefix={<FaLock className="site-form-item-icon" />}
+                  // onChange={(e) => {
+                  //   setPassword(e.target.value)
+                  // }}
+                  className="rounded-xl "
+                  prefix={<FaLock className="site-form-item-icon text-blue-500 mr-3 " />}
                   type="password"
                   placeholder="Password"
                 />
@@ -235,10 +242,10 @@ const Login = (props) => {
                 </Form.Item> */}
 
                 <p
-                  className="login-form-forgot"
+                  className="text-xs text-white login-form-forgot cursor-pointer italic underline hover:underline-offset-4"
                   onClick={(e) => forgotPassword()}
                 >
-                  Forgot password
+                  Forgot password?
                 </p>
               </Form.Item>
 
@@ -247,7 +254,7 @@ const Login = (props) => {
                   type="primary"
                   htmlType="submit"
                   shape="round"
-                  className="login-form-button w-full "
+                  className="login-form-button w-52 "
                 >
                   Log in
                 </Button>

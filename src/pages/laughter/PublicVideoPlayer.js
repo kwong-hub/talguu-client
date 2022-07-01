@@ -1,39 +1,63 @@
 import React, { useEffect, useState } from 'react'
-import { IoSendSharp } from 'react-icons/io5'
-import { useHistory, useParams } from 'react-router-dom'
-
+import { FaPlayCircle } from 'react-icons/fa'
+import { useHistory } from 'react-router-dom'
+import { useSwipeable } from 'react-swipeable'
+import LaughterSideNav from './LaughterSideNav'
+import { config } from './swiperConfig'
 import VideoPlayer from './VideoPlayer'
 
 import talguuLogo from '../../assets/images/talguu_logo.png'
 import { Space, Spin } from 'antd'
-import { config } from './swiperConfig'
-import { useSwipeable } from 'react-swipeable'
 
-import './custom_player_style.css'
-import LaughterSideNav from './LaughterSideNav'
-import { FaPlayCircle } from 'react-icons/fa'
-import { laughterService } from '../../_services/laughter.service'
+import './send/send_module_css.css'
 
-import { useLocation } from 'react-router-dom'
-
-const LaughterVideoPlayer = () => {
-  const history = useHistory()
-
-  const [currentVideo, setCurrentVideo] = useState({})
+const PublicVideoPlayer = () => {
+  const [currentVideo, setCurrentVideo] = useState({
+    id: 1,
+    video_link:
+      'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+    video_type: 'video/mp4',
+    specialMessage: 'My Special gift for you'
+  })
   const [randomStr, setRandomStr] = useState('')
-  const [loading, setLoading] = useState(true)
-  const { vidId } = useParams()
   const [playVideo, setPlayVideo] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [showOverlayText, setShowOverlayText] = useState(true)
 
   const playerRef = React.useRef(null)
 
+  const history = useHistory()
 
+  const overlayShowTime = 5
 
-  const handlePlayerReady = (player) => {
+  useEffect(() => {
+    console.log("publicPlayer mounted")
+    setPlayVideo(true)
+    setRandomStr(new Date().getTime().toString())
+    window.scrollTo(0, 0)
+    
+    return () => {
+       
+        console.log("publicPlayer unMounted")
+    }
+
+  }, [currentVideo])
+
+  const handlePlayerReadyPublic = (player) => {
     playerRef.current = player
 
-    // You can handle player events here, for example:
+    
+    var myInterval = setInterval(() => {
+        console.log('Current player: ', player)
+      if (player) {
+        if (player.currentTime() > overlayShowTime) {
+          setShowOverlayText(false)
+          clearInterval(myInterval)
+        }
+      }
+      console.log('Timer running....')
+    }, 1000)
     player.on('waiting', () => {
       player.log('player is waiting')
     })
@@ -52,36 +76,17 @@ const LaughterVideoPlayer = () => {
     })
   }
 
-  useEffect(() => {
-    if (vidId) {
-      const singleVideoLaughter = () => {
-        laughterService.getLaughterVideoUrl(vidId).then((res) => {
-          console.log('res: ', res)
-          if (res) {
-            setLoading(false)
-            setCurrentVideo(res)
-          } else {
-            setCurrentVideo({})
-          }
-        })
-      }
-
-      singleVideoLaughter()
-    }
-
-    window.scrollTo(0, 0)
-  }, [])
-
-  useEffect(() => {
-    setPlayVideo(true)
-    setRandomStr(new Date().getTime().toString())
-    window.scrollTo(0, 0)
-    return () => {}
-  }, [currentVideo])
-
   const handlePlayPause = () => {
     const player = playerRef.current
-    // const xyPlayer = document.getElementById("myPlayerLaughter")
+    var myInterval = setInterval(() => {
+      if (player) {
+        if (player.currentTime() > overlayShowTime) {
+          setShowOverlayText(false)
+          clearInterval(myInterval)
+        }
+      }
+      console.log('Timer running....')
+    }, 1000)
 
     if (isPlaying) {
       player.pause()
@@ -91,30 +96,7 @@ const LaughterVideoPlayer = () => {
     }
   }
 
-  const handleSendLaughter = (currentVideo) => {
-    const user = JSON.parse(localStorage.getItem('user'))
-
-    if (!user || user.role !== 'VIEWER') {
-      history.push({
-        pathname: '/login',
-        search: `?return_url=/laughter/send/${currentVideo.id}`,
-      
-      })
-    } else {
-      history.push({
-        pathname: `/laughter/send/${currentVideo.id}`,
-      
-      })
-    }
-  }
-
   const handlers = useSwipeable({
-    onSwipedLeft: () => {
-      handleHorizontalSwipe()
-    },
-    onSwipedRight: () => {
-      handleHorizontalSwipe()
-    },
     onSwipedUp: () => {
       handleVerticalSwipe()
     },
@@ -124,27 +106,23 @@ const LaughterVideoPlayer = () => {
     ...config
   })
 
-  const handleHorizontalSwipe = () => {
-    const producerId = currentVideo.producerId
-    history.push({
-      pathname: `/producer/${producerId}`,
-      state: {
-        vidId
-      },
-    })
-  }
-
   const handleVerticalSwipe = () => {
     const user = JSON.parse(localStorage.getItem('user'))
     if (!user || user.role !== 'VIEWER') {
       history.push({
         pathname: `/laughter-home`,
-      
+        state: {
+          laughter_page_offset: 1,
+          page_limit: 6
+        },
       })
     } else {
       history.push({
         pathname: `/laughter`,
-      
+        state: {
+          laughter_page_offset: 1,
+          page_limit: 6
+        }
       })
     }
   }
@@ -156,9 +134,6 @@ const LaughterVideoPlayer = () => {
         autoplay: true,
         controls: false,
         errorDisplay: false,
-        // poster: currentVideo?.thumbnial?.includes('talguu-vout1')
-        //     ? currentVideo?.thumbnial
-        //     : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png',
         aspectRatio: '9:16',
         responsive: true,
         fill: true,
@@ -178,25 +153,13 @@ const LaughterVideoPlayer = () => {
           >
             <VideoPlayer
               options={videoJsOptions}
-              onReady={handlePlayerReady}
+              onReady={handlePlayerReadyPublic}
               handlePlayPause={handlePlayPause}
             />
           </div>
           <div className="flex w-full h-14 md:w-full justify-between py-1 absolute top-3">
             <div className="items-start ml-2">
               <img src={talguuLogo} className="w-20 h-7" alt="logo" />
-            </div>
-
-            <div className="flex flex-col items-end mr-3 cursor-pointer">
-              <button
-                onClick={() => handleSendLaughter(currentVideo)}
-                className="text-white px-5 py-2 text-lg rounded-3xl border-1 border-gray-600 bg-gray-600 opacity-75"
-              >
-                <span className="flex items-center justify-center">
-                  <IoSendSharp className="mr-3" />
-                  Send
-                </span>
-              </button>
             </div>
           </div>
 
@@ -207,13 +170,23 @@ const LaughterVideoPlayer = () => {
             {!isPlaying && <FaPlayCircle className="w-10 h-10 text-white" />}
           </div>
 
+          {showOverlayText && (
+            <div className="overlay_text_style">
+              <h1 className="text-white animate-charcter">
+                {currentVideo.specialMessage
+                  ? currentVideo.specialMessage
+                  : 'Hello there!'}
+              </h1>
+            </div>
+          )}
+
           <div className="w-full">
             <LaughterSideNav></LaughterSideNav>
           </div>
         </div>
       )
     } else {
-      <div className="w-full h-full flex items-center justify-center">
+      ;<div className="w-full h-full flex items-center justify-center">
         <p>{'There is no video to play'}</p>
       </div>
     }
@@ -228,8 +201,7 @@ const LaughterVideoPlayer = () => {
       <div className="player_content">
         {playVideo && currentVideo ? (
           renderPlayer()
-        ) : // <div>This is the test div</div>
-        loading ? (
+        ) : loading ? (
           <div className="w-screen mx-auto mt-40">
             <Space size="middle">
               <Spin size="large" />
@@ -247,4 +219,4 @@ const LaughterVideoPlayer = () => {
   )
 }
 
-export default LaughterVideoPlayer
+export default PublicVideoPlayer

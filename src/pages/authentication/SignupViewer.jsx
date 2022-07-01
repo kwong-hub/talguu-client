@@ -1,7 +1,8 @@
 import './SignupViewer.css'
-
+import Image from "../../assets/images/login-svg-2.svg";
 import { Button, Form, Input, Modal } from 'antd'
 import React, { useEffect, useState } from 'react'
+import logo from '../../assets/images/logo1.png'
 import {
   FaEnvelope,
   FaFacebook,
@@ -14,12 +15,13 @@ import {
 } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
-import logo from '../../assets/images/logo1.png'
 import msp from '../../assets/images/msp-icon.png'
 import jobDor from '../../assets/images/jobdor.png'
 
 import Header from '../../partials/header/Header'
 import { CREATE_VIEWER_ASYNC, CREATE_VIEWER_RESET } from '../../redux/types'
+import ParticleBackground from '../../components/ParticleBackground';
+
 
 const SignupViewer = () => {
   const history = useHistory()
@@ -190,14 +192,15 @@ const SignupViewer = () => {
         initialValues={{ remember: true }}
         onFinish={onPersonalFinish}
         form={form}
+        className="md:flex md:flex-wrap w-full md:gap-5 md:px-20 md:py-4"
       >
         <Form.Item
           name="firstName"
           rules={[{ required: true, message: 'Please input your first Name!' }]}
         >
           <Input
-            className="rounded-2xl"
-            prefix={<FaUser className="site-form-item-icon mr-2" />}
+            className="rounded-xl w-64"
+            prefix={<FaUser className="site-form-item-icon  text-blue-500 mr-3" />}
             placeholder="First Name*"
           />
         </Form.Item>
@@ -206,8 +209,8 @@ const SignupViewer = () => {
           rules={[{ required: true, message: 'Please input your last Name!' }]}
         >
           <Input
-            className="rounded-2xl"
-            prefix={<FaUser className="site-form-item-icon mr-2" />}
+            className="rounded-xl w-64"
+            prefix={<FaUser className="site-form-item-icon text-blue-500 mr-3" />}
             placeholder="Last Name*"
           />
         </Form.Item>
@@ -216,8 +219,8 @@ const SignupViewer = () => {
           rules={[{ required: true, message: 'Please input your email!' }]}
         >
           <Input
-            className="rounded-2xl"
-            prefix={<FaEnvelope className="site-form-item-icon mr-2" />}
+            className="rounded-xl w-64"
+            prefix={<FaEnvelope className="site-form-item-icon text-blue-500 mr-3" />}
             placeholder="E-mail Address*"
           />
         </Form.Item>
@@ -236,10 +239,10 @@ const SignupViewer = () => {
             onChange={(e) => {
               phoneNumberChange(e.target.value)
             }}
-            className="rounded-2xl"
+            className="rounded-xl w-64"
             prefix={
               <span className="flex justify-center items-center">
-                <FaPhone className="site-form-item-icon mr-2" />
+                <FaPhone className="site-form-item-icon text-blue-500 mr-3" />
                 +1
               </span>
             }
@@ -251,8 +254,8 @@ const SignupViewer = () => {
           rules={[{ required: true, message: 'Please input your Password!' }]}
         >
           <Input
-            className="rounded-2xl "
-            prefix={<FaLock className="site-form-item-icon mr-2" />}
+            className="rounded-xl w-64"
+            prefix={<FaLock className="site-form-item-icon text-blue-500 mr-3" />}
             type="password"
             placeholder="Password*"
           />
@@ -262,20 +265,20 @@ const SignupViewer = () => {
           rules={[{ required: true, message: 'Please Confirm your Password!' }]}
         >
           <Input
-            className="rounded-2xl "
-            prefix={<FaLock className="site-form-item-icon mr-2" />}
+            className="rounded-xl w-64"
+            prefix={<FaLock className="site-form-item-icon text-blue-500 mr-3" />}
             type="password"
             placeholder="Confirm Password*"
           />
         </Form.Item>
 
-        <Form.Item>
+        <Form.Item className='w-full mx-auto'>
           <Button
             loading={loading}
             type="primary"
             htmlType="submit"
             shape="round"
-            className="login-form-button w-full"
+            className="login-form-button w-24 md:w-90"
           >
             Sign Up
           </Button>
@@ -307,16 +310,22 @@ const SignupViewer = () => {
   }
 
   return (
-    <div>
-      <Header />
-      <div className="flex m-auto items-center justify-center w-auto md:p-8 pt-2 mt-1 h-screen">
-        <div className="flex justify-center items-center h-full w-full max-w-sm">
+    <div >
+      
+     
+      <div className="flex m-auto items-center justify-center w-auto pt-2 mt-4 h-screen  bg-gradient-to-r from-blue-500 via-purple-500 to-blue-800">
+      
+        <div className="z-50 flex justify-center items-center h-full md:w-full w-72 md:max-w-3xl">
+        <Header />
+        <ParticleBackground/>
+       
           {currentForm !== 1 ? (
-            <div className="w-full flex flex-col h-screen justify-center p-4 md:py-6 py-3 shadow-md rounded-2xl bg-white">
+             
+            <div className="w-full flex flex-col h-70 justify-center p-4 py-3 bg-white bg-opacity-20 backdrop-blur-2xl shadow-2xl rounded-xl mx-15 md:mx-auto">
               <div className="flex justify-center flex-col items-center ">
-                {/* <img className="" src={logo} alt="Logo" width={50} /> */}
+               <img className="hidden md:block" src={logo} alt="Logo" width={110} /> 
 
-                <p className="md:text-2xl text-xl text-gray-700 md:mb-4 mb-4 md:mt-2">
+                <p className="md:text-xl text-xl text-white md:mb-1 mb-2 md:mt-2">
                   Create a New Account
                 </p>
                 {/* <div className="hidden md:block">
@@ -341,15 +350,16 @@ const SignupViewer = () => {
                 </div>
                  */}
               </div>
+   
               {showError && (
                 <div className="w-full text-red-500 text-md text-center mb-4">
                   {viewerErrMessages}
                 </div>
               )}
-              <div>
+              <div className='flex flex-col p-2 w-full items-center justify-center'>
                 {renderPersonal()}
                 <div>
-                  <div className="flex px-2 text-blue-500 text-lg">
+                  <div className="flex px-2 text-white text-sm">
                     <Link to="/signupprd">Join as Producer</Link>
                   </div>
                   {/* <p className="my-6">OR USING</p> */}

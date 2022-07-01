@@ -19,7 +19,7 @@ export const Navbar = () => {
 
 
     return (
-        <div className='flex w-full h-full justify-between z-10'>
+        <div className='flex w-full h-full justify-between z-10 '>
             <div className='flex items-start -ml-2 w-2/3'>
                 <img src={talguuLogo} className="w-20 h-7" alt="logo" />
             </div>

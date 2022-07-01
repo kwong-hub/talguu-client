@@ -10,7 +10,7 @@ import {
 import { Link } from 'react-router-dom'
 
 import logo from '../../assets/images/logo1.png'
-
+import ParticleBackground from '../../components/ParticleBackground';
 export class Signup extends Component {
   state = {}
 
@@ -28,6 +28,7 @@ export class Signup extends Component {
     return (
       <div>
         <div className="flex justify-center items-center h-full">
+       
           <div className="w-full max-w-xs flex flex-col justify-center m-4 p-4 py-8 shadow-md rounded-2xl bg-white">
             <div className="flex justify-center flex-col items-center ">
               <img className="" src={logo} alt="Logo" width={50} />

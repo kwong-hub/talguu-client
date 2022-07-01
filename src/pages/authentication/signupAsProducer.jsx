@@ -27,18 +27,18 @@ const signupAsProducer = () => {
   return (
     <div>
       <Header />
-      <div className="flex justify-center m-auto items-center w-full md:p-8 pt-2">
-        <div className="flex justify-center items-center h-screen w-full max-w-lg">
-          <div className="w-full flex flex-col justify-center my-4 p-4 py-8 shadow-md rounded-2xl bg-white h-full">
+      <div className=" flex justify-center m-auto items-center w-full md:p-8 pt-2 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-800">
+        <div className="flex justify-center items-center h-screen md:w-full w-72 max-w-lg ">
+          <div className="w-full flex flex-col justify-center my-4 p-4 py-8 bg-white bg-opacity-20 backdrop-blur-2xl shadow-2xl rounded-xl h-72">
             <div className="flex justify-center flex-col items-center ">
               <img className="" src={logo} alt="Logo" width={90} />
 
-              <p className="text-2xl text-gray-700 my-6">On invitation only</p>
-              <p className="text-md text-gray-700 my-6">
+              <p className="text-2xl text-white my-6">On invitation only</p>
+              <p className="text-md text-white my-6">
                 If you are interested in joining, please send an email to
-                <span style={{color:"#1890ff"}}> kwong@talguu.com </span>
+                <span className='text-indigo-700 font-bold'  > kwong@talguu.com </span>
               </p>
-              <div className="flex bg-white mb-8">
+              <div className="flex bg-transparent mb-8">
                 <Link
                   to="/login"
                   className=" rounded-3xl border-green-700 px-5"
@@ -47,7 +47,7 @@ const signupAsProducer = () => {
                     shape="round"
                     style={{background:"#1890ff", paddingLeft:"20px", paddingRight:"20px"}}
                     type='primary'
-                    className="flex items-center border-transparent bg-transparent m-1 px-4"
+                    className="flex items-center border-transparent bg-transparent m-1 px-4 text-white"
                   >
                     Login
                   </Button>

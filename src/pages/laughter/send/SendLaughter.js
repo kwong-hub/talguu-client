@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation, useHistory, useParams } from 'react-router-dom'
-import { Form, Input, message, Spin, Steps, Button } from 'antd'
+import { useHistory, useParams } from 'react-router-dom'
+import {message, Steps, Button } from 'antd'
 
 import { useSwipeable } from 'react-swipeable'
 
-import VideoPlayer from '../VideoPlayer'
 import { laughterService } from '../../../_services/laughter.service'
 import { slides } from './sample_gifs'
 import { config } from '../swiperConfig'
@@ -17,11 +16,8 @@ import { BsFillArrowLeftCircleFill } from 'react-icons/bs'
 import PreviewLaughter from './PreviewLaughter'
 
 const SendLaughter = () => {
-  // const { TextArea } = Input
+ 
   const history = useHistory()
-  const location = useLocation()
-  const laughterPageOffset = location?.state.laughter_page_offset
-  const pageLimit = location?.state.page_limit
 
   const playerRef = React.useRef(null)
 
@@ -42,7 +38,6 @@ const SendLaughter = () => {
 
   const { Step } = Steps
   const [current, setCurrent] = useState(0)
-  const { TextArea } = Input
 
   const [receiverEmail, setReceiverEmail] = useState('')
   const [specialMessage, setSpecialMessage] = useState('')
@@ -54,7 +49,6 @@ const SendLaughter = () => {
   const [showOverlayText, setShowOverlayText] = useState(true)
 
   const overlayShowTime = 5
-
 
   useEffect(() => {
     if (vidId) {
@@ -91,7 +85,6 @@ const SendLaughter = () => {
     }
   }, [page, pageSize])
 
-
   const handlePlayerReady = (player) => {
     playerRef.current = player
 
@@ -105,9 +98,11 @@ const SendLaughter = () => {
     }, 1000)
 
     player.on('pause', () => {
+      player.log('player paused')
       setIsPlaying(false)
     })
     player.on('play', () => {
+      player.log('player playing....')
       setIsPlaying(true)
     })
     player.on('ended', () => {
@@ -118,17 +113,15 @@ const SendLaughter = () => {
   const handlePlayerReadyDecorator = (player) => {
     playerRef.current = player
 
-    player.on('waiting', () => {
-
-    })
+    player.on('waiting', () => {})
 
     player.on('pause', () => {
-    player.log('player paused')
+      player.log('player paused')
       setIsPlaying(false)
     })
     player.on('play', () => {
-       player.log('player playing....')
-        setIsPlaying(true)
+      player.log('player playing....')
+      setIsPlaying(true)
     })
     player.on('ended', () => {
       setIsPlayerEnded(true)
@@ -138,19 +131,6 @@ const SendLaughter = () => {
       player.log('player will dispose')
     })
   }
-
-  const handleOverlayText = (player) => {
-    if (player) {
-      const time = player.currentTime()
-      if (time >= overlayShowTime) {
-        console.log('time: ', time)
-        setShowOverlayText(false)
-      } else {
-        setShowOverlayText(true)
-      }
-    }
-  }
-
 
 
   const handlers = useSwipeable({
@@ -253,17 +233,17 @@ const SendLaughter = () => {
   }
 
   const next = () => {
-    if (!receiverEmail || !specialMessage) {
+    // !receiverEmail || !specialMessage
+    if ( !specialMessage) {
       message.error('please fill all the required fields')
       return
     }
-    if (!isEmail(receiverEmail)) {
-      message.error('Please insert the valid email')
-      return
-    }
+    // if (!isEmail(receiverEmail)) {
+    //   message.error('Please insert the valid email')
+    //   return
+    // }
 
     const body = {
-      email: receiverEmail,
       message: specialMessage,
       videoId: vidId,
       decoratorId: decoratorId
@@ -300,8 +280,6 @@ const SendLaughter = () => {
   const back = () => {
     history.push({
       pathname: `/laughter/watch/${vidId}`,
-      search: `laughter_page_offset=${laughterPageOffset}&page_limit=${pageLimit}`,
-      state: { laughter_page_offset: laughterPageOffset, page_limit: pageLimit },
     })
   }
 
@@ -310,7 +288,7 @@ const SendLaughter = () => {
       {current === 0 && (
         <div className="w-full flex flex-col items-start">
           <button type="button" className="px-6 mr-5 mt-5 w-20" onClick={back}>
-            <BsFillArrowLeftCircleFill className="w-8 h-8 text-purple-800" />
+            <BsFillArrowLeftCircleFill className="w-9 h-9 text-blue-500 " />
           </button>
         </div>
       )}
@@ -328,17 +306,19 @@ const SendLaughter = () => {
                     ))}
                 </Steps> */}
       </div>
-      <div className="my-5 mt-6">{steps[current].content}</div>
+      <div className="my-5 mt-6 md:my-0 md:mt-0">{steps[current].content}</div>
 
       {!loading && (
         <div className="steps-action">
           {current < steps.length - 1 && dataSource.length > 0 && (
-            <Button type="primary" onClick={() => next()}>
+            <Button className="bg-blue-500 md:bg-blue-500 text-white w-28 h-11 md:h-9 md:w-24 rounded-xl text-lg md:text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800"  onClick={() => next()}>
               Next
             </Button>
           )}
           {current === steps.length - 1 && (
-            <Button type="primary" onClick={() => submitLaughterData()}>
+            <Button 
+              className="bg-blue-500 md:bg-blue-500 text-white w-28 h-11 md:h-9 md:w-24 rounded-xl text-lg md:text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800"
+            onClick={() => submitLaughterData()}>
               Done
             </Button>
           )}
