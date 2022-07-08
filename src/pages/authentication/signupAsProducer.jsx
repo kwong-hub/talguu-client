@@ -27,14 +27,14 @@ const signupAsProducer = () => {
   return (
     <div>
       <Header />
-      <div className=" flex justify-center m-auto items-center w-full md:p-8 pt-2 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-800">
-        <div className="flex justify-center items-center h-screen md:w-full w-72 max-w-lg ">
-          <div className="w-full flex flex-col justify-center my-4 p-4 py-8 bg-white bg-opacity-20 backdrop-blur-2xl shadow-2xl rounded-xl h-72">
+      <div className=" flex justify-center m-auto items-center w-full md:p-8 pt-2 bg-blue-300 ">
+        <div className="flex justify-center items-center h-screen md:w-full w-96  max-w-lg ">
+          <div className="w-full flex flex-col justify-center my-4 p-5 pt-16 bg-white bg-opacity-70 backdrop-blur-2xl shadow-xl rounded-xl h-72">
             <div className="flex justify-center flex-col items-center ">
               <img className="" src={logo} alt="Logo" width={90} />
 
-              <p className="text-2xl text-white my-6">On invitation only</p>
-              <p className="text-md text-white my-6">
+              <p className="text-2xl text-blue-500 my-6">On invitation only</p>
+              <p className="text-md text-blue-500 my-6">
                 If you are interested in joining, please send an email to
                 <span className='text-indigo-700 font-bold'  > kwong@talguu.com </span>
               </p>

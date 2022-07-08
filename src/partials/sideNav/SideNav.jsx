@@ -236,9 +236,9 @@ const SideNav = (props) => {
 
   const suffix = <FaSearch className="text-xl text-gray-300" />
   return (
-    <div className="container bottom-0 bg-transparent sm:bg-red-500">
-      <div className="px-5 md:p-3 fixed z-10 right-0 left-0 sm:left-14 top-0 bg-white">
-        <div className="flex justify-between sm:hidden -mx-5 pt-3 pb-3 bg-gray-100 bg-opacity-100 backdrop-blur-xl">
+    <div className="bottom-0 bg-blue-400">
+      <div className="px-5 md:p-3 fixed z-10 right-0 left-0 sm:left-14 top-0 bg-white bg-opacity-100 backdrop-blur-3xl z-50">
+        <div className="flex justify-between sm:hidden -mx-5 pt-3 pb-3 ">
           <div className="text-xl  mr-4 flex items-center justify-center header_title text-gray-500">
             <Link to="/" className="flex items-center">
               <img
@@ -267,24 +267,6 @@ const SideNav = (props) => {
               </span>
             </Dropdown>
           </div>
-          {/* <span
-            className={
-              'mt-2 text-gray-500 flex-col mr-4 cursor-pointer text-lg items-center hover:text-gray-700'
-            }
-          >
-            <Dropdown
-              trigger="click"
-              overlay={mobileMenu}
-              onVisibleChange={handleVisibleChange}
-              visible={mobileMenuVisible}
-              overlayClassName="w-screen h-48"
-            >
-              <div
-                onClick={(event) => event.preventDefault()}
-                className={`menu_icon ${mobileMenuVisible ? 'active' : ''}`}
-              ></div>
-            </Dropdown>
-          </span> */}
         </div>
         <div className="block sm:flex  justify-between items-center">
           <div className="hidden sm:flex text-xl mr-4 items-center justify-center header_title text-gray-500">
@@ -338,7 +320,7 @@ const SideNav = (props) => {
         {!user && (
           <li
             className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-              location.pathname === '/laughter-home' ? 'bg-gray-400' : ''
+              location.pathname === '/laughter-home' ? '' : ''
             }`}
           >
             <Link

@@ -82,6 +82,20 @@ const EditProdVideo = (props) => {
       }
     ]
   }
+
+  const videoJsOptionsTrailer = {
+    autoplay: true,
+    controls: false,
+    aspectRatio: type === 'LAUGHTER' ? '9:16' : '16:9',
+    responsive: true,
+    sources: [
+      {
+        src: video?.trailer,
+        type: video?.video_type
+      }
+    ]
+  }
+  
   return (
     <div className="ml-0 sm:ml-16 mt-24 sm:mt-16 relative">
       <SideNav />
@@ -93,17 +107,17 @@ const EditProdVideo = (props) => {
         subTitle="Add extra additional information"
       />
       <Button
-        className="absolute top-12 sm:top-3 right-2"
+        className="absolute top-12 sm:top-3 right-6 rounded-xl"
         onClick={editVideo}
         key="1"
         type="primary"
       >
         Save Changes
       </Button>
-      <div className="flex flex-col-reverse sm:flex-row mx-4">
+      <div className="ml-6 flex flex-col-reverse sm:flex-row mx-auto">
         {!loading && (
-          <div className={type === 'LAUGHTER' ? 'w-2/3' : 'w-full'}>
-            <div className="my-4">
+          <div className={type === 'LAUGHTER' ? 'w-1/2' : 'w-1/2 px-8 '}>
+            <div className="my-4 ">
               <span className="flex text-md text-gray-600">Title</span>
               <Input
                 value={title}
@@ -162,20 +176,15 @@ const EditProdVideo = (props) => {
                     attention.
                   </h3>
                   <Trailer videoId={video?.id} />
-
-                  {video && video?.trailer && (
-                    <div className="w-2/3 lg:w-2/6 p-4 ">
-                      <VideoPlayer
-                        {...{
-                          ...videoJsOptions,
-                          sources: [
-                            { src: video?.trailer, type: video?.video_type }
-                          ],
-                          randomStr: new Date().getTime().toString()
-                        }}
-                      />
-                    </div>
-                  )}
+                  {
+                    loading ? (  <Spin className="items-center self-center" />) : (
+                     video?.trailer && (
+                        <div className="w-2/3 lg:w-2/6 p-4 ">
+                           <VideoPlayer {...videoJsOptions} />
+                        </div>
+                      )
+                    )}
+                 
                 </div>
               )}
             </div>

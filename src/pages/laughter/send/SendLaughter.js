@@ -284,7 +284,7 @@ const SendLaughter = () => {
   }
 
   return (
-    <div className="w-full relative h-full py-5 px-5">
+    <div className="w-full relative h-screen py-5 px-5 ">
       {current === 0 && (
         <div className="w-full flex flex-col items-start">
           <button type="button" className="px-6 mr-5 mt-5 w-20" onClick={back}>

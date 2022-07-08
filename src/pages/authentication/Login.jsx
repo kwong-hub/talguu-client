@@ -147,7 +147,7 @@ const Login = (props) => {
 
   return (
     
-    <div className="z-50 flex items-center justify-center relative h-screen p-5 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-800">
+    <div className="z-50 flex items-center justify-center relative h-screen p-5 bg-blue-400">
      
       <Header />
      
@@ -167,10 +167,10 @@ const Login = (props) => {
       
       <div className="flex justify-center md:items-center md:h-full pt-2 mt-20 md:mt-4">
       <ParticleBackground/>
-        <div className="w-full max-w-xs h-50 flex flex-col justify-center md:m-4 py-8 px-8 md:px-4 md:shadow-md bg-white bg-opacity-20 backdrop-blur-2xl shadow-2xl rounded-xl">
+        <div className="w-full max-w-xs h-50 flex flex-col justify-center md:m-4 py-8 px-8 md:px-4 md:shadow-md bg-white bg-opacity-70 bg-gray-100 backdrop-blur-2xl shadow-xl rounded-xl">
           <div className="flex justify-center flex-col items-center ">
             <img className="w-32" src={logo} alt="Logo" />
-            <p className="text-md text-purple-200 my-4 font-bold">
+            <p className="text-md text-blue-400 my-4 font-bold">
               Welcome back to Talguu
             </p>
 
@@ -242,7 +242,7 @@ const Login = (props) => {
                 </Form.Item> */}
 
                 <p
-                  className="text-xs text-white login-form-forgot cursor-pointer italic underline hover:underline-offset-4"
+                  className="text-xs text-blue-500 login-form-forgot cursor-pointer italic underline hover:underline-offset-4"
                   onClick={(e) => forgotPassword()}
                 >
                   Forgot password?

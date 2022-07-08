@@ -40,16 +40,16 @@ const PreviewLaughter = ({
     }
     if (decoratorVideo) {
       return (
-        <div className="">
+        <div className="w-full">
           <div className="sender_player_style" key={randomStr}>
             <VideoPlayer options={videoJsOptions} onReady={handlePlayerReady} />
           </div>
 
           {showOverlayText && !loading && (
-            <div className="overlay_text_style">
-              <h1 className="text-white animate-charcter">
+            <div className="overlay_text_style ">
+              <h3 className="animate-charcter text-center mx-auto">
                 {sendingData ? sendingData.message : 'Hello there!'}
-              </h1>
+              </h3>
             </div>
           )}
         </div>

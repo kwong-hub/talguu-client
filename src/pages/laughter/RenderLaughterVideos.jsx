@@ -105,12 +105,12 @@ const RenderLaughterVideos = ({
           loading && (
             Array.from(new Array(2)).map((item, index) => {
               return (
-                <div key={index} className="flex flex-wrap h-96 w-full my-3 items-center ">
+                <div key={index} className="flex flex-wrap h-96 w-full justify-center md:justify-start my-3 items-center ">
                   <div className="video_skeleton rounded-xl md:h-96 md:w-56 w-40 h-48 m-2 "></div>
                   <div className="video_skeleton rounded-xl md:h-96 md:w-56 w-40 h-48 m-2 "></div>
                   <div className="video_skeleton rounded-xl md:h-96 md:w-56 w-40 h-48 m-2"></div>
                   <div className="video_skeleton rounded-xl md:h-96 md:w-56 w-40 h-48 m-2"></div>
-                  <div className="video_skeleton rounded-xl md:h-96 md:w-56 w-40 h-48 m-2"></div>
+                  <div className="video_skeleton rounded-xl md:h-96 md:w-56 w-40 h-48 m-2 hidden md:block"></div>
                 </div>
               )
             })

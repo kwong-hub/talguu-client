@@ -177,7 +177,7 @@ class UploadVideo extends Component {
     return (
       <>
         <SideNav></SideNav>
-        <div className="flex flex-col mt-20 m-4 mx-auto w-full max-w-4xl justify-center ">
+        <div className="flex flex-col m-16 mx-auto items-center justify-center w-1/2 h-fit rounded-xl shadow-2xl bg-gray-100">
           <div className="flex justify-around mx-4 my-4 ">
             <p className="text-2xl text-gray-600 m-2">
               One Step to Publish your video!{' '}
@@ -188,9 +188,9 @@ class UploadVideo extends Component {
             <div>
               <form
                 onSubmit={this.submit}
-                className="flex flex-col w-full items-center my-8 text-md text-gray-500"
+                className="flex flex-col w-full items-center text-md text-gray-500 bg-gray-100"
               >
-                <div className="w-full p-2">
+                <div className="w-full p-2 ">
                   {!this.state.fileSelected && (
                     <Dragger
                       className="max-w-lg mx-auto"
@@ -202,7 +202,7 @@ class UploadVideo extends Component {
                       <p className="ant-upload-text">
                         Click or drag file to this area to upload
                       </p>
-                      <p className="ant-upload-hint">
+                      <p className="ant-upload-hint text-xs p-2">
                         Be sure to upload only video files like .mp4 .flv .mkv
                         .mpeg .mov...
                       </p>
@@ -220,16 +220,16 @@ class UploadVideo extends Component {
                   )}
                 </div>
 
-                <div className="mt-4 p-3 w-3/4">
-                  <label className="flex flex-col sm:flex-row items-baseline w-3/4 my-2">
-                    Select Type
+                <div className="mt-1 p-3 w-full  px-5">
+                  <label className="flex items-baseline  my-2">
+                    Select Type:
                     <Select
                       placeholder="Select video type"
                       defaultValue="VIDEO"
                       onChange={this.handleChange}
                       style={{
-                        width: '30%',
-                        paddingLeft: 10
+                        width: '50%',
+                        paddingLeft: 10,
                       }}
                     >
                       <Select.Option value="VIDEO">VIDEO</Select.Option>
@@ -238,9 +238,9 @@ class UploadVideo extends Component {
                   </label>
 
                   <label className="flex flex-col sm:flex-row items-baseline w-full">
-                    Title
+                    Title:
                     <input
-                      className="border p-2 m-2 w-full rounded-xl focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-transparent focus:border-blue-500"
+                      className="border p-2 m-2 ml-14 w-60 focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-transparent focus:border-blue-500"
                       type="text"
                       value={this.state.title}
                       onChange={(e) => {
@@ -250,8 +250,10 @@ class UploadVideo extends Component {
                   </label>
 
                   <label className="flex flex-col sm:flex-row items-baseline w-full">
-                    Description
-                    <textarea
+                    Description:
+                  </label>
+                          <textarea
+                          rows={3}
                       className="border w-full p-1 m-4 rounded-lg focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-transparent focus:border-blue-500"
                       type="text"
                       value={this.state.describe}
@@ -259,7 +261,6 @@ class UploadVideo extends Component {
                         this.setState({ describe: e.target.value })
                       }}
                     ></textarea>
-                  </label>
                 </div>
                 <Button
                   size={60}
@@ -267,7 +268,7 @@ class UploadVideo extends Component {
                   shape="round"
                   icon={<RiArrowRightCircleLine />}
                   onClick={this.submit}
-                  className="w-64 my-4 py-5 flex justify-center items-center text-md p-4 transform hover:scale-110 motion-reduce:transform-none"
+                  className="w-32 mb-4 py-5 flex justify-center items-center text-md p-4 transform hover:scale-110 motion-reduce:transform-none"
                 >
                   Next
                 </Button>

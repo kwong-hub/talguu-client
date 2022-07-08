@@ -26,7 +26,7 @@ const ForgotPassword = () => {
     <div className="relative">
       <Header />
 
-      <div className="px-5 flex flex-col items-center justify-center h-screen bg-gradient-to-r from-blue-500 via-purple-500 to-blue-800">
+      <div className="px-5 flex flex-col items-center justify-center h-screen bg-blue-300 ">
         
      
 
@@ -38,12 +38,12 @@ const ForgotPassword = () => {
             </Link>
           </div>
         ) : (
-          <div className=" bg-white bg-opacity-20 backdrop-blur-2xl shadow-2xl rounded-xl p-4  max-w-md text-white">
+          <div className=" bg-opacity-70 bg-gray-100 backdrop-blur-2xl shadow-xl rounded-xl p-4  max-w-md text-white">
               <img className="" src={logo} alt="Logo" width={70} />
-        <p className="text-white text-xl py-4">Forgot Password</p>
+        <p className="text-blue-500 text-xl py-4">Forgot Password</p>
            
            
-            <p className="">
+            <p className="text-blue-500">
               Enter your verifed email address and we will send you a password
               reset link.
             </p>

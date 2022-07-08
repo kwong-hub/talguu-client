@@ -312,8 +312,8 @@ const SignupViewer = () => {
   return (
     <div >
       
-     
-      <div className="flex m-auto items-center justify-center w-auto pt-2 mt-4 h-screen  bg-gradient-to-r from-blue-500 via-purple-500 to-blue-800">
+     bg-
+      <div className="flex m-auto items-center justify-center w-auto pt-2 mt-4 h-screen">
       
         <div className="z-50 flex justify-center items-center h-full md:w-full w-72 md:max-w-3xl">
         <Header />
@@ -321,11 +321,11 @@ const SignupViewer = () => {
        
           {currentForm !== 1 ? (
              
-            <div className="w-full flex flex-col h-70 justify-center p-4 py-3 bg-white bg-opacity-20 backdrop-blur-2xl shadow-2xl rounded-xl mx-15 md:mx-auto">
+            <div className="w-full flex flex-col h-70 justify-center p-4 py-3 bg-opacity-70 bg-gray-100 backdrop-blur-2xl shadow-xl rounded-xl mx-15 md:mx-auto">
               <div className="flex justify-center flex-col items-center ">
                <img className="hidden md:block" src={logo} alt="Logo" width={110} /> 
 
-                <p className="md:text-xl text-xl text-white md:mb-1 mb-2 md:mt-2">
+                <p className="md:text-xl text-xl text-blue-500 md:mb-1 mb-2 md:mt-2">
                   Create a New Account
                 </p>
                 {/* <div className="hidden md:block">
@@ -359,7 +359,7 @@ const SignupViewer = () => {
               <div className='flex flex-col p-2 w-full items-center justify-center'>
                 {renderPersonal()}
                 <div>
-                  <div className="flex px-2 text-white text-sm">
+                  <div className="flex px-2 text-blue-500 text-sm">
                     <Link to="/signupprd">Join as Producer</Link>
                   </div>
                   {/* <p className="my-6">OR USING</p> */}

@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Water+Brush&display=swap');
+
+
 .sender_player_style {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%; /* 30% of 1080 */
-  height: 100%; /* 30% of 1920 */
+  height: 100%; /* 30% of 1920 */;
 }
 
 #canvas {
@@ -26,19 +29,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 50px;
-  font-weight: 900;
+  font-size: 35px;
+  font-weight: 800;
   z-index: 50;
+  
+  text-align: center;
 }
 
 .animate-charcter {
-  text-transform: uppercase;
+ 
   background-image: linear-gradient(
     -225deg,
-    #231557 0%,
-    #44107a 29%,
-    #ff1361 67%,
-    #fff800 100%
+    #3361b6 0%,
+    #d9c6e0 29%,
+    #c6cadd 67%,
+    #0e5dc4 100%
   );
   background-size: auto auto;
   background-clip: border-box;
@@ -49,7 +54,11 @@
   -webkit-text-fill-color: transparent;
   animation: textclip 2s linear infinite;
   display: inline-block;
-  font-size: 50px;
+  font-size: 35px;
+  font-weight: 800;
+  font-family: 'Permanent Marker', cursive;
+  
+  text-align: center;
 }
 
 @keyframes textclip {

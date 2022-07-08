@@ -70,7 +70,7 @@ const Settings = (props) => {
               onClick={() => changeBalanceInfosVisible(true)}
               className="m-2"
             >
-              Balance
+               Balance
             </Button>
             <Button onClick={() => depositAccount(true)} type="secondary">
               Deposit

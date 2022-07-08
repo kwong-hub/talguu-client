@@ -27,7 +27,7 @@ const LaughterDecorator = ({
   const renderDots = () => {
     const dots = generateArray()
     return (
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center mt-3">
         {dots.slice(0, 10).map((data, index) => (
           <div
             key={index}
@@ -77,6 +77,7 @@ const LaughterDecorator = ({
               <VideoPlayer
                 options={videoJsOptions}
                 onReady={handlePlayerReady}
+                className="rounded-2xl"
               />
             </div>
           ) : (

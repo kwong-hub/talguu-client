@@ -7,7 +7,7 @@ import logo from '../../assets/images/logo1.png'
 const Header = () => {
   const currentURL = useLocation().pathname
   return (
-    <div className="w-full fixed top-0 left-0 right-0 h-14 shadow-sm z-10 flex justify-between items-center bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400">
+    <div className="w-full fixed top-0 left-0 right-0 h-14 shadow-sm z-10 flex justify-between items-center bg-white bg-opacity-80 backdrop-blur-2xl">
       <div className="text-2xl flex items-center justify-center header_title text-gray-500">
         <Link to="/" className="flex items-center">
           <img src={logo} alt="" className="rounded h-14 p-2" />
@@ -18,9 +18,9 @@ const Header = () => {
           <Button
             shape="round"
             className={
-              'flex items-center m-1 px-4 bg-transparent text-white font-bold' +
+              'flex items-center m-1 px-4 bg-transparent border-blue-500 text-blue-500 font-bold' +
               (currentURL !== '/login'
-                ? 'border-transparent bg-transparent text-white font-bold'
+                ? 'border-blue-500 bg-transparent text-blue-500 font-bold'
                 : '')
             }
           >
@@ -31,9 +31,9 @@ const Header = () => {
           <Button
             shape="round"
             className={
-              'flex items-center m-1 px-4 bg-transparent text-white font-bold cursor-pointer' +
+              'flex items-center m-1 px-4 bg-transparent border-blue-500 text-blue-500 font-bold cursor-pointer' +
               (currentURL !== '/signup_viewer'
-                ? 'border-transparent bg-transparent text-white font-bold cursor-pointer'
+                ? 'border-blue-700 bg-transparent text-white font-bold cursor-pointer'
                 : '')
             }
           >

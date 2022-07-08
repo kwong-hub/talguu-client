@@ -190,10 +190,10 @@ const LaughterVideoPlayer = () => {
             <div className="flex flex-col items-end mr-3 cursor-pointer">
               <button
                 onClick={() => handleSendLaughter(currentVideo)}
-                className="text-white px-5 py-2 text-lg rounded-3xl border-1 border-gray-600 bg-gray-600 opacity-75"
+                className="text-white px-5 py-2 text-lg rounded-3xl border-1 border-gray-600 bg-blue-500 opacity-80"
               >
-                <span className="flex items-center justify-center">
-                  <IoSendSharp className="mr-3" />
+                <span className="flex items-center justify-center text-white font-bold">
+                  <IoSendSharp className="mr-3 text-gray-100" />
                   Send
                 </span>
               </button>

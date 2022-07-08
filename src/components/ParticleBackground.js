@@ -9,7 +9,7 @@ export default function ParticleBackground() {
     };
 
     const particlesLoaded = (container) => {
-        console.log(container);
+        // console.log(container);
     };
 
     return (
@@ -22,20 +22,24 @@ export default function ParticleBackground() {
                 },
                 "particles": {
                     "number": {
-                        "value": 6,
+                        "value": 8,
                         "density": {
                             "enable": true,
                             "value_area": 800
                         }
                     },
                     "color": {
-                        "value": "#D396FF",
+                        "value": "#ffffff",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                          },
                     },
                     "shape": {
-                        "type": "polygon",
+                        "type": "circle",
                         "polygon": {
-                            "sides": 6
-                        }
+                            "nb_sides": 5
+                          },
                     },
                     "opacity": {
                         "value": 0.5,
@@ -88,7 +92,7 @@ export default function ParticleBackground() {
                 "retina_detect": true,
                 "background": {
                     "color":"rgb(2,0,36)",
-                    "image": "linear-gradient(90deg, #3B82F6 0%, #8B5CF6 35%, #1E40AF 100%)",
+                    "image": "linear-gradient(90deg,  #8fc3f7 0.5%, #8fc3f7 100%, #ffffff 100%)",
                     "position": "50% 50%",
                     "repeat": "no-repeat",
                     "size": "cover"
