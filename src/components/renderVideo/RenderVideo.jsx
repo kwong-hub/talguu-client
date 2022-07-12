@@ -48,10 +48,10 @@ function RenderVideo(props) {
       onClick={(event) => props.playVideo(props.video)}
       className={
         props.for
-          ? 'flex-col w-full md:w-4/12 lg:w-80 sm:w-6/12 pt-2 cursor-pointer video_thumbnail overflow-h transform hover:scale-105 z-10  transition duration-1000 ease-in-out bg-white rounded-xl shadow-md' +
-            varClassNames
-          : 'flex-col w-full md:w-4/12 lg:w-72 sm:w-6/12 pt-2 cursor-pointer video_thumbnail overflow-h transform hover:scale-105 z-10  transition duration-1000 ease-in-out bg-white rounded-xl shadow-md' +
-            varClassNames
+          ? 'flex-col w-full md:w-4/12 lg:w-56 sm:w-6/12 pt-2 cursor-pointer video_thumbnail overflow-h transform hover:scale-105 z-10  transition duration-5000 ease-in-out delay-500  bg-white hover:z-50 hover:shadow-xl ' +
+          varClassNames
+          : 'flex-col w-full md:w-4/12 lg:w-56 sm:w-6/12 pt-2 cursor-pointer video_thumbnail overflow-h transform hover:scale-105 z-10  transition duration-5000 ease-in-out delay-500 bg-white hover:z-50 hover:shadow-xl ' +
+          varClassNames
       }
     >
       <div className="relative max-h-full flex justify-center">
@@ -62,7 +62,7 @@ function RenderVideo(props) {
               : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png'
           }
           alt=""
-          className="block h-42 video_image"
+          className="block h-40 video_image"
         />
         <img
           src={
@@ -70,7 +70,7 @@ function RenderVideo(props) {
               ? props.video.main_gif || ''
               : props.video.trailer_gif || ''
           }
-          className="hidden h-48 video_gif mx-auto"
+          className="hidden h-40 video_gif mx-auto"
           alt=''
         />
         <div className="absolute thumbnail_button_container">
@@ -106,17 +106,17 @@ function RenderVideo(props) {
         {props.video.paid
           ? ''
           : (!user || user.role === 'VIEWER') && (
-              <div className="absolute bottom-1 left-1 py-0 invisible watch_video_buttons">
-                <Button
-                  onClick={(event) =>
-                    props.paymentModalVisible(true, props.video, event)
-                  }
-                  className="mr-1 rounded-2xl text-xs px-2 py-0 opacity-80"
-                >
-                  Watch Full Video
-                </Button>
-              </div>
-            )}
+            <div className="absolute bottom-1 left-1 py-0 invisible watch_video_buttons">
+              <Button
+                onClick={(event) =>
+                  props.paymentModalVisible(true, props.video, event)
+                }
+                className="mr-1 rounded-2xl text-xs px-2 py-0 opacity-80"
+              >
+                Watch Full Video
+              </Button>
+            </div>
+          )}
         {!props.video.paid ? (
           <div className="flex items-center bg-transparent bg-gray-100 rounded-xl text-green-400  absolute top-1 left-1 py-0 px-1 md:text-sm text-2xl font-black opacity-90 md:w-12 w-18">
             <FaDollarSign className="text-green-400 md:text-sm text-xl" />{' '}
@@ -125,19 +125,22 @@ function RenderVideo(props) {
         ) : (
           ''
         )}
-        <div className="flex items-center bg-black text-white rounded-md absolute bottom-1 front-bold right-1 py-0 px-2 md:text-sm text-xl">
+        <div className="flex items-center bg-gray-700 text-white rounded-md absolute bottom-1 front-bold right-1 py-0 px-2 md:text-sm text-xl">
           {moment(duration.split('.')[0], [moment.ISO_8601, 'HH:mm:ss']).format(
             'H:m:ss'
           )}
         </div>
       </div>
-      <div className="flex-col p-3">
-        <h4 className="my-2 text-left text-md text-gray-600 video_title font-bold">
+      <div className="flex-col px-3 py-1">
+        <h4 className="mt-1 text-left text-md text-gray-600 video_title font-bold">
           {props.video.title}
         </h4>
-        <div className="flex">
-          <span className="flex items-center text-gray-500 cursor-pointer hover:text-blue-400 text-sm font-bold ">
+        <div className="flex items-center">
+          <span className="flex items-center text-gray-500 cursor-pointer hover:text-blue-400 text-sm font-semibold">
             {props.video.viewCount} views
+          </span>
+          <span className="mx-2 text-xs">
+            {moment(props.video.createdAt).fromNow()} 
           </span>
         </div>
       </div>

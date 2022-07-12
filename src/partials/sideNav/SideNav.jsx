@@ -237,7 +237,7 @@ const SideNav = (props) => {
   const suffix = <FaSearch className="text-xl text-gray-300" />
   return (
     <div className="bottom-0 bg-blue-400">
-      <div className="px-5 md:p-3 fixed z-10 right-0 left-0 sm:left-14 top-0 bg-white bg-opacity-100 backdrop-blur-3xl z-50">
+      <div className="px-5 md:p-1 fixed z-20 bg-white right-0 left-0 sm:left-14 top-0  bg-opacity-100 backdrop-blur-3xl">
         <div className="flex justify-between sm:hidden -mx-5 pt-3 pb-3 ">
           <div className="text-xl  mr-4 flex items-center justify-center header_title text-gray-500">
             <Link to="/" className="flex items-center">

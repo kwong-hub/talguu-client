@@ -14,12 +14,19 @@
   
 }
 
+
 body::-webkit-scrollbar {
-  display: none;
+    width: 6px;
+    height: 0px;
 }
 
-html {
-  scrollbar-width: none;
+body::-webkit-scrollbar-track {
+    background-color: #ffffff;
+}
+body::-webkit-scrollbar-thumb {
+    background-color: #3B82F6; 
+
+    border-radius: 1rem;
 }
 
 .App {

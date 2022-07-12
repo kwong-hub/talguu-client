@@ -27,21 +27,22 @@ const Videos = (props) => {
   const { q } = useParams()
   const dispatch = useDispatch()
   // const viewerVideos = useSelector((state) => state.video.viewerVideos);
-  const [viewerVideos,setViewerVideos] = useState([]);
+  const [viewerVideos, setViewerVideos] = useState([]);
 
   useEffect(() => {
-    const getVids =()=>{
+    const getVids = () => {
       setLoading(true)
-      videoService.getViewerVideos({payload: { q }}).then((res)=>{
-        const {data, success} = res;
-        if(success && data){
+      videoService.getViewerVideos({ payload: { q } }).then((res) => {
+        const { data, success } = res;
+        if (success && data) {
           setViewerVideos(data)
-        }else{
+
+        } else {
           setViewerVideos([])
         }
         setLoading(false)
       })
-      
+
     }
     getVids();
     // dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q } })
@@ -120,13 +121,35 @@ const Videos = (props) => {
 
   const renderVideos = () => {
     if (loading) {
-      return Array.from(new Array(2)).map((item, index) => {
+      return Array.from(new Array(3)).map((item, index) => {
         return (
-          <div key={index} className="flex flex-wrap h-72 w-full items-center ">
-            <div className="video_skeleton rounded-xl md:h-72 md:w-72 w-96 h-64 m-2 "></div>
-            <div className="video_skeleton rounded-xl md:h-72 md:w-72 w-96 h-64 m-2 "></div>
-            <div className="video_skeleton rounded-xl md:h-72 md:w-72 w-96 h-64 m-2 hidden md:block"></div>
-            <div className="video_skeleton rounded-xl md:h-72 md:w-72 w-96 h-64 m-2 hidden md:block"></div>
+          <div key={index} className="flex flex-wrap h-full w-full items-center ">
+            <div className="flex flex-col space-y-2p-2">
+              <div className="video_skeleton rounded-xl md:h-40 md:w-56 w-80 h-52 m-2 "></div>
+              <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
+              <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
+              </div>
+            <div className="flex flex-col space-y-2p-2">
+              <div className="video_skeleton rounded-xl md:h-40 md:w-56 w-80 h-52 m-2 "></div>
+              <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
+              <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
+            </div>
+            <div className="flex flex-col space-y-2 p-2 hidden md:block">
+              <div className="video_skeleton rounded-xl md:h-40 md:w-56 w-80 h-52 m-2 "></div>
+              <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
+              <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
+            </div>
+            <div className="flex flex-col space-y-2p -2 hidden md:block" >
+              <div className="video_skeleton rounded-xl md:h-40 md:w-56 w-80 h-52 m-2 "></div>
+              <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
+              <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
+            </div>
+            <div className="flex flex-col space-y-2p -2 hidden md:block" >
+              <div className="video_skeleton rounded-xl md:h-40 md:w-56 w-80 h-52 m-2 "></div>
+              <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
+              <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
+            </div>
+
           </div>
         )
       })
@@ -161,7 +184,7 @@ const Videos = (props) => {
   return (
     <div className="pt-2 sm:ml-14 mt-12">
       <SideNav onSearch={onSearch}></SideNav>
-      <div className="flex gap-4 relative mb-2 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
+      <div className="flex gap-4 relative mb-2 ml-4 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white items-center justify-center">
         {renderVideos()}
       </div>
       {paymentModalVisible && renderPaymentModal()}
