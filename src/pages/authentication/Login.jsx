@@ -167,7 +167,7 @@ const Login = (props) => {
       
       <div className="flex justify-center md:items-center md:h-full pt-2 mt-20 md:mt-4">
       <ParticleBackground/>
-        <div className="w-full max-w-xs h-50 flex flex-col justify-center md:m-4 py-8 px-8 md:px-4 md:shadow-md bg-white bg-opacity-70 bg-gray-100 backdrop-blur-2xl shadow-xl rounded-xl">
+        <div className="w-full max-w-xs h-50 flex flex-col justify-center md:m-4 py-8 px-8 md:px-4 md:shadow-md bg-opacity-70 bg-gray-100 backdrop-blur-2xl shadow-xl rounded-xl">
           <div className="flex justify-center flex-col items-center ">
             <img className="w-32" src={logo} alt="Logo" />
             <p className="text-md text-blue-400 my-4 font-bold">

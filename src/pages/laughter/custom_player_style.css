@@ -91,8 +91,8 @@
   width: 324px !important;
   height: 576px !important;
   position: absolute;
-  left: 25%;
-  top: 10%;
+  left: 36%;
+  top: 5%;
   /* background: rgb(6, 1, 10); */
 }
 
@@ -253,8 +253,8 @@
     width: 324px !important;
     height: 576px !important;
     position: absolute;
-    left: 25%;
-    top: 10%;
+    left: 36%;
+    top: 5%;
   }
   .laughter_video_thumb_style {
     display: flex;
@@ -285,8 +285,8 @@
     width: 324px !important;
     height: 576px !important;
     position: absolute;
-    left: 25%;
-    top: 10%;
+    left: 36%;
+    top: 5%;
 
     /* background: rgb(6, 1, 10); */
   }
@@ -319,8 +319,8 @@
     width: 324px !important;
     height: 576px !important;
     position: absolute;
-    left: 25%;
-    top: 10%;
+    left: 36%;
+    top: 5%;
 
     /* background: yellowgreen; */
   }

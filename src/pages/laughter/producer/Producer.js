@@ -6,13 +6,11 @@ import { useHistory, useParams, useLocation } from 'react-router-dom';
 import SideNav from '../../../partials/sideNav/SideNav';
 import { laughterService } from '../../../_services/laughter.service'
 import { LoadingOutlined } from '@ant-design/icons'
-import { swipeDetect } from '../swipeDetector';
 import { useSwipeable } from 'react-swipeable';
 import { config } from '../swiperConfig';
 import { userService } from '../../../_services/user.service';
 import RenderLaughterVideos from '../RenderLaughterVideos';
 
-import { AiOutlineDoubleLeft, AiOutlineLeft } from 'react-icons/ai'
 
 import {BsFillArrowLeftCircleFill} from 'react-icons/bs'
 
@@ -24,9 +22,6 @@ export const Producer = () => {
 
     const location = useLocation()
 
-    const vidId  = location?.state.vidId
-    const laughterPageOffset = location?.state.laughter_page_offset
-    const pageLimit = location?.state.page_limit
 
 
     const [page, setPage] = useState(1)
@@ -35,10 +30,8 @@ export const Producer = () => {
     const [dataSource, setDataSource] = useState([])
     const [loading, setLoading] = useState(false)
     const [hasMore, setHasMore] = useState(true)
-    const [once, setOnce] = useState(true)
     const [producerInfo, setProducerInfo] = useState({})
     const [isLoading, setIsLoading] = useState(false)
-    const log = console.log
 
 
     const antIcon = <LoadingOutlined style={{ fontSize: 36 }} spin />
@@ -58,9 +51,6 @@ export const Producer = () => {
     useEffect(() => {
         getProducerInfo()
     }, [])
-
-
-
 
     const getProducerInfo = () => {
         setIsLoading(true)
@@ -82,42 +72,7 @@ export const Producer = () => {
     }
 
 
-    const handlers = useSwipeable({
-        onSwipedLeft: () => {
-            if (dataSource.length === total) {
-                setHasMore(false)
-                return
-            }
-            setPage(page + 1)
-        },
-        onSwipedRight: () => {
-            if (page === 1) {
-                setHasMore(false)
-                return
-            } else {
-                setPage(page - 1)
-            }
-        },
-        onSwipedUp: () => {
-            const user = JSON.parse(localStorage.getItem('user'))
-            console.log('user: ' + user)
-            if (!user || user.role !== 'VIEWER') {
-                history.push('/laughter-home')
-            } else {
-                history.push(`/laughter`)
-            }
-        },
-        onSwipedDown: () => {
-            const user = JSON.parse(localStorage.getItem('user'))
-            console.log('user: ' + user)
-            if (!user || user.role !== 'VIEWER') {
-                history.push('/laughter-home')
-            } else {
-                history.push(`/laughter`)
-            }
-        },
-        ...config,
-    });
+   
 
 
     const getAllVideos = (page, pageSize) => {
@@ -125,7 +80,7 @@ export const Producer = () => {
         laughterService.getProducerLaughterVideos(producerId, page, pageSize).then((res) => {
             const success = res.data?.success
             const videos = res.data?.videos
-            console.log("Videos: ", videos)
+            // console.log("Videos: ", videos)
             if (success) {
                 const { count, rows } = videos
                 setTotal(count)
@@ -139,28 +94,11 @@ export const Producer = () => {
     }
 
 
-    const watchVideo = (video) => {
-        const user = JSON.parse(localStorage.getItem('user'))
-        console.log('user: ' + user)
-        if (!user || user.role !== 'VIEWER') {
-            history.push({
-                pathname: '/login',
-                search: `?return_url=/laughter/watch/${video.id}`
-            })
-        } else {
-            history.push(`/laughter/watch/${video.id}`)
-        }
-    }
+
 
     const producerProfile = () => {
-       
         history.push({
           pathname: `/producer-profile/${producerId}`,
-          state: {
-            laughter_page_offset: laughterPageOffset,
-            page_limit: pageLimit,
-            vidId
-          }
         })
     }
 
@@ -176,50 +114,24 @@ export const Producer = () => {
         setPage(page + 1)
     }
 
-    // const RenderLaughterVideos = () => {
-    //     return (
-    //         <div className='my-5 px-5'>
-    //             <div className='px-1'>
-    //                 <div className='flex flex-wrap mb-14 items-center justify-center w-full lg:justify-start md:justify-start'>
-    //                     {
-    //                     dataSource.length > 0 ?
-    //                     dataSource.map((video, index) => {
-    //                         return (
-    //                             <div
-    //                                 className="laughter_video_thumb_style laughter_video_thumbnail"
-    //                                 key={index}
-    //                                 onClick={() => watchVideo(video)}
-    //                             >
-    //                                 <img
-    //                                     src={
-    //                                         video.main_gif
-    //                                     }
-    //                                     className="w-full h-full"
-    //                                     alt=""
-    //                                 />
-    //                             </div>
-    //                         )
-    //                     }): (
-    //                         <p> There are no videos available</p>
-    //                     )
-    //                 }
-    //                 </div>
-    //             </div>
-
-    //         </div>
-
-    //     )
-    // }
 
     const back = () => {
+        // history.push({
+        //   pathname: `/laughter/watch/${vidId}`,
+        // })
+      const user = JSON.parse(localStorage.getItem('user'))
+
+      if (!user || user.role !== 'VIEWER') {
         history.push({
-          pathname: `/laughter/watch/${vidId}`,
-          search: `laughter_page_offset=${laughterPageOffset}&page_limit=${pageLimit}`,
-          state: {
-            laughter_page_offset: laughterPageOffset,
-            page_limit: pageLimit
-          }
+          pathname: '/laughter-home',
+       
         })
+      } else {
+        history.push({
+          pathname: `/laughter`,
+
+        })
+      }
     }
 
 
@@ -228,23 +140,14 @@ export const Producer = () => {
         <div className="pt-2 sm:ml-14 mt-12">
           <SideNav></SideNav>
           <div className="flex relative mt-2 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
-            {/* <div className='w-full flex flex-col items-start'>
-                        <button
-                            type='button'
-                            className='px-6 mr-5 mt-5 w-20'
-                            onClick={back}
-                        >
-                            <AiOutlineLeft className='w-8 h-8 text-purple-800' />
-                        </button>
-
-                    </div> */}
+           
             <div className="flex items-center justify-between w-full">
               {isLoading ? // <><Spin indicator={antIcon} /></>
               null : (
                 <>
                   <div className="w-10 mx-2">
                     <button type="button" className="w-full" onClick={back}>
-                      <BsFillArrowLeftCircleFill className="w-8 h-8 text-purple-800" />
+                      <BsFillArrowLeftCircleFill className="w-8 h-8 text-blue-500" />
                     </button>
                   </div>
 
@@ -286,19 +189,6 @@ export const Producer = () => {
                 pageSize={pageSize}
               />
 
-              {/* {loading ? (
-                            <div className="absolute top-1/2 left-1/2 w-20 h-12 flex items-center justify-center">
-                                <Spin indicator={antIcon} />
-                            </div>
-                        ) :
-                            <div className="">
-                                <RenderLaughterVideos />
-                                {
-                                    !hasMore && dataSource.length > 0 &&
-                                    <p style={{ textAlign: 'center' }}>Yay! You have seen it all</p>
-                                }
-                            </div>
-                        } */}
             </div>
           </div>
         </div>

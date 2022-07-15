@@ -1,10 +1,14 @@
 import { Divider } from 'antd'
 import React, { useState, useEffect } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { useHistory } from 'react-router-dom'
 
 import './custom_player_style.css'
+import LaughterPlayerModal from './LaughterPlayerModal'
+
+import { showVideoModal } from '../../redux/reducers/custom.reducer'
 
 const RenderLaughterVideos = ({
   dataSource,
@@ -13,38 +17,27 @@ const RenderLaughterVideos = ({
   hasMore,
   loading,
   type,
-  page,
-  pageSize
 }) => {
+
+
   const history = useHistory()
+  const [videoId, setVideoId]= useState('')
 
-  const [scrollPosition, setScrollPosition] = useState(0)
-
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true })
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-
-  }, [])
-
-
-  const handleScroll = () => {
-    const position = window.pageYOffset
-    setScrollPosition(position)
-  }
-
+  const { showVideoPlayer } = useSelector((state) => state.showPlayer)
+  const dispatch = useDispatch()
 
 
   const watchVideo = (video) => {
-    history.push({
-      pathname: `/laughter/watch/${video.id}`,
-      state: { laughter_page_offset: page, page_limit: pageSize, scrollPosition },
-      search: `laughter_page_offset=${page}&page_limit=${pageSize}`
-    })
+    
+    dispatch(showVideoModal())
+    document.body.style.overflow = 'hidden'
+    setVideoId(video.id)
+    // history.push({
+    //   pathname: `/laughter/watch/${video.id}`
+    // })
   }
+
+
 
   const renderVideos = () => {
     if (dataSource.length > 0) {
@@ -67,7 +60,7 @@ const RenderLaughterVideos = ({
             </>
           )}
 
-          <div className="flex flex-wrap items-center justify-center w-full lg:justify-center">
+          <div className={`flex flex-wrap items-center justify-center w-full lg:justify-center`}>
             {dataSource.map((video, index) => {
               return (
                 // p-2 flex md:w-1/4 w-1/2 h-52 cursor-pointer laughter_video_thumbnail
@@ -122,9 +115,17 @@ const RenderLaughterVideos = ({
           </div>
         }
       >
-        {/* <p>Total: {dataSource.length}</p> */}
-        {/* Yay! You have seen it all */}
+ 
         {renderVideos()}
+
+        {
+          showVideoPlayer ?
+          <LaughterPlayerModal  
+            videoId={videoId}
+          />
+          :""
+        }
+
       </InfiniteScroll>
     </div>
   )

@@ -7,9 +7,8 @@ import { HiOutlineLocationMarker } from 'react-icons/hi'
 import { MdWorkOutline } from 'react-icons/md'
 import { RiChatFollowUpFill } from 'react-icons/ri'
 import { BsFillArrowLeftCircleFill } from 'react-icons/bs'
-import { useHistory, useLocation, useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { userService } from '../../../_services/user.service'
-import { FaCheck } from 'react-icons/fa'
 
 export const ProducerProfile = () => {
   const history = useHistory()
@@ -19,14 +18,11 @@ export const ProducerProfile = () => {
 
   const { producerId } = useParams()
 
-  const location = useLocation()
-  const laughterPageOffset = location?.state.laughter_page_offset
-  const pageLimit = location?.state.page_limit
-
   const [loading, setLoading] = useState(false)
   const [producerInfo, setProducerInfo] = useState({})
   const [isLoading, setIsLoading] = useState(false)
 
+  
   // get producers infos
   useEffect(() => {
     getProducerInfo()
@@ -58,11 +54,6 @@ export const ProducerProfile = () => {
   const back = () => {
     history.push({
       pathname: `/producer/${producerId}`,
-      search: `laughter_page_offset=${laughterPageOffset}&page_limit=${pageLimit}`,
-      state: {
-        laughter_page_offset: laughterPageOffset,
-        page_limit: pageLimit
-      }
     })
   }
 

@@ -26,16 +26,6 @@ const Laughter = () => {
 
       const location = useLocation()
 
-    
-      
-
-  useEffect(() => {
-    window.scroll({
-      left: 0,
-      behavior: 'smooth'
-    })
-  }, [])
-
 
   useEffect(() => {
     getAllVideos(page, pageSize)
@@ -71,11 +61,12 @@ const Laughter = () => {
     setPage(page + 1)
   }
 
-
+  // const { showVideoPlayer } = useSelector((state) => state.showPlayer)
+  
   return (
     <div className="pt-2 sm:ml-14 mt-12">
       <SideNav></SideNav>
-      <div className="flex relative pb-20 mt-2 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
+      <div className="flex relative pb-20 mt-2 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white ">
         {/* <div className="w-full">
           <HomeContainer
             sidebarItems={sidebarItems}

@@ -19,7 +19,6 @@ import { Link, useHistory, useLocation } from 'react-router-dom'
 
 import logo from '../../assets/images/logo1.png'
 import Avatar from 'antd/lib/avatar/avatar'
-// import { userService } from '../../_services/user.service'
 import { useDispatch } from 'react-redux'
 import { LOGOUT_ASYNC } from '../../redux/types'
 import { RiLiveFill, RiLiveLine } from 'react-icons/ri'
@@ -48,7 +47,7 @@ const SideNav = (props) => {
     dispatch({ type: LOGOUT_ASYNC })
   }
   const accountMenu = (
-    <div className="bg-white shadow-lg rounded-lg -mr-2">
+    <div className="bg-white shadow-lg rounded-lg">
       <div className="flex flex-col py-4 px-8 items-center ">
         <Avatar
           className="flex items-center justify-center bg-gray-200"
@@ -234,9 +233,9 @@ const SideNav = (props) => {
     setSearchVisible(!searchVisible)
   }
 
-  const suffix = <FaSearch className="text-xl text-gray-300" />
+  const suffix = <FaSearch className="text-xl text-blue-400" />
   return (
-    <div className="bottom-0 bg-blue-400">
+    <div className="bottom-0 bg-gray-300">
       <div className="px-5 md:p-1 fixed z-20 bg-white right-0 left-0 sm:left-14 top-0  bg-opacity-100 backdrop-blur-3xl">
         <div className="flex justify-between sm:hidden -mx-5 pt-3 pb-3 ">
           <div className="text-xl  mr-4 flex items-center justify-center header_title text-gray-500">
@@ -244,14 +243,14 @@ const SideNav = (props) => {
               <img
                 src={logo}
                 alt=""
-                className="rounded pl-2 sm:pl-0 w-24 sm:w-64"
+                className="rounded pl-2 sm:pl-0 w-24 sm:w-64 ml-3"
               />
             </Link>
           </div>
           <div className="flex mr-2">
             <FaSearch
               onClick={() => toggleSearch()}
-              className="p-2 text-4xl text-blue-500 mx-3"
+              className="p-2 text-4xl text-blue-500"
             />
             <Dropdown
               overlay={accountMenu}
@@ -263,7 +262,7 @@ const SideNav = (props) => {
                 className="ant-dropdown-link"
                 onClick={(e) => e.preventDefault()}
               >
-                <FaUser className="p-2 text-4xl text-blue-500" />
+                <FaUser className="p-2 text-4xl text-blue-500 mr-4" />
               </span>
             </Dropdown>
           </div>
@@ -287,7 +286,7 @@ const SideNav = (props) => {
             <span className="text-gray-500 hidden sm:flex ml-6 cursor-pointer text-lg items-center hover:text-gray-700 md:ml-20">
               {/* <Link to="/account"> */}
               <Dropdown overlay={accountMenu} placement="bottomRight" arrow>
-                <FaUser className={'text-xl inline text-blue-500'} />
+                <FaUser className={'text-xl inline text-blue-500 mr-3'} />
               </Dropdown>
               {/* <Tooltip placement="rightTop" title="Account"></Tooltip> */}
               {/* </Link> */}
@@ -297,10 +296,10 @@ const SideNav = (props) => {
           )}
         </div>
       </div>
-      <ul className="w-14  min-h-full fixed left-0 top-0 list-disc space-y-5 p-1 border-r hidden sm:block pt-5">
+      <ul className="bg-white w-14 min-h-full fixed left-0 top-0 list-disc space-y-5 p-1 border-r hidden sm:block pt-5">
         <li
           className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-            location.pathname === '/' ? 'bg-gray-100' : ''
+            location.pathname === '/' ? 'bg-gray-300' : ''
           }`}
         >
           <Link to="/">
@@ -320,7 +319,7 @@ const SideNav = (props) => {
         {!user && (
           <li
             className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-              location.pathname === '/laughter-home' ? '' : ''
+              location.pathname === '/laughter-home' ? 'bg-gray-300' : ''
             }`}
           >
             <Link
@@ -350,7 +349,7 @@ const SideNav = (props) => {
                 {/* authenticated laughter begins  */}
                 <li
                   className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                    location.pathname === '/laughter' ? 'bg-gray-400' : ''
+                    location.pathname === '/laughter' ? 'bg-gray-300' : ''
                   }`}
                 >
                   <Link
@@ -362,7 +361,7 @@ const SideNav = (props) => {
                     <Tooltip placement="rightTop" title="Laughter">
                       <BsFillEmojiLaughingFill
                         className={
-                          'text-3xl inline text-gray-300 hover:text-white'
+                          'text-3xl inline text-blue-400 hover:text-white'
                         }
                       />
                     </Tooltip>
@@ -371,14 +370,14 @@ const SideNav = (props) => {
                 {/* authenticated laughter ends */}
                 <li
                   className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                    location.pathname === '/live_video' ? 'bg-gray-400' : ''
+                    location.pathname === '/live_video' ? 'bg-gray-300' : ''
                   }`}
                 >
                   <Link to="/live_video">
                     <Tooltip placement="rightTop" title="Live Broadcast">
                       <FaLifeRing
                         className={
-                          'text-3xl inline text-gray-300 hover:text-white'
+                          'text-3xl inline text-blue-400 hover:text-white'
                         }
                       />
                     </Tooltip>
@@ -386,14 +385,14 @@ const SideNav = (props) => {
                 </li>
                 <li
                   className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                    location.pathname === '/saved_later' ? 'bg-gray-400' : ''
+                    location.pathname === '/saved_later' ? 'bg-gray-300' : ''
                   }`}
                 >
                   <Link to="/saved_later">
                     <Tooltip placement="rightTop" title="Saved Videos">
                       <FaSave
                         className={
-                          'text-3xl inline text-gray-300 hover:text-white'
+                          'text-3xl inline text-blue-400 hover:text-white'
                         }
                       />
                     </Tooltip>
@@ -402,7 +401,7 @@ const SideNav = (props) => {
                 <li
                   className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
                     location.pathname === '/purchased_playlist'
-                      ? 'bg-gray-400'
+                      ? 'bg-gray-300'
                       : ''
                   }`}
                 >
@@ -410,7 +409,7 @@ const SideNav = (props) => {
                     <Tooltip placement="rightTop" title="Purchased Videos">
                       <FaFilm
                         className={
-                          'text-3xl inline text-gray-300 hover:text-white'
+                          'text-3xl inline text-blue-400 hover:text-white'
                         }
                       />
                     </Tooltip>
@@ -423,14 +422,14 @@ const SideNav = (props) => {
             {user.role === 'PRODUCER' ? (
               <li
                 className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                  location.pathname === '/your_video' ? 'bg-gray-400' : ''
+                  location.pathname === '/your_video' ? 'bg-gray-300' : ''
                 }`}
               >
                 <Link to="/your_video">
                   <Tooltip placement="rightTop" title="List Video">
                     <BiVideoRecording
                       className={
-                        'text-3xl inline text-gray-300 hover:text-white'
+                        'text-3xl inline text-blue-400 hover:text-white'
                       }
                     />
                   </Tooltip>
@@ -442,14 +441,14 @@ const SideNav = (props) => {
             {user.role === 'PRODUCER' ? (
               <li
                 className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                  location.pathname === '/upload_video' ? 'bg-gray-400' : ''
+                  location.pathname === '/upload_video' ? 'bg-gray-300' : ''
                 }`}
               >
                 <Link to="/upload_video">
                   <Tooltip placement="rightTop" title="Upload Video">
                     <FaCloudUploadAlt
                       className={
-                        'text-3xl inline text-gray-300 hover:text-white'
+                        'text-3xl inline text-blue-400 hover:text-white'
                       }
                     />
                   </Tooltip>
@@ -461,14 +460,14 @@ const SideNav = (props) => {
             {user.role === 'PRODUCER' ? (
               <li
                 className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                  location.pathname === '/live_stream' ? 'bg-gray-400' : ''
+                  location.pathname === '/live_stream' ? 'bg-gray-300' : ''
                 }`}
               >
                 <Link to="/live_stream">
                   <Tooltip placement="rightTop" title="Stream Video">
                     <FaStream
                       className={
-                        'text-3xl inline text-gray-300 hover:text-white'
+                        'text-3xl inline text-blue-400 hover:text-white'
                       }
                     />
                   </Tooltip>
@@ -480,14 +479,14 @@ const SideNav = (props) => {
             {user.role === 'PRODUCER' ? (
               <li
                 className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                  location.pathname === '/webcam' ? 'bg-gray-400' : ''
+                  location.pathname === '/webcam' ? 'bg-gray-300' : ''
                 }`}
               >
                 <Link to="/webcam">
                   <Tooltip placement="rightTop" title="Go Live">
                     <RiLiveFill
                       className={
-                        'text-3xl inline text-gray-300 hover:text-white'
+                        'text-3xl inline text-blue-400 hover:text-white'
                       }
                     />
                   </Tooltip>
@@ -499,14 +498,14 @@ const SideNav = (props) => {
             {user.role === 'PRODUCER' ? (
               <li
                 className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                  location.pathname === '/conference' ? 'bg-gray-400' : ''
+                  location.pathname === '/conference' ? 'bg-gray-300' : ''
                 }`}
               >
                 <Link to="/conference">
                   <Tooltip placement="rightTop" title="Conference">
                     <RiLiveLine
                       className={
-                        'text-3xl inline text-gray-300 hover:text-white'
+                        'text-3xl inline text-blue-400 hover:text-white'
                       }
                     />
                   </Tooltip>
@@ -518,14 +517,14 @@ const SideNav = (props) => {
             {user.role === 'VIEWER' && (
               <li
                 className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                  location.pathname === '/settings' ? 'bg-gray-400' : ''
+                  location.pathname === '/settings' ? 'bg-gray-300' : ''
                 }`}
               >
                 <Link to="/settings">
                   <Tooltip placement="rightTop" title="Settings">
                     <FaCog
                       className={
-                        'text-3xl inline text-gray-300 hover:text-white'
+                        'text-3xl inline text-blue-400 hover:text-white'
                       }
                     />
                   </Tooltip>
@@ -536,7 +535,7 @@ const SideNav = (props) => {
         ) : (
           <li
             className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-              location.pathname === '/login' ? 'bg-gray-400' : ''
+              location.pathname === '/login' ? 'bg-gray-300' : ''
             }`}
           >
             <Link to="/login">

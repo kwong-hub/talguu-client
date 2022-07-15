@@ -11,7 +11,7 @@ import {
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
 import { AiOutlineDownCircle, AiOutlineUpCircle } from 'react-icons/ai'
-import { FaHeart, FaHeartBroken } from 'react-icons/fa'
+import { AiFillLike, AiFillDislike } from "react-icons/ai";
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 
@@ -48,6 +48,7 @@ const WatchVideo = () => {
   const commentRef = useRef()
 
   const user = JSON.parse(localStorage.getItem('user'))
+
  
   useEffect(() => {
     if (vidId) {
@@ -311,7 +312,7 @@ const WatchVideo = () => {
           </div>
           <div className="flex-col mx-1 mt-44 sm:mt-6 player_details">
             <div className="w-full flex justify-between">
-              <div className="text-gray-800 lg:text-2xl text-md  text-left py-5 md:py-0 mt-4 md:mt-0">
+              <div className="text-gray-800 lg:text-xl text-md  text-left py-5 md:py-0 mt-4 md:mt-0">
                 {currentVideo?.title}
               </div>
               {currentVideo.paid || (user && user.role !== 'VIEWER') ? (
@@ -332,11 +333,11 @@ const WatchVideo = () => {
             </div>
             <div className="flex justify-between text-gray-800 text-2xl w-full text-left px-3 md:py-3 lg:py-3">
               <div className="flex items-end">
-                <span className="text-gray-400 text-lg">
+                <span className="text-gray-500 text-sm">
                   {currentVideo?.viewCount}
                   {currentVideo?.viewCount <= 1 ? ' view' : ' views'}
                 </span>
-                <span className="text-gray-600 ml-4 text-base">
+                <span className="text-gray-600 ml-4 text-sm">
                   {currentVideo?.streamed ? 'Streamed at ' : ''}
                   {moment(currentVideo?.premiered).format('MMM DD, YYYY')}
                 </span>
@@ -350,11 +351,11 @@ const WatchVideo = () => {
                   title="Like"
                 >
                   <div
-                    className={`flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ${
+                    className={`mt-3 flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-sm ${
                       currentVideo.like === 1 ? 'text-blue-400' : ''
                     }`}
                   >
-                    {currentVideo?.likeCount} <FaHeart className="ml-1" />
+                    <span className="text-sm text-gray-500 font-semibold mr-2 ">LIKE</span> <AiFillLike className="mr-2 w-6 h-6 text-blue-400" /> {currentVideo?.likeCount} 
                   </div>
                 </Tooltip>
                 <Tooltip
@@ -365,12 +366,13 @@ const WatchVideo = () => {
                   title="Dislike"
                 >
                   <span
-                    className={`flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2 ${
+                    className={`mt-3 flex items-center  text-gray-400 cursor-pointer hover:text-blue-400 text-sm ml-2 ${
                       currentVideo.like === 0 ? 'text-blue-400' : ''
                     }`}
                   >
+                    <span className="text-sm text-gray-500 font-semibold mr-2 ">DISLIKE</span>  <AiFillDislike className="mr-2 text-md w-6 h-6 text-gray-400" />
                     {currentVideo.dislikeCount}{' '}
-                    <FaHeartBroken className="ml-1" />
+                   
                   </span>
                 </Tooltip>
               </div>
@@ -416,9 +418,18 @@ const WatchVideo = () => {
     dispatch({ type: VIEWER_VIDEOS_ASYNC, payload: { q: value } })
   }
 
+
+  const filterArray = (vidId, videos) => {
+    let result = videos.filter((video)=> video.id !== vidId)
+    return result;
+  }
+
+
   const renderVideos = () => {
     if (viewerVideos) {
-      return viewerVideos.map((video) => {
+      const _viewerVideos = filterArray(vidId, viewerVideos)
+      
+      return _viewerVideos.map((video) => {
         return (
           <>
             <RenderVideo

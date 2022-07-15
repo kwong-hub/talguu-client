@@ -20,10 +20,12 @@
   transform: scale(1.4);
 }
 
+
 .thumbnail_button_container {
   top: calc(50% - 1rem);
   left: calc(50% - 1rem);
 }
+
 
 .ant-tooltip-arrow-content {
   background-color: #aaa;
@@ -56,6 +58,21 @@
 .video_thumbnail:hover > div > .video_title {
   color: #222;
 }
+
+.video_title_new{
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.video_title_new:hover {
+  overflow: visible;
+  white-space: normal;
+
+}
+
+
 .ant-modal-content,
 .ant-modal-body {
   height: 100%;

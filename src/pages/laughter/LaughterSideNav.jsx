@@ -30,7 +30,7 @@ const LaughterSideNav = () => {
 
 
   const menuTextStyle =
-    'text-left text-xs h-full inline-block text-gray-300 hover:text-gray-900'
+    'text-left text-xs h-full inline-block text-gray-300 hover:text-gray-400'
   const menuIconStyle = 'text-2xl inline text-gray-300'
 
   const mobileMenu = (
@@ -53,9 +53,7 @@ const LaughterSideNav = () => {
         <Menu.Item key="1">
           <Link
             to={{
-              pathname: '/laughter-home',
-              state: { laughter_page_offset: 1, page_limit: 6 },
-              search: `laughter_page_offset=1&page_limit=6`
+              pathname: '/laughter-home'
             }}
           >
             <div className="flex flex-col items-center justify-center">
@@ -80,9 +78,7 @@ const LaughterSideNav = () => {
             <Menu.Item key="1">
               <Link
                 to={{
-                  pathname: '/laughter',
-                  state: { laughter_page_offset: 1, page_limit: 6 },
-                  search: `laughter_page_offset=1&page_limit=6`
+                  pathname: '/laughter'
                 }}
               >
                 <div className="flex flex-col items-center justify-center">
@@ -186,7 +182,7 @@ const LaughterSideNav = () => {
     <div className="container bottom-0 bg-transparent  sm:bg-black">
       <ul className="w-14 min-h-full fixed left-0 top-0 list-disc space-y-5 p-1 border-r hidden sm:block  mt-2">
         <li
-          className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
+          className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-300 ${
             location.pathname === '/' ? 'bg-gray-400' : ''
           }`}
         >
@@ -197,7 +193,7 @@ const LaughterSideNav = () => {
               title="All Videos"
             >
               <FaVideo
-                className={'text-3xl inline text-gray-300 hover:text-white'}
+                className={'text-3xl inline text-blue-400 hover:text-white'}
               />
             </Tooltip>
           </Link>
@@ -207,14 +203,12 @@ const LaughterSideNav = () => {
         {!user && (
           <li
             className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-              location.pathname === '/laughter-home' ? 'bg-gray-400' : ''
+              location.pathname === '/laughter-home' ? 'bg-gray-300' : ''
             }`}
           >
             <Link
               to={{
-                pathname: '/laughter-home',
-                state: { laughter_page_offset: 1, page_limit: 6 },
-                search: `laughter_page_offset=1&page_limit=6`
+                pathname: '/laughter-home'
               }}
             >
               <Tooltip
@@ -223,7 +217,7 @@ const LaughterSideNav = () => {
                 title="Laughter"
               >
                 <BsFillEmojiLaughingFill
-                  className={'text-3xl inline text-gray-300 hover:text-white'}
+                  className={'text-3xl inline text-blue-400 hover:text-white'}
                 />
               </Tooltip>
             </Link>
@@ -243,15 +237,13 @@ const LaughterSideNav = () => {
                 >
                   <Link
                     to={{
-                      pathname: '/laughter',
-                      state: { laughter_page_offset: 1, page_limit: 6 },
-                      search: `laughter_page_offset=1&page_limit=6`
+                      pathname: '/laughter'
                     }}
                   >
                     <Tooltip placement="rightTop" title="Laughter">
                       <BsFillEmojiLaughingFill
                         className={
-                          'text-3xl inline text-gray-300 hover:text-white'
+                          'text-3xl inline text-blue-400 hover:text-white'
                         }
                       />
                     </Tooltip>
@@ -267,7 +259,7 @@ const LaughterSideNav = () => {
                     <Tooltip placement="rightTop" title="Live Broadcast">
                       <FaLifeRing
                         className={
-                          'text-3xl inline text-gray-300 hover:text-white'
+                          'text-3xl inline text-blue-400 hover:text-white'
                         }
                       />
                     </Tooltip>
@@ -282,7 +274,7 @@ const LaughterSideNav = () => {
                     <Tooltip placement="rightTop" title="Saved Videos">
                       <FaSave
                         className={
-                          'text-3xl inline text-gray-300 hover:text-white'
+                          'text-3xl inline text-blue-400 hover:text-white'
                         }
                       />
                     </Tooltip>
@@ -299,7 +291,7 @@ const LaughterSideNav = () => {
                     <Tooltip placement="rightTop" title="Purchased Videos">
                       <FaFilm
                         className={
-                          'text-3xl inline text-gray-300 hover:text-white'
+                          'text-3xl inline text-blue-400 hover:text-white'
                         }
                       />
                     </Tooltip>
@@ -319,7 +311,7 @@ const LaughterSideNav = () => {
                   <Tooltip placement="rightTop" title="List Video">
                     <BiVideoRecording
                       className={
-                        'text-3xl inline text-gray-300 hover:text-white'
+                        'text-3xl inline text-blue-400 hover:text-white'
                       }
                     />
                   </Tooltip>
@@ -338,7 +330,7 @@ const LaughterSideNav = () => {
                   <Tooltip placement="rightTop" title="Upload Video">
                     <FaCloudUploadAlt
                       className={
-                        'text-3xl inline text-gray-300 hover:text-white'
+                        'text-3xl inline text-blue-400 hover:text-white'
                       }
                     />
                   </Tooltip>
@@ -357,7 +349,7 @@ const LaughterSideNav = () => {
                   <Tooltip placement="rightTop" title="Stream Video">
                     <FaStream
                       className={
-                        'text-3xl inline text-gray-300 hover:text-white'
+                        'text-3xl inline text-blue-400 hover:text-white'
                       }
                     />
                   </Tooltip>
@@ -376,7 +368,7 @@ const LaughterSideNav = () => {
                   <Tooltip placement="rightTop" title="Go Live">
                     <RiLiveFill
                       className={
-                        'text-3xl inline text-gray-300 hover:text-white'
+                        'text-3xl inline text-blue-400 hover:text-white'
                       }
                     />
                   </Tooltip>
@@ -395,7 +387,7 @@ const LaughterSideNav = () => {
                   <Tooltip placement="rightTop" title="Conference">
                     <RiLiveLine
                       className={
-                        'text-3xl inline text-gray-300 hover:text-white'
+                        'text-3xl inline text-blue-400 hover:text-white'
                       }
                     />
                   </Tooltip>
@@ -414,7 +406,7 @@ const LaughterSideNav = () => {
                   <Tooltip placement="rightTop" title="Settings">
                     <FaCog
                       className={
-                        'text-3xl inline text-gray-300 hover:text-white'
+                        'text-3xl inline text-blue-400 hover:text-white'
                       }
                     />
                   </Tooltip>
@@ -431,7 +423,7 @@ const LaughterSideNav = () => {
             <Link to="/login">
               <Tooltip placement="rightTop" title="Login">
                 <FaSignInAlt
-                  className={'text-3xl inline text-gray-300 hover:text-white'}
+                  className={'text-3xl inline text-blue-400 hover:text-white'}
                 />
               </Tooltip>
             </Link>

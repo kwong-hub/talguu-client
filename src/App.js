@@ -5,7 +5,9 @@ import React from 'react'
 
 import Router from './routes/Router'
 
+
 function App() {
+
   // let history = useHistory();
   // const authorized = useSelector((state) => state.error.authorized);
 
@@ -16,7 +18,7 @@ function App() {
   // }, authorized);
 
   return (
-    <div className="App">
+    <div className={`App`}>
       <Router />
     </div>
   )

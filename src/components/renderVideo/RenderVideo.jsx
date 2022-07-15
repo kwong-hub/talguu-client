@@ -44,13 +44,14 @@ function RenderVideo(props) {
       ? props.video?.video_duration
       : props.video?.trailer_duration) || '00:00:00'
   return (
+    
     <div
       onClick={(event) => props.playVideo(props.video)}
       className={
         props.for
-          ? 'flex-col w-full md:w-4/12 lg:w-56 sm:w-6/12 pt-2 cursor-pointer video_thumbnail overflow-h transform hover:scale-105 z-10  transition duration-5000 ease-in-out delay-500  bg-white hover:z-50 hover:shadow-xl ' +
+          ? 'flex-col w-full h-56 mb-1 md:h-64 md:w-4/12 lg:w-56 sm:w-6/12 pt-2 cursor-pointer video_thumbnail transform hover:scale-110  transition duration-5000 ease-in-out delay-500  bg-white hover:z-50 md:hover:shadow-xl ' +
           varClassNames
-          : 'flex-col w-full md:w-4/12 lg:w-56 sm:w-6/12 pt-2 cursor-pointer video_thumbnail overflow-h transform hover:scale-105 z-10  transition duration-5000 ease-in-out delay-500 bg-white hover:z-50 hover:shadow-xl ' +
+          : 'flex-col w-full h-56 mb-1 md:h-64 md:w-4/12 lg:w-56 sm:w-6/12 pt-2 cursor-pointer video_thumbnail transform hover:scale-110  transition duration-5000 ease-in-out delay-500 bg-white hover:z-50 md:hover:shadow-xl ' +
           varClassNames
       }
     >
@@ -102,7 +103,7 @@ function RenderVideo(props) {
             </Tooltip>
           </div>
         }
-        <div className="bg-gray-600 rounded-sm absolute bottom-1 right-1 py-4 px-4 bg-opacity-40"></div>
+        {/* <div className="bg-gray-600 rounded-sm absolute bottom-1 right-1 py-4 px-4 bg-opacity-40"></div> */}
         {props.video.paid
           ? ''
           : (!user || user.role === 'VIEWER') && (
@@ -118,29 +119,29 @@ function RenderVideo(props) {
             </div>
           )}
         {!props.video.paid ? (
-          <div className="flex items-center bg-transparent bg-gray-100 rounded-xl text-green-400  absolute top-1 left-1 py-0 px-1 md:text-sm text-2xl font-black opacity-90 md:w-12 w-18">
-            <FaDollarSign className="text-green-400 md:text-sm text-xl" />{' '}
+          <div className="flex items-center bg-transparent bg-gray-100 rounded-xl text-green-400  absolute top-1 left-1 py-0 px-1 md:text-xs text-sm font-medium  opacity-90 md:w-12 w-18">
+            <FaDollarSign className="text-green-400 md:text-sm text-sm" />{' '}
             {props.video?.video_price}
           </div>
         ) : (
           ''
         )}
-        <div className="flex items-center bg-gray-700 text-white rounded-md absolute bottom-1 front-bold right-1 py-0 px-2 md:text-sm text-xl">
+        <div className="flex items-center bg-gray-900 text-white  absolute bottom-1 front-semibold right-1 py-0 px-2 md:text-xs text-sm">
           {moment(duration.split('.')[0], [moment.ISO_8601, 'HH:mm:ss']).format(
             'H:m:ss'
           )}
         </div>
       </div>
-      <div className="flex-col px-3 py-1">
-        <h4 className="mt-1 text-left text-md text-gray-600 video_title font-bold">
+      <div className="flex-col px-3 py-1 md:h-40">
+        <h4 className="mt-1 text-left text-xs  text-gray-700 font-semibold video_title_new">
           {props.video.title}
         </h4>
         <div className="flex items-center">
-          <span className="flex items-center text-gray-500 cursor-pointer hover:text-blue-400 text-sm font-semibold">
+          <span className="flex items-center text-gray-500 cursor-pointer font-medium  hover:text-blue-400 text-xs mt-2 ">
             {props.video.viewCount} views
           </span>
-          <span className="mx-2 text-xs">
-            {moment(props.video.createdAt).fromNow()} 
+          <span className="mx-2 text-xs mt-2">
+            {moment(props.video.createdAt).fromNow()}
           </span>
         </div>
       </div>

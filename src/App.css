@@ -1,16 +1,12 @@
 @import '~antd/dist/antd.css';
-@import url('https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=Pacifico&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800&display=swap');
-
-
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 
 *{
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Poppins';
   
 }
 
@@ -68,4 +64,11 @@ body::-webkit-scrollbar-thumb {
   100% {
     transform: translateY(0px);
   }
+}
+
+
+.backdropPlayer{
+  background-color: rgba(238, 241, 247, 0.4);
+  backdrop-filter: blur(22px);
+  --webkit-backdrop-filter: blur(20px);
 }

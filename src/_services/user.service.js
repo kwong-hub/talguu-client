@@ -20,7 +20,7 @@ function login({ email, password }) {
 
 function logout(redirectUrl = '') {
   if (redirectUrl) {
-    history.push({ pathname: '/login', search: `?redirectUrl=${redirectUrl}` })
+    history.push({ pathname: '/', search: `?redirectUrl=${redirectUrl}` })
   } else {
     history.replace({ pathname: '/login' })
   }
