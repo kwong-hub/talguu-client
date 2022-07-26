@@ -13,7 +13,7 @@ const SavedPlayList = () => {
 
   useEffect(() => {
     dispatch({ type: GET_SAVED_VIDEOS_ASYNC, payload: '' })
-    return () => {}
+    return () => { }
   }, [])
 
   const renderVideos = () => {
@@ -38,9 +38,9 @@ const SavedPlayList = () => {
   }
 
   return (
-    <div className="pt-2 ml-0 sm:ml-14">
+    <div className="pt-2 sm:ml-14 mt-12">
       <SideNav></SideNav>
-      <div className="flex relative mt-12 border-2 flex-wrap min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
+      <div className="flex gap-4 relative mb-2 ml-4 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white items-center justify-start">
         {renderVideos()}
       </div>
     </div>

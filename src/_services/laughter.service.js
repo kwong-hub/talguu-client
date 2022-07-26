@@ -14,6 +14,16 @@ const laughterVideos = async (page, pageSize) => {
     }
 }
 
+const introVideos = async (page, pageSize) => {
+    try {
+        const response = await axios.get(`${environment}/video/intro?page=${page}&pageSize=${pageSize}`)
+
+        return response;
+    } catch (error) {
+        return error
+    }
+}
+
 const getSingleLaughterVideo = async (videoId) => {
     try {
         const response = await axios.get(`${environment}/video/laughter/${videoId}`)
@@ -33,6 +43,15 @@ const getLaughterVideoUrl = async (videoId) => {
 }
 
 
+const getPreviewVideoUrl = async (body) => {
+    try {
+        const response = await axios.post(`${environment}/video/preview_laughter_url`, body)
+        return response.data;
+    } catch (error) {
+        return error
+    }
+}
+
 const getProducerLaughterVideos = async (producerId, page, pageSize) => {
     try {
         const response = await axios.get(`${environment}/video/laughter/${producerId}?page=${page}&pageSize=${pageSize}`)
@@ -47,5 +66,7 @@ export const laughterService = {
     laughterVideos,
     getSingleLaughterVideo,
     getProducerLaughterVideos,
-    getLaughterVideoUrl
+    getLaughterVideoUrl,
+    introVideos,
+    getPreviewVideoUrl
 }

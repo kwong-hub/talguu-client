@@ -32,7 +32,7 @@ const SendLaughter = () => {
 
   const [currentVideo, setCurrentVideo] = useState({})
   const [decoratorVideo, setDecoratorVideo] = useState({})
-
+  const [introVideoUrl, setIntroVideoUrl] = useState("")
   const [randomStr, setRandomStr] = useState('')
   const [playVideo, setPlayVideo] = useState(false)
 
@@ -43,7 +43,8 @@ const SendLaughter = () => {
   const [specialMessage, setSpecialMessage] = useState('')
 
   const [sendingData, setSendingData] = useState({})
-  const [decoratorId, setDecoratorId] = useState(dataSource[0]?.id)
+  const [decoratorId, setDecoratorId] = useState("")
+
   const [isPlaying, setIsPlaying] = useState(false)
   const [isPlayerEnded, setIsPlayerEnded] = useState(false)
   const [showOverlayText, setShowOverlayText] = useState(true)
@@ -67,13 +68,11 @@ const SendLaughter = () => {
       singleVideoLaughter()
     }
 
-    window.scrollTo(0, 0)
   }, [])
 
   useEffect(() => {
     setPlayVideo(true)
     setRandomStr(new Date().getTime().toString())
-    window.scrollTo(0, 0)
     return () => {}
   }, [currentVideo, decoratorVideo])
 
@@ -140,13 +139,7 @@ const SendLaughter = () => {
         return
       }
       setPage(page + 1)
-      // we cam access the property of swiped item
-      let id = dataSource[0].id
-      // setSendingData((prevData) => ({
-      //     ...prevData,
-      //     decoratorId: id
-      // }))
-      setDecoratorId(id)
+  
     },
     onSwipedRight: () => {
       if (page === 1) {
@@ -155,8 +148,7 @@ const SendLaughter = () => {
       } else {
         setPage(page - 1)
       }
-      let id = dataSource[0].id
-      setDecoratorId(id)
+
     },
 
     ...config
@@ -194,8 +186,7 @@ const SendLaughter = () => {
       content: (
         <PreviewLaughter
           playVideo={playVideo}
-          currentVideo={currentVideo}
-          decoratorVideo={decoratorVideo}
+          introVideoUrl={introVideoUrl}
           randomStr={randomStr}
           dataSource={dataSource}
           handlePlayerReady={handlePlayerReady}
@@ -209,15 +200,17 @@ const SendLaughter = () => {
 
   const getAllVideos = (page, pageSize) => {
     setLoading(true)
-    laughterService.laughterVideos(page, pageSize).then((res) => {
+    laughterService.introVideos(page, pageSize).then((res) => {
       const success = res.data?.success
       const videos = res.data?.videos
+
       if (success) {
         const { count, rows } = videos
         setTotal(count)
         setDataSource(rows)
         // get video id
         const videoId = rows[0].id
+        setDecoratorId(videoId)
 
         laughterService.getLaughterVideoUrl(videoId).then((res) => {
           if (res) {
@@ -233,26 +226,45 @@ const SendLaughter = () => {
   }
 
   const next = () => {
-    // !receiverEmail || !specialMessage
     if ( !specialMessage) {
       message.error('please fill all the required fields')
       return
     }
-    // if (!isEmail(receiverEmail)) {
-    //   message.error('Please insert the valid email')
-    //   return
+
+    // if(decoratorId === "" || decoratorId.length === 0){
+    //   setDecoratorId(dataSource[0]?.id)
     // }
 
     const body = {
       message: specialMessage,
       videoId: vidId,
-      decoratorId: decoratorId
+      introId: decoratorId
     }
 
     setSendingData(body)
 
     setCurrent(current + 1)
+
+    if(current === 1){
+      previewPlayer(body)
+    }
+
   }
+
+
+  const previewPlayer = (body) => {
+    console.log("body: ", body)
+    laughterService.getPreviewVideoUrl(body).then(res => {
+      const { success, prvUrl} = res
+      console.log("preview response: ", res)
+
+      if(success) {
+        setIntroVideoUrl(prvUrl)
+      }else{
+        setIntroVideoUrl("")
+      }
+    })
+  } 
 
   const isEmail = (val) => {
     let regEmail =
@@ -265,7 +277,7 @@ const SendLaughter = () => {
   }
 
   const submitLaughterData = () => {
-    if (!receiverEmail || !specialMessage || !vidId || !decoratorId) {
+    if (!specialMessage || !vidId || !decoratorId) {
       message.error('please fill all the required fields')
       return
     }
@@ -311,7 +323,7 @@ const SendLaughter = () => {
       {!loading && (
         <div className="steps-action">
           {current < steps.length - 1 && dataSource.length > 0 && (
-            <Button className="bg-blue-500 md:bg-blue-500 text-white w-28 h-11 md:h-9 md:w-24 rounded-xl text-lg md:text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800"  onClick={() => next()}>
+            <Button className="bg-blue-500 text-white w-28 h-11 md:h-9 md:w-24 rounded-xl text-lg md:text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800"  onClick={() => next()}>
               Next
             </Button>
           )}

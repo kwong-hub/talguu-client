@@ -22,14 +22,14 @@ const RenderVideoMinimal = (props) => {
       key={props.video.id}
       onClick={() => play(props.video)}
       className={
-        'flex-col w-full md:w-4/12 lg:w-3/12 sm:w-6/12 p-2 cursor-pointer video_thumbnail self-stretch'
+        'flex-col w-full h-56 mb-1 md:h-64 md:w-4/12 lg:w-56 sm:w-6/12 pt-2 cursor-pointer video_thumbnail transform hover:scale-110  transition duration-5000 ease-in-out delay-500 bg-white hover:z-50 md:hover:shadow-xl'
       }
     >
-      <div className="relative">
+      <div className="relative max-h-full flex justify-center">
         <img
           src={props.video.thumbnial}
           alt=""
-          className="max-h-full block video_image"
+          className="block h-40 video_image"
         />
         <img
           src={
@@ -37,7 +37,8 @@ const RenderVideoMinimal = (props) => {
               ? props.video.main_gif || ''
               : props.video.trailer_gif || ''
           }
-          className="max-h-full hidden h-96 sm:h-48 video_gif mx-auto"
+          className="hidden h-40 video_gif"
+          alt=''
         />
         <div className="absolute thumbnail_button_container">
           <Tooltip placement="bottom" title="Watch Video">
@@ -45,19 +46,19 @@ const RenderVideoMinimal = (props) => {
           </Tooltip>
         </div>
         <div className="bg-gray-600 rounded-sm absolute bottom-1 right-1 py-0 px-4 bg-opacity-40"></div>
-        <div className="flex items-center bg-white text-gray-700 rounded-sm absolute bottom-1 right-1 py-0 px-4">
+        <div className="flex items-center bg-gray-900 text-white  absolute bottom-1 front-semibold right-1 py-0 px-2 md:text-xs text-sm">
           {moment(props.video?.video_duration?.split('.')[0], [
             moment.ISO_8601,
             'HH:mm:ss'
           ]).format('H:m:ss')}
         </div>
       </div>
-      <div className="flex-col">
-        <h4 className="my-2 text-left text-md text-gray-600 video_title">
+      <div className="flex-col px-3 py-1 md:h-40">
+        <h4 className="mt-1 text-left text-xs  text-gray-700 font-semibold video_title_new">
           {props.video.title}
         </h4>
-        <div className="flex">
-          <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-lg ml-2">
+        <div className="flex items-center">
+          <span className="flex items-center text-gray-500 cursor-pointer font-medium  hover:text-blue-400 text-xs mt-2">
             {props.video.viewCount} views
           </span>
         </div>

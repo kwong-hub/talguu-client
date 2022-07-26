@@ -54,6 +54,7 @@ const SenderInfo = ({
                           <p className='text-sm text-gray-600 font-bold '>Your Message</p>
                       </div>
                       <TextArea
+                         maxLength={70}
                           className='w-80 p-3 box-border mx-5 rounded-xl'
                           value={specialMessage}
                           onChange={(e) => setSpecialMessage(e.target.value)}

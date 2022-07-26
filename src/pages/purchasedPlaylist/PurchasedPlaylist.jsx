@@ -36,7 +36,7 @@ function PurchasedPlaylist(props) {
       return (
         <div
           className={
-            'flex justify-center w-full p-2 cursor-pointer video_thumbnail self-stretch'
+            'flex justify-center w-full mt-10 p-2 cursor-pointer video_thumbnail self-stretch'
           }
         >
           <p className="text-gray-600 text-md py-4 w-96">
@@ -49,9 +49,9 @@ function PurchasedPlaylist(props) {
   }
 
   return (
-    <div className="pt-2 ml-0 sm:ml-14">
+    <div className="pt-2 sm:ml-14 mt-12">
       <SideNav></SideNav>
-      <div className="flex relative mt-12 border-2 flex-wrap min-h-full w-auto lg:min-w-full lg:max-w-full border-white">
+      <div className="flex gap-4 relative mb-2 ml-4 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white items-center justify-center">
         {renderVideos()}
       </div>
     </div>

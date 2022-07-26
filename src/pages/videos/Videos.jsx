@@ -134,27 +134,27 @@ const Videos = (props) => {
       return Array.from(new Array(3)).map((item, index) => {
         return (
           <div key={index} className="flex flex-wrap w-full h-full items-center">
-            <div className="flex flex-col space-y-2 p-2">
+            <div className="flex flex-col space-y-2 p-1">
               <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-80 h-52 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
             </div>
-            <div className="flex flex-col space-y-2 p-2">
+            <div className="flex flex-col space-y-2 p-1">
               <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-80 h-52 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
             </div>
-            <div className="flex flex-col space-y-2 p-2 hidden md:block">
+            <div className="flex flex-col space-y-2 p-1 hidden md:block">
               <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-80 h-52 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
             </div>
-            <div className="flex flex-col space-y-2 p-2 hidden md:block" >
+            <div className="flex flex-col space-y-2 p-1 hidden md:block" >
               <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-80 h-52 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
             </div>
-            <div className="flex flex-col space-y-2 p-2 hidden md:block" >
+            <div className="flex flex-col space-y-2 p-1 hidden md:block" >
               <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-80 h-52 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
@@ -168,7 +168,7 @@ const Videos = (props) => {
       return viewerVideos.map((video) => {
         return (
           <RenderVideo
-          loading={loading}
+            loading={loading}
             playVideo={() => play(video)}
             key={video.id}
             video={video}

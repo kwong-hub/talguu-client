@@ -177,10 +177,10 @@ class UploadVideo extends Component {
     return (
       <>
         <SideNav></SideNav>
-        <div className="flex flex-col m-16 mx-auto items-center justify-center w-1/2 h-fit rounded-xl shadow-2xl bg-gray-100">
+        <div className="flex flex-col m-16 mx-auto items-center justify-center w-1/2 h-fit rounded-xl shadow-xl bg-gray-100">
           <div className="flex justify-around mx-4 my-4 ">
             <p className="text-2xl text-gray-600 m-2">
-              One Step to Publish your video!{' '}
+              One More Step to Publish your video!{' '}
             </p>
           </div>
 

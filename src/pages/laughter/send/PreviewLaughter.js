@@ -4,8 +4,7 @@ import VideoPlayer from '../VideoPlayer'
 
 const PreviewLaughter = ({
   playVideo,
-  currentVideo,
-  decoratorVideo,
+  introVideoUrl,
   randomStr,
   handlePlayerReady,
   showOverlayText,
@@ -20,11 +19,12 @@ const PreviewLaughter = ({
 
   useEffect(() => {
     console.log('showOverlayText: ', showOverlayText)
+    
   }, [showOverlayText])
 
   const renderPlayer = () => {
     const videoJsOptions = {
-      videoId: decoratorVideo.id,
+      videoId: "randomId123",
       autoplay: true,
       controls: true,
       errorDisplay: false,
@@ -33,23 +33,23 @@ const PreviewLaughter = ({
       fill: true,
       sources: [
         {
-          src: decoratorVideo.video_link,
-          type: decoratorVideo.video_type
+          src: introVideoUrl,
+          type: "application/x-mpegURL"
         }
       ]
     }
-    if (decoratorVideo) {
+    if (introVideoUrl) {
       return (
-        <div className="w-full">
-          <div className="sender_player_style" key={randomStr}>
+        <div className="w-full relative">
+          <div className="sender_player_style " key={randomStr}>
             <VideoPlayer options={videoJsOptions} onReady={handlePlayerReady} />
           </div>
 
           {showOverlayText && !loading && (
-            <div className="overlay_text_style ">
-              <h3 className="animate-charcter text-center mx-auto">
+            <div className="absolute mx-auto top-1/2 h-1/2 break-all overflow-hidden text-center w-full">
+              <span className="animate-charcter text-center mx-auto break-all">
                 {sendingData ? sendingData.message : 'Hello there!'}
-              </h3>
+              </span>
             </div>
           )}
         </div>
@@ -62,7 +62,7 @@ const PreviewLaughter = ({
       <p className="text-sm font-bold mb-5 md:mb-1">Preview</p>
 
       <div className="ml-2">
-        {playVideo && decoratorVideo ? (
+        {playVideo && introVideoUrl ? (
           renderPlayer()
         ) : (
           <div className="w-screen mx-auto mt-40">
