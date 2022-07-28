@@ -62,7 +62,7 @@ const LaughterDecorator = ({
       }
 
       return (
-        <div className="flex flex-col w-full h-full items-center" {...handlers}>
+        <div className="flex flex-col w-full h-full items-center overflow-auto" {...handlers}>
           {/* replace carousel here */}
 
           {loading ? (

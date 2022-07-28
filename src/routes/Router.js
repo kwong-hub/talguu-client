@@ -65,7 +65,7 @@ const Router = () => {
           />
           <Route
             exact
-            path="/laughter-public/watch-video/:vidId"
+            path="/laughter-public/watch-video"
             component={PublicVideoPlayer}
           />
 

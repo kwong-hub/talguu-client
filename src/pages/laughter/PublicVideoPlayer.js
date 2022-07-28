@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FaPlayCircle } from 'react-icons/fa'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useSwipeable } from 'react-swipeable'
 import LaughterSideNav from './LaughterSideNav'
 import { config } from './swiperConfig'
@@ -10,15 +10,24 @@ import talguuLogo from '../../assets/images/talguu_logo.png'
 import { Space, Spin } from 'antd'
 
 import './send/send_module_css.css'
+import { laughterService } from '../../_services/laughter.service'
 
 const PublicVideoPlayer = () => {
+
+
+  const search = useLocation().search
+
+  const token = new URLSearchParams(search).get('tkn')
+  const videoUrl = new URLSearchParams(search).get('vdy')
+
+
   const [currentVideo, setCurrentVideo] = useState({
     id: 1,
-    video_link:
-      'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-    video_type: 'video/mp4',
-    specialMessage: 'My Special gift for you'
+    video_link: '',
+    video_type: 'application/x-mpegURL',
+    specialMessage: ''
   })
+
   const [randomStr, setRandomStr] = useState('')
   const [playVideo, setPlayVideo] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -31,50 +40,70 @@ const PublicVideoPlayer = () => {
 
   const overlayShowTime = 5
 
+
   useEffect(() => {
-    console.log("publicPlayer mounted")
     setPlayVideo(true)
     setRandomStr(new Date().getTime().toString())
-    window.scrollTo(0, 0)
-    
-    return () => {
-       
-        console.log("publicPlayer unMounted")
-    }
-
   }, [currentVideo])
 
-  const handlePlayerReadyPublic = (player) => {
-    playerRef.current = player
 
-    
-    var myInterval = setInterval(() => {
-        console.log('Current player: ', player)
+  useEffect(() => {
+    publicLaughterVideoPlayer()
+  }, [])
+
+
+
+
+
+
+  const publicLaughterVideoPlayer = () => {
+    setLoading(true)
+    laughterService.getPublicLaughterVideoUrl(token, videoUrl).then(res => {
+      const { message, video_url } = res
+      if (message && video_url) {
+        setCurrentVideo((prev) => ({
+          ...prev,
+          specialMessage: message,
+          video_link: video_url
+        }))
+      } else {
+        setCurrentVideo({})
+      }
+      setLoading(false)
+    })
+  }
+
+
+
+  const handlePlayerReadyPublic = (player) => {
+
+    var myInterval = setInterval((player) => {
       if (player) {
         if (player.currentTime() > overlayShowTime) {
           setShowOverlayText(false)
           clearInterval(myInterval)
         }
       }
-      console.log('Timer running....')
     }, 1000)
+    playerRef.current = player
     player.on('waiting', () => {
-      player.log('player is waiting')
     })
 
     player.on('pause', () => {
-      player.log('player is paused')
+      // player.log('player is paused')
       setIsPlaying(false)
     })
     player.on('play', () => {
-      player.log('player is playing....')
+      // player.log('player is playing....')
       setIsPlaying(true)
     })
 
     player.on('dispose', () => {
-      player.log('player will dispose')
+      // player.log('player will dispose')
     })
   }
+
+
 
   const handlePlayPause = () => {
     const player = playerRef.current
@@ -85,7 +114,6 @@ const PublicVideoPlayer = () => {
           clearInterval(myInterval)
         }
       }
-      console.log('Timer running....')
     }, 1000)
 
     if (isPlaying) {
@@ -175,7 +203,7 @@ const PublicVideoPlayer = () => {
               <h1 className="text-white animate-charcter">
                 {currentVideo.specialMessage
                   ? currentVideo.specialMessage
-                  : 'Hello there!'}
+                  : ''}
               </h1>
             </div>
           )}
@@ -186,7 +214,7 @@ const PublicVideoPlayer = () => {
         </div>
       )
     } else {
-      ;<div className="w-full h-full flex items-center justify-center">
+       <div className="w-full h-full flex items-center justify-center">
         <p>{'There is no video to play'}</p>
       </div>
     }

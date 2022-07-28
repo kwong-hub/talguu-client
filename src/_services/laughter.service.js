@@ -43,6 +43,15 @@ const getLaughterVideoUrl = async (videoId) => {
 }
 
 
+const getPublicLaughterVideoUrl = async (token,vdy) => {
+    try {
+        const response = await axios.get(`${environment}/video/lftr_url?tkn=${token}&vdy=${vdy}`)
+        return response.data;
+    } catch (error) {
+        return error
+    }
+}
+
 const getPreviewVideoUrl = async (body) => {
     try {
         const response = await axios.post(`${environment}/video/preview_laughter_url`, body)
@@ -68,5 +77,6 @@ export const laughterService = {
     getProducerLaughterVideos,
     getLaughterVideoUrl,
     introVideos,
-    getPreviewVideoUrl
+    getPreviewVideoUrl,
+    getPublicLaughterVideoUrl
 }
