@@ -318,7 +318,7 @@ const SendLaughter = () => {
                     ))}
                 </Steps> */}
       </div>
-      <div className="my-5 mt-6 md:my-0 md:mt-0">{steps[current].content}</div>
+      <div className="mt-2 md:my-0 md:mt-0">{steps[current].content}</div>
 
       {!loading && (
         <div className="steps-action">

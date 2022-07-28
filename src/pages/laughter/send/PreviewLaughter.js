@@ -59,7 +59,7 @@ const PreviewLaughter = ({
 
   return (
     <div className="w-full md:w-72 mx-auto">
-      <p className="text-sm font-bold mb-5 md:mb-1">Preview</p>
+      <p className="text-sm font-bold mb-2 md:mb-1">Preview</p>
 
       <div className="ml-2">
         {playVideo && introVideoUrl ? (

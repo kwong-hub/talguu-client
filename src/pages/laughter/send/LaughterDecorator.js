@@ -27,7 +27,7 @@ const LaughterDecorator = ({
   const renderDots = () => {
     const dots = generateArray()
     return (
-      <div className="flex items-center justify-center mt-3">
+      <div className="flex items-center justify-center mt-2">
         {dots.slice(0, 10).map((data, index) => (
           <div
             key={index}
@@ -88,8 +88,8 @@ const LaughterDecorator = ({
   }
 
   return (
-    <div className="w-full md:w-72 mx-auto">
-      <p className="text-sm font-bold mb-5 md:mb-2">Select Intro Videos</p>
+    <div className="w-full md:w-72 mx-auto ">
+      <p className="text-sm font-bold mb-2 md:mb-2">Select Intro Videos</p>
 
       {renderPlayer()}
 
