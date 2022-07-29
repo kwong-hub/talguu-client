@@ -134,28 +134,28 @@ const Videos = (props) => {
       return Array.from(new Array(3)).map((item, index) => {
         return (
           <div key={index} className="flex flex-wrap w-full h-full items-center">
-            <div className="flex flex-col space-y-2 p-1">
-              <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-80 h-52 m-2 "></div>
+            <div className="flex flex-col space-y-2 md:p-1 w-full">
+              <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-full h-52 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
             </div>
-            <div className="flex flex-col space-y-2 p-1">
-              <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-80 h-52 m-2 "></div>
+            <div className="flex flex-col space-y-2 md:p-1 w-full">
+              <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-full h-52 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
             </div>
-            <div className="flex flex-col space-y-2 p-1 hidden md:block">
-              <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-80 h-52 m-2 "></div>
+            <div className="flex flex-col space-y-2 md:p-1 hidden md:block w-full">
+              <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-full h-52 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
             </div>
-            <div className="flex flex-col space-y-2 p-1 hidden md:block" >
-              <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-80 h-52 m-2 "></div>
+            <div className="flex flex-col space-y-2 md:p-1 hidden md:block w-full" >
+              <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-full h-52 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
             </div>
-            <div className="flex flex-col space-y-2 p-1 hidden md:block" >
-              <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-80 h-52 m-2 "></div>
+            <div className="flex flex-col space-y-2 md:p-1 hidden md:block w-full" >
+              <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-full h-52 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
             </div>
@@ -195,7 +195,7 @@ const Videos = (props) => {
   return (
     <div className="pt-2 sm:ml-14 mt-12">
       <SideNav onSearch={onSearch}></SideNav>
-      <div className="flex gap-4 relative mb-2 ml-4 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white items-center justify-center">
+      <div className="flex gap-4 relative mb-2 border-2 lg:ml-0 flex-wrap xl:w-3/12 min-h-full w-auto lg:min-w-full lg:max-w-full border-white items-center justify-center">
         {renderVideos()}
       </div>
       {paymentModalVisible && renderPaymentModal()}

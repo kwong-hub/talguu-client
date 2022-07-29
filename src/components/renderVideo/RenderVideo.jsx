@@ -49,13 +49,13 @@ function RenderVideo(props) {
       onClick={(event) => props.playVideo(props.video)}
       className={
         props.for
-          ? 'flex-col w-full h-56 mb-1 md:h-64 md:w-4/12 lg:w-56 sm:w-6/12 pt-2 cursor-pointer video_thumbnail transform hover:scale-110  transition duration-5000 ease-in-out delay-500  bg-white hover:z-50 md:hover:shadow-xl ' +
+          ? 'flex-col w-full h-72  mb-1 md:h-64 md:w-4/12 lg:w-56 sm:w-6/12 pt-2 cursor-pointer video_thumbnail transform hover:scale-110  transition duration-5000 ease-in-out delay-500  bg-white hover:z-50 md:hover:shadow-xl ' +
           varClassNames
-          : 'flex-col w-full h-56 mb-1 md:h-64 md:w-4/12 lg:w-56 sm:w-6/12 pt-2 cursor-pointer video_thumbnail transform hover:scale-110  transition duration-5000 ease-in-out delay-500 bg-white hover:z-50 md:hover:shadow-xl ' +
+          : 'flex-col w-full h-72 mb-1 md:h-64 md:w-4/12 lg:w-56 sm:w-6/12 pt-2 cursor-pointer video_thumbnail transform hover:scale-110  transition duration-5000 ease-in-out delay-500 bg-white hover:z-50 md:hover:shadow-xl ' +
           varClassNames
       }
     >
-      <div className="relative max-h-full flex justify-center">
+      <div className="relative max-h-full flex justify-center bg-green-500">
         <img
           src={
             props.video.thumbnial?.includes('talguu-vout1')
@@ -63,7 +63,7 @@ function RenderVideo(props) {
               : 'https://s3.us-west-2.amazonaws.com/talguu-vout1/default_tumbnail.png'
           }
           alt=""
-          className="block h-40 video_image"
+          className="block h-56 md:h-40 video_image w-full"
         />
         <img
           src={
@@ -71,7 +71,7 @@ function RenderVideo(props) {
               ? props.video.main_gif || ''
               : props.video.trailer_gif || ''
           }
-          className="hidden h-40 video_gif mx-auto"
+          className="hidden h-56 md:h-40 video_gif w-full"
           alt=''
         />
         <div className="absolute thumbnail_button_container">
@@ -133,7 +133,7 @@ function RenderVideo(props) {
         </div>
       </div>
       <div className="flex-col px-3 py-1 md:h-40">
-        <h4 className="mt-1 text-left text-xs  text-gray-700 font-semibold video_title_new">
+        <h4 className="mt-3 md:mt-1 text-left text-xs  text-gray-700 font-semibold video_title_new">
           {props.video.title}
         </h4>
         <div className="flex items-center">
