@@ -9,27 +9,25 @@ import LaughterSideNav from './LaughterSideNav'
 import { config } from './swiperConfig'
 import VideoPlayer from './VideoPlayer'
 import talguuLogo from '../../assets/images/talguu_logo.png'
-
 import { useDispatch } from 'react-redux'
-
 import { hideVideoModal } from '../../redux/reducers/custom.reducer'
 import { BsFillArrowLeftCircleFill } from 'react-icons/bs'
 
 
 const LaughterPlayerModal = ({
+
     videoId
+
 }) => {
 
     const history = useHistory()
-
     const [currentVideo, setCurrentVideo] = useState({})
     const [randomStr, setRandomStr] = useState('')
     const [loading, setLoading] = useState(true)
     const [playVideo, setPlayVideo] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false)
-
+ 
     const playerRef = React.useRef(null)
-
     // const { showVideoPlayer } = useSelector((state) => state.showPlayer)
     const dispatch = useDispatch()
 
@@ -216,7 +214,7 @@ const LaughterPlayerModal = ({
 
     return (
         <div className="z-50 fixed inset-0">
-            
+
             <div className="fixed inset-0 backdropPlayer overflow-y-auto h-full w-full"></div>
 
             <div className="w-full h-full bg-transparent absolute overflow-hidden top-0 right-0 z-50 ">
@@ -234,25 +232,19 @@ const LaughterPlayerModal = ({
                 <div
                     {...handlers}
                     id="playerDiv"
-                    className="w-full h-screen md:bg-transparent bg-black"
-                    >
-                   
+                    className="w-full h-screen md:bg-transparent bg-black flex flex-col items-center justify-center"
+                >
+
                     <div className="player_content">
                         {playVideo && currentVideo ? (
                             renderPlayer()
                         ) : // <div>This is the test div</div>
                             loading ? (
-                                <div className="w-screen mx-auto mt-40">
-                                    <Space size="middle">
-                                        <Spin size="large" />
-                                    </Space>
+                                <div className="w-screen mx-auto mt-60">
+                                    <Spin size="large" />
                                 </div>
                             ) : (
-                                <div className="w-screen mx-auto mt-40">
-                                    <Space size="middle">
-                                        <Spin size="large" />
-                                    </Space>
-                                </div>
+                                ''
                             )}
                     </div>
                 </div>

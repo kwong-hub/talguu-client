@@ -52,6 +52,16 @@ const getPublicLaughterVideoUrl = async (token,vdy) => {
     }
 }
 
+
+const sendVideoToEmail = async (body) => {
+    try {
+        const response = await axios.post(`${environment}/video/prplftr`, body)
+        return response.data;
+    } catch (error) {
+        return error
+    }
+}
+
 const getPreviewVideoUrl = async (body) => {
     try {
         const response = await axios.post(`${environment}/video/preview_laughter_url`, body)
@@ -78,5 +88,6 @@ export const laughterService = {
     getLaughterVideoUrl,
     introVideos,
     getPreviewVideoUrl,
-    getPublicLaughterVideoUrl
+    getPublicLaughterVideoUrl,
+    sendVideoToEmail
 }

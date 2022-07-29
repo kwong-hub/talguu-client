@@ -5,8 +5,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%; /* 30% of 1080 */
-  height: 100%; /* 30% of 1920 */;
+  width: 270px; /* 30% of 1080 */
+  height:480px; /* 30% of 1920 */;
 }
 
 #canvas {

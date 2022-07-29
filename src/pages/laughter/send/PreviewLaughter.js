@@ -48,7 +48,7 @@ const PreviewLaughter = ({
           {showOverlayText && !loading && (
             <div className="absolute mx-auto top-1/2 h-1/2 break-all overflow-hidden text-center w-full">
               <span className="animate-charcter text-center mx-auto break-all">
-                {sendingData ? sendingData.message : 'Hello there!'}
+                {sendingData ? sendingData.message : ''}
               </span>
             </div>
           )}
@@ -65,10 +65,8 @@ const PreviewLaughter = ({
         {playVideo && introVideoUrl ? (
           renderPlayer()
         ) : (
-          <div className="w-screen mx-auto mt-40">
-            <Spin size="middle">
+          <div className="w-full mx-auto mt-40">
               <Spin size="large" />
-            </Spin>
           </div>
         )}
       </div>

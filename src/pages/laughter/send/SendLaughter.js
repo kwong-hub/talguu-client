@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import {message, Steps, Button } from 'antd'
+import { message, Steps, Button } from 'antd'
 
 import { useSwipeable } from 'react-swipeable'
 
@@ -16,7 +16,7 @@ import { BsFillArrowLeftCircleFill } from 'react-icons/bs'
 import PreviewLaughter from './PreviewLaughter'
 
 const SendLaughter = () => {
- 
+
   const history = useHistory()
 
   const playerRef = React.useRef(null)
@@ -35,7 +35,7 @@ const SendLaughter = () => {
   const [introVideoUrl, setIntroVideoUrl] = useState("")
   const [randomStr, setRandomStr] = useState('')
   const [playVideo, setPlayVideo] = useState(false)
-
+  const [sent, setSent] = useState(false)
   const { Step } = Steps
   const [current, setCurrent] = useState(0)
 
@@ -73,7 +73,7 @@ const SendLaughter = () => {
   useEffect(() => {
     setPlayVideo(true)
     setRandomStr(new Date().getTime().toString())
-    return () => {}
+    return () => { }
   }, [currentVideo, decoratorVideo])
 
   useEffect(() => {
@@ -112,7 +112,7 @@ const SendLaughter = () => {
   const handlePlayerReadyDecorator = (player) => {
     playerRef.current = player
 
-    player.on('waiting', () => {})
+    player.on('waiting', () => { })
 
     player.on('pause', () => {
       player.log('player paused')
@@ -134,12 +134,17 @@ const SendLaughter = () => {
 
   const handlers = useSwipeable({
     onSwipedLeft: () => {
+
       if (dataSource.length === total) {
         setHasMore(false)
-        return
+        return;
       }
-      setPage(page + 1)
-  
+      if (page < total) {
+        setPage(page + 1)
+      } else {
+        return;
+      }
+
     },
     onSwipedRight: () => {
       if (page === 1) {
@@ -208,25 +213,30 @@ const SendLaughter = () => {
         const { count, rows } = videos
         setTotal(count)
         setDataSource(rows)
-        // get video id
-        const videoId = rows[0].id
-        setDecoratorId(videoId)
+        if (rows.length > 0) {
+          // get video id
+          const videoId = rows[0].id
+          setDecoratorId(videoId)
 
-        laughterService.getLaughterVideoUrl(videoId).then((res) => {
-          if (res) {
-            setLoading(false)
-            setDecoratorVideo(res)
-          } else {
-            setDecoratorVideo({})
-          }
-        })
+          laughterService.getLaughterVideoUrl(videoId).then((res) => {
+            if (res) {
+              setLoading(false)
+              setDecoratorVideo(res)
+            } else {
+              setDecoratorVideo({})
+            }
+          })
+        } else {
+          setDecoratorId("")
+          setLoading(false)
+        }
       }
       setLoading(false)
     })
   }
 
   const next = () => {
-    if ( !specialMessage) {
+    if (!specialMessage) {
       message.error('please fill all the required fields')
       return
     }
@@ -236,16 +246,16 @@ const SendLaughter = () => {
     // }
 
     const body = {
-      message: specialMessage,
-      videoId: vidId,
-      introId: decoratorId
+      msg: specialMessage,
+      mainVideoId: vidId,
+      introVideoId: decoratorId
     }
 
     setSendingData(body)
 
     setCurrent(current + 1)
 
-    if(current === 1){
+    if (current === 1) {
       previewPlayer(body)
     }
 
@@ -253,18 +263,16 @@ const SendLaughter = () => {
 
 
   const previewPlayer = (body) => {
-    console.log("body: ", body)
     laughterService.getPreviewVideoUrl(body).then(res => {
-      const { success, prvUrl} = res
-      console.log("preview response: ", res)
-
-      if(success) {
+      const { success, prvUrl } = res
+      console.log("Preview: ", prvUrl)
+      if (success) {
         setIntroVideoUrl(prvUrl)
-      }else{
+      } else {
         setIntroVideoUrl("")
       }
     })
-  } 
+  }
 
   const isEmail = (val) => {
     let regEmail =
@@ -282,7 +290,11 @@ const SendLaughter = () => {
       return
     }
 
-    console.log('FINAL DATA: ', sendingData)
+    console.log('send data: ', sendingData)
+    laughterService.sendVideoToEmail(sendingData).then(res => {
+      console.log('sentEmail: ', res)
+      setSent(true);
+    })
   }
 
   const prev = () => {
@@ -296,7 +308,7 @@ const SendLaughter = () => {
   }
 
   return (
-    <div className="w-full relative py-5 px-5 ">
+    <div className="w-full relative px-5 py-3 flex flex-col items-center justify-center">
       {current === 0 && (
         <div className="w-full flex flex-col items-start">
           <button type="button" className="px-6 mr-5 mt-5 w-20" onClick={back}>
@@ -304,9 +316,9 @@ const SendLaughter = () => {
           </button>
         </div>
       )}
-
+      {/*
       <div className="flex flex-nowrap">
-        {/* <Steps
+         <Steps
                     direction='horizontal'
                     current={current}>
                     {steps.map((item) => (
@@ -316,29 +328,32 @@ const SendLaughter = () => {
                             title={item.title}
                         />
                     ))}
-                </Steps> */}
-      </div>
+                </Steps> 
+        </div>
+        */}
       <div className="mt-2 md:my-0 md:mt-0">{steps[current].content}</div>
 
       {!loading && (
         <div className="steps-action">
           {current < steps.length - 1 && dataSource.length > 0 && (
-            <Button className="bg-blue-500 text-white w-28 h-11 md:h-9 md:w-24 rounded-xl text-lg md:text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800"  onClick={() => next()}>
+            <Button
+              className="bg-blue-500 text-white w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800"
+              onClick={() => next()}
+            >
               Next
             </Button>
           )}
           {current === steps.length - 1 && (
-            <Button 
-              className="bg-blue-500 md:bg-blue-500 text-white w-28 h-11 md:h-9 md:w-24 rounded-xl text-lg md:text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800"
-            onClick={() => submitLaughterData()}>
-              Done
+            <Button
+              disabled={sent}
+              className={`${sent ? "bg-green-500" : "bg-blue-500"} text-white w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800`}
+              onClick={() => submitLaughterData()}>
+              {sent ? "Sent" : "Done"}
             </Button>
           )}
           {current > 0 && (
             <Button
-              style={{
-                margin: '0 8px'
-              }}
+              className="bg-gray-200 mx-3 text-black w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200"
               onClick={() => prev()}
             >
               Previous

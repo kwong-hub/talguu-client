@@ -62,14 +62,12 @@ const LaughterDecorator = ({
       }
 
       return (
-        <div className="flex flex-col w-full h-full items-center overflow-auto" {...handlers}>
+        <div className="flex flex-col w-full h-full items-center" {...handlers}>
           {/* replace carousel here */}
 
           {loading ? (
             <div className="w-screen mx-auto mt-40">
-              <Spin size="middle">
                 <Spin size="large" />
-              </Spin>
             </div>
           ) : dataSource.length > 0 ? (
             <div key={randomStr} className="sender_player_style">
@@ -80,7 +78,7 @@ const LaughterDecorator = ({
               />
             </div>
           ) : (
-            <p>There are no more videos</p>
+            <p>There are no more intro videos</p>
           )}
         </div>
       )
@@ -88,7 +86,7 @@ const LaughterDecorator = ({
   }
 
   return (
-    <div className="w-full md:w-72 mx-auto ">
+    <div className="w-full md:w-72 mx-auto">
       <p className="text-sm font-bold mb-2 md:mb-2">Select Intro Videos</p>
 
       {renderPlayer()}
@@ -99,5 +97,6 @@ const LaughterDecorator = ({
     </div>
   )
 }
+
 
 export default LaughterDecorator
