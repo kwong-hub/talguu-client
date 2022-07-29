@@ -1,14 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Water+Brush&display=swap');
 
-
-.sender_player_style {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 340px; /* 30% of 1080 */
-  height:630px; /* 30% of 1920 */;
+@media only screen and (max-width:500px) {
+  .sender_player_style {
+  width: 270px; /* 30% of 1080 */
+  height:480px; /* 30% of 1920 */;
+}
 }
 
+
+
+@media only screen and (max-width:376px) {
+  .sender_player_style {
+  width: 270px !important;  /* 30% of 1080 */
+  height:480px !important;  /* 30% of 1920 */;
+}
+}
+
+.sender_player_style {
+   display: flex;
+  align-items: center;
+  justify-content: center;
+ width: 340px; /* 30% of 1080 */
+  height:630px; 
+}
 #canvas {
   background-color: aqua;
 }

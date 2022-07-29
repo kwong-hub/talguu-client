@@ -133,29 +133,29 @@ const Videos = (props) => {
     if (loading) {
       return Array.from(new Array(3)).map((item, index) => {
         return (
-          <div key={index} className="flex flex-wrap w-full h-full items-center">
-            <div className="flex flex-col space-y-2 md:p-1 w-full">
-              <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-full h-52 m-2 "></div>
+          <div key={index} className="flex flex-wrap w-full h-full items-center gap-4">
+            <div className="flex flex-col space-y-2 md:p-1 w-full md:w-56">
+              <div className="video_skeleton rounded-xl md:h-40 md:w-56 w-full h-52 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
             </div>
-            <div className="flex flex-col space-y-2 md:p-1 w-full">
-              <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-full h-52 m-2 "></div>
+            <div className="flex flex-col space-y-2 md:p-1 w-full md:w-56">
+              <div className="video_skeleton rounded-xl md:h-40 md:w-56 w-full h-52 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
             </div>
-            <div className="flex flex-col space-y-2 md:p-1 hidden md:block w-full">
-              <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-full h-52 m-2 "></div>
+            <div className="flex flex-col space-y-2 md:p-1 hidden md:block w-full md:w-56">
+              <div className="video_skeleton rounded-xl md:h-40 md:w-56 w-full h-52 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
             </div>
-            <div className="flex flex-col space-y-2 md:p-1 hidden md:block w-full" >
-              <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-full h-52 m-2 "></div>
+            <div className="flex flex-col space-y-2 md:p-1 hidden md:block w-full md:w-56" >
+              <div className="video_skeleton rounded-xl md:h-40 md:w-56 w-full h-52 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
             </div>
-            <div className="flex flex-col space-y-2 md:p-1 hidden md:block w-full" >
-              <div className="video_skeleton rounded-xl md:h-40 md:w-52 w-full h-52 m-2 "></div>
+            <div className="flex flex-col space-y-2 md:p-1 hidden md:block w-full md:w-56" >
+              <div className="video_skeleton rounded-xl md:h-40 md:w-56 w-full h-52 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-44 w-60 h-6 m-2 "></div>
               <div className="video_skeleton rounded-xl md:h-3 md:w-40 w-40 h-6 m-2 "></div>
             </div>

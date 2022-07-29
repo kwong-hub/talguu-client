@@ -9,7 +9,8 @@ const PreviewLaughter = ({
   handlePlayerReady,
   showOverlayText,
   loading,
-  sendingData
+  sendingData,
+  showConfirmation
 }) => {
   // steps to follow
   // 1. play a decorator video
@@ -59,17 +60,21 @@ const PreviewLaughter = ({
 
   return (
     <div className="w-full md:w-72 mx-auto">
-      <p className="text-sm font-bold mb-2 md:mb-1">Preview</p>
+      {showConfirmation ? "" : (
+        <>
+          <p className="text-sm font-bold mb-2 md:mb-1">Preview</p>
 
-      <div className="ml-2">
-        {playVideo && introVideoUrl ? (
-          renderPlayer()
-        ) : (
-          <div className="w-full mx-auto mt-40">
-              <Spin size="large" />
+          <div className="ml-2">
+            {playVideo && introVideoUrl ? (
+              renderPlayer()
+            ) : (
+              <div className="w-full mx-auto mt-40">
+                <Spin size="large" />
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </>
+      )}
     </div>
   )
 }

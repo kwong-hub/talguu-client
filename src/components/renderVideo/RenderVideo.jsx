@@ -55,7 +55,7 @@ function RenderVideo(props) {
           varClassNames
       }
     >
-      <div className="relative max-h-full flex justify-center bg-green-500">
+      <div className="relative max-h-full flex justify-center">
         <img
           src={
             props.video.thumbnial?.includes('talguu-vout1')

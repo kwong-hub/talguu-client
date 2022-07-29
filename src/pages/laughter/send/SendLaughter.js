@@ -15,6 +15,8 @@ import LaughterDecorator from './LaughterDecorator'
 import { BsFillArrowLeftCircleFill } from 'react-icons/bs'
 import PreviewLaughter from './PreviewLaughter'
 
+import SendConfirmation from './SendConfirmation'
+
 const SendLaughter = () => {
 
   const history = useHistory()
@@ -48,6 +50,7 @@ const SendLaughter = () => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isPlayerEnded, setIsPlayerEnded] = useState(false)
   const [showOverlayText, setShowOverlayText] = useState(true)
+  const [showConfirmation, setShowConfirmation] = useState(false)
 
   const overlayShowTime = 5
 
@@ -198,6 +201,7 @@ const SendLaughter = () => {
           showOverlayText={showOverlayText}
           loading={loading}
           sendingData={sendingData}
+          showConfirmation={showConfirmation}
         />
       )
     }
@@ -290,10 +294,20 @@ const SendLaughter = () => {
       return
     }
 
-    console.log('send data: ', sendingData)
     laughterService.sendVideoToEmail(sendingData).then(res => {
-      console.log('sentEmail: ', res)
-      setSent(true);
+      const success = res?.success
+      const videos = res?.videos
+      if (success && videos === "OK") {
+        setSent(true);
+        setShowConfirmation(true)
+        setTimeout(() => {
+          setShowConfirmation(false)
+          history.push("/laughter")
+        }, 3000);
+      } else {
+        setShowConfirmation(false)
+        return;
+      }
     })
   }
 
@@ -316,6 +330,12 @@ const SendLaughter = () => {
           </button>
         </div>
       )}
+
+
+      {
+        showConfirmation && <SendConfirmation />
+      }
+
       {/*
       <div className="flex flex-nowrap">
          <Steps
@@ -333,34 +353,39 @@ const SendLaughter = () => {
         */}
       <div className="mt-2 md:my-0 md:mt-0">{steps[current].content}</div>
 
-      {!loading && (
-        <div className="steps-action">
-          {current < steps.length - 1 && dataSource.length > 0 && (
-            <Button
-              className="bg-blue-500 text-white w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800"
-              onClick={() => next()}
-            >
-              Next
-            </Button>
-          )}
-          {current === steps.length - 1 && (
-            <Button
-              disabled={sent}
-              className={`${sent ? "bg-green-500" : "bg-blue-500"} text-white w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800`}
-              onClick={() => submitLaughterData()}>
-              {sent ? "Sent" : "Done"}
-            </Button>
-          )}
-          {current > 0 && (
-            <Button
-              className="bg-gray-200 mx-3 text-black w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200"
-              onClick={() => prev()}
-            >
-              Previous
-            </Button>
-          )}
-        </div>
-      )}
+      {
+        showConfirmation ? "" : (
+          !loading && (
+            <div className="steps-action">
+              {current < steps.length - 1 && dataSource.length > 0 && (
+                <Button
+                  className="bg-blue-500 text-white w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800"
+                  onClick={() => next()}
+                >
+                  Next
+                </Button>
+              )}
+              {current === steps.length - 1 && (
+                <Button
+                  disabled={sent}
+                  className={`${sent ? "bg-green-500" : "bg-blue-500"} text-white w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800`}
+                  onClick={() => submitLaughterData()}>
+                  {sent ? "Sent" : "Done"}
+                </Button>
+              )}
+              {current > 0 && (
+                <Button
+                  className="bg-gray-200 mx-3 text-black w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200"
+                  onClick={() => prev()}
+                >
+                  Previous
+                </Button>
+              )}
+            </div>
+          )
+        )
+      }
+
     </div>
   )
 }
