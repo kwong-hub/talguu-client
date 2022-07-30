@@ -49,10 +49,11 @@ const SendLaughter = () => {
 
   const [isPlaying, setIsPlaying] = useState(false)
   const [isPlayerEnded, setIsPlayerEnded] = useState(false)
-  const [showOverlayText, setShowOverlayText] = useState(true)
+  const [showOverlayText, setShowOverlayText] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false)
 
-  const overlayShowTime = 5
+  let isShowingText = false;
+
 
   useEffect(() => {
     if (vidId) {
@@ -90,21 +91,31 @@ const SendLaughter = () => {
   const handlePlayerReady = (player) => {
     playerRef.current = player
 
-    var myInterval = setInterval(() => {
-      if (player) {
-        if (player.currentTime() > overlayShowTime) {
-          setShowOverlayText(false)
-          clearInterval(myInterval)
+    player.ready(function () {
+      this.on('timeupdate', function () {
+        // console.log("currentTIme: ", this.currentTime())
+
+        if(this.currentTime() > 0 && this.currentTime() < 1 ){
+          if(!isShowingText){
+            setShowOverlayText(true)
+            isShowingText = true
+          }
         }
-      }
-    }, 1000)
+        else if (this.currentTime() > 5) {
+          if(isShowingText){
+            setShowOverlayText(false)
+            isShowingText = false
+          }
+        }
+      })
+    });
 
     player.on('pause', () => {
-      player.log('player paused')
+      // player.log('player paused')
       setIsPlaying(false)
     })
     player.on('play', () => {
-      player.log('player playing....')
+      // player.log('player playing....')
       setIsPlaying(true)
     })
     player.on('ended', () => {
@@ -118,11 +129,11 @@ const SendLaughter = () => {
     player.on('waiting', () => { })
 
     player.on('pause', () => {
-      player.log('player paused')
+      // player.log('player paused')
       setIsPlaying(false)
     })
     player.on('play', () => {
-      player.log('player playing....')
+      // player.log('player playing....')
       setIsPlaying(true)
     })
     player.on('ended', () => {
@@ -130,7 +141,7 @@ const SendLaughter = () => {
     })
 
     player.on('dispose', () => {
-      player.log('player will dispose')
+      // player.log('player will dispose')
     })
   }
 

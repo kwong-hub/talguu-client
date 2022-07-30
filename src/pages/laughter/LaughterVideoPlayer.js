@@ -14,7 +14,6 @@ import LaughterSideNav from './LaughterSideNav'
 import { FaPlayCircle } from 'react-icons/fa'
 import { laughterService } from '../../_services/laughter.service'
 
-import { useLocation } from 'react-router-dom'
 
 const LaughterVideoPlayer = () => {
   const history = useHistory()
@@ -35,20 +34,20 @@ const LaughterVideoPlayer = () => {
 
     // You can handle player events here, for example:
     player.on('waiting', () => {
-      player.log('player is waiting')
+      // player.log('player is waiting')
     })
 
     player.on('pause', () => {
-      player.log('player is paused')
+      // player.log('player is paused')
       setIsPlaying(false)
     })
     player.on('play', () => {
-      player.log('player is playing....')
+      // player.log('player is playing....')
       setIsPlaying(true)
     })
 
     player.on('dispose', () => {
-      player.log('player will dispose')
+      // player.log('player will dispose')
     })
   }
 
@@ -56,7 +55,7 @@ const LaughterVideoPlayer = () => {
     if (vidId) {
       const singleVideoLaughter = () => {
         laughterService.getLaughterVideoUrl(vidId).then((res) => {
-          console.log('res: ', res)
+          // console.log('res: ', res)
           if (res) {
             setLoading(false)
             setCurrentVideo(res)
@@ -69,13 +68,11 @@ const LaughterVideoPlayer = () => {
       singleVideoLaughter()
     }
 
-    window.scrollTo(0, 0)
   }, [])
 
   useEffect(() => {
     setPlayVideo(true)
     setRandomStr(new Date().getTime().toString())
-    window.scrollTo(0, 0)
     return () => {}
   }, [currentVideo])
 

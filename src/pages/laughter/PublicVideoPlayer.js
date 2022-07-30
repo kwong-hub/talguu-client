@@ -35,10 +35,10 @@ const PublicVideoPlayer = () => {
   const [showOverlayText, setShowOverlayText] = useState(true)
 
   const playerRef = React.useRef(null)
+  let isShowingText = false;
 
   const history = useHistory()
 
-  const overlayShowTime = 5
 
 
   useEffect(() => {
@@ -77,14 +77,24 @@ const PublicVideoPlayer = () => {
 
   const handlePlayerReadyPublic = (player) => {
 
-    var myInterval = setInterval((player) => {
-      if (player) {
-        if (player.currentTime() > overlayShowTime) {
-          setShowOverlayText(false)
-          clearInterval(myInterval)
+    player.ready(function () {
+      this.on('timeupdate', function () {
+
+        if (this.currentTime() > 0 && this.currentTime() < 1) {
+          if (!isShowingText) {
+            setShowOverlayText(true)
+            isShowingText = true
+          }
         }
-      }
-    }, 1000)
+        else if (this.currentTime() > 5) {
+          if (isShowingText) {
+            setShowOverlayText(false)
+            isShowingText = false
+          }
+        }
+      })
+    });
+
     playerRef.current = player
     player.on('waiting', () => {
     })
@@ -107,14 +117,25 @@ const PublicVideoPlayer = () => {
 
   const handlePlayPause = () => {
     const player = playerRef.current
-    var myInterval = setInterval(() => {
-      if (player) {
-        if (player.currentTime() > overlayShowTime) {
-          setShowOverlayText(false)
-          clearInterval(myInterval)
+
+    player.ready(function () {
+      this.on('timeupdate', function () {
+        // console.log("currentTIme: ", this.currentTime())
+
+        if (this.currentTime() > 0 && this.currentTime() < 1) {
+          if (!isShowingText) {
+            setShowOverlayText(true)
+            isShowingText = true
+          }
         }
-      }
-    }, 1000)
+        else if (this.currentTime() > 5) {
+          if (isShowingText) {
+            setShowOverlayText(false)
+            isShowingText = false
+          }
+        }
+      })
+    });
 
     if (isPlaying) {
       player.pause()

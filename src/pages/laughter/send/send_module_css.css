@@ -20,9 +20,19 @@
    display: flex;
   align-items: center;
   justify-content: center;
- width: 340px; /* 30% of 1080 */
+   width: 340px; /* 30% of 1080 */
   height:630px; 
 }
+
+
+@media only screen and (min-width:768px) {
+  .sender_player_style {
+    width: 270px !important;  /* 30% of 1080 */
+    height:480px !important;  /* 30% of 1920 */;
+}
+}
+
+
 #canvas {
   background-color: aqua;
 }

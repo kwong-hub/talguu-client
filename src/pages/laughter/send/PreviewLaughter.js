@@ -18,10 +18,9 @@ const PreviewLaughter = ({
   // 3. then play video only
   // 4.
 
-  useEffect(() => {
-    console.log('showOverlayText: ', showOverlayText)
-    
-  }, [showOverlayText])
+
+  // console.log("sendingData: ", sendingData)
+
 
   const renderPlayer = () => {
     const videoJsOptions = {
@@ -49,7 +48,7 @@ const PreviewLaughter = ({
           {showOverlayText && !loading && (
             <div className="absolute mx-auto top-1/2 h-1/2 break-all overflow-hidden text-center w-full">
               <span className="animate-charcter text-center mx-auto break-all">
-                {sendingData ? sendingData.message : ''}
+                {sendingData ? sendingData.msg : ''}
               </span>
             </div>
           )}
