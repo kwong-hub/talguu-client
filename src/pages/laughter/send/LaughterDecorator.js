@@ -66,7 +66,7 @@ const LaughterDecorator = ({
           {/* replace carousel here */}
 
           {loading ? (
-            <div className="w-screen mx-auto mt-40">
+            <div className="w-screen h-96 mt-60 mb-14">
                 <Spin size="large" />
             </div>
           ) : dataSource.length > 0 ? (

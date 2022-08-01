@@ -95,14 +95,14 @@ const SendLaughter = () => {
       this.on('timeupdate', function () {
         // console.log("currentTIme: ", this.currentTime())
 
-        if(this.currentTime() > 0 && this.currentTime() < 1 ){
-          if(!isShowingText){
+        if (this.currentTime() > 0.5 && this.currentTime() < 1) {
+          if (!isShowingText) {
             setShowOverlayText(true)
             isShowingText = true
           }
         }
         else if (this.currentTime() > 5) {
-          if(isShowingText){
+          if (isShowingText) {
             setShowOverlayText(false)
             isShowingText = false
           }
@@ -313,7 +313,10 @@ const SendLaughter = () => {
         setShowConfirmation(true)
         setTimeout(() => {
           setShowConfirmation(false)
-          history.push("/laughter")
+          history.push({
+            pathname: "/laughter",
+            search: `videoId=${vidId}`,
+          })
         }, 3000);
       } else {
         setShowConfirmation(false)
@@ -366,34 +369,35 @@ const SendLaughter = () => {
 
       {
         showConfirmation ? "" : (
-          !loading && (
-            <div className="steps-action">
-              {current < steps.length - 1 && dataSource.length > 0 && (
-                <Button
-                  className="bg-blue-500 text-white w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800"
-                  onClick={() => next()}
-                >
-                  Next
-                </Button>
-              )}
-              {current === steps.length - 1 && (
-                <Button
-                  disabled={sent}
-                  className={`${sent ? "bg-green-500" : "bg-blue-500"} text-white w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800`}
-                  onClick={() => submitLaughterData()}>
-                  {sent ? "Sent" : "Done"}
-                </Button>
-              )}
-              {current > 0 && (
-                <Button
-                  className="bg-gray-200 mx-3 text-black w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200"
-                  onClick={() => prev()}
-                >
-                  Previous
-                </Button>
-              )}
-            </div>
-          )
+          <div className="steps-action">
+            {current < steps.length - 1 && dataSource.length > 0 && (
+              <Button
+                disabled={loading}
+                className="bg-blue-500 text-white w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800"
+                onClick={() => next()}
+              >
+                Next
+              </Button>
+            )}
+            {current === steps.length - 1 && (
+              <Button
+                disabled={sent}
+                className={`${sent ? "bg-green-500" : "bg-blue-500"} text-white w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800`}
+                onClick={() => submitLaughterData()}>
+                {sent ? "Sent" : "Done"}
+              </Button>
+            )}
+            {current > 0 && (
+              <Button
+                disabled={loading}
+                className="bg-gray-200 mx-3 text-black w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200"
+                onClick={() => prev()}
+              >
+                Previous
+              </Button>
+            )}
+          </div>
+
         )
       }
 

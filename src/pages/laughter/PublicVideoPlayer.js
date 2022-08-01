@@ -80,7 +80,7 @@ const PublicVideoPlayer = () => {
     player.ready(function () {
       this.on('timeupdate', function () {
 
-        if (this.currentTime() > 0 && this.currentTime() < 1) {
+        if (this.currentTime() > 0.5 && this.currentTime() < 1) {
           if (!isShowingText) {
             setShowOverlayText(true)
             isShowingText = true

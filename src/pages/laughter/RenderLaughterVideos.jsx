@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import './custom_player_style.css'
 import LaughterPlayerModal from './LaughterPlayerModal'
@@ -25,6 +25,10 @@ const RenderLaughterVideos = ({
 
   const { showVideoPlayer } = useSelector((state) => state.showPlayer)
   const dispatch = useDispatch()
+
+  const search = useLocation().search
+
+  const vidId = new URLSearchParams(search).get('videoId')
 
 
   const watchVideo = (video) => {
@@ -121,7 +125,7 @@ const RenderLaughterVideos = ({
         {
           showVideoPlayer ?
           <LaughterPlayerModal  
-            videoId={videoId}
+            videoId={videoId ? videoId : vidId }
           />
           :""
         }

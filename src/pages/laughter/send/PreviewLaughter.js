@@ -58,7 +58,7 @@ const PreviewLaughter = ({
   }
 
   return (
-    <div className="w-full md:w-72 mx-auto">
+    <div className="flex flex-col w-full h-full items-center">
       {showConfirmation ? "" : (
         <>
           <p className="text-sm font-bold mb-2 md:mb-1">Preview</p>
@@ -67,7 +67,7 @@ const PreviewLaughter = ({
             {playVideo && introVideoUrl ? (
               renderPlayer()
             ) : (
-              <div className="w-full mx-auto mt-40">
+                <div className="w-screen h-96 mt-10 md:mb-14 mb-52 pt-44">
                 <Spin size="large" />
               </div>
             )}

@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux'
 import { hideVideoModal } from '../../redux/reducers/custom.reducer'
 import { BsFillArrowLeftCircleFill } from 'react-icons/bs'
 
+import { LoadingOutlined } from '@ant-design/icons';
 
 const LaughterPlayerModal = ({
 
@@ -26,17 +27,19 @@ const LaughterPlayerModal = ({
     const [loading, setLoading] = useState(true)
     const [playVideo, setPlayVideo] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false)
+    const [videoStarted, setVideoStarted] = useState(false)
  
     const playerRef = React.useRef(null)
     // const { showVideoPlayer } = useSelector((state) => state.showPlayer)
     const dispatch = useDispatch()
 
 
+    const antIcon = (<LoadingOutlined style={{ fontSize: 30, }} spin />)
+
     useEffect(() => {
         if (videoId) {
             const singleVideoLaughter = () => {
                 laughterService.getLaughterVideoUrl(videoId).then((res) => {
-                    console.log('res: ', res)
                     if (res) {
                         setLoading(false)
                         setCurrentVideo(res)
@@ -63,6 +66,19 @@ const LaughterPlayerModal = ({
     const handlePlayerReady = (player) => {
         playerRef.current = player
 
+        player.ready(function () {
+            this.on('timeupdate', function () {
+
+                if (this.currentTime() > 0) {
+                    if (!videoStarted) {
+                        setVideoStarted(true)
+                    }
+                }else{
+                    setVideoStarted(false)
+                }
+               
+            })
+        });
         
         // You can handle player events here, for example:
         player.on('waiting', () => {
@@ -241,7 +257,7 @@ const LaughterPlayerModal = ({
                             renderPlayer()
                         ) : // <div>This is the test div</div>
                             loading ? (
-                                <div className="w-screen mx-auto mt-60">
+                                <div className="w-screen mt-60 items-center justify-center">
                                     <Spin size="large" />
                                 </div>
                             ) : (
