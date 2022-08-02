@@ -46,7 +46,7 @@ const WatchVideo = () => {
   const viewerVideos = useSelector((state) => state.video.viewerVideos)
   const errorMessage = useSelector((state) => state.video.errMessages)
   const commentRef = useRef()
-
+  
   const user = JSON.parse(localStorage.getItem('user'))
 
  
@@ -306,19 +306,18 @@ const WatchVideo = () => {
         <div className="relative sm:static player_container bg-white mt-10 sm:mt-0">
           <div
             key={randomStr}
-            className="pt-2 sm:pt-0 fixed left-0 right-0 top-12 sm:top-0 sm:static bg-white flex sm:mx-1 z-10 sm:-z-10"
+            className="pt-2 sm:pt-0 fixed left-0 right-0 top-12 sm:top-0 sm:static bg-white flex flex-col sm:mx-1 z-10 sm:-z-10"
           >
             <VideoPlayer {...videoJsOptions}></VideoPlayer>
-          </div>
-          <div className="flex-col mx-1 mt-44 sm:mt-6 player_details">
-            <div className="w-full flex justify-between">
-              <div className="text-gray-800 lg:text-xl text-md  text-left py-5 md:py-0 mt-4 md:mt-0">
+
+            <div className="w-full flex justify-between md:mt-3">
+              <div className="text-gray-800 lg:text-xl text-md  text-left py-3 md:py-0 md:mt-0">
                 {currentVideo?.title}
               </div>
               {currentVideo.paid || (user && user.role !== 'VIEWER') ? (
                 ''
               ) : (
-                <div className="py-5 md:py-0 lg:py-0 mt-4 md:mt-0 lg:mt-0">
+                <div className="py-3 md:py-0 lg:py-0 md:mt-0 lg:mt-0">
                   <Button
                     type="primary"
                     onClick={(event) =>
@@ -331,13 +330,15 @@ const WatchVideo = () => {
                 </div>
               )}
             </div>
+         </div>
+          <div className="flex-col mx-1 mt-44 sm:mt-6 player_details">
             <div className="flex justify-between text-gray-800 text-2xl w-full text-left px-3 md:py-3 lg:py-3">
               <div className="flex items-end">
                 <span className="text-gray-500 text-sm">
                   {currentVideo?.viewCount}
                   {currentVideo?.viewCount <= 1 ? ' view' : ' views'}
                 </span>
-                <span className="text-gray-600 ml-4 text-sm">
+                <span className="text-gray-500 ml-4 text-sm">
                   {currentVideo?.streamed ? 'Streamed at ' : ''}
                   {moment(currentVideo?.premiered).format('MMM DD, YYYY')}
                 </span>
@@ -409,6 +410,7 @@ const WatchVideo = () => {
               </div>
             </div>
           </div>
+    
         </div>
       )
     }
@@ -463,12 +465,10 @@ const WatchVideo = () => {
             renderPlayer()
           ) : (
             <div className="w-screen mx-auto mt-40">
-              <Space size="middle">
                 <Spin size="large" />
-              </Space>
             </div>
           )}
-          <div className="flex relative lg:absolute right-0  bottom-0 border-2 mt-4 lg:top-10 lg:flex-col lg:ml-0 flex-wrap lg:flex-nowrap videos_container border-white">
+          <div className="flex relative lg:absolute right-0 md:mt-10 bottom-0 border-2 mt-4 lg:top-10 lg:flex-col lg:ml-0 flex-wrap lg:flex-nowrap videos_container border-white">
             {renderVideos()}
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { Space, Spin } from 'antd'
+import { Spin } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { FaPlayCircle } from 'react-icons/fa'
 import { IoSendSharp } from 'react-icons/io5'
@@ -13,7 +13,6 @@ import { useDispatch } from 'react-redux'
 import { hideVideoModal } from '../../redux/reducers/custom.reducer'
 import { BsFillArrowLeftCircleFill } from 'react-icons/bs'
 
-import { LoadingOutlined } from '@ant-design/icons';
 
 const LaughterPlayerModal = ({
 
@@ -34,7 +33,20 @@ const LaughterPlayerModal = ({
     const dispatch = useDispatch()
 
 
-    const antIcon = (<LoadingOutlined style={{ fontSize: 30, }} spin />)
+    useEffect(()=> {
+
+        return history.listen((location) => {
+            const _pathName = location.pathname
+            console.log("pathname: ", _pathName)
+            if (_pathName === "/" || _pathName === "/saved_later" || _pathName === "/purchased_playlist" || _pathName === "/settings" || _pathName ==="/live_video" || _pathName==="/login"){
+                dispatch(hideVideoModal())
+                document.body.style.overflow = 'unset'
+            }
+           
+        })
+
+    }, [history])
+
 
     useEffect(() => {
         if (videoId) {

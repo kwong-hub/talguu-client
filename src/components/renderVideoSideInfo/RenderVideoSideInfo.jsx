@@ -64,6 +64,7 @@ function RenderVideoSideInfo(props) {
               ? props.video.main_gif || ''
               : props.video.trailer_gif || ''
           }
+          alt=""
           className="hidden h-28 video_gif mx-auto"
         />
         <div className="absolute thumbnail_button_container">
@@ -130,10 +131,10 @@ function RenderVideoSideInfo(props) {
           {props.video.title}
         </h4>
         <div className="flex">
-          <span className="flex items-center text-gray-400 cursor-pointer hover:text-blue-400 text-md">
+          <span className="flex items-center text-gray-500 cursor-pointer hover:text-blue-400 text-md">
             {props.video.viewCount} views
           </span>
-          <span className="hover:text-blue-400 text-md ml-2 self-end">
+          <span className="hover:text-blue-400 text-sm ml-2 self-end text-gray-500">
             {moment(props.video?.premiered).format('MMM DD, YYYY')}
           </span>
         </div>

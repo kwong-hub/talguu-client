@@ -104,15 +104,17 @@ const SideNav = (props) => {
           </Link>
         </Menu.Item>
       )}
+        {!user && (
+            <Menu.Item key="222">
+              <Link to="/login">
+                <div className="flex flex-col items-center justify-center">
+                  <FaSignInAlt className={menuIconStyle} />
+                  <span className={menuTextStyle}>Login</span>
+                </div>
+              </Link>
+            </Menu.Item>
+      )}
 
-      <Menu.Item key="22">
-        <Link to="/live_video">
-          <div className="flex flex-col items-center justify-center">
-            <FaLifeRing className={menuIconStyle} />
-            <span className={menuTextStyle}>Live</span>
-          </div>
-        </Link>
-      </Menu.Item>
       {user ? (
         <>
           {user.role === 'VIEWER' ? (
@@ -131,6 +133,21 @@ const SideNav = (props) => {
           ) : (
             ''
           )}
+
+            {
+              user.role === 'VIEWER' ? (
+              <Menu.Item key="22">
+                <Link to="/live_video">
+                  <div className="flex flex-col items-center justify-center">
+                    <FaLifeRing className={menuIconStyle} />
+                    <span className={menuTextStyle}>Live</span>
+                  </div>
+                </Link>
+              </Menu.Item>
+              ): (
+                ''
+                )}
+
           {user.role === 'VIEWER' ? (
             <Menu.Item key="3">
               <Link to="/saved_later">
