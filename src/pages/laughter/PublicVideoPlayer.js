@@ -220,12 +220,16 @@ const PublicVideoPlayer = () => {
           </div>
 
           {showOverlayText && (
-            <div className="overlay_text_style">
-              <h1 className="text-white animate-charcter">
+            <div className="absolute mx-auto top-1/2 h-1/2 break-all overflow-hidden text-center w-full">
+              <span className="text-4xl font-black text-center mx-auto break-all"
+                style={{
+                  color: currentVideo.colorCode,
+                  fontFamily: 'Josefin Sans',
+                }}>
                 {currentVideo.specialMessage
                   ? currentVideo.specialMessage
                   : ''}
-              </h1>
+              </span>
             </div>
           )}
 
@@ -252,15 +256,12 @@ const PublicVideoPlayer = () => {
           renderPlayer()
         ) : loading ? (
           <div className="w-screen mx-auto mt-40">
-            <Space size="middle">
               <Spin size="large" />
-            </Space>
+
           </div>
         ) : (
           <div className="w-screen mx-auto mt-40">
-            <Space size="middle">
               <Spin size="large" />
-            </Space>
           </div>
         )}
       </div>

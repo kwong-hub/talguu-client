@@ -22,7 +22,7 @@ function logout(redirectUrl = '') {
   if (redirectUrl) {
     history.push({ pathname: '/', search: `?redirectUrl=${redirectUrl}` })
   } else {
-    history.replace({ pathname: '/login' })
+    history.push({ pathname: '/' })
   }
   localStorage.removeItem('user')
   history.go(0)

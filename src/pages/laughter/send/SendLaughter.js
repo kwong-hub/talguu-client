@@ -43,6 +43,7 @@ const SendLaughter = () => {
 
   const [receiverEmail, setReceiverEmail] = useState('')
   const [specialMessage, setSpecialMessage] = useState('')
+  const [textColor, setTextColor] = useState('')
 
   const [sendingData, setSendingData] = useState({})
   const [decoratorId, setDecoratorId] = useState("")
@@ -59,7 +60,7 @@ const SendLaughter = () => {
     if (vidId) {
       const singleVideoLaughter = () => {
         laughterService.getLaughterVideoUrl(vidId).then((res) => {
-          console.log('res: ', res)
+          // console.log('res: ', res)
           if (res) {
             setLoading(false)
             setCurrentVideo(res)
@@ -182,6 +183,8 @@ const SendLaughter = () => {
           specialMessage={specialMessage}
           setReceiverEmail={setReceiverEmail}
           setSpecialMessage={setSpecialMessage}
+          textColor={textColor}
+          setTextColor={setTextColor}
         />
       )
     },
@@ -213,6 +216,7 @@ const SendLaughter = () => {
           loading={loading}
           sendingData={sendingData}
           showConfirmation={showConfirmation}
+          textColor={textColor}
         />
       )
     }
@@ -263,7 +267,8 @@ const SendLaughter = () => {
     const body = {
       msg: specialMessage,
       mainVideoId: vidId,
-      introVideoId: decoratorId
+      introVideoId: decoratorId,
+      colorCode: textColor,
     }
 
     setSendingData(body)
@@ -287,16 +292,6 @@ const SendLaughter = () => {
         setIntroVideoUrl("")
       }
     })
-  }
-
-  const isEmail = (val) => {
-    let regEmail =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    if (regEmail.test(val)) {
-      return true
-    } else {
-      return false
-    }
   }
 
   const submitLaughterData = () => {

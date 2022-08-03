@@ -10,7 +10,8 @@ const PreviewLaughter = ({
   showOverlayText,
   loading,
   sendingData,
-  showConfirmation
+  showConfirmation,
+  textColor,
 }) => {
   // steps to follow
   // 1. play a decorator video
@@ -47,7 +48,11 @@ const PreviewLaughter = ({
 
           {showOverlayText && !loading && (
             <div className="absolute mx-auto top-1/2 h-1/2 break-all overflow-hidden text-center w-full">
-              <span className="animate-charcter text-center mx-auto break-all">
+              <span className="text-4xl font-black text-center mx-auto break-all"
+                style={{
+                  color: textColor,
+                  fontFamily:'Josefin Sans',
+                }}>
                 {sendingData ? sendingData.msg : ''}
               </span>
             </div>
@@ -67,7 +72,7 @@ const PreviewLaughter = ({
             {playVideo && introVideoUrl ? (
               renderPlayer()
             ) : (
-                <div className="w-screen h-96 mt-10 md:mb-14 mb-52 pt-44">
+              <div className="w-screen h-96 mt-10 md:mb-14 mb-52 pt-44">
                 <Spin size="large" />
               </div>
             )}

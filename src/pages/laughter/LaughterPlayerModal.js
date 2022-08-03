@@ -37,7 +37,6 @@ const LaughterPlayerModal = ({
 
         return history.listen((location) => {
             const _pathName = location.pathname
-            console.log("pathname: ", _pathName)
             if (_pathName === "/" || _pathName === "/saved_later" || _pathName === "/purchased_playlist" || _pathName === "/settings" || _pathName ==="/live_video" || _pathName==="/login"){
                 dispatch(hideVideoModal())
                 document.body.style.overflow = 'unset'
@@ -50,6 +49,7 @@ const LaughterPlayerModal = ({
 
     useEffect(() => {
         if (videoId) {
+            setLoading(true)
             const singleVideoLaughter = () => {
                 laughterService.getLaughterVideoUrl(videoId).then((res) => {
                     if (res) {
@@ -94,26 +94,25 @@ const LaughterPlayerModal = ({
         
         // You can handle player events here, for example:
         player.on('waiting', () => {
-            player.log('player is waiting')
+            // player.log('player is waiting')
         })
 
         player.on('pause', () => {
-            player.log('player is paused')
+            // player.log('player is paused')
             setIsPlaying(false)
         })
         player.on('play', () => {
-            player.log('player is playing....')
+            // player.log('player is playing....')
             setIsPlaying(true)
         })
 
         player.on('dispose', () => {
-            player.log('player will dispose')
+            // player.log('player will dispose')
         })
     }
 
     const handlePlayPause = () => {
         const player = playerRef.current
-
         if (isPlaying) {
             player.pause()
             //    setIsPlaying()
@@ -123,14 +122,11 @@ const LaughterPlayerModal = ({
     }
 
     const handleSendLaughter = (currentVideo) => {
-
         const user = JSON.parse(localStorage.getItem('user'))
-
         if (!user || user.role !== 'VIEWER') {
             history.push({
                 pathname: '/login',
                 search: `?return_url=/laughter/send/${currentVideo.id}`,
-
             })
         } else {
             history.push({
@@ -139,6 +135,7 @@ const LaughterPlayerModal = ({
             })
         }
     }
+
 
     const handlers = useSwipeable({
         onSwipedLeft: () => {
@@ -264,18 +261,17 @@ const LaughterPlayerModal = ({
                     className="w-full h-screen md:bg-transparent bg-black flex flex-col items-center justify-center"
                 >
 
-                    <div className="player_content">
-                        {playVideo && currentVideo ? (
-                            renderPlayer()
-                        ) : // <div>This is the test div</div>
-                            loading ? (
-                                <div className="w-screen mt-60 items-center justify-center">
-                                    <Spin size="large" />
-                                </div>
-                            ) : (
-                                ''
-                            )}
-                    </div>
+                    {
+                        loading ?  
+                            <div className="w-screen flex items-center justify-center">
+                                <Spin size="large" />
+                            </div>
+                        : <div className="player_content">
+                            {playVideo && currentVideo ? (
+                                renderPlayer()
+                            ): ''}
+                        </div>
+                    }
                 </div>
             </div>
         </div>

@@ -34,7 +34,7 @@ const SideNav = (props) => {
   const user = JSON.parse(localStorage.getItem('user'))
   const [searchVisible, setSearchVisible] = useState(false)
 
-  const handleMenuClick = () => {}
+  const handleMenuClick = () => { }
 
   const onSearch = (values) => {
     history.push({
@@ -58,10 +58,14 @@ const SideNav = (props) => {
         <span className="text-gray-600 text-sm ">{user?.email}</span>
       </div>
       <Menu className="text-md">
-        <Menu.Item className="hover:bg-gray-300">
+        <Menu.Item
+          key="account"
+          className="hover:bg-gray-300">
           <Link to="/account">Account</Link>
         </Menu.Item>
-        <Menu.Item className="hover:bg-gray-300">
+        <Menu.Item
+          key="logout" 
+          className="hover:bg-gray-300">
           <Link to="" onClick={(e) => logout()}>
             Sign Out
           </Link>
@@ -104,15 +108,15 @@ const SideNav = (props) => {
           </Link>
         </Menu.Item>
       )}
-        {!user && (
-            <Menu.Item key="222">
-              <Link to="/login">
-                <div className="flex flex-col items-center justify-center">
-                  <FaSignInAlt className={menuIconStyle} />
-                  <span className={menuTextStyle}>Login</span>
-                </div>
-              </Link>
-            </Menu.Item>
+      {!user && (
+        <Menu.Item key="222">
+          <Link to="/login">
+            <div className="flex flex-col items-center justify-center">
+              <FaSignInAlt className={menuIconStyle} />
+              <span className={menuTextStyle}>Login</span>
+            </div>
+          </Link>
+        </Menu.Item>
       )}
 
       {user ? (
@@ -134,8 +138,8 @@ const SideNav = (props) => {
             ''
           )}
 
-            {
-              user.role === 'VIEWER' ? (
+          {
+            user.role === 'VIEWER' ? (
               <Menu.Item key="22">
                 <Link to="/live_video">
                   <div className="flex flex-col items-center justify-center">
@@ -144,9 +148,9 @@ const SideNav = (props) => {
                   </div>
                 </Link>
               </Menu.Item>
-              ): (
-                ''
-                )}
+            ) : (
+              ''
+            )}
 
           {user.role === 'VIEWER' ? (
             <Menu.Item key="3">
@@ -269,19 +273,23 @@ const SideNav = (props) => {
               onClick={() => toggleSearch()}
               className="p-2 text-4xl text-blue-500"
             />
-            <Dropdown
-              overlay={accountMenu}
-              placement="bottomRight"
-              trigger={['click']}
-              arrow
-            >
-              <span
-                className="ant-dropdown-link"
-                onClick={(e) => e.preventDefault()}
-              >
-                <FaUser className="p-2 text-4xl text-blue-500 mr-4" />
-              </span>
-            </Dropdown>
+            {
+              user && (
+                <Dropdown
+                  overlay={accountMenu}
+                  placement="bottomRight"
+                  trigger={['click']}
+                  arrow
+                >
+                  <span
+                    className="ant-dropdown-link"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    <FaUser className="p-2 text-4xl text-blue-500 mr-4" />
+                  </span>
+                </Dropdown>
+              )
+            }
           </div>
         </div>
         <div className="block sm:flex  justify-between items-center">
@@ -315,9 +323,8 @@ const SideNav = (props) => {
       </div>
       <ul className="bg-white w-14 min-h-full fixed left-0 top-0 list-disc space-y-5 p-1 border-r hidden sm:block pt-5">
         <li
-          className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-            location.pathname === '/' ? 'bg-gray-300' : ''
-          }`}
+          className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${location.pathname === '/' ? 'bg-gray-300' : ''
+            }`}
         >
           <Link to="/">
             <Tooltip
@@ -335,14 +342,13 @@ const SideNav = (props) => {
 
         {!user && (
           <li
-            className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-              location.pathname === '/laughter-home' ? 'bg-gray-300' : ''
-            }`}
+            className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${location.pathname === '/laughter-home' ? 'bg-gray-300' : ''
+              }`}
           >
             <Link
               to={{
                 pathname: '/laughter-home',
-                
+
               }}
             >
               <Tooltip
@@ -365,14 +371,13 @@ const SideNav = (props) => {
               <>
                 {/* authenticated laughter begins  */}
                 <li
-                  className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                    location.pathname === '/laughter' ? 'bg-gray-300' : ''
-                  }`}
+                  className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${location.pathname === '/laughter' ? 'bg-gray-300' : ''
+                    }`}
                 >
                   <Link
                     to={{
                       pathname: '/laughter',
-                    
+
                     }}
                   >
                     <Tooltip placement="rightTop" title="Laughter">
@@ -386,9 +391,8 @@ const SideNav = (props) => {
                 </li>
                 {/* authenticated laughter ends */}
                 <li
-                  className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                    location.pathname === '/live_video' ? 'bg-gray-300' : ''
-                  }`}
+                  className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${location.pathname === '/live_video' ? 'bg-gray-300' : ''
+                    }`}
                 >
                   <Link to="/live_video">
                     <Tooltip placement="rightTop" title="Live Broadcast">
@@ -401,9 +405,8 @@ const SideNav = (props) => {
                   </Link>
                 </li>
                 <li
-                  className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                    location.pathname === '/saved_later' ? 'bg-gray-300' : ''
-                  }`}
+                  className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${location.pathname === '/saved_later' ? 'bg-gray-300' : ''
+                    }`}
                 >
                   <Link to="/saved_later">
                     <Tooltip placement="rightTop" title="Saved Videos">
@@ -416,11 +419,10 @@ const SideNav = (props) => {
                   </Link>
                 </li>
                 <li
-                  className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                    location.pathname === '/purchased_playlist'
+                  className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${location.pathname === '/purchased_playlist'
                       ? 'bg-gray-300'
                       : ''
-                  }`}
+                    }`}
                 >
                   <Link to="/purchased_playlist">
                     <Tooltip placement="rightTop" title="Purchased Videos">
@@ -438,9 +440,8 @@ const SideNav = (props) => {
             )}
             {user.role === 'PRODUCER' ? (
               <li
-                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                  location.pathname === '/your_video' ? 'bg-gray-300' : ''
-                }`}
+                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${location.pathname === '/your_video' ? 'bg-gray-300' : ''
+                  }`}
               >
                 <Link to="/your_video">
                   <Tooltip placement="rightTop" title="List Video">
@@ -457,9 +458,8 @@ const SideNav = (props) => {
             )}
             {user.role === 'PRODUCER' ? (
               <li
-                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                  location.pathname === '/upload_video' ? 'bg-gray-300' : ''
-                }`}
+                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${location.pathname === '/upload_video' ? 'bg-gray-300' : ''
+                  }`}
               >
                 <Link to="/upload_video">
                   <Tooltip placement="rightTop" title="Upload Video">
@@ -476,9 +476,8 @@ const SideNav = (props) => {
             )}
             {user.role === 'PRODUCER' ? (
               <li
-                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                  location.pathname === '/live_stream' ? 'bg-gray-300' : ''
-                }`}
+                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${location.pathname === '/live_stream' ? 'bg-gray-300' : ''
+                  }`}
               >
                 <Link to="/live_stream">
                   <Tooltip placement="rightTop" title="Stream Video">
@@ -495,9 +494,8 @@ const SideNav = (props) => {
             )}
             {user.role === 'PRODUCER' ? (
               <li
-                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                  location.pathname === '/webcam' ? 'bg-gray-300' : ''
-                }`}
+                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${location.pathname === '/webcam' ? 'bg-gray-300' : ''
+                  }`}
               >
                 <Link to="/webcam">
                   <Tooltip placement="rightTop" title="Go Live">
@@ -514,9 +512,8 @@ const SideNav = (props) => {
             )}
             {user.role === 'PRODUCER' ? (
               <li
-                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                  location.pathname === '/conference' ? 'bg-gray-300' : ''
-                }`}
+                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${location.pathname === '/conference' ? 'bg-gray-300' : ''
+                  }`}
               >
                 <Link to="/conference">
                   <Tooltip placement="rightTop" title="Conference">
@@ -533,9 +530,8 @@ const SideNav = (props) => {
             )}
             {user.role === 'VIEWER' && (
               <li
-                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-                  location.pathname === '/settings' ? 'bg-gray-300' : ''
-                }`}
+                className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${location.pathname === '/settings' ? 'bg-gray-300' : ''
+                  }`}
               >
                 <Link to="/settings">
                   <Tooltip placement="rightTop" title="Settings">
@@ -551,9 +547,8 @@ const SideNav = (props) => {
           </>
         ) : (
           <li
-            className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${
-              location.pathname === '/login' ? 'bg-gray-300' : ''
-            }`}
+            className={`cursor-pointer flex items-center justify-center min-w-full rounded-xl h-10 hover:bg-gray-400 ${location.pathname === '/login' ? 'bg-gray-300' : ''
+              }`}
           >
             <Link to="/login">
               <Tooltip placement="rightTop" title="Login">

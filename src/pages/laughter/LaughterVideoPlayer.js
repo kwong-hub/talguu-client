@@ -150,7 +150,7 @@ const LaughterVideoPlayer = () => {
     if (currentVideo) {
       const videoJsOptions = {
         videoId: currentVideo.id,
-        autoplay: true,
+        autoplay: false,
         controls: false,
         errorDisplay: false,
         // poster: currentVideo?.thumbnial?.includes('talguu-vout1')

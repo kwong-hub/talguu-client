@@ -113,14 +113,14 @@ function RenderVideoSideInfo(props) {
               </div>
             )} */}
         {!props.video.paid ? (
-          <div className="flex items-center bg-white text-gray-700 rounded-sm absolute top-1 left-1 py-0 px-4">
-            <FaDollarSign className="text-gray-700 text-xs" />{' '}
+          <div className="flex items-center bg-transparent bg-gray-100 rounded-xl text-green-400  absolute top-1 left-1 py-0 px-1 md:text-xs text-sm font-medium  opacity-90 md:w-12 w-18">
+            <FaDollarSign className="text-green-400 md:text-sm text-sm" />{' '}
             {props.video?.video_price}
           </div>
         ) : (
           ''
         )}
-        <div className="flex items-center bg-white text-gray-700 rounded-sm absolute bottom-1 right-1 py-0 px-4">
+        <div className="flex items-center bg-gray-900 text-white  absolute bottom-1 front-semibold right-1 py-0 px-2 md:text-xs text-sm">
           {moment(duration.split('.')[0], [moment.ISO_8601, 'HH:mm:ss']).format(
             'H:m:ss'
           )}

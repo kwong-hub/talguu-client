@@ -46,6 +46,7 @@ import ProducerProfile from '../pages/laughter/producer/ProducerProfile'
 import SendLaughter from '../pages/laughter/send/SendLaughter'
 import PublicVideoPlayer from '../pages/laughter/PublicVideoPlayer'
 import Dashboard from '../pages/admin/Dashboard'
+import Users from '../pages/admin/Users'
 
 const Router = () => {
   return (
@@ -59,8 +60,8 @@ const Router = () => {
           <Route path="/watch/:vidId" component={WatchVideo} />
           <PrivateRoute path="/live_video" component={LiveVideos} />
 
-          {/* <Route exact path="/admin-dashboard" component={Dashboard} /> */}
-
+          <Route exact path="/admin-dashboard" component={Dashboard} />
+          <Route exact path="/admin-users" component={Users} />
 
           <Route
             exact
