@@ -7,7 +7,7 @@ import { config } from './swiperConfig'
 import VideoPlayer from './VideoPlayer'
 
 import talguuLogo from '../../assets/images/talguu_logo.png'
-import { Space, Spin } from 'antd'
+import { Spin } from 'antd'
 
 import './send/send_module_css.css'
 import { laughterService } from '../../_services/laughter.service'
@@ -25,7 +25,8 @@ const PublicVideoPlayer = () => {
     id: 1,
     video_link: '',
     video_type: 'application/x-mpegURL',
-    specialMessage: ''
+    specialMessage: '',
+    colorCode:''
   })
 
   const [randomStr, setRandomStr] = useState('')
@@ -48,10 +49,8 @@ const PublicVideoPlayer = () => {
 
 
   useEffect(() => {
-    publicLaughterVideoPlayer()
+    publicLaughterVideoPlayer()   
   }, [])
-
-
 
 
 
@@ -59,13 +58,16 @@ const PublicVideoPlayer = () => {
   const publicLaughterVideoPlayer = () => {
     setLoading(true)
     laughterService.getPublicLaughterVideoUrl(token, videoUrl).then(res => {
-      const { message, video_url } = res
+      const { message, video_url,colorCode } = res
+
       if (message && video_url) {
         setCurrentVideo((prev) => ({
           ...prev,
           specialMessage: message,
-          video_link: video_url
+          video_link: video_url,
+          colorCode:colorCode
         }))
+     
       } else {
         setCurrentVideo({})
       }
@@ -116,6 +118,8 @@ const PublicVideoPlayer = () => {
 
 
   const handlePlayPause = () => {
+
+    console.log("currentVideo", currentVideo)
     const player = playerRef.current
 
     player.ready(function () {
@@ -177,6 +181,8 @@ const PublicVideoPlayer = () => {
   }
 
   const renderPlayer = () => {
+
+    console.log(currentVideo)
     if (currentVideo) {
       const videoJsOptions = {
         videoId: currentVideo.id,
@@ -221,7 +227,7 @@ const PublicVideoPlayer = () => {
 
           {showOverlayText && (
             <div className="absolute mx-auto top-1/2 h-1/2 break-all overflow-hidden text-center w-full">
-              <span className="text-4xl font-black text-center mx-auto break-all"
+              <span className="text-4xl text-white font-black text-center mx-auto break-all"
                 style={{
                   color: currentVideo.colorCode,
                   fontFamily: 'Josefin Sans',
@@ -239,7 +245,7 @@ const PublicVideoPlayer = () => {
         </div>
       )
     } else {
-       <div className="w-full h-full flex items-center justify-center">
+      <div className="w-full h-full flex items-center justify-center">
         <p>{'There is no video to play'}</p>
       </div>
     }
@@ -251,20 +257,18 @@ const PublicVideoPlayer = () => {
       id="playerDiv"
       className="w-full h-screen bg-black md:bg-white lg:bg-white"
     >
-      <div className="player_content">
-        {playVideo && currentVideo ? (
-          renderPlayer()
-        ) : loading ? (
-          <div className="w-screen mx-auto mt-40">
-              <Spin size="large" />
-
+      {
+        loading ?
+          <div className="w-screen flex items-center justify-center">
+            <Spin size="large" />
           </div>
-        ) : (
-          <div className="w-screen mx-auto mt-40">
-              <Spin size="large" />
+          :
+          <div className="player_content">
+            {playVideo && currentVideo ? (
+              renderPlayer()
+            ) : ''}
           </div>
-        )}
-      </div>
+      }
     </div>
   )
 }

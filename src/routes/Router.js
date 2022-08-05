@@ -47,6 +47,10 @@ import SendLaughter from '../pages/laughter/send/SendLaughter'
 import PublicVideoPlayer from '../pages/laughter/PublicVideoPlayer'
 import Dashboard from '../pages/admin/Dashboard'
 import Users from '../pages/admin/Users'
+import ManageUserVideos from '../pages/admin/manageVideo/ManageUserVideos'
+import IntroVideos from '../pages/admin/manageIntroVideo/IntroVideos'
+import ManageLaughter from '../pages/admin/manageLaughter/ManageLaughter'
+import UploadIntroVideo from '../pages/admin/manageIntroVideo/UploadIntroVideo'
 
 const Router = () => {
   return (
@@ -60,8 +64,14 @@ const Router = () => {
           <Route path="/watch/:vidId" component={WatchVideo} />
           <PrivateRoute path="/live_video" component={LiveVideos} />
 
+          {/* Admin part */}
           <Route exact path="/admin-dashboard" component={Dashboard} />
           <Route exact path="/admin-users" component={Users} />
+          <Route exact path="/admin-user-videos" component={ManageUserVideos} />
+          <Route exact path="/admin-intro-videos" component={IntroVideos} />
+          <Route exact path="/admin-laughters" component={ManageLaughter} />
+          <Route exact path="/admin-upload-intro-video" component={UploadIntroVideo} />
+
 
           <Route
             exact
