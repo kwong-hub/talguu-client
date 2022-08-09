@@ -21,12 +21,14 @@ const PublicVideoPlayer = () => {
   const videoUrl = new URLSearchParams(search).get('vdy')
 
 
+
   const [currentVideo, setCurrentVideo] = useState({
     id: 1,
     video_link: '',
     video_type: 'application/x-mpegURL',
     specialMessage: '',
-    colorCode:''
+    colorCode:'',
+    textSize: ''
   })
 
   const [randomStr, setRandomStr] = useState('')
@@ -45,6 +47,7 @@ const PublicVideoPlayer = () => {
   useEffect(() => {
     setPlayVideo(true)
     setRandomStr(new Date().getTime().toString())
+
   }, [currentVideo])
 
 
@@ -58,14 +61,15 @@ const PublicVideoPlayer = () => {
   const publicLaughterVideoPlayer = () => {
     setLoading(true)
     laughterService.getPublicLaughterVideoUrl(token, videoUrl).then(res => {
-      const { message, video_url,colorCode } = res
+      const { message, video_url,colorCode, textSize } = res
 
       if (message && video_url) {
         setCurrentVideo((prev) => ({
           ...prev,
           specialMessage: message,
           video_link: video_url,
-          colorCode:colorCode
+          colorCode:colorCode,
+          textSize
         }))
      
       } else {
@@ -226,11 +230,12 @@ const PublicVideoPlayer = () => {
           </div>
 
           {showOverlayText && (
-            <div className="absolute mx-auto top-1/2 h-1/2 break-all overflow-hidden text-center w-full">
-              <span className="text-4xl text-white font-black text-center mx-auto break-all"
+            <div className="absolute mx-auto top-1/2 h-1/2 break-all overflow-hidden text-center w-full md:72">
+              <span className=" text-white font-black text-center mx-auto break-all"
                 style={{
                   color: currentVideo.colorCode,
                   fontFamily: 'Josefin Sans',
+                  fontSize: `${currentVideo.textSize}px`,
                 }}>
                 {currentVideo.specialMessage
                   ? currentVideo.specialMessage
@@ -259,7 +264,7 @@ const PublicVideoPlayer = () => {
     >
       {
         loading ?
-          <div className="w-screen flex items-center justify-center">
+          <div className="w-screen h-96 flex items-center justify-center">
             <Spin size="large" />
           </div>
           :

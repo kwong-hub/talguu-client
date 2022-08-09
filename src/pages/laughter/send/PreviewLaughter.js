@@ -1,6 +1,8 @@
 import { Spin } from 'antd'
-import React, { useEffect } from 'react'
+import React from 'react'
 import VideoPlayer from '../VideoPlayer'
+
+import {FaPlayCircle} from 'react-icons/fa'
 
 const PreviewLaughter = ({
   playVideo,
@@ -12,22 +14,18 @@ const PreviewLaughter = ({
   sendingData,
   showConfirmation,
   textColor,
+  handlePlayPause,
+  isPlaying,
+  isSettingVisible,
+  textSize
 }) => {
-  // steps to follow
-  // 1. play a decorator video
-  // 2. show text overlay upto 5 seconds
-  // 3. then play video only
-  // 4.
-
-
-  // console.log("sendingData: ", sendingData)
-
-
+  
+  
   const renderPlayer = () => {
     const videoJsOptions = {
       videoId: "randomId123",
       autoplay: true,
-      controls: true,
+      controls: false,
       errorDisplay: false,
       aspectRatio: '9:16',
       responsive: true,
@@ -42,21 +40,34 @@ const PreviewLaughter = ({
     if (introVideoUrl) {
       return (
         <div className="w-full relative">
-          <div className="sender_player_style " key={randomStr}>
+          <div div className = "w-screen h-screen md:w-72 md:mt-5"
+          key = {
+            randomStr
+          } >
             <VideoPlayer options={videoJsOptions} onReady={handlePlayerReady} />
           </div>
 
           {showOverlayText && !loading && (
-            <div className="absolute mx-auto top-1/2 h-1/2 break-all overflow-hidden text-center w-full">
-              <span className="text-4xl font-black text-center mx-auto break-all"
+            <div className="absolute mx-auto top-1/3 h-1/2 break-words overflow-hidden text-center w-full md:w-72">
+              <span className="font-black text-center mx-auto break-all"
                 style={{
                   color: textColor,
                   fontFamily:'Josefin Sans',
+                  fontSize: textSize + "px",
                 }}>
                 {sendingData ? sendingData.msg : ''}
               </span>
             </div>
           )}
+
+   { isSettingVisible ? "" : <div
+                        className="custom_play_button cursor-pointer"
+                        onClick={handlePlayPause}
+                    >
+                        {!isPlaying && <FaPlayCircle className="w-10 h-10 text-white" />}
+                    </div>
+                    }
+
         </div>
       )
     }
@@ -66,13 +77,11 @@ const PreviewLaughter = ({
     <div className="flex flex-col w-full h-full items-center">
       {showConfirmation ? "" : (
         <>
-          <p className="text-sm font-bold mb-2 md:mb-1">Preview</p>
-
-          <div className="ml-2">
+          <div className="w-full">
             {playVideo && introVideoUrl ? (
               renderPlayer()
             ) : (
-              <div className="w-screen h-96 mt-10 md:mb-14 mb-52 pt-44">
+              <div div className = "w-screen h-96 mt-10 mb-52 pt-44 md:w-full md:flex items-center justify-center" >
                 <Spin size="large" />
               </div>
             )}

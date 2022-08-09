@@ -1,5 +1,5 @@
-import { Input, Form } from 'antd'
 import React from 'react'
+import { Input, Form } from 'antd'
 
 const SenderInfo = ({
     receiverEmail,
@@ -70,8 +70,9 @@ const SenderInfo = ({
                           <p className='text-sm text-gray-600 font-bold '>Pick text color</p>
                       </div>
                       <input
-                          className='w-28 h-14 p-3  mx-5 rounded-xl outline-none'
+                         className='w-28 h-14 p-3  mx-5 rounded-xl outline-none'
                          type='color'
+                         value={textColor}
                          onChange={(e) => setTextColor(e.target.value)}
                          
                       />

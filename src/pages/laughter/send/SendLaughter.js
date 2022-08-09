@@ -11,11 +11,15 @@ import { config } from '../swiperConfig'
 import './send_module_css.css'
 import SenderInfo from './SenderInfo'
 import LaughterDecorator from './LaughterDecorator'
+import TestDecorator from './TestDecorator'
 
 import { BsFillArrowLeftCircleFill } from 'react-icons/bs'
 import PreviewLaughter from './PreviewLaughter'
 
 import SendConfirmation from './SendConfirmation'
+import SettingModal from './SettingModal'
+
+
 
 const SendLaughter = () => {
 
@@ -31,20 +35,19 @@ const SendLaughter = () => {
   const [dataSource, setDataSource] = useState(slides)
   const [loading, setLoading] = useState(false)
   const [hasMore, setHasMore] = useState(true)
-
+  const [dataLoading, setDataLoading] = useState(false)
   const [currentVideo, setCurrentVideo] = useState({})
   const [decoratorVideo, setDecoratorVideo] = useState({})
   const [introVideoUrl, setIntroVideoUrl] = useState("")
   const [randomStr, setRandomStr] = useState('')
   const [playVideo, setPlayVideo] = useState(false)
   const [sent, setSent] = useState(false)
-  const { Step } = Steps
   const [current, setCurrent] = useState(0)
 
   const [receiverEmail, setReceiverEmail] = useState('')
   const [specialMessage, setSpecialMessage] = useState('')
-  const [textColor, setTextColor] = useState('')
-
+  const [textColor, setTextColor] = useState('#000000')
+  const [textSize, setTextSize] = useState('16')
   const [sendingData, setSendingData] = useState({})
   const [decoratorId, setDecoratorId] = useState("")
 
@@ -52,12 +55,14 @@ const SendLaughter = () => {
   const [isPlayerEnded, setIsPlayerEnded] = useState(false)
   const [showOverlayText, setShowOverlayText] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false)
+  const [isSettingVisible, setIsSettingVisible] = useState(false)
 
   let isShowingText = false;
 
 
   useEffect(() => {
     if (vidId) {
+      setLoading(true)
       const singleVideoLaughter = () => {
         laughterService.getLaughterVideoUrl(vidId).then((res) => {
           // console.log('res: ', res)
@@ -81,13 +86,12 @@ const SendLaughter = () => {
     return () => { }
   }, [currentVideo, decoratorVideo])
 
+
   useEffect(() => {
     getAllVideos(page, pageSize)
-
-    return () => {
-      setHasMore(false)
-    }
   }, [page, pageSize])
+
+
 
   const handlePlayerReady = (player) => {
     playerRef.current = player
@@ -127,6 +131,25 @@ const SendLaughter = () => {
   const handlePlayerReadyDecorator = (player) => {
     playerRef.current = player
 
+
+     player.ready(function () {
+       this.on('timeupdate', function () {
+         // console.log("currentTIme: ", this.currentTime())
+
+         if (this.currentTime() > 0.5 && this.currentTime() < 1) {
+           if (!isShowingText) {
+             setShowOverlayText(true)
+             isShowingText = true
+           }
+         } else if (this.currentTime() > 5) {
+           if (isShowingText) {
+             setShowOverlayText(false)
+             isShowingText = false
+           }
+         }
+       })
+     });
+
     player.on('waiting', () => { })
 
     player.on('pause', () => {
@@ -146,6 +169,15 @@ const SendLaughter = () => {
     })
   }
 
+
+const handlePlayPause = () => {
+  const player = playerRef.current
+  if (isPlaying) {
+    player.pause()
+  } else {
+    player.play()
+  }
+}
 
   const handlers = useSwipeable({
     onSwipedLeft: () => {
@@ -174,24 +206,60 @@ const SendLaughter = () => {
     ...config
   })
 
+  const handleSettingModal = () => {
+    console.log("setting is working...")
+    setIsSettingVisible(!isSettingVisible)
+  }
+
+const back = () => {
+  history.push({
+    pathname: `/laughter/watch/${vidId}`,
+  })
+}
+
+
+
+  const getAllVideos = (page, pageSize) => {
+    setDataLoading(true)
+    laughterService.introVideos(page, pageSize).then((res) => {
+      const success = res.data?.success
+      const videos = res.data?.videos
+
+      if (success) {
+        const { count, rows } = videos
+        console.log("Total: " + count)
+        setTotal(count)
+        setDataSource(rows)
+        if (rows.length > 0) {
+          // get video id
+          const videoId = rows[0].id
+          setDecoratorId(videoId)
+
+          laughterService.getLaughterVideoUrl(videoId).then((res) => {
+            if (res) {
+              setDataLoading(false)
+              setDecoratorVideo(res)
+            } else {
+              setDecoratorVideo({})
+            }
+          })
+        } else {
+          setDecoratorId("")
+          setDataLoading(false)
+        }
+      }
+      setDataLoading(false)
+    })
+  }
+
+
+
   const steps = [
-    {
-      title: 'Sender Info',
-      content: (
-        <SenderInfo
-          receiverEmail={receiverEmail}
-          specialMessage={specialMessage}
-          setReceiverEmail={setReceiverEmail}
-          setSpecialMessage={setSpecialMessage}
-          textColor={textColor}
-          setTextColor={setTextColor}
-        />
-      )
-    },
-    {
+    
+     {
       title: 'Intro video',
       content: (
-        <LaughterDecorator
+        <TestDecorator
           handlers={handlers}
           loading={loading}
           dataSource={dataSource}
@@ -200,6 +268,16 @@ const SendLaughter = () => {
           totalDecorators={total}
           page={page}
           decoratorVideo={decoratorVideo}
+          showOverlayText={showOverlayText}
+          textColor={textColor}
+          specialMessage={specialMessage}
+          handlePlayPause={handlePlayPause}
+          isPlaying={isPlaying}
+          handleSettingModal={handleSettingModal}
+          isSettingVisible={isSettingVisible}
+          textSize={textSize}
+          back={back}
+          dataLoading={dataLoading}
         />
       )
     },
@@ -217,65 +295,30 @@ const SendLaughter = () => {
           sendingData={sendingData}
           showConfirmation={showConfirmation}
           textColor={textColor}
+          handlePlayPause={handlePlayPause}
+          isPlaying={isPlaying}
+          isSettingVisible={isSettingVisible}
+          textSize={textSize}
         />
       )
     }
   ]
 
-  const getAllVideos = (page, pageSize) => {
-    setLoading(true)
-    laughterService.introVideos(page, pageSize).then((res) => {
-      const success = res.data?.success
-      const videos = res.data?.videos
-
-      if (success) {
-        const { count, rows } = videos
-        setTotal(count)
-        setDataSource(rows)
-        if (rows.length > 0) {
-          // get video id
-          const videoId = rows[0].id
-          setDecoratorId(videoId)
-
-          laughterService.getLaughterVideoUrl(videoId).then((res) => {
-            if (res) {
-              setLoading(false)
-              setDecoratorVideo(res)
-            } else {
-              setDecoratorVideo({})
-            }
-          })
-        } else {
-          setDecoratorId("")
-          setLoading(false)
-        }
-      }
-      setLoading(false)
-    })
-  }
 
   const next = () => {
-    if (!specialMessage) {
-      message.error('please fill all the required fields')
-      return
-    }
-
-    // if(decoratorId === "" || decoratorId.length === 0){
-    //   setDecoratorId(dataSource[0]?.id)
-    // }
 
     const body = {
       msg: specialMessage,
       mainVideoId: vidId,
       introVideoId: decoratorId,
       colorCode: textColor,
+      textSize
     }
-
     setSendingData(body)
 
     setCurrent(current + 1)
 
-    if (current === 1) {
+    if (current === 0) {
       previewPlayer(body)
     }
 
@@ -293,6 +336,7 @@ const SendLaughter = () => {
       }
     })
   }
+
 
   const submitLaughterData = () => {
     if (!specialMessage || !vidId || !decoratorId) {
@@ -324,65 +368,44 @@ const SendLaughter = () => {
     setCurrent(current - 1)
   }
 
-  const back = () => {
-    history.push({
-      pathname: `/laughter/watch/${vidId}`,
-    })
-  }
 
   return (
-    <div className="w-full relative px-5 py-3 flex flex-col items-center justify-center">
-      {current === 0 && (
-        <div className="w-full flex flex-col items-start">
-          <button type="button" className="px-6 mr-5 mt-5 w-20" onClick={back}>
-            <BsFillArrowLeftCircleFill className="w-9 h-9 text-blue-500 " />
-          </button>
-        </div>
-      )}
-
-
+    <div className="w-full relative flex flex-col items-center justify-center">
+      
       {
-        showConfirmation && <SendConfirmation />
+        showConfirmation ? <SendConfirmation /> : ""
+      }
+      {
+       isSettingVisible ? 
+       <SettingModal
+          specialMessage={specialMessage}
+          setSpecialMessage={setSpecialMessage}
+          textColor={textColor}
+          setTextColor={setTextColor}
+          textSize={textSize}
+          setTextSize={setTextSize}
+          handleSettingModal={handleSettingModal}
+       />
+      : ""
       }
 
-      {/*
-      <div className="flex flex-nowrap">
-         <Steps
-                    direction='horizontal'
-                    current={current}>
-                    {steps.map((item) => (
-                        <Step
-                            className=""
-                            key={item.title}
-                            title={item.title}
-                        />
-                    ))}
-                </Steps> 
-        </div>
-        */}
-      <div className="mt-2 md:my-0 md:mt-0">{steps[current].content}</div>
+      <div className="md:my-0 md:mt-0">{steps[current].content}</div>
 
       {
         showConfirmation ? "" : (
-          <div className="steps-action">
+          <div className="steps-action fixed bottom-2 md:bottom-12 right-10 md:left-0">
             {current < steps.length - 1 && dataSource.length > 0 && (
               <Button
                 disabled={loading}
                 className="bg-blue-500 text-white w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800"
                 onClick={() => next()}
               >
-                Next
+                Preview
               </Button>
             )}
-            {current === steps.length - 1 && (
-              <Button
-                disabled={sent}
-                className={`${sent ? "bg-green-500" : "bg-blue-500"} text-white w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800`}
-                onClick={() => submitLaughterData()}>
-                {sent ? "Sent" : "Done"}
-              </Button>
-            )}
-            {current > 0 && (
+
+
+              {current > 0 && (
               <Button
                 disabled={loading}
                 className="bg-gray-200 mx-3 text-black w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200"
@@ -391,6 +414,17 @@ const SendLaughter = () => {
                 Previous
               </Button>
             )}
+
+            {current === steps.length - 1 && (
+              <Button
+                disabled={sent}
+                className={`${sent ? "bg-green-500" : "bg-blue-500"} text-white w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800`}
+                onClick={() => submitLaughterData()}>
+                {sent ? "Sent" : "Done"}
+              </Button>
+            )}
+
+        
           </div>
 
         )

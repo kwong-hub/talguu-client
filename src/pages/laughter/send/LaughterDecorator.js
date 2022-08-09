@@ -10,7 +10,10 @@ const LaughterDecorator = ({
   handlePlayerReady,
   totalDecorators,
   page,
-  decoratorVideo
+  decoratorVideo,
+  showOverlayText,
+  sendingData,
+  textColor,
 }) => {
   const generateArray = () => {
     let totalDec = totalDecorators + 1
@@ -70,13 +73,27 @@ const LaughterDecorator = ({
                 <Spin size="large" />
             </div>
           ) : dataSource.length > 0 ? (
-            <div key={randomStr} className="sender_player_style">
-              <VideoPlayer
-                options={videoJsOptions}
-                onReady={handlePlayerReady}
-                className="rounded-2xl"
-              />
-            </div>
+           <div className="w-full relative">
+              <div key={randomStr} className="sender_player_style">
+                    <VideoPlayer
+                      options={videoJsOptions}
+                      onReady={handlePlayerReady}
+                      className="rounded-2xl"
+                    />
+                  </div>
+                  {
+                  showOverlayText && !loading && (
+                  <div className="absolute mx-auto top-1/2 h-1/2 break-all overflow-hidden text-center w-full">
+                    <span className="text-4xl font-black text-center mx-auto break-all"
+                      style={{
+                        color: textColor,
+                        fontFamily:'Josefin Sans',
+                      }}>
+                      {sendingData ? sendingData.msg : 'Hello There'}
+                    </span>
+                  </div>
+                  )}
+           </div>
           ) : (
             <p>There are no more intro videos</p>
           )}

@@ -21,9 +21,57 @@ body::-webkit-scrollbar-track {
 }
 body::-webkit-scrollbar-thumb {
     background-color: #3B82F6; 
-
     border-radius: 1rem;
 }
+
+
+.settingModal {
+    -webkit-animation-duration: 10s;
+    animation-duration: 10s; 
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both; 
+}
+
+
+ @-webkit-keyframes bounceIn {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(.3);
+    }
+    50% {
+        opacity: 1;
+        -webkit-transform: scale(1.05);
+    }
+    70% {
+        -webkit-transform: scale(.9);
+    }
+    100% {
+        -webkit-transform: scale(1);
+    }
+  }
+         
+  @keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(.3);
+    }
+    50% {
+        opacity: 1; 
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(.9);
+    }
+    100% {
+        transform: scale(1);
+    }
+  }
+  
+  .bounceIn {
+    -webkit-animation-name: bounceIn; 
+    animation-name: bounceIn;
+  }
+
 
 .App {
   text-align: center;
