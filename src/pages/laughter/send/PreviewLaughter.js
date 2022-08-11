@@ -2,7 +2,8 @@ import { Spin } from 'antd'
 import React from 'react'
 import VideoPlayer from '../VideoPlayer'
 
-import {FaPlayCircle} from 'react-icons/fa'
+import {FaPlay} from 'react-icons/fa'
+import Loader from '../common/loader/Loader'
 
 const PreviewLaughter = ({
   playVideo,
@@ -64,7 +65,7 @@ const PreviewLaughter = ({
                         className="custom_play_button cursor-pointer"
                         onClick={handlePlayPause}
                     >
-                        {!isPlaying && <FaPlayCircle className="w-10 h-10 text-white" />}
+                        {!isPlaying && <FaPlay className="w-10 h-10 text-white" />}
                     </div>
                     }
 
@@ -82,7 +83,7 @@ const PreviewLaughter = ({
               renderPlayer()
             ) : (
               <div div className = "w-screen h-96 mt-10 mb-52 pt-44 md:w-full md:flex items-center justify-center" >
-                <Spin size="large" />
+                <Loader />
               </div>
             )}
           </div>

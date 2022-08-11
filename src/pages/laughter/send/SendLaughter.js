@@ -212,9 +212,10 @@ const handlePlayPause = () => {
   }
 
 const back = () => {
-  history.push({
-    pathname: `/laughter/watch/${vidId}`,
-  })
+    history.push({
+      pathname: "/laughter",
+      search: `videoId=${vidId}`,
+    })
 }
 
 

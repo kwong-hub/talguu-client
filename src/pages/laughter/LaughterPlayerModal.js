@@ -1,6 +1,6 @@
 import { Spin } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { FaPlayCircle } from 'react-icons/fa'
+import { FaPlay, FaPlayCircle } from 'react-icons/fa'
 import { IoSendSharp } from 'react-icons/io5'
 import { useHistory } from 'react-router-dom'
 import { useSwipeable } from 'react-swipeable'
@@ -12,6 +12,7 @@ import talguuLogo from '../../assets/images/talguu_logo.png'
 import { useDispatch } from 'react-redux'
 import { hideVideoModal } from '../../redux/reducers/custom.reducer'
 import { BsFillArrowLeftCircleFill } from 'react-icons/bs'
+import Loader from './common/loader/Loader'
 
 
 const LaughterPlayerModal = ({
@@ -94,7 +95,7 @@ const LaughterPlayerModal = ({
         
         // You can handle player events here, for example:
         player.on('waiting', () => {
-            // player.log('player is waiting')
+          setIsPlaying(true)
         })
 
         player.on('pause', () => {
@@ -220,10 +221,10 @@ const LaughterPlayerModal = ({
                     </div>
 
                     <div
-                        className="custom_play_button cursor-pointer"
+                        className="custom_play_button md:cursor-pointer"
                         onClick={handlePlayPause}
                     >
-                        {!isPlaying && <FaPlayCircle className="w-10 h-10 text-white" />}
+                        {!isPlaying && videoStarted && <FaPlay className="w-10 h-10 text-white" />}
                     </div>
 
                     <div className="w-full">
@@ -263,9 +264,7 @@ const LaughterPlayerModal = ({
 
                     {
                         loading ?  
-                            <div className="w-screen flex items-center justify-center">
-                                <Spin size="large" />
-                            </div>
+                          <Loader />
                         : <div className="player_content">
                             {playVideo && currentVideo ? (
                                 renderPlayer()

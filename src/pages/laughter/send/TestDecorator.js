@@ -1,13 +1,13 @@
 
 import React, {useEffect} from 'react'
 
-import { Spin } from 'antd'
 import VideoPlayer from '../VideoPlayer'
 
-import { FaPlayCircle } from 'react-icons/fa'
+import { FaPlay } from 'react-icons/fa'
 
 import { AiFillMessage } from 'react-icons/ai'
 import {BsFillArrowLeftCircleFill} from 'react-icons/bs'
+import Loader from '../common/loader/Loader'
 
 const TestDecorator = ({
     handlers,
@@ -121,7 +121,7 @@ const TestDecorator = ({
                         className="custom_play_button cursor-pointer"
                         onClick={handlePlayPause}
                     >
-                        {!isPlaying && <FaPlayCircle className="w-10 h-10 text-white" />}
+                        {!isPlaying && <FaPlay className="w-10 h-10 text-white" />}
                     </div>
                     }
             </div>
@@ -139,7 +139,7 @@ const TestDecorator = ({
         {
             dataLoading ? (
                  <div div className = "w-screen h-96 mt-10 mb-52 pt-44 md:w-full md:flex items-center justify-center">
-                    <Spin size="large" />
+                    <Loader />
               </div>
             ) :
             

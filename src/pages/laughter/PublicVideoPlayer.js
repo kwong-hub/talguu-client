@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FaPlayCircle } from 'react-icons/fa'
+import { FaPlay } from 'react-icons/fa'
 import { useHistory, useLocation } from 'react-router-dom'
 import { useSwipeable } from 'react-swipeable'
 import LaughterSideNav from './LaughterSideNav'
@@ -7,10 +7,10 @@ import { config } from './swiperConfig'
 import VideoPlayer from './VideoPlayer'
 
 import talguuLogo from '../../assets/images/talguu_logo.png'
-import { Spin } from 'antd'
 
 import './send/send_module_css.css'
 import { laughterService } from '../../_services/laughter.service'
+import Loader from './common/loader/Loader'
 
 const PublicVideoPlayer = () => {
 
@@ -36,6 +36,7 @@ const PublicVideoPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [loading, setLoading] = useState(true)
   const [showOverlayText, setShowOverlayText] = useState(true)
+  const [videoStarted, setVideoStarted] = useState(false)
 
   const playerRef = React.useRef(null)
   let isShowingText = false;
@@ -86,7 +87,12 @@ const PublicVideoPlayer = () => {
     player.ready(function () {
       this.on('timeupdate', function () {
 
-        if (this.currentTime() > 0.5 && this.currentTime() < 1) {
+        if(this.currentTime() > 0){
+          if (!videoStarted) {
+            setVideoStarted(true)
+          }
+        }
+        else if (this.currentTime() > 0.5 && this.currentTime() < 1) {
           if (!isShowingText) {
             setShowOverlayText(true)
             isShowingText = true
@@ -97,6 +103,8 @@ const PublicVideoPlayer = () => {
             setShowOverlayText(false)
             isShowingText = false
           }
+        }else{
+          setVideoStarted(false)
         }
       })
     });
@@ -226,11 +234,11 @@ const PublicVideoPlayer = () => {
             className="custom_play_button cursor-pointer"
             onClick={handlePlayPause}
           >
-            {!isPlaying && <FaPlayCircle className="w-10 h-10 text-white" />}
+            {!isPlaying && videoStarted && <FaPlay className="w-10 h-10 text-white" />}
           </div>
 
           {showOverlayText && (
-            <div className="absolute mx-auto top-1/2 h-1/2 break-all overflow-hidden text-center w-full md:72">
+            <div className="absolute mx-auto top-1/3 h-1/2 break-words overflow-hidden text-center w-full md:72">
               <span className=" text-white font-black text-center mx-auto break-all"
                 style={{
                   color: currentVideo.colorCode,
@@ -264,8 +272,8 @@ const PublicVideoPlayer = () => {
     >
       {
         loading ?
-          <div className="w-screen h-96 flex items-center justify-center">
-            <Spin size="large" />
+          <div className="w-screen h-96 flex items-center justify-center md:mt-40">
+            <Loader />
           </div>
           :
           <div className="player_content">
