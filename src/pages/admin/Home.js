@@ -162,7 +162,7 @@ const Home = (props) => {
                 </div>
 
 
-                <div className="bg-gray-200 w-full h-screen">
+                <div className="bg-gray-100 w-full h-screen">
                     {
                         props.children
                     }

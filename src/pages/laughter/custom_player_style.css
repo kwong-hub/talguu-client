@@ -35,7 +35,7 @@
   height: 350px;
   top: calc(20% - 0.2em);
   left: 0;
-  z-index: 100;
+  z-index: 40;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,10 +118,10 @@
   .custom_play_button {
     position: absolute;
     width: 100%;
-    height: 350px;
+    height: 450px;
     top: calc(20% - 0.2em);
     left: 0;
-    z-index: 100;
+    z-index: 40;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -158,7 +158,7 @@
     height: 350px;
     top: calc(20% - 0.2em);
     left: 0;
-    z-index: 100;
+    z-index: 40;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -339,7 +339,7 @@
     height: 350px;
     top: calc(10% - 0.2em);
     left: 0;
-    z-index: 100;
+    z-index:40;
     display: flex;
     align-items: center;
     justify-content: center;

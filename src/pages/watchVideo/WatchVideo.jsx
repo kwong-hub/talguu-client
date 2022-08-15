@@ -29,6 +29,7 @@ import {
 } from '../../redux/types'
 import RenderVideoSideInfo from '../../components/renderVideoSideInfo/RenderVideoSideInfo'
 import './WatchVideo.css'
+import Loader from '../laughter/common/loader/Loader';
 
 const WatchVideo = () => {
   const history = useHistory()
@@ -464,8 +465,8 @@ const WatchVideo = () => {
           {playVideo && currentVideo ? (
             renderPlayer()
           ) : (
-            <div className="w-screen mx-auto mt-40">
-                <Spin size="large" />
+            <div className="w-screen mx-auto md:mt-80 mt-40">
+                <Loader />
             </div>
           )}
           <div className="flex relative lg:absolute right-0 md:mt-10 bottom-0 border-2 mt-4 lg:top-10 lg:flex-col lg:ml-0 flex-wrap lg:flex-nowrap videos_container border-white">

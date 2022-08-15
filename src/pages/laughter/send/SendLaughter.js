@@ -46,8 +46,8 @@ const SendLaughter = () => {
 
   const [receiverEmail, setReceiverEmail] = useState('')
   const [specialMessage, setSpecialMessage] = useState('')
-  const [textColor, setTextColor] = useState('#000000')
-  const [textSize, setTextSize] = useState('16')
+  const [textColor, setTextColor] = useState('#0000ff')
+  const [textSize, setTextSize] = useState('40')
   const [sendingData, setSendingData] = useState({})
   const [decoratorId, setDecoratorId] = useState("")
 
@@ -141,7 +141,7 @@ const SendLaughter = () => {
              setShowOverlayText(true)
              isShowingText = true
            }
-         } else if (this.currentTime() > 5) {
+         } else if (this.currentTime() > 10) {
            if (isShowingText) {
              setShowOverlayText(false)
              isShowingText = false
@@ -279,6 +279,10 @@ const back = () => {
           textSize={textSize}
           back={back}
           dataLoading={dataLoading}
+          setSpecialMessage={setSpecialMessage}
+          setTextColor={setTextColor}
+          setTextSize={setTextSize}
+          setPage={setPage}
         />
       )
     },
@@ -371,7 +375,7 @@ const back = () => {
 
 
   return (
-    <div className="w-full relative flex flex-col items-center justify-center">
+    <div className="w-screen h-screen overflow-hidden relative flex flex-col items-center justify-center bg-black md:bg-white">
       
       {
         showConfirmation ? <SendConfirmation /> : ""
@@ -394,11 +398,11 @@ const back = () => {
 
       {
         showConfirmation ? "" : (
-          <div className="steps-action fixed bottom-2 md:bottom-12 right-10 md:left-0">
+          <div className="steps-action fixed bottom-4 md:bottom-12 right-10 md:left-0">
             {current < steps.length - 1 && dataSource.length > 0 && (
               <Button
                 disabled={loading}
-                className="bg-blue-500 text-white w-20 h-8 rounded-xl text-sm outline-none border-none transition hover:bg-blue-400 hover:text-gray-200  md:font-bold duration-800"
+                className="bg-transparent md:bg-blue-500 text-white w-20 h-8 rounded-xl text-sm outline-gray border-none transition hover:bg-blue-400 hover:text-gray-200 md:font-bold duration-800"
                 onClick={() => next()}
               >
                 Preview

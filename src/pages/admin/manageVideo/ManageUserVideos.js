@@ -20,6 +20,11 @@ const ManageUserVideos = () => {
       title: 'Price',
       dataIndex: 'price',
       key: 'price',
+      render: (price) => (
+      <div>
+        $ <span>{price}</span>
+      </div>
+    )
     },
     {
       title: 'Views',
@@ -34,17 +39,21 @@ const ManageUserVideos = () => {
     {
       title: 'Status',
       key: 'status',
-      dataIndex: 'status'
+      dataIndex: 'status',
+      render:(status) => (
+        <div className = {`${status === "PUBLISHED" ? "text-blue-500" : "text-red-400"}`}>
+            {status}
+        </div>
+      )
     },
     {
       title: 'Action',
       key: 'action',
       render: () => (
         <div className="flex gap-2">
-          <button className="px-3 py-1 text-white bg-yellow-400 rounded-md">Edit</button>
-          <button className="px-3 py-1 text-white bg-red-400 rounded-md">Delete</button>
-          <button className="px-3 py-1 text-white bg-red-400 rounded-md">Publish</button>
-
+          <button className="px-3 py-1 text-yellow-400 hover:text-gray-900 outline-gray">Edit</button>
+          <button className="px-3 py-1 text-red-400  hover:text-gray-900 outline-gray">Delete</button>
+          <button className="px-3 py-1 text-blue-400 hover:text-gray-900 outline-gray">Publish</button>
         </div>
       ),
     },
@@ -92,11 +101,23 @@ const ManageUserVideos = () => {
 
   return (
     <Home>
-        <div className="p-5">
-        <Table
-          columns={columns}
-          dataSource={data}
-        />
+        <div className="p-5 m-4">
+          <div className="flex flex-col items-start">
+            <h2 className="text-xl text-gray-700 font-medium">
+              Video Content{' '}
+              </h2>
+              <p className="font-normal text-gray-500">
+                Analyze,Manage,Edit,Delete
+              </p>
+          </div>
+
+        <div className="mt-3">
+          <Table
+            columns={columns}
+            dataSource={data}
+            rowKey={(record) => record.id}
+          />
+        </div>
         </div>
     </Home>
   )

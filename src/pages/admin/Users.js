@@ -32,8 +32,8 @@ const Users = () => {
             key: 'action',
             render: () => (
                 <div className="flex gap-2">
-                    <button className="px-3 py-1 text-white bg-yellow-400 rounded-md">Suspend</button>
-                    <button className="px-3 py-1 text-white bg-red-400 rounded-md">Ban</button>
+                    <button className="px-3 py-1 text-yellow-400 hover:text-blue-500 outline-gray ">Suspend</button>
+                    <button className="px-3 py-1 text-red-800  hover:text-blue-500 outline-gray">Ban</button>
                 </div>
             ),
         },
@@ -66,11 +66,23 @@ const Users = () => {
 
     return (
         <Home>
-            <div className="p-5">
-                <Table 
+            <div className="p-5 m-4">
+                <div className="flex flex-col items-start m-2">
+                    <h2 className="text-xl text-gray-700 font-medium">
+                    Users Content{' '}
+                    </h2>
+                    <p className="font-normal text-gray-500">
+                    Analyze,Manage,Edit,Delete
+                    </p>
+                </div>
+            
+            <div className="mt-3">
+                 <Table 
                     columns={columns} 
                     dataSource={data}
+                    rowKey={(record) => record.id}
                 />
+            </div>
             </div>
         </Home>
     )
